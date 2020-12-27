@@ -7,18 +7,19 @@ using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Entities
 {
-    [Table("Type")]
-    public class Type
+    [Table("Category")]
+    public class Category
     {
         [Key]
-        public int ID_Type { get; set; }
+        public int ID_Categorie { get; set; }
 
-        [Required]
-        [MaxLength(100)]
-        public string Name_Type { get; set; }
+        [Display(Name = "Danh mục")]
+        [Required(ErrorMessage = "Không được để trống")]
+        [MaxLength(100, ErrorMessage = "Không hợp lệ")]
+        public string Category_Name { get; set; }
 
         public ICollection<Product> Products { get; set; }
-        public Type()
+        public Category()
         {
             Products = new HashSet<Product>();
         }

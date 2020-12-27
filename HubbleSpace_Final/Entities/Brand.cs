@@ -13,9 +13,10 @@ namespace HubbleSpace_Final.Entities
         [Key]
         public int ID_Brand { get; set; }
 
-        [Required]
+        [Display(Name = "Nhãn hiệu")]
+        [Required(ErrorMessage = "Không được để trống")]
         [MaxLength(100)]
-        public string Name_Brand { get; set; }
+        public string Brand_Name { get; set; }
         
         public ICollection<Product> Products { get; set; }
         public Brand()
