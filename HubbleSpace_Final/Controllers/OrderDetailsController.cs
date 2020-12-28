@@ -21,7 +21,7 @@ namespace HubbleSpace_Final.Controllers
         // GET: OrderDetails
         public async Task<IActionResult> Index()
         {
-            var myDbContext = _context.OrderDetail.Include(o => o.Order).Include(o => o.Product);
+            var myDbContext = _context.OrderDetail.Include(o => o.order).Include(o => o.product);
             return View(await myDbContext.ToListAsync());
         }
 
@@ -34,8 +34,8 @@ namespace HubbleSpace_Final.Controllers
             }
 
             var orderDetail = await _context.OrderDetail
-                .Include(o => o.Order)
-                .Include(o => o.Product)
+                .Include(o => o.order)
+                .Include(o => o.product)
                 .FirstOrDefaultAsync(m => m.ID_OrderDetail == id);
             if (orderDetail == null)
             {
@@ -48,7 +48,7 @@ namespace HubbleSpace_Final.Controllers
         // GET: OrderDetails/Create
         public IActionResult Create()
         {
-            ViewData["ID_Order"] = new SelectList(_context.Order, "ID_Order", "ID_Order");
+            ViewData["ID_Order"] = new SelectList(_context.Order, "ID_Order", "Date");
             ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name");
             return View();
         }
@@ -66,7 +66,7 @@ namespace HubbleSpace_Final.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ID_Order"] = new SelectList(_context.Order, "ID_Order", "ID_Order", orderDetail.ID_Order);
+            ViewData["ID_Order"] = new SelectList(_context.Order, "ID_Order", "Date", orderDetail.ID_Order);
             ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name", orderDetail.ID_Product);
             return View(orderDetail);
         }
@@ -84,7 +84,7 @@ namespace HubbleSpace_Final.Controllers
             {
                 return NotFound();
             }
-            ViewData["ID_Order"] = new SelectList(_context.Order, "ID_Order", "ID_Order", orderDetail.ID_Order);
+            ViewData["ID_Order"] = new SelectList(_context.Order, "ID_Order", "Date", orderDetail.ID_Order);
             ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name", orderDetail.ID_Product);
             return View(orderDetail);
         }
@@ -121,7 +121,7 @@ namespace HubbleSpace_Final.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ID_Order"] = new SelectList(_context.Order, "ID_Order", "ID_Order", orderDetail.ID_Order);
+            ViewData["ID_Order"] = new SelectList(_context.Order, "ID_Order", "Date", orderDetail.ID_Order);
             ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name", orderDetail.ID_Product);
             return View(orderDetail);
         }
@@ -135,8 +135,8 @@ namespace HubbleSpace_Final.Controllers
             }
 
             var orderDetail = await _context.OrderDetail
-                .Include(o => o.Order)
-                .Include(o => o.Product)
+                .Include(o => o.order)
+                .Include(o => o.product)
                 .FirstOrDefaultAsync(m => m.ID_OrderDetail == id);
             if (orderDetail == null)
             {

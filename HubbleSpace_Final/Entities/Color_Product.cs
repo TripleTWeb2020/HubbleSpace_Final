@@ -21,7 +21,7 @@ namespace HubbleSpace_Final.Entities
         [Display(Name = "Sản phẩm")]
         public int ID_Product { get; set; }
         [ForeignKey("ID_Product")]
-        public Product Product { get; set; }
+        public Product product { get; set; }
 
         public ICollection<Img_Product> Img_Products { get; set; }
         public Color_Product()

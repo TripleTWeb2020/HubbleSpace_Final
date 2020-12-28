@@ -20,17 +20,12 @@ namespace HubbleSpace_Final.Entities
         [Display(Name = "Ngày bán")]
         [Required(ErrorMessage = "Không được để trống")]
         [DataType(DataType.DateTime, ErrorMessage = "Không hợp lệ")]
-        public int Date { get; set; }
+        public string Date { get; set; }
 
         [Display(Name = "Khách hàng")]
-        public int Client { get; set; }
-        [ForeignKey("ID_Client")]
-        public Client client { get; set; }
-
-        [Display(Name = "Thu ngân")]
-        public int Cashier { get; set; }
-        [ForeignKey("ID_Employee")]
-        public Employee Employee { get; set; }
+        public int ID_Account { get; set; }
+        [ForeignKey("ID_Account")]
+        public Account account { get; set; }
 
         public ICollection<OrderDetail> OrderDetails { get; set; }
         public Order()

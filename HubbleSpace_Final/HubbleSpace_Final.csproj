@@ -13,6 +13,26 @@
     <Compile Remove="Migrations\20201227052749_Db.init.Designer.cs" />
     <Compile Remove="Migrations\20201227053224_Db.init.cs" />
     <Compile Remove="Migrations\20201227053224_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20201227054424_Db.init.cs" />
+    <Compile Remove="Migrations\20201227054424_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20201227101325_Db.init.cs" />
+    <Compile Remove="Migrations\20201227101325_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20201227101806_Db.init.cs" />
+    <Compile Remove="Migrations\20201227101806_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20201227103700_Db.init.cs" />
+    <Compile Remove="Migrations\20201227103700_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20201227104641_Db.init.cs" />
+    <Compile Remove="Migrations\20201227104641_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20201227104913_Db.init.cs" />
+    <Compile Remove="Migrations\20201227104913_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20201227105231_Db.init.cs" />
+    <Compile Remove="Migrations\20201227105231_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20201228032419_Db.init.cs" />
+    <Compile Remove="Migrations\20201228032419_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20201228034047_Db.init.cs" />
+    <Compile Remove="Migrations\20201228034047_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20201228035407_Db.init.cs" />
+    <Compile Remove="Migrations\20201228035407_Db.init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,10 +45,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

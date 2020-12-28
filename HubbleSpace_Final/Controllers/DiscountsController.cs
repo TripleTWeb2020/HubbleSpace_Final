@@ -53,7 +53,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_Discount,Code_Discount,Expire,Value,NumberofTurn")] Discount discount)
+        public async Task<IActionResult> Create([Bind("ID_Discount,Code_Discount,Expire,Value,NumberofTurns")] Discount discount)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID_Discount,Code_Discount,Expire,Value,NumberofTurn")] Discount discount)
+        public async Task<IActionResult> Edit(int id, [Bind("ID_Discount,Code_Discount,Expire,Value,NumberofTurns")] Discount discount)
         {
             if (id != discount.ID_Discount)
             {

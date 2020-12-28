@@ -18,6 +18,11 @@ namespace HubbleSpace_Final.Entities
         [MaxLength(100, ErrorMessage = "Không hợp lệ")]
         public string Category_Name { get; set; }
 
+        [Display(Name = "Đối tượng")]
+        [Required(ErrorMessage = "Không được để trống")]
+        [MaxLength(100, ErrorMessage = "Không hợp lệ")]
+        public string Object { get; set; }
+
         public ICollection<Product> Products { get; set; }
         public Category()
         {

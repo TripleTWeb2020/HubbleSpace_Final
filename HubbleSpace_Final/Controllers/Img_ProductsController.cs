@@ -9,11 +9,11 @@ using HubbleSpace_Final.Entities;
 
 namespace HubbleSpace_Final.Controllers
 {
-    public class Img_ProductController : Controller
+    public class Img_ProductsController : Controller
     {
         private readonly MyDbContext _context;
 
-        public Img_ProductController(MyDbContext context)
+        public Img_ProductsController(MyDbContext context)
         {
             _context = context;
         }
@@ -21,7 +21,7 @@ namespace HubbleSpace_Final.Controllers
         // GET: Img_Product
         public async Task<IActionResult> Index()
         {
-            var myDbContext = _context.Img_Product.Include(i => i.Color_Product);
+            var myDbContext = _context.Img_Product.Include(i => i.color_Product);
             return View(await myDbContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace HubbleSpace_Final.Controllers
             }
 
             var img_Product = await _context.Img_Product
-                .Include(i => i.Color_Product)
+                .Include(i => i.color_Product)
                 .FirstOrDefaultAsync(m => m.ID_Img_Product == id);
             if (img_Product == null)
             {
@@ -130,7 +130,7 @@ namespace HubbleSpace_Final.Controllers
             }
 
             var img_Product = await _context.Img_Product
-                .Include(i => i.Color_Product)
+                .Include(i => i.color_Product)
                 .FirstOrDefaultAsync(m => m.ID_Img_Product == id);
             if (img_Product == null)
             {

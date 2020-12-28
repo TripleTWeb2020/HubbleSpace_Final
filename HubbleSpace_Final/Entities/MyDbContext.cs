@@ -17,6 +17,8 @@ namespace HubbleSpace_Final.Entities
         public DbSet<Employee> Employee { get; set; }
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderDetail> OrderDetail { get; set; }
+        public DbSet<Size> Size { get; set; }
+
 
         public MyDbContext(DbContextOptions options) : base(options)
         {

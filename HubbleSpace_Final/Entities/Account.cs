@@ -31,6 +31,12 @@ namespace HubbleSpace_Final.Entities
 
         [Display(Name = "Level")]
         [Required(ErrorMessage = "Không được để trống")]
-        public level level { get; set; }
+        public level Level { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
+        public Account()
+        {
+            Orders = new HashSet<Order>();
+        }
     }
 }

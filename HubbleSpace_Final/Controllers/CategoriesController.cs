@@ -53,7 +53,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_Categorie,Category_Name")] Category category)
+        public async Task<IActionResult> Create([Bind("ID_Categorie,Category_Name,Object")] Category category)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID_Categorie,Category_Name")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("ID_Categorie,Category_Name,Object")] Category category)
         {
             if (id != category.ID_Categorie)
             {

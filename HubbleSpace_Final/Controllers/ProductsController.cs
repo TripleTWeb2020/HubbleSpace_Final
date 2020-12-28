@@ -21,7 +21,7 @@ namespace HubbleSpace_Final.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var myDbContext = _context.Product.Include(p => p.Brand);
+            var myDbContext = _context.Product.Include(p => p.Brand).Include(p => p.category);
             return View(await myDbContext.ToListAsync());
         }
 
@@ -35,6 +35,7 @@ namespace HubbleSpace_Final.Controllers
 
             var product = await _context.Product
                 .Include(p => p.Brand)
+                .Include(p => p.category)
                 .FirstOrDefaultAsync(m => m.ID_Product == id);
             if (product == null)
             {
@@ -48,6 +49,7 @@ namespace HubbleSpace_Final.Controllers
         public IActionResult Create()
         {
             ViewData["ID_Brand"] = new SelectList(_context.Brand, "ID_Brand", "Brand_Name");
+            ViewData["ID_Categorie"] = new SelectList(_context.Category, "ID_Categorie", "Category_Name");
             return View();
         }
 
@@ -56,7 +58,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_Product,Product_Name,Price_Product,Price_Sale,ID_Brand,Category")] Product product)
+        public async Task<IActionResult> Create([Bind("ID_Product,Product_Name,Price_Product,Price_Sale,ID_Brand,ID_Categorie")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -65,6 +67,7 @@ namespace HubbleSpace_Final.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ID_Brand"] = new SelectList(_context.Brand, "ID_Brand", "Brand_Name", product.ID_Brand);
+            ViewData["ID_Categorie"] = new SelectList(_context.Category, "ID_Categorie", "Category_Name", product.ID_Categorie);
             return View(product);
         }
 
@@ -82,6 +85,7 @@ namespace HubbleSpace_Final.Controllers
                 return NotFound();
             }
             ViewData["ID_Brand"] = new SelectList(_context.Brand, "ID_Brand", "Brand_Name", product.ID_Brand);
+            ViewData["ID_Categorie"] = new SelectList(_context.Category, "ID_Categorie", "Category_Name", product.ID_Categorie);
             return View(product);
         }
 
@@ -90,7 +94,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID_Product,Product_Name,Price_Product,Price_Sale,ID_Brand,Category")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ID_Product,Product_Name,Price_Product,Price_Sale,ID_Brand,ID_Categorie")] Product product)
         {
             if (id != product.ID_Product)
             {
@@ -118,6 +122,7 @@ namespace HubbleSpace_Final.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ID_Brand"] = new SelectList(_context.Brand, "ID_Brand", "Brand_Name", product.ID_Brand);
+            ViewData["ID_Categorie"] = new SelectList(_context.Category, "ID_Categorie", "Category_Name", product.ID_Categorie);
             return View(product);
         }
 
@@ -131,6 +136,7 @@ namespace HubbleSpace_Final.Controllers
 
             var product = await _context.Product
                 .Include(p => p.Brand)
+                .Include(p => p.category)
                 .FirstOrDefaultAsync(m => m.ID_Product == id);
             if (product == null)
             {

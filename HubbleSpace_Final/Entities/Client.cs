@@ -42,5 +42,6 @@ namespace HubbleSpace_Final.Entities
         [ForeignKey("ID_Account")]
         public Account Account { get; set; }
 
+
     }
 }

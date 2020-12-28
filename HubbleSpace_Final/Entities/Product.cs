@@ -33,16 +33,14 @@ namespace HubbleSpace_Final.Entities
         public Brand Brand { get; set; }
 
         [Display(Name = "Danh mục")]
-        public int Category { get; set; }
+        public int ID_Categorie { get; set; }
         [ForeignKey("ID_Categorie")]
         public Category category { get; set; }
 
-        public ICollection<Img_Product> Img_Products { get; set; }
         public ICollection<Color_Product> Color_Products { get; set; }
         public Product()
         {
             Color_Products = new HashSet<Color_Product>();
-            Img_Products = new HashSet<Img_Product>();
         }
 
     }

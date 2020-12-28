@@ -7,16 +7,20 @@ using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Entities
 {
-    [Table("Img_Product")]
-    public class Img_Product
+    
+    [Table("Size")]
+    public class Size
     {
         [Key]
-        public int ID_Img_Product { get; set; }
+        public int ID_Size_Product { get; set; }
 
-        [Display(Name = "Hình ảnh")]
+        [Required(ErrorMessage ="Không được để trống")]
+        [Display(Name = "Size")]
+        public string size { get; set; }
+
         [Required(ErrorMessage = "Không được để trống")]
-        [DataType(DataType.Upload, ErrorMessage ="Không hợp lệ")]
-        public string Photo { get; set; }
+        [Display(Name = "Số lượng")]
+        public int Quantity { get; set; }
 
         [Display(Name = "Màu")]
         public int ID_Color_Product { get; set; }
@@ -25,6 +29,5 @@ namespace HubbleSpace_Final.Entities
 
         [Display(Name = "Sản phẩm")]
         public string Product_Name => color_Product.product.Product_Name;
-
     }
 }

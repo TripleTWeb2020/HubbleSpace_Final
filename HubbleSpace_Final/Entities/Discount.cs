@@ -31,6 +31,6 @@ namespace HubbleSpace_Final.Entities
         [Display(Name = "Số lượt còn lại")]
         [Required(ErrorMessage = "Không được để trống")]
         [Range(0,100,ErrorMessage ="Không hợp lệ")]
-        public int NumberofTurn { get; set; }
+        public int NumberofTurns { get; set; }
     }
 }

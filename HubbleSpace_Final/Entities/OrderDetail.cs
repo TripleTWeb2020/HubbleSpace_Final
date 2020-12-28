@@ -16,10 +16,10 @@ namespace HubbleSpace_Final.Entities
         [Display(Name = "Tên sản phẩm")]
         public int ID_Product { get; set; }
         [ForeignKey("ID_Product")]
-        public Product Product { get; set; }
+        public Product product { get; set; }
 
         [Display(Name = "Đơn giá")]
-        public double UnitPrice => Product.Price_Product ;
+        public double UnitPrice => product.Price_Product ;
 
         [Display(Name = "Số lượng")]
         [Required(ErrorMessage = "Không được để trống")]
@@ -32,6 +32,6 @@ namespace HubbleSpace_Final.Entities
         [Display(Name = "Mã đơn hàng")]
         public int ID_Order { get; set; }
         [ForeignKey("ID_Order")]
-        public Order Order { get; set; }
+        public Order order { get; set; }
     }
 }

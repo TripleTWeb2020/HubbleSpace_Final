@@ -9,23 +9,23 @@ using HubbleSpace_Final.Entities;
 
 namespace HubbleSpace_Final.Controllers
 {
-    public class Color_ProductController : Controller
+    public class SizesController : Controller
     {
         private readonly MyDbContext _context;
 
-        public Color_ProductController(MyDbContext context)
+        public SizesController(MyDbContext context)
         {
             _context = context;
         }
 
-        // GET: Color_Product
+        // GET: Sizes
         public async Task<IActionResult> Index()
         {
-            var myDbContext = _context.Color_Product.Include(c => c.Product);
+            var myDbContext = _context.Size.Include(s => s.color_Product);
             return View(await myDbContext.ToListAsync());
         }
 
-        // GET: Color_Product/Details/5
+        // GET: Sizes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,42 +33,42 @@ namespace HubbleSpace_Final.Controllers
                 return NotFound();
             }
 
-            var color_Product = await _context.Color_Product
-                .Include(c => c.Product)
-                .FirstOrDefaultAsync(m => m.ID_Color_Product == id);
-            if (color_Product == null)
+            var size = await _context.Size
+                .Include(s => s.color_Product)
+                .FirstOrDefaultAsync(m => m.ID_Size_Product == id);
+            if (size == null)
             {
                 return NotFound();
             }
 
-            return View(color_Product);
+            return View(size);
         }
 
-        // GET: Color_Product/Create
+        // GET: Sizes/Create
         public IActionResult Create()
         {
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name");
+            ViewData["ID_Color_Product"] = new SelectList(_context.Color_Product, "ID_Color_Product", "Color_Name");
             return View();
         }
 
-        // POST: Color_Product/Create
+        // POST: Sizes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_Color_Product,Color_Name,ID_Product")] Color_Product color_Product)
+        public async Task<IActionResult> Create([Bind("ID_Size_Product,size,Quantity,ID_Color_Product")] Size size)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(color_Product);
+                _context.Add(size);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name", color_Product.ID_Product);
-            return View(color_Product);
+            ViewData["ID_Color_Product"] = new SelectList(_context.Color_Product, "ID_Color_Product", "Color_Name", size.ID_Color_Product);
+            return View(size);
         }
 
-        // GET: Color_Product/Edit/5
+        // GET: Sizes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,23 +76,23 @@ namespace HubbleSpace_Final.Controllers
                 return NotFound();
             }
 
-            var color_Product = await _context.Color_Product.FindAsync(id);
-            if (color_Product == null)
+            var size = await _context.Size.FindAsync(id);
+            if (size == null)
             {
                 return NotFound();
             }
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name", color_Product.ID_Product);
-            return View(color_Product);
+            ViewData["ID_Color_Product"] = new SelectList(_context.Color_Product, "ID_Color_Product", "Color_Name", size.ID_Color_Product);
+            return View(size);
         }
 
-        // POST: Color_Product/Edit/5
+        // POST: Sizes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID_Color_Product,Color_Name,ID_Product")] Color_Product color_Product)
+        public async Task<IActionResult> Edit(int id, [Bind("ID_Size_Product,size,Quantity,ID_Color_Product")] Size size)
         {
-            if (id != color_Product.ID_Color_Product)
+            if (id != size.ID_Size_Product)
             {
                 return NotFound();
             }
@@ -101,12 +101,12 @@ namespace HubbleSpace_Final.Controllers
             {
                 try
                 {
-                    _context.Update(color_Product);
+                    _context.Update(size);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!Color_ProductExists(color_Product.ID_Color_Product))
+                    if (!SizeExists(size.ID_Size_Product))
                     {
                         return NotFound();
                     }
@@ -117,11 +117,11 @@ namespace HubbleSpace_Final.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name", color_Product.ID_Product);
-            return View(color_Product);
+            ViewData["ID_Color_Product"] = new SelectList(_context.Color_Product, "ID_Color_Product", "Color_Name", size.ID_Color_Product);
+            return View(size);
         }
 
-        // GET: Color_Product/Delete/5
+        // GET: Sizes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,31 +129,31 @@ namespace HubbleSpace_Final.Controllers
                 return NotFound();
             }
 
-            var color_Product = await _context.Color_Product
-                .Include(c => c.Product)
-                .FirstOrDefaultAsync(m => m.ID_Color_Product == id);
-            if (color_Product == null)
+            var size = await _context.Size
+                .Include(s => s.color_Product)
+                .FirstOrDefaultAsync(m => m.ID_Size_Product == id);
+            if (size == null)
             {
                 return NotFound();
             }
 
-            return View(color_Product);
+            return View(size);
         }
 
-        // POST: Color_Product/Delete/5
+        // POST: Sizes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var color_Product = await _context.Color_Product.FindAsync(id);
-            _context.Color_Product.Remove(color_Product);
+            var size = await _context.Size.FindAsync(id);
+            _context.Size.Remove(size);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool Color_ProductExists(int id)
+        private bool SizeExists(int id)
         {
-            return _context.Color_Product.Any(e => e.ID_Color_Product == id);
+            return _context.Size.Any(e => e.ID_Size_Product == id);
         }
     }
 }
