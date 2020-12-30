@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HubbleSpace_Final.Migrations
 {
@@ -15,7 +16,8 @@ namespace HubbleSpace_Final.Migrations
                     UserName = table.Column<string>(maxLength: 100, nullable: false),
                     Password = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
-                    Level = table.Column<int>(nullable: false)
+                    Level = table.Column<int>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,7 +32,7 @@ namespace HubbleSpace_Final.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Banner_Name = table.Column<string>(maxLength: 100, nullable: false),
                     Photo = table.Column<string>(nullable: false),
-                    Date_Upload = table.Column<string>(nullable: true)
+                    Date_Upload = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,7 +73,7 @@ namespace HubbleSpace_Final.Migrations
                     ID_Discount = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code_Discount = table.Column<string>(maxLength: 100, nullable: false),
-                    Expire = table.Column<string>(nullable: false),
+                    Expire = table.Column<DateTime>(nullable: false),
                     Value = table.Column<int>(nullable: false),
                     NumberofTurns = table.Column<int>(nullable: false)
                 },
@@ -88,7 +90,7 @@ namespace HubbleSpace_Final.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Client_Name = table.Column<string>(maxLength: 100, nullable: false),
                     Phone = table.Column<string>(nullable: false),
-                    DOB = table.Column<string>(nullable: false),
+                    DOB = table.Column<DateTime>(nullable: false),
                     Gender = table.Column<int>(nullable: false),
                     CreditCard = table.Column<string>(nullable: true),
                     ID_Account = table.Column<int>(nullable: false)
@@ -112,7 +114,7 @@ namespace HubbleSpace_Final.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Employee_Name = table.Column<string>(maxLength: 100, nullable: false),
                     Phone = table.Column<string>(nullable: false),
-                    DOB = table.Column<string>(nullable: false),
+                    DOB = table.Column<DateTime>(nullable: false),
                     Gender = table.Column<int>(nullable: false),
                     Citizen_ID = table.Column<string>(maxLength: 11, nullable: false),
                     Salary = table.Column<double>(nullable: false),
@@ -137,7 +139,11 @@ namespace HubbleSpace_Final.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TotalMoney = table.Column<double>(nullable: false),
                     Date = table.Column<string>(nullable: false),
-                    ID_Account = table.Column<int>(nullable: false)
+                    Address = table.Column<string>(nullable: false),
+                    Receiver = table.Column<string>(nullable: false),
+                    SDT = table.Column<string>(nullable: false),
+                    ID_Account = table.Column<int>(nullable: false),
+                    Process = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

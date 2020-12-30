@@ -19,13 +19,14 @@ namespace HubbleSpace_Final.Entities
         public string Banner_Name { get; set; }
 
         [Display(Name = "Hình ảnh")]
-        [Required]
-        [DataType(DataType.Upload, ErrorMessage = "Không được để trống")]
+        [Required(ErrorMessage = "Không được để trống")]
+        [DataType(DataType.Upload, ErrorMessage = "Không hợp lệ")]
         public string Photo { get; set; }
 
         [Display(Name = "Ngày cập nhật")]
-        [DataType(DataType.DateTime, ErrorMessage = "Không được để trống")]
-        public string Date_Upload { get; set; }
+        [Required(ErrorMessage = "Không được để trống")]
+        [DataType(DataType.DateTime, ErrorMessage = "Không hợp lệ")]
+        public DateTime Date_Upload { get; set; }
 
     }
 }

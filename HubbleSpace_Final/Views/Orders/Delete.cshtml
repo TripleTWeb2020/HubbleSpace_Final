@@ -24,11 +24,35 @@
             @Html.DisplayFor(model => model.Date)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Receiver)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Receiver)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SDT)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SDT)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.account)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.account.Email)
+            @Html.DisplayFor(model => model.account.Date)
         </dd class>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Process)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Process)
+        </dd>
     </dl>
     
     <form asp-action="Delete">

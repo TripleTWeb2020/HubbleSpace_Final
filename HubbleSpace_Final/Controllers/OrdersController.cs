@@ -47,7 +47,7 @@ namespace HubbleSpace_Final.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            ViewData["ID_Account"] = new SelectList(_context.Account, "ID_Account", "Email");
+            ViewData["ID_Account"] = new SelectList(_context.Account, "ID_Account", "Date");
             return View();
         }
 
@@ -56,7 +56,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_Order,TotalMoney,Date,ID_Account")] Order order)
+        public async Task<IActionResult> Create([Bind("ID_Order,TotalMoney,Date,Address,Receiver,SDT,ID_Account,Process")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace HubbleSpace_Final.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ID_Account"] = new SelectList(_context.Account, "ID_Account", "Email", order.ID_Account);
+            ViewData["ID_Account"] = new SelectList(_context.Account, "ID_Account", "Date", order.ID_Account);
             return View(order);
         }
 
@@ -81,7 +81,7 @@ namespace HubbleSpace_Final.Controllers
             {
                 return NotFound();
             }
-            ViewData["ID_Account"] = new SelectList(_context.Account, "ID_Account", "Email", order.ID_Account);
+            ViewData["ID_Account"] = new SelectList(_context.Account, "ID_Account", "Date", order.ID_Account);
             return View(order);
         }
 
@@ -90,7 +90,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID_Order,TotalMoney,Date,ID_Account")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("ID_Order,TotalMoney,Date,Address,Receiver,SDT,ID_Account,Process")] Order order)
         {
             if (id != order.ID_Order)
             {
@@ -117,7 +117,7 @@ namespace HubbleSpace_Final.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ID_Account"] = new SelectList(_context.Account, "ID_Account", "Email", order.ID_Account);
+            ViewData["ID_Account"] = new SelectList(_context.Account, "ID_Account", "Date", order.ID_Account);
             return View(order);
         }
 

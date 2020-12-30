@@ -344,11 +344,17 @@
                 </div>
             </header>
             <!-- HEADER DESKTOP-->
-            @RenderBody()
-          
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
         </div>
     </div>
-
     <!-- Jquery JS-->
     <script src="~/CoolAdmin-master/vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
@@ -369,7 +375,6 @@
     <script src="~/CoolAdmin-master/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="~/CoolAdmin-master/vendor/select2/select2.min.js">
     </script>
-
     <!-- Main JS-->
     <script src="~/CoolAdmin-master/js/main.js"></script>
 </body>

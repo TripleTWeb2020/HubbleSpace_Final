@@ -21,7 +21,7 @@ namespace HubbleSpace_Final.Entities
         [Display(Name = "Hạn sử dụng")]
         [Required(ErrorMessage = "Không được để trống")]
         [DataType(DataType.DateTime, ErrorMessage = "Không hợp lệ")]
-        public string Expire { get; set; }
+        public DateTime Expire { get; set; }
 
         [Display(Name = "Trị giá")]
         [Required(ErrorMessage = "Không được để trống")]

@@ -22,10 +22,28 @@ namespace HubbleSpace_Final.Entities
         [DataType(DataType.DateTime, ErrorMessage = "Không hợp lệ")]
         public string Date { get; set; }
 
-        [Display(Name = "Khách hàng")]
+        [Display(Name = "Địa chỉ")]
+        [Required(ErrorMessage = "Không được để trống")]
+        public string Address { get; set; }
+
+        [Display(Name = "Người nhận")]
+        [Required(ErrorMessage = "Không được để trống")]
+        public string Receiver { get; set; }
+
+        [Display(Name = "SĐT Người nhận")]
+        [Required(ErrorMessage = "Không được để trống")]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "Không hợp lệ")]
+        public string SDT { get; set; }
+
+        [Display(Name = "Người đặt")]
         public int ID_Account { get; set; }
         [ForeignKey("ID_Account")]
         public Account account { get; set; }
+
+        [Display(Name = "Tình trạng")]
+        [Required(ErrorMessage = "Không được để trống")]
+        public string Process { get; set; }
+
 
         public ICollection<OrderDetail> OrderDetails { get; set; }
         public Order()

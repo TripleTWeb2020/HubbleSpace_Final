@@ -33,6 +33,11 @@ namespace HubbleSpace_Final.Entities
         [Required(ErrorMessage = "Không được để trống")]
         public level Level { get; set; }
 
+        [Display(Name = "Ngày tạo")]
+        [Required(ErrorMessage = "Không được để trống")]
+        [DataType(DataType.DateTime, ErrorMessage = "Không hợp lệ")]
+        public DateTime Date { get; set; }
+
         public ICollection<Order> Orders { get; set; }
         public Account()
         {
