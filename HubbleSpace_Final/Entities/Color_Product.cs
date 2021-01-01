@@ -23,6 +23,11 @@ namespace HubbleSpace_Final.Entities
         [ForeignKey("ID_Product")]
         public Product product { get; set; }
 
+        [Display(Name = "Hình ảnh")]
+        [Required(ErrorMessage = "Không được để trống")]
+        [DataType(DataType.ImageUrl)]
+        public String Image { get; set; }
+
         public ICollection<Img_Product> Img_Products { get; set; }
         public Color_Product()
         {

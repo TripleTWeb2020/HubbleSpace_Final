@@ -18,6 +18,11 @@ namespace HubbleSpace_Final.Entities
         [MaxLength(100, ErrorMessage = "Không hợp lệ")]
         public string Product_Name { get; set; }
 
+        [Display(Name = "Hình ảnh")]
+        [Required(ErrorMessage = "Không được để trống")]
+        [DataType(DataType.ImageUrl)]
+        public String Image { get; set; }
+
         [Display(Name = "Giá bán")]
         [Required(ErrorMessage = "Không được để trống")]
         [Range(0, 100000000, ErrorMessage ="Không hợp lệ")]

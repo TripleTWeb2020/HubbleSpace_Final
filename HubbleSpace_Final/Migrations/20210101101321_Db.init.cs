@@ -16,7 +16,8 @@ namespace HubbleSpace_Final.Migrations
                     UserName = table.Column<string>(maxLength: 100, nullable: false),
                     Password = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
-                    Level = table.Column<int>(nullable: false)
+                    Level = table.Column<int>(nullable: false),
+                    Date_Create = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,7 +31,8 @@ namespace HubbleSpace_Final.Migrations
                     ID_Banner = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Banner_Name = table.Column<string>(maxLength: 100, nullable: false),
-                    Photo = table.Column<string>(nullable: false)
+                    Photo = table.Column<string>(nullable: false),
+                    Date_Upload = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -136,6 +138,7 @@ namespace HubbleSpace_Final.Migrations
                     ID_Order = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TotalMoney = table.Column<double>(nullable: false),
+                    Date_Create = table.Column<DateTime>(nullable: false),
                     Address = table.Column<string>(nullable: false),
                     Receiver = table.Column<string>(nullable: false),
                     SDT = table.Column<string>(nullable: false),
@@ -160,6 +163,7 @@ namespace HubbleSpace_Final.Migrations
                     ID_Product = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Product_Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Image = table.Column<string>(nullable: false),
                     Price_Product = table.Column<double>(nullable: false),
                     Price_Sale = table.Column<double>(nullable: false),
                     ID_Brand = table.Column<int>(nullable: false),
@@ -189,7 +193,8 @@ namespace HubbleSpace_Final.Migrations
                     ID_Color_Product = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Color_Name = table.Column<string>(maxLength: 100, nullable: false),
-                    ID_Product = table.Column<int>(nullable: false)
+                    ID_Product = table.Column<int>(nullable: false),
+                    Image = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

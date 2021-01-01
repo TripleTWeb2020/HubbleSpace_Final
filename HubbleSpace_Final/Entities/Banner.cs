@@ -26,7 +26,12 @@ namespace HubbleSpace_Final.Entities
         [Display(Name = "Ngày cập nhật")]
         [Required(ErrorMessage = "Không được để trống")]
         [DataType(DataType.DateTime, ErrorMessage = "Không hợp lệ")]
-        public DateTime Date_Upload => DateTime.Now ;
+        public DateTime Date_Upload { get; set; }
+
+        public Banner()
+        {
+            Date_Upload = DateTime.Now;
+        }
 
     }
 }

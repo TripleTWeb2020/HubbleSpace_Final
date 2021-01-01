@@ -26,6 +26,9 @@ namespace HubbleSpace_Final.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("Date_Create")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -58,6 +61,9 @@ namespace HubbleSpace_Final.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
+
+                    b.Property<DateTime>("Date_Upload")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Photo")
                         .IsRequired()
@@ -156,6 +162,10 @@ namespace HubbleSpace_Final.Migrations
 
                     b.Property<int>("ID_Product")
                         .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID_Color_Product");
 
@@ -262,6 +272,9 @@ namespace HubbleSpace_Final.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Date_Create")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("ID_Account")
                         .HasColumnType("int");
 
@@ -324,6 +337,10 @@ namespace HubbleSpace_Final.Migrations
 
                     b.Property<int>("ID_Categorie")
                         .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price_Product")
                         .HasColumnType("float");

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<HubbleSpace_Final.Entities.Banner>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Banner - Manage";
     Layout = "_AdminLayout";
 
 }
@@ -48,7 +48,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                   @foreach (var item in Model)
+                    @foreach (var item in Model)
                     {
                         <tr class="tr-shadow row">
                             <td class="col-3">
@@ -73,11 +73,11 @@
                                     </a>
                                 </div>
                             </td>
-                            
+
                         </tr>
                         <tr class="spacer"></tr>
                     }
-                    </tbody>
+                </tbody>
             </table>
         </div>
         <!-- END DATA TABLE -->

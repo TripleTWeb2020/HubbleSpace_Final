@@ -56,7 +56,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_Order,TotalMoney,Address,Receiver,SDT,ID_Account,Process")] Order order)
+        public async Task<IActionResult> Create([Bind("ID_Order,TotalMoney,Date_Create,Address,Receiver,SDT,ID_Account,Process")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID_Order,TotalMoney,Address,Receiver,SDT,ID_Account,Process")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("ID_Order,TotalMoney,Date_Create,Address,Receiver,SDT,ID_Account,Process")] Order order)
         {
             if (id != order.ID_Order)
             {

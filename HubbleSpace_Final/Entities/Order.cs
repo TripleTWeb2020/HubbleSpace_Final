@@ -20,7 +20,7 @@ namespace HubbleSpace_Final.Entities
         [Display(Name = "Ngày bán")]
         [Required(ErrorMessage = "Không được để trống")]
         [DataType(DataType.DateTime, ErrorMessage = "Không hợp lệ")]
-        public DateTime Date_Create => DateTime.Now;
+        public DateTime Date_Create { get; set; }
 
         [Display(Name = "Địa chỉ")]
         [Required(ErrorMessage = "Không được để trống")]
@@ -49,6 +49,7 @@ namespace HubbleSpace_Final.Entities
         public Order()
         {
             OrderDetails = new HashSet<OrderDetail>();
+            Date_Create = DateTime.Now;
         }
     }
 }

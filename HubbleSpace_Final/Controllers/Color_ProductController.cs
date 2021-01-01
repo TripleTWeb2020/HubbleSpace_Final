@@ -47,7 +47,7 @@ namespace HubbleSpace_Final.Controllers
         // GET: Color_Product/Create
         public IActionResult Create()
         {
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name");
+            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Image");
             return View();
         }
 
@@ -56,7 +56,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_Color_Product,Color_Name,ID_Product")] Color_Product color_Product)
+        public async Task<IActionResult> Create([Bind("ID_Color_Product,Color_Name,ID_Product,Image")] Color_Product color_Product)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace HubbleSpace_Final.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name", color_Product.ID_Product);
+            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Image", color_Product.ID_Product);
             return View(color_Product);
         }
 
@@ -81,7 +81,7 @@ namespace HubbleSpace_Final.Controllers
             {
                 return NotFound();
             }
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name", color_Product.ID_Product);
+            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Image", color_Product.ID_Product);
             return View(color_Product);
         }
 
@@ -90,7 +90,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID_Color_Product,Color_Name,ID_Product")] Color_Product color_Product)
+        public async Task<IActionResult> Edit(int id, [Bind("ID_Color_Product,Color_Name,ID_Product,Image")] Color_Product color_Product)
         {
             if (id != color_Product.ID_Color_Product)
             {
@@ -117,7 +117,7 @@ namespace HubbleSpace_Final.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name", color_Product.ID_Product);
+            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Image", color_Product.ID_Product);
             return View(color_Product);
         }
 

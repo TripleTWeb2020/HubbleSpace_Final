@@ -58,7 +58,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_Product,Product_Name,Price_Product,Price_Sale,ID_Brand,ID_Categorie")] Product product)
+        public async Task<IActionResult> Create([Bind("ID_Product,Product_Name,Image,Price_Product,Price_Sale,ID_Brand,ID_Categorie")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID_Product,Product_Name,Price_Product,Price_Sale,ID_Brand,ID_Categorie")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ID_Product,Product_Name,Image,Price_Product,Price_Sale,ID_Brand,ID_Categorie")] Product product)
         {
             if (id != product.ID_Product)
             {

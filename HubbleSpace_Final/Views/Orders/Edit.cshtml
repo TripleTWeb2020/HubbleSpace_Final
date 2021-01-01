@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h2>Edit</h2>
 
 <h4>Order</h4>
 <hr />
@@ -17,6 +17,11 @@
                 <label asp-for="TotalMoney" class="control-label"></label>
                 <input asp-for="TotalMoney" class="form-control" />
                 <span asp-validation-for="TotalMoney" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date_Create" class="control-label"></label>
+                <input asp-for="Date_Create" class="form-control" />
+                <span asp-validation-for="Date_Create" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
@@ -44,7 +49,7 @@
                 <span asp-validation-for="Process" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>
