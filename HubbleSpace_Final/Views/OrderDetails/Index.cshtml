@@ -6,48 +6,9 @@
 
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.product)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.order)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.product.Product_Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.order.Address)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID_OrderDetail">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID_OrderDetail">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID_OrderDetail">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-
 <div class="row">
     <div class="col-md-12">
-        <h3 class="title-5 m-b-35">Quản lý sản phẩm</h3>
+        <h3 class="title-5 m-b-35">Quản lý chi tiết đơn hàng</h3>
         <div class="table-data__tool">
             <div class="table-data__tool-left">
                 <form>
@@ -79,19 +40,16 @@
                             @Html.DisplayNameFor(model => model.product)
                         </th>
                         <th class="col-3">
+                            @Html.DisplayNameFor(model => model.UnitPrice)
+                        </th>
+                        <th class="col-3">
                             @Html.DisplayNameFor(model => model.Quantity)
                         </th>
                         <th class="col-3">
-                            @Html.DisplayFor(modelItem => item.order.Address)
+                            @Html.DisplayNameFor(model => model.TotalPrice)
                         </th>
                         <th class="col-3">
-                            @Html.DisplayNameFor(model => model.Price_Sale)
-                        </th>
-                        <th class="col-3">
-                            @Html.DisplayNameFor(model => model.Brand)
-                        </th>
-                        <th class="col-3">
-                            @Html.DisplayNameFor(model => model.category)
+                            @Html.DisplayNameFor(model => model.order)
                         </th>
                         <th class="col-3"></th>
                     </tr>
@@ -101,32 +59,29 @@
                     {
                         <tr class="tr-shadow row">
                             <td class="col-3">
-                                @Html.DisplayFor(modelItem => item.Product_Name)
+                                @Html.DisplayFor(modelItem => item.product)
                             </td>
                             <td class="col-3">
-                                <img class="figure-img" src="~/Images/Product_Avatar/@Html.DisplayFor(modelItem => item.Image)">
+                                @Html.DisplayFor(modelItem => item.UnitPrice)
                             </td>
                             <td class="col-3">
-                                @Html.DisplayFor(modelItem => item.Price_Product)
+                                @Html.DisplayFor(modelItem => item.Quantity)
                             </td>
                             <td class="col-3">
-                                @Html.DisplayFor(modelItem => item.Price_Sale)
+                                @Html.DisplayFor(modelItem => item.TotalPrice)
                             </td>
                             <td class="col-3">
-                                @Html.DisplayFor(modelItem => item.Brand.Brand_Name)
-                            </td>
-                            <td class="col-3">
-                                @Html.DisplayFor(modelItem => item.category.Category_Name)
+                                @Html.DisplayFor(modelItem => item.order)
                             </td>
                             <td class="col-3">
                                 <div class="table-data-feature">
-                                    <a class="item" asp-action="Edit" asp-route-id="@item.ID_Product" data-toggle="tooltip" data-placement="top" title="Edit">
+                                    <a class="item" asp-action="Edit" asp-route-id="@item.ID_OrderDetail" data-toggle="tooltip" data-placement="top" title="Edit">
                                         <i class="zmdi zmdi-edit"></i>
                                     </a>
-                                    <a class="item" asp-action="Delete" asp-route-id="@item.ID_Product" data-toggle="tooltip" data-placement="top" title="Delete">
+                                    <a class="item" asp-action="Delete" asp-route-id="@item.ID_OrderDetail" data-toggle="tooltip" data-placement="top" title="Delete">
                                         <i class="zmdi zmdi-delete"></i>
                                     </a>
-                                    <a class="item" asp-action="Details" asp-route-id="@item.ID_Product" data-toggle="tooltip" data-placement="top" title="More">
+                                    <a class="item" asp-action="Details" asp-route-id="@item.ID_OrderDetail" data-toggle="tooltip" data-placement="top" title="More">
                                         <i class="zmdi zmdi-more"></i>
                                     </a>
                                 </div>

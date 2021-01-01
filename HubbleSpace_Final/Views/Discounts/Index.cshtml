@@ -6,51 +6,6 @@
 
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Code_Discount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Expire)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Value)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumberofTurns)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code_Discount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Expire)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Value)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberofTurns)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID_Discount">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID_Discount">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID_Discount">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-
 <div class="row">
     <div class="col-md-12">
         <h3 class="title-5 m-b-35">Quản lý khuyến mãi</h3>

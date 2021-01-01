@@ -57,6 +57,10 @@
     <Compile Remove="Migrations\20210101084217_Db.init.Designer.cs" />
     <Compile Remove="Migrations\20210101090858_Db.init.cs" />
     <Compile Remove="Migrations\20210101090858_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20210101101321_Db.init.cs" />
+    <Compile Remove="Migrations\20210101101321_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20210101172136_Db.init.cs" />
+    <Compile Remove="Migrations\20210101172136_Db.init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

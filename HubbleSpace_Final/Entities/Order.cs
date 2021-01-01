@@ -30,12 +30,12 @@ namespace HubbleSpace_Final.Entities
         [Required(ErrorMessage = "Không được để trống")]
         public string Receiver { get; set; }
 
-        [Display(Name = "SĐT Người nhận")]
+        [Display(Name = "SĐT")]
         [Required(ErrorMessage = "Không được để trống")]
         [DataType(DataType.PhoneNumber, ErrorMessage = "Không hợp lệ")]
         public string SDT { get; set; }
 
-        [Display(Name = "Người đặt")]
+        [Display(Name = "Email")]
         public int ID_Account { get; set; }
         [ForeignKey("ID_Account")]
         public Account account { get; set; }

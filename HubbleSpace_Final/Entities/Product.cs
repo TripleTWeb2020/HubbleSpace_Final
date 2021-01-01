@@ -32,7 +32,7 @@ namespace HubbleSpace_Final.Entities
         [Display(Name = "Giá khuyến mãi")]
         public double Price_Sale { get; set; }
 
-        [Display(Name = "Nhãn hiệu")]
+        [Display(Name = "Thương hiệu")]
         public int ID_Brand { get; set; }
         [ForeignKey("ID_Brand")]
         public Brand Brand { get; set; }
