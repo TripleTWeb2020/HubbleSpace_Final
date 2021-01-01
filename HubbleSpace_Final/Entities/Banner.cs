@@ -20,13 +20,13 @@ namespace HubbleSpace_Final.Entities
 
         [Display(Name = "Hình ảnh")]
         [Required(ErrorMessage = "Không được để trống")]
-        [DataType(DataType.Upload, ErrorMessage = "Không hợp lệ")]
-        public string Photo { get; set; }
+        [DataType(DataType.ImageUrl, ErrorMessage = "Không hợp lệ")]
+        public String Photo { get; set; }
 
         [Display(Name = "Ngày cập nhật")]
         [Required(ErrorMessage = "Không được để trống")]
         [DataType(DataType.DateTime, ErrorMessage = "Không hợp lệ")]
-        public DateTime Date_Upload { get; set; }
+        public DateTime Date_Upload => DateTime.Now ;
 
     }
 }

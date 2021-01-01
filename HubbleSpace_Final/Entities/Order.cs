@@ -20,7 +20,7 @@ namespace HubbleSpace_Final.Entities
         [Display(Name = "Ngày bán")]
         [Required(ErrorMessage = "Không được để trống")]
         [DataType(DataType.DateTime, ErrorMessage = "Không hợp lệ")]
-        public string Date { get; set; }
+        public DateTime Date_Create => DateTime.Now;
 
         [Display(Name = "Địa chỉ")]
         [Required(ErrorMessage = "Không được để trống")]

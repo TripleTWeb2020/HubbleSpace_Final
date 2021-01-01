@@ -36,7 +36,7 @@ namespace HubbleSpace_Final.Entities
         [Display(Name = "Ngày tạo")]
         [Required(ErrorMessage = "Không được để trống")]
         [DataType(DataType.DateTime, ErrorMessage = "Không hợp lệ")]
-        public DateTime Date { get; set; }
+        public DateTime Date_Create => DateTime.Now;
 
         public ICollection<Order> Orders { get; set; }
         public Account()

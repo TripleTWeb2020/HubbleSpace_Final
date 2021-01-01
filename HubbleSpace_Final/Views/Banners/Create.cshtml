@@ -1,17 +1,17 @@
 ﻿@model HubbleSpace_Final.Entities.Banner
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Banner";
     Layout = "_AdminLayout";
 
 }
 <div class="row">
     <div class="card card-body">
-        <div class="card-header">
+        <div class="card-header title--sbold">
             Tạo mới Banner
         </div>
         <div class="card-body card-block">
-            <form action="" method="post" class="form-horizontal">
+            <form asp-action="Create" method="post" class="form-horizontal">
                 <div class="row form-group">
                     <div class="col col-md-3">
                         <label asp-for="Banner_Name" class="control-label "></label>
@@ -28,15 +28,6 @@
                     <div class="col-12 col-md-9">
                         <input asp-for="Photo" class="form-control-file" type="file" />
                         <span asp-validation-for="Photo" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label asp-for="Date_Upload" class="control-label"></label>
-                    </div>
-                    <div class="col-12 col-md-9">
-                        <input asp-for="Date_Upload" class="form-control" />
-                        <span asp-validation-for="Date_Upload" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group card-footer">

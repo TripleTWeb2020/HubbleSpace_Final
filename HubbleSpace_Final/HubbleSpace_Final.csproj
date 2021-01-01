@@ -39,6 +39,18 @@
     <Compile Remove="Migrations\20201230151134_Db.init.Designer.cs" />
     <Compile Remove="Migrations\20201230163954_Db.init.cs" />
     <Compile Remove="Migrations\20201230163954_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20201230175352_Db.init.cs" />
+    <Compile Remove="Migrations\20201230175352_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20201231072423_Dbinit.cs" />
+    <Compile Remove="Migrations\20201231072423_Dbinit.Designer.cs" />
+    <Compile Remove="Migrations\20201231072720_Db.init.cs" />
+    <Compile Remove="Migrations\20201231072720_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20201231073042_Db.init.cs" />
+    <Compile Remove="Migrations\20201231073042_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20201231073545_db.init.cs" />
+    <Compile Remove="Migrations\20201231073545_db.init.Designer.cs" />
+    <Compile Remove="Migrations\20201231080112_Db.init.cs" />
+    <Compile Remove="Migrations\20201231080112_Db.init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

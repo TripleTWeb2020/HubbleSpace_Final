@@ -1,0 +1,115 @@
+body {
+    padding-top: 70px;  Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. 
+}
+
+.slide-image {
+    width: 100%;
+}
+
+.carousel-holder {
+    margin-bottom: 0px;
+}
+
+.carousel-control,
+.item {
+    border-radius: 4px;
+}
+
+.caption {
+    height: 130px;
+    overflow: hidden;
+}
+
+.caption h4 {
+    white-space: nowrap;
+}
+
+.thumbnail img {
+    width: 100%;
+}
+
+.ratings {
+    padding-right: 10px;
+    padding-left: 10px;
+    color: #d17581;
+}
+
+.thumbnail {
+    padding: 0;
+}
+
+.thumbnail .caption-full {
+    padding: 9px;
+    color: #333;
+}
+
+footer {
+    margin: 0px 0;
+}
+/**/
+.menu1 ul{
+	position: absolute;
+	z-index: 999;
+}
+
+.break{
+	clear: both;
+	height: 10px;
+	width: 100%;
+	margin:auto;
+	border-bottom: 1px solid #EEEEEE;
+}
+
+.break90{
+	clear: both;
+	height: 10px;
+	width: 90%;
+	margin:auto;
+	border-bottom: 1px solid #EEEEEE;
+}
+
+.space20{
+	height: 20px;
+	width: 100%;
+}
+
+
+.row-item{
+	padding-left:15px;
+}
+
+.border-left{
+	border-left: 1px solid #EEEEEE;
+}
+
+.border-right{
+	border-right: 1px solid #EEEEEE;
+}
+
+a{
+	color:black;
+}
+
+a:hover{
+	text-decoration: none;
+}
+
+.myheader{
+	background-color: #337AB7;
+	color:white;
+}
+
+.clear{
+	clear:both;
+}
+.row{
+	margin-right: 0px!important;
+	margin-left: 0px!important
+}
+.navbar-inverse .navbar-nav>li>a {
+    color: #edeff2;
+}
+.navbar-inverse .navbar-brand {
+    color: #edeff2;
+    text-transform: uppercase;
+}

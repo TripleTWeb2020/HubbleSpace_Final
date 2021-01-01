@@ -16,9 +16,6 @@
                 @Html.DisplayNameFor(model => model.TotalMoney)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Address)
             </th>
             <th>
@@ -43,9 +40,6 @@
                 @Html.DisplayFor(modelItem => item.TotalMoney)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
@@ -55,7 +49,7 @@
                 @Html.DisplayFor(modelItem => item.SDT)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.account.Date)
+                @Html.DisplayFor(modelItem => item.account.Email)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Process)

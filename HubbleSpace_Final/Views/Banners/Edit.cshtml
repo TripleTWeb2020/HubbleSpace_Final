@@ -1,41 +1,45 @@
 ﻿@model HubbleSpace_Final.Entities.Banner
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Banner";
+    Layout = "_AdminLayout";
+
 }
-
-<h1>Edit</h1>
-
-<h4>Banner</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID_Banner" />
-            <div class="form-group">
-                <label asp-for="Banner_Name" class="control-label"></label>
-                <input asp-for="Banner_Name" class="form-control" />
-                <span asp-validation-for="Banner_Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Photo" class="control-label"></label>
-                <input asp-for="Photo" class="form-control" />
-                <span asp-validation-for="Photo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Date_Upload" class="control-label"></label>
-                <input asp-for="Date_Upload" class="form-control" />
-                <span asp-validation-for="Date_Upload" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="card card-body">
+        <div class="card-header title--sbold">
+            Cập nhật Banner
+        </div>
+        <div class="card-body card-block">
+            <form asp-action="Edit" class="form-horizontal">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID_Banner" />
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Banner_Name" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Banner_Name" class="form-control" />
+                        <span asp-validation-for="Banner_Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Photo" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Photo" class="form-control" type="url"/>
+                        <span asp-validation-for="Photo" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group card-footer">
+                    <input type="submit" value="Save" class="btn btn-primary col-2" />
+                    <input type="reset" value="Reset" class="btn btn-danger col-2" />
+                    <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 

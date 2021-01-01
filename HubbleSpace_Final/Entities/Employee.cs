@@ -25,7 +25,7 @@ namespace HubbleSpace_Final.Entities
         
         [Display(Name = "Ngày sinh")]
         [Required(ErrorMessage = "Không được để trống")]
-        [DataType(DataType.DateTime, ErrorMessage = "Không hợp lệ")]
+        [DataType(DataType.Date, ErrorMessage = "Không hợp lệ")]
         public DateTime DOB { get; set; }
 
         [Display(Name = "Giới tính")]
