@@ -1,59 +1,95 @@
 ﻿@model HubbleSpace_Final.Entities.Order
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Order";
+    Layout = "_AdminLayout";
+
 }
 
-<h2>Create</h2>
-
-<h4>Order</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TotalMoney" class="control-label"></label>
-                <input asp-for="TotalMoney" class="form-control" />
-                <span asp-validation-for="TotalMoney" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Date_Create" class="control-label"></label>
-                <input asp-for="Date_Create" class="form-control" />
-                <span asp-validation-for="Date_Create" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Receiver" class="control-label"></label>
-                <input asp-for="Receiver" class="form-control" />
-                <span asp-validation-for="Receiver" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SDT" class="control-label"></label>
-                <input asp-for="SDT" class="form-control" />
-                <span asp-validation-for="SDT" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ID_Account" class="control-label"></label>
-                <select asp-for="ID_Account" class ="form-control" asp-items="ViewBag.ID_Account"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Process" class="control-label"></label>
-                <input asp-for="Process" class="form-control" />
-                <span asp-validation-for="Process" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+    <div class="card card-body">
+        <div class="card-header title--sbold">
+            Thêm đơn hàng
+        </div>
+        <div class="card-body card-block">
+            <form asp-action="Create" method="post" class="form-horizontal">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="TotalMoney" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="TotalMoney" class="form-control" />
+                        <span asp-validation-for="TotalMoney" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Date_Create" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Date_Create" class="form-control" />
+                        <span asp-validation-for="Date_Create" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Address" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Receiver" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Receiver" class="form-control" type="radio" />
+                        <span asp-validation-for="Receiver" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="SDT" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="SDT" class="form-control" />
+                        <span asp-validation-for="SDT" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="ID_Account" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <select asp-for="ID_Account" class="form-control" asp-items="ViewBag.ID_Account"></select>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Process" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Process" class="form-control" />
+                        <span asp-validation-for="Process" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group card-footer">
+                    <input type="submit" value="Create" class="btn btn-primary col-2" />
+                    <input type="reset" value="Reset" class="btn btn-danger col-2" />
+                    <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

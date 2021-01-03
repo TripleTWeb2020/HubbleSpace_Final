@@ -13,13 +13,19 @@ namespace HubbleSpace_Final.Entities
         [Key]
         public int ID_OrderDetail { get; set; }
 
-        [Display(Name = "Tên sản phẩm")]
-        public int ID_Product { get; set; }
-        [ForeignKey("ID_Product")]
-        public Product product { get; set; }
+        [Display(Name = "Màu sắc")]
+        public int ID_Color_Product { get; set; }
+        [ForeignKey("ID_Color_Product")]
+        public Color_Product Color_Product { get; set; }
+
+        [Display(Name = "Sản phẩm")]
+        public String Product => Color_Product.product.Product_Name;
+
+        [Display(Name = "Size")]
+        public String Size { get; set; }
 
         [Display(Name = "Đơn giá")]
-        public double UnitPrice => product.Price_Product ;
+        public double UnitPrice => Math.Min( Color_Product.product.Price_Product, Color_Product.product.Price_Sale);
 
         [Display(Name = "Số lượng")]
         [Required(ErrorMessage = "Không được để trống")]

@@ -36,44 +36,56 @@
             <table class="table table-data2">
                 <thead>
                     <tr class="row">
-                        <th class="col-3">
-                            @Html.DisplayNameFor(model => model.product)
+                        <th class="col-2">
+                            @Html.DisplayNameFor(model => model.Color_Product.product.Product_Name)
                         </th>
-                        <th class="col-3">
+                        <th class="col-2">
+                            @Html.DisplayNameFor(model => model.Color_Product)
+                        </th>
+                        <th class="col-2">
+                            @Html.DisplayNameFor(model => model.Size)
+                        </th>
+                        <th class="col-2">
                             @Html.DisplayNameFor(model => model.UnitPrice)
                         </th>
-                        <th class="col-3">
+                        <th class="col-2">
                             @Html.DisplayNameFor(model => model.Quantity)
                         </th>
-                        <th class="col-3">
+                        <th class="col-2">
                             @Html.DisplayNameFor(model => model.TotalPrice)
                         </th>
-                        <th class="col-3">
+                        <th class="col-2">
                             @Html.DisplayNameFor(model => model.order)
                         </th>
-                        <th class="col-3"></th>
+                        <th class="col-2"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
                         <tr class="tr-shadow row">
-                            <td class="col-3">
-                                @Html.DisplayFor(modelItem => item.product)
+                            <td class="col-2">
+                                @Html.DisplayFor(modelItem => item.Color_Product.product.Product_Name)
                             </td>
-                            <td class="col-3">
+                            <td class="col-2">
+                                @Html.DisplayFor(modelItem => item.Color_Product.Color_Name)
+                            </td>
+                            <td class="col-2">
+                                @Html.DisplayFor(modelItem => item.Size)
+                            </td>
+                            <td class="col-2">
                                 @Html.DisplayFor(modelItem => item.UnitPrice)
                             </td>
-                            <td class="col-3">
+                            <td class="col-2">
                                 @Html.DisplayFor(modelItem => item.Quantity)
                             </td>
-                            <td class="col-3">
+                            <td class="col-2">
                                 @Html.DisplayFor(modelItem => item.TotalPrice)
                             </td>
-                            <td class="col-3">
+                            <td class="col-2">
                                 @Html.DisplayFor(modelItem => item.order)
                             </td>
-                            <td class="col-3">
+                            <td class="col-2">
                                 <div class="table-data-feature">
                                     <a class="item" asp-action="Edit" asp-route-id="@item.ID_OrderDetail" data-toggle="tooltip" data-placement="top" title="Edit">
                                         <i class="zmdi zmdi-edit"></i>

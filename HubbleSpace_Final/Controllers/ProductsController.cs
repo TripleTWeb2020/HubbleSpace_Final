@@ -49,7 +49,13 @@ namespace HubbleSpace_Final.Controllers
         public IActionResult Create()
         {
             ViewData["ID_Brand"] = new SelectList(_context.Brand, "ID_Brand", "Brand_Name");
-            ViewData["ID_Categorie"] = new SelectList(_context.Category, "ID_Categorie", "Category_Name");
+            var Category_Name = from c in _context.Category
+                                     select new
+                                     {
+                                         ID_Categorie = c.ID_Categorie,
+                                         Category_Name = c.Category_Name + c.Object
+                                     };
+            ViewData["ID_Categorie"] = new SelectList(Category_Name, "ID_Categorie", "Category_Name");
             return View();
         }
 
@@ -67,7 +73,13 @@ namespace HubbleSpace_Final.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ID_Brand"] = new SelectList(_context.Brand, "ID_Brand", "Brand_Name", product.ID_Brand);
-            ViewData["ID_Categorie"] = new SelectList(_context.Category, "ID_Categorie", "Category_Name", product.ID_Categorie);
+            var Category_Name = from c in _context.Category
+                                select new
+                                {
+                                    ID_Categorie = c.ID_Categorie,
+                                    Category_Name = c.Category_Name + c.Object
+                                };
+            ViewData["ID_Categorie"] = new SelectList(Category_Name, "ID_Categorie", "Category_Name", product.ID_Categorie);
             return View(product);
         }
 
@@ -85,7 +97,13 @@ namespace HubbleSpace_Final.Controllers
                 return NotFound();
             }
             ViewData["ID_Brand"] = new SelectList(_context.Brand, "ID_Brand", "Brand_Name", product.ID_Brand);
-            ViewData["ID_Categorie"] = new SelectList(_context.Category, "ID_Categorie", "Category_Name", product.ID_Categorie);
+            var Category_Name = from c in _context.Category
+                                select new
+                                {
+                                    ID_Categorie = c.ID_Categorie,
+                                    Category_Name = c.Category_Name + c.Object
+                                };
+            ViewData["ID_Categorie"] = new SelectList(Category_Name, "ID_Categorie", "Category_Name", product.ID_Categorie);
             return View(product);
         }
 
@@ -122,7 +140,13 @@ namespace HubbleSpace_Final.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ID_Brand"] = new SelectList(_context.Brand, "ID_Brand", "Brand_Name", product.ID_Brand);
-            ViewData["ID_Categorie"] = new SelectList(_context.Category, "ID_Categorie", "Category_Name", product.ID_Categorie);
+            var Category_Name = from c in _context.Category
+                                select new
+                                {
+                                    ID_Categorie = c.ID_Categorie,
+                                    Category_Name = c.Category_Name + c.Object
+                                };
+            ViewData["ID_Categorie"] = new SelectList(Category_Name, "ID_Categorie", "Category_Name", product.ID_Categorie);
             return View(product);
         }
 

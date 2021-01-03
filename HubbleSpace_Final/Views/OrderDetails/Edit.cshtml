@@ -1,41 +1,67 @@
 ﻿@model HubbleSpace_Final.Entities.OrderDetail
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit OrderDetail";
+    Layout = "_AdminLayout";
+
 }
 
-<h2>Edit</h2>
-
-<h4>OrderDetail</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID_OrderDetail" />
-            <div class="form-group">
-                <label asp-for="ID_Product" class="control-label"></label>
-                <select asp-for="ID_Product" class="form-control" asp-items="ViewBag.ID_Product"></select>
-                <span asp-validation-for="ID_Product" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ID_Order" class="control-label"></label>
-                <select asp-for="ID_Order" class="form-control" asp-items="ViewBag.ID_Order"></select>
-                <span asp-validation-for="ID_Order" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+    <div class="card card-body">
+        <div class="card-header title--sbold">
+            Cập nhật thông tin chi tiết đơn hàng
+        </div>
+        <div class="card-body card-block">
+            <form asp-action="Edit" class="form-horizontal">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID_OrderDetail" />
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="ID_Color_Product" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <select asp-for="ID_Color_Product" class="form-control" asp-items="ViewBag.ID_Color_Product"></select>
+                        <span asp-validation-for="ID_Color_Product" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Size" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Size" class="form-control" />
+                        <span asp-validation-for="Size" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Quantity" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Quantity" class="form-control" />
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="ID_Order" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <select asp-for="ID_Order" class="form-control" asp-items="ViewBag.ID_Order"></select>
+                        <span asp-validation-for="ID_Order" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group card-footer">
+                    <input type="submit" value="Save" class="btn btn-primary col-2" />
+                    <input type="reset" value="Reset" class="btn btn-danger col-2" />
+                    <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

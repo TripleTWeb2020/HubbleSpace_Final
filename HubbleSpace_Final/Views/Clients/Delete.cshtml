@@ -1,57 +1,80 @@
 ﻿@model HubbleSpace_Final.Entities.Client
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete - Client";
+    Layout = "_AdminLayout";
+
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Client</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Client_Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Client_Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DOB)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DOB)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreditCard)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CreditCard)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Account)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Account.Email)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="ID_Client" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+
+<div class="row">
+    <div class="card card-body">
+        <div class="card-header title--sbold">
+            Xóa Banner <br>
+            Bạn chắc chắn muốn xóa khách hàng này?
+        </div>
+        <div class="card-body card-block">
+            <form asp-action="Edit" class="form-horizontal">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID_Client" />
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Client_Name" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Client_Name" class="form-control disabled" />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Phone" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Phone" class="form-control disabled" />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="DOB" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="DOB" class="form-control disabled" />
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Gender" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Gender" class="form-control disabled" type="radio" />
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="CreditCard" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="CreditCard" class="form-control disabled" />
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Account" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        @Html.DisplayFor(model => model.Account.Email)
+                    </div>
+                </div>
+
+                <div class="form-group card-footer">
+                    <a asp-action="Delete" class="btn btn-danger col-2" asp-route-id="@Model.ID_Account">Delete</a>
+                    <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

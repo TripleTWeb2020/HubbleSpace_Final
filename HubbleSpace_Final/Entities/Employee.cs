@@ -32,13 +32,6 @@ namespace HubbleSpace_Final.Entities
         [Required(ErrorMessage = "Không được để trống")]
         public Gender Gender { get; set; }
 
-        [Display(Name = "CMND")]
-        [Required(ErrorMessage = "Không được để trống")]
-        [MinLength(9)]
-        [MaxLength(11)]
-        [RegularExpression("0[1-9]", ErrorMessage = "Không hợp lệ")]
-        public string Citizen_ID { get; set; }
-
         [Display(Name = "Lương")]
         [Required(ErrorMessage = "Không được để trống")]
         [Range(0, 10000000, ErrorMessage = "Không hợp lệ")]
@@ -48,6 +41,5 @@ namespace HubbleSpace_Final.Entities
         public int ID_Account { get; set; }
         [ForeignKey("ID_Account")]
         public Account Account { get; set; }
-
     }
 }

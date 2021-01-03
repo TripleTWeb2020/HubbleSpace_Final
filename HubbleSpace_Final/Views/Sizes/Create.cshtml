@@ -1,39 +1,54 @@
 ﻿@model HubbleSpace_Final.Entities.Size
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Size";
+    Layout = "_AdminLayout";
+
 }
 
-<h2>Create</h2>
-
-<h4>Size</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="size" class="control-label"></label>
-                <input asp-for="size" class="form-control" />
-                <span asp-validation-for="size" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ID_Color_Product" class="control-label"></label>
-                <select asp-for="ID_Color_Product" class ="form-control" asp-items="ViewBag.ID_Color_Product"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+    <div class="card card-body">
+        <div class="card-header title--sbold">
+            Thêm size cho sản phẩm
+        </div>
+        <div class="card-body card-block">
+            <form asp-action="Create" method="post" class="form-horizontal">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="size" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="size" class="form-control" />
+                        <span asp-validation-for="size" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Quantity" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Quantity" class="form-control" />
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="ID_Color_Product" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <select asp-for="ID_Color_Product" class="form-control" asp-items="ViewBag.ID_Color_Product"></select>
+                    </div>
+                </div>
+                <div class="form-group card-footer">
+                    <input type="submit" value="Create" class="btn btn-primary col-2" />
+                    <input type="reset" value="Reset" class="btn btn-danger col-2" />
+                    <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

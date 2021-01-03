@@ -1,54 +1,89 @@
 ﻿@model HubbleSpace_Final.Entities.Client
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Client";
+    Layout = "_AdminLayout";
+
 }
 
-<h2>Create</h2>
-
-<h4>Client</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Client_Name" class="control-label"></label>
-                <input asp-for="Client_Name" class="form-control" />
-                <span asp-validation-for="Client_Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DOB" class="control-label"></label>
-                <input asp-for="DOB" class="form-control" />
-                <span asp-validation-for="DOB" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                <select asp-for="Gender" class="form-control"></select>
-                <span asp-validation-for="Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreditCard" class="control-label"></label>
-                <input asp-for="CreditCard" class="form-control" />
-                <span asp-validation-for="CreditCard" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ID_Account" class="control-label"></label>
-                <select asp-for="ID_Account" class ="form-control" asp-items="ViewBag.ID_Account"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+    <div class="card card-body">
+        <div class="card-header title--sbold">
+            Tạo mới khách hàng
+        </div>
+        <div class="card-body card-block">
+            <form asp-action="Create" method="post" class="form-horizontal">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Client_Name" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Client_Name" class="form-control" />
+                        <span asp-validation-for="Client_Name" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Phone" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="DOB" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="DOB" class="form-control" type="date" />
+                        <span asp-validation-for="DOB" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Gender" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        @foreach (var value in Enum.GetValues(typeof(HubbleSpace_Final.Entities.Gender)))
+                        {
+                            @Html.RadioButtonFor(m => m, value)
+                            @Html.Label(value.ToString())
+                        }
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="CreditCard" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="CreditCard" class="form-control" />
+                        <span asp-validation-for="CreditCard" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="ID_Account" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <select asp-for="ID_Account" class="form-control" asp-items="ViewBag.ID_Account"></select>
+                    </div>
+                </div>
+
+                <div class="form-group card-footer">
+                    <input type="submit" value="Create" class="btn btn-primary col-2" />
+                    <input type="reset" value="Reset" class="btn btn-danger col-2" />
+                    <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

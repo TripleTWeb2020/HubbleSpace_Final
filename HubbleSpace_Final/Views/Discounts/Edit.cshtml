@@ -1,46 +1,67 @@
 ﻿@model HubbleSpace_Final.Entities.Discount
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Discount";
+    Layout = "_AdminLayout";
+
 }
 
-<h2>Edit</h2>
-
-<h4>Discount</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID_Discount" />
-            <div class="form-group">
-                <label asp-for="Code_Discount" class="control-label"></label>
-                <input asp-for="Code_Discount" class="form-control" />
-                <span asp-validation-for="Code_Discount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Expire" class="control-label"></label>
-                <input asp-for="Expire" class="form-control" />
-                <span asp-validation-for="Expire" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Value" class="control-label"></label>
-                <input asp-for="Value" class="form-control" />
-                <span asp-validation-for="Value" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NumberofTurns" class="control-label"></label>
-                <input asp-for="NumberofTurns" class="form-control" />
-                <span asp-validation-for="NumberofTurns" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+    <div class="card card-body">
+        <div class="card-header title--sbold">
+            Cập nhật thông tin khuyến mãi
+        </div>
+        <div class="card-body card-block">
+            <form asp-action="Edit" class="form-horizontal">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID_Discount" />
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Code_Discount" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Code_Discount" class="form-control" />
+                        <span asp-validation-for="Code_Discount" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Expire" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Expire" class="form-control" />
+                        <span asp-validation-for="Expire" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Value" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Value" class="form-control" />
+                        <span asp-validation-for="Value" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="NumberofTurns" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="NumberofTurns" class="form-control" />
+                        <span asp-validation-for="NumberofTurns" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group card-footer">
+                    <input type="submit" value="Save" class="btn btn-primary col-2" />
+                    <input type="reset" value="Reset" class="btn btn-danger col-2" />
+                    <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

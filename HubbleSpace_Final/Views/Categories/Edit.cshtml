@@ -1,36 +1,48 @@
 ﻿@model HubbleSpace_Final.Entities.Category
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Category";
+    Layout = "_AdminLayout";
+
 }
 
-<h2>Edit</h2>
-
-<h4>Category</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID_Categorie" />
-            <div class="form-group">
-                <label asp-for="Category_Name" class="control-label"></label>
-                <input asp-for="Category_Name" class="form-control" />
-                <span asp-validation-for="Category_Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Object" class="control-label"></label>
-                <input asp-for="Object" class="form-control" />
-                <span asp-validation-for="Object" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+    <div class="card card-body">
+        <div class="card-header title--sbold">
+            Cập nhật thông tin danh mục
+        </div>
+        <div class="card-body card-block">
+            <form asp-action="Edit" class="form-horizontal">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID_Categorie" />
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Category_Name" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Category_Name" class="form-control" />
+                        <span asp-validation-for="Category_Name" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Object" class="control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Object" class="form-control" />
+                        <span asp-validation-for="Object" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <div class="form-group card-footer">
+                    <input type="submit" value="Save" class="btn btn-primary col-2" />
+                    <input type="reset" value="Reset" class="btn btn-danger col-2" />
+                    <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

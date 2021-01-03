@@ -56,7 +56,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_Employee,Employee_Name,Phone,DOB,Gender,Citizen_ID,Salary,ID_Account")] Employee employee)
+        public async Task<IActionResult> Create([Bind("ID_Employee,Employee_Name,Phone,DOB,Gender,Salary,ID_Account")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID_Employee,Employee_Name,Phone,DOB,Gender,Citizen_ID,Salary,ID_Account")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind("ID_Employee,Employee_Name,Phone,DOB,Gender,Salary,ID_Account")] Employee employee)
         {
             if (id != employee.ID_Employee)
             {

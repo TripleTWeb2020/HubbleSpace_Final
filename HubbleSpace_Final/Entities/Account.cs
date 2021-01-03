@@ -24,6 +24,10 @@ namespace HubbleSpace_Final.Entities
         [DataType(DataType.Password, ErrorMessage = "Không hợp lệ")]
         public string Password { get; set; }
 
+        [Display(Name = "Avatar")]
+        [DataType(DataType.ImageUrl, ErrorMessage = "Không hợp lệ")]
+        public string Avatar { get; set; }
+
         [Display(Name = "Email")]
         [Required(ErrorMessage = "Không được để trống")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Không hợp lệ")]

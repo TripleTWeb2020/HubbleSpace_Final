@@ -29,9 +29,14 @@ namespace HubbleSpace_Final.Entities
         public String Image { get; set; }
 
         public ICollection<Img_Product> Img_Products { get; set; }
+        public ICollection<Size> Sizes { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
+
         public Color_Product()
         {
             Img_Products = new HashSet<Img_Product>();
+            Sizes = new HashSet<Size>();
+            OrderDetails = new HashSet<OrderDetail>();
         }
 
     }
