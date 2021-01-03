@@ -1,24 +1,31 @@
 ﻿@model HubbleSpace_Final.Entities.Brand
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details Brand";
+    Layout = "_AdminLayout";
+
 }
 
-<h2>Details</h2>
+<div class="row">
+    <div class="card card-body">
+        <div class="card-header title--sbold">
+            Thông tin thương hiệu
+        </div>
+        <div class="card-body card-block">
+            <input type="hidden" asp-for="ID_Brand" />
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Brand_Name)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Brand_Name)
+                </div>
+            </div>
 
-<div>
-    <h4>Brand</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Brand_Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Brand_Name)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ID_Brand">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+            <div class="form-group card-footer">
+                <a asp-action="Delete" class="btn btn-danger col-2" asp-route-id="@Model.ID_Brand">Delete</a>
+                <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+            </div>
+        </div>
+    </div>
 </div>

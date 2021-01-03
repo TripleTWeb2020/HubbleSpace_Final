@@ -47,7 +47,7 @@ namespace HubbleSpace_Final.Controllers
         // GET: Color_Product/Create
         public IActionResult Create()
         {
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Image");
+            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace HubbleSpace_Final.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Image", color_Product.ID_Product);
+            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name", color_Product.ID_Product);
             return View(color_Product);
         }
 
@@ -81,7 +81,7 @@ namespace HubbleSpace_Final.Controllers
             {
                 return NotFound();
             }
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Image", color_Product.ID_Product);
+            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name", color_Product.ID_Product);
             return View(color_Product);
         }
 
@@ -117,7 +117,7 @@ namespace HubbleSpace_Final.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Image", color_Product.ID_Product);
+            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name", color_Product.ID_Product);
             return View(color_Product);
         }
 

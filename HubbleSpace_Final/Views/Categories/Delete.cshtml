@@ -9,36 +9,33 @@
 <div class="row">
     <div class="card card-body">
         <div class="card-header title--sbold">
-            Xóa Banner <br>
+            Xóa danh mục <br>
             Bạn chắc chắn muốn xóa danh mục này?
         </div>
         <div class="card-body card-block">
-            <form asp-action="Edit" class="form-horizontal">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="ID_Categorie" />
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label asp-for="Category_Name" class="control-label "></label>
-                    </div>
-                    <div class="col-12 col-md-9">
-                        <input asp-for="Category_Name" class="form-control disabled" />
-                    </div>
+            <input type="hidden" asp-for="ID_Categorie" />
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Category_Name)
                 </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Category_Name)
+                </div>
+            </div>
 
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label asp-for="Object" class="control-label "></label>
-                    </div>
-                    <div class="col-12 col-md-9">
-                        <input asp-for="Object" class="form-control disabled" />
-                    </div>
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Object)
                 </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Object)
+                </div>
+            </div>
 
-                <div class="form-group card-footer">
-                    <a asp-action="Delete" class="btn btn-danger col-2" asp-route-id="@Model.ID_Categorie">Delete</a>
-                    <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+            <div class="form-group card-footer">
+                <a asp-action="Delete" class="btn btn-danger col-2" asp-route-id="@Model.ID_Categorie">Delete</a>
+                <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
                 </div>
-            </form>
         </div>
     </div>
 </div>

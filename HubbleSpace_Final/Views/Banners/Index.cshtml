@@ -34,33 +34,33 @@
         <div class="table-responsive table-responsive-data2">
             <table class="table table-data2">
                 <thead>
-                    <tr>
-                        <th>
+                    <tr class="row">
+                        <th class="col-3">
                             @Html.DisplayNameFor(model => model.Banner_Name)
                         </th>
-                        <th>
+                        <th class="col-3">
                             @Html.DisplayNameFor(model => model.Photo)
                         </th>
-                        <th>
+                        <th class="col-3">
                             @Html.DisplayNameFor(model => model.Date_Upload)
                         </th>
-                        <th></th>
+                        <th class="col-3"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
                         <tr class="tr-shadow row">
-                            <td>
+                            <td class="col-3">
                                 @Html.DisplayFor(modelItem => item.Banner_Name)
                             </td>
-                            <td>
+                            <td class="col-3">
                                 <img class="figure-img" src="~/Images/Banner/@Html.DisplayFor(modelItem => item.Photo)">
                             </td>
-                            <td>
+                            <td class="col-3">
                                 @Html.DisplayFor(modelItem => item.Date_Upload)
                             </td>
-                            <td>
+                            <td class="col-3">
                                 <div class="table-data-feature">
                                     <a class="item" asp-action="Edit" asp-route-id="@item.ID_Banner" data-toggle="tooltip" data-placement="top" title="Edit">
                                         <i class="zmdi zmdi-edit"></i>

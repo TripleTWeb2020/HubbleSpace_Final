@@ -1,48 +1,85 @@
 ﻿@model HubbleSpace_Final.Entities.Account
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details - Account";
+    Layout = "_AdminLayout";
+
 }
 
-<h2>Details</h2>
+<div class="row">
+    <div class="card card-body">
+        <div class="card-header title--sbold">
+            Thông tin người dùng
+        </div>
+        <div class="card-body card-block">
+            <input type="hidden" asp-for="ID_Account" />
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.UserName)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.UserName)
+                </div>
+            </div>
 
-<div>
-    <h4>Account</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Level)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Level)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Date_Create)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Date_Create)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ID_Account">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Password)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Password)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Avatar)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Avatar)
+                </div>
+
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                </div>
+                <div class="col-12 col-md-3">
+                    <img src="~/Images/Admin_Avatar/@Html.DisplayFor(model => model.Avatar)" />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Email)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Email)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Level)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Level)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Date_Create)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Date_Create)
+                </div>
+            </div>
+
+            <div class="form-group card-footer">
+                <a asp-action="Edit" class="btn btn-danger col-2" asp-route-id="@Model.ID_Account">Edit</a>
+                <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+            </div>
+        </div>
+    </div>
 </div>

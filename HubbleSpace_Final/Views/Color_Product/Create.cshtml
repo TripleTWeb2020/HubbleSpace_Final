@@ -9,7 +9,7 @@
 <div class="row">
     <div class="card card-body">
         <div class="card-header title--sbold">
-            Tạo mới Color_Product
+            Thêm màu sản phẩm
         </div>
         <div class="card-body card-block">
             <form asp-action="Create" method="post" class="form-horizontal">
@@ -30,7 +30,7 @@
                         <label asp-for="ID_Product" class="control-label "></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <select asp-for="ID_Product" class="form-control" asp-items="ViewBag.product.Name_Product"></select>
+                        <select asp-for="ID_Product" class="form-control" asp-items="ViewBag.ID_Product"></select>
                     </div>
                 </div>
 

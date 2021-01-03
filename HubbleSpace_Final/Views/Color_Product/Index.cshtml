@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h3 class="title-5 m-b-35">Quản lý Color_Product</h3>
+        <h3 class="title-5 m-b-35">Quản lý màu sản phẩm</h3>
         <div class="table-data__tool">
             <div class="table-data__tool-left">
                 <form>
@@ -35,33 +35,33 @@
         <div class="table-responsive table-responsive-data2">
             <table class="table table-data2">
                 <thead>
-                    <tr>
-                        <th>
+                    <tr class="row">
+                        <th class="col-3">
                             @Html.DisplayNameFor(model => model.Color_Name)
                         </th>
-                        <th>
+                        <th class="col-3">
                             @Html.DisplayNameFor(model => model.product)
                         </th>
-                        <th>
+                        <th class="col-3">
                             @Html.DisplayNameFor(model => model.Image)
                         </th>
-                        <th></th>
+                        <th class="col-3"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr class="tr-shadow ">
-                            <td>
+                        <tr class="tr-shadow row">
+                            <td class="col-3">
                                 @Html.DisplayFor(modelItem => item.Color_Name)
                             </td>
-                            <td>
+                            <td class="col-3">
                                 @Html.DisplayFor(modelItem => item.product.Product_Name)
                             </td>
-                            <td>
+                            <td class="col-3">
                                 <img class="figure-img" src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)">
                             </td>
-                            <td>
+                            <td class="col-3">
                                 <div class="table-data-feature">
                                     <a class="item" asp-action="Edit" asp-route-id="@item.ID_Color_Product" data-toggle="tooltip" data-placement="top" title="Edit">
                                         <i class="zmdi zmdi-edit"></i>
