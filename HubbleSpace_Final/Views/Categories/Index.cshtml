@@ -37,27 +37,27 @@
         <div class="table-responsive table-responsive-data2">
             <table class="table table-data2">
                 <thead>
-                    <tr class="row">
-                        <th class="col-3">
+                    <tr>
+                        <th>
                             @Html.DisplayNameFor(model => model.Category_Name)
                         </th>
-                        <th class="col-3">
+                        <th>
                             @Html.DisplayNameFor(model => model.Object)
                         </th>
-                        <th class="col-3"></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr class="tr-shadow row">
-                        <td class="col-3">
+                    <tr class="tr-shadow">
+                        <td>
                             @Html.DisplayFor(modelItem => item.Category_Name)
                         </td>
-                        <td class="col-3">
+                        <td>
                             @Html.DisplayFor(modelItem => item.Object)
                         </td>
-                        <td class="col-3">
+                        <td>
                             <div class="table-data-feature">
                                 <a class="item" asp-action="Edit" asp-route-id="@item.ID_Categorie" data-toggle="tooltip" data-placement="top" title="Edit">
                                     <i class="zmdi zmdi-edit"></i>

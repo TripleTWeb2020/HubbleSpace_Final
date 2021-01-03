@@ -35,51 +35,51 @@
         <div class="table-responsive table-responsive-data2">
             <table class="table table-data2">
                 <thead>
-                    <tr class="row">
-                        <th class="col-2">
+                    <tr>
+                        <th>
                             @Html.DisplayNameFor(model => model.Client_Name)
                         </th>
-                        <th class="col-2">
+                        <th>
                             @Html.DisplayNameFor(model => model.Phone)
                         </th>
-                        <th class="col-2">
+                        <th>
                             @Html.DisplayNameFor(model => model.DOB)
                         </th>
-                        <th class="col-2">
+                        <th>
                             @Html.DisplayNameFor(model => model.Gender)
                         </th>
-                        <th class="col-2">
+                        <th>
                             @Html.DisplayNameFor(model => model.CreditCard)
                         </th>
-                        <th class="col-2">
+                        <th>
                             @Html.DisplayNameFor(model => model.Account)
                         </th>
-                        <th class="col-2"></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr class="tr-shadow row">
-                            <td class="col-2">
+                        <tr class="tr-shadow ">
+                            <td>
                                 @Html.DisplayFor(modelItem => item.Client_Name)
                             </td>
-                            <td class="col-2">
+                            <td>
                                 @Html.DisplayFor(modelItem => item.Phone)
                             </td>
-                            <td class="col-2">
+                            <td>
                                 @Html.DisplayFor(modelItem => item.DOB)
                             </td>
-                            <td class="col-2">
+                            <td>
                                 @Html.DisplayFor(modelItem => item.Gender)
                             </td>
-                            <td class="col-2">
+                            <td>
                                 @Html.DisplayFor(modelItem => item.CreditCard)
                             </td>
-                            <td class="col-2">
+                            <td>
                                 @Html.DisplayFor(modelItem => item.Account.Email)
                             </td>
-                            <td class="col-2">
+                            <td>
                                 <div class="table-data-feature">
                                     <a class="item" asp-action="Edit" asp-route-id="@item.ID_Account" data-toggle="tooltip" data-placement="top" title="Edit">
                                         <i class="zmdi zmdi-edit"></i>

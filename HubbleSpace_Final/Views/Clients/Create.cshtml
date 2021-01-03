@@ -50,11 +50,10 @@
                         <label asp-for="Gender" class="control-label"></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        @foreach (var value in Enum.GetValues(typeof(HubbleSpace_Final.Entities.Gender)))
-                        {
-                            @Html.RadioButtonFor(m => m, value)
-                            @Html.Label(value.ToString())
-                        }
+                        <select asp-for="Gender" class="form-control">
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                        </select>
                         <span asp-validation-for="Gender" class="text-danger"></span>
                     </div>
                 </div>
