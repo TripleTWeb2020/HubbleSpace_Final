@@ -10,23 +10,23 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HubbleSpace_Final.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20210104153502_Db.init")]
+    [Migration("20210104155437_Db.init")]
     partial class Dbinit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
+                .HasAnnotation("ProductVersion", "3.1.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.Account", b =>
                 {
                     b.Property<int>("ID_Account")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Avatar")
                         .HasColumnType("nvarchar(max)");
@@ -47,8 +47,8 @@ namespace HubbleSpace_Final.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("ID_Account");
 
@@ -60,12 +60,12 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<int>("ID_Banner")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Banner_Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<DateTime>("Date_Upload")
                         .HasColumnType("datetime2");
@@ -84,12 +84,12 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<int>("ID_Brand")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Brand_Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("ID_Brand");
 
@@ -101,17 +101,17 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<int>("ID_Categorie")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Category_Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Object")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("ID_Categorie");
 
@@ -123,12 +123,12 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<int>("ID_Client")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Client_Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("CreditCard")
                         .HasColumnType("nvarchar(max)");
@@ -158,12 +158,12 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<int>("ID_Color_Product")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Color_Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<int>("ID_Product")
                         .HasColumnType("int");
@@ -184,12 +184,12 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<int>("ID_Discount")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code_Discount")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<DateTime>("Expire")
                         .HasColumnType("datetime2");
@@ -210,7 +210,7 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<int>("ID_DiscountUsed")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ID_Account")
                         .HasColumnType("int");
@@ -232,15 +232,15 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<int>("ID_Employee")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DOB")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Employee_Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -267,7 +267,7 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<int>("ID_Img_Product")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ID_Color_Product")
                         .HasColumnType("int");
@@ -288,7 +288,7 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<int>("ID_Order")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -327,7 +327,7 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<int>("ID_OrderDetail")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ID_Color_Product")
                         .HasColumnType("int");
@@ -355,7 +355,7 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<int>("ID_Product")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ID_Brand")
                         .HasColumnType("int");
@@ -375,8 +375,8 @@ namespace HubbleSpace_Final.Migrations
 
                     b.Property<string>("Product_Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("ID_Product");
 
@@ -392,7 +392,7 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<int>("ID_Size_Product")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ID_Color_Product")
                         .HasColumnType("int");
@@ -400,7 +400,7 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("size")
+                    b.Property<string>("SizeNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -418,8 +418,6 @@ namespace HubbleSpace_Final.Migrations
                         .HasForeignKey("ID_Account")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.Color_Product", b =>
@@ -429,8 +427,6 @@ namespace HubbleSpace_Final.Migrations
                         .HasForeignKey("ID_Product")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("product");
                 });
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.DiscountUsed", b =>
@@ -446,10 +442,6 @@ namespace HubbleSpace_Final.Migrations
                         .HasForeignKey("ID_Discount")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Discount");
                 });
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.Employee", b =>
@@ -459,8 +451,6 @@ namespace HubbleSpace_Final.Migrations
                         .HasForeignKey("ID_Account")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.Img_Product", b =>
@@ -470,8 +460,6 @@ namespace HubbleSpace_Final.Migrations
                         .HasForeignKey("ID_Color_Product")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("color_Product");
                 });
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.Order", b =>
@@ -481,8 +469,6 @@ namespace HubbleSpace_Final.Migrations
                         .HasForeignKey("ID_Account")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("account");
                 });
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.OrderDetail", b =>
@@ -498,10 +484,6 @@ namespace HubbleSpace_Final.Migrations
                         .HasForeignKey("ID_Order")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Color_Product");
-
-                    b.Navigation("order");
                 });
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.Product", b =>
@@ -517,10 +499,6 @@ namespace HubbleSpace_Final.Migrations
                         .HasForeignKey("ID_Categorie")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Brand");
-
-                    b.Navigation("category");
                 });
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.Size", b =>
@@ -530,49 +508,6 @@ namespace HubbleSpace_Final.Migrations
                         .HasForeignKey("ID_Color_Product")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("color_Product");
-                });
-
-            modelBuilder.Entity("HubbleSpace_Final.Entities.Account", b =>
-                {
-                    b.Navigation("DiscountUseds");
-
-                    b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("HubbleSpace_Final.Entities.Brand", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("HubbleSpace_Final.Entities.Category", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("HubbleSpace_Final.Entities.Color_Product", b =>
-                {
-                    b.Navigation("Img_Products");
-
-                    b.Navigation("OrderDetails");
-
-                    b.Navigation("Sizes");
-                });
-
-            modelBuilder.Entity("HubbleSpace_Final.Entities.Discount", b =>
-                {
-                    b.Navigation("DiscountUseds");
-                });
-
-            modelBuilder.Entity("HubbleSpace_Final.Entities.Order", b =>
-                {
-                    b.Navigation("OrderDetails");
-                });
-
-            modelBuilder.Entity("HubbleSpace_Final.Entities.Product", b =>
-                {
-                    b.Navigation("Color_Products");
                 });
 #pragma warning restore 612, 618
         }

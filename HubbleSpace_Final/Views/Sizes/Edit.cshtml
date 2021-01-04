@@ -9,7 +9,8 @@
 <div class="row">
     <div class="card card-body">
         <div class="card-header title--sbold">
-            Cập nhật thông tin size sản phẩm
+            Cập nhật thông tin size cho sản phẩm
+        </div>
         <div class="card-body card-block">
             <form asp-action="Edit" class="form-horizontal">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -17,11 +18,11 @@
 
                 <div class="row form-group">
                     <div class="col col-md-3">
-                        <label asp-for="size" class="control-label "></label>
+                        <label asp-for="SizeNumber" class="control-label "></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input asp-for="size" class="form-control" />
-                        <span asp-validation-for="size" class="text-danger"></span>
+                        <input asp-for="SizeNumber" class="form-control" />
+                        <span asp-validation-for="SizeNumber" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -35,13 +36,13 @@
                     </div>
                 </div>
 
+
                 <div class="row form-group">
                     <div class="col col-md-3">
-                        <label asp-for="ID_Color_Product" class="control-label"></label>
+                        <label asp-for="ID_Color_Product" class="control-label "></label>
                     </div>
                     <div class="col-12 col-md-9">
                         <select asp-for="ID_Color_Product" class="form-control" asp-items="ViewBag.ID_Color_Product"></select>
-                        <span asp-validation-for="ID_Color_Product" class="text-danger"></span>
                     </div>
                 </div>
 

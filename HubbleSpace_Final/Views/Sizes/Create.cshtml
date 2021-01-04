@@ -1,15 +1,13 @@
 ﻿@model HubbleSpace_Final.Entities.Size
 
-@{
-    ViewData["Title"] = "Create Size";
-    Layout = "_AdminLayout";
-
+@{ ViewData["Title"] = "Create Size";
+    Layout = "_AdminLayout"; 
 }
 
 <div class="row">
     <div class="card card-body">
         <div class="card-header title--sbold">
-            Thêm size cho sản phẩm
+            Thêm size mới cho sản phẩm
         </div>
         <div class="card-body card-block">
             <form asp-action="Create" method="post" class="form-horizontal">
@@ -17,23 +15,24 @@
 
                 <div class="row form-group">
                     <div class="col col-md-3">
-                        <label asp-for="size" class="control-label "></label>
+                        <label asp-for="SizeNumber" class="control-label "></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input asp-for="size" class="form-control" />
-                        <span asp-validation-for="size" class="text-danger"></span>
+                        <input asp-for="SizeNumber" class="form-control" />
+                        <span asp-validation-for="SizeNumber" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="row form-group">
                     <div class="col col-md-3">
-                        <label asp-for="Quantity" class="control-label "></label>
+                        <label asp-for="Quantity" class="control-label"></label>
                     </div>
                     <div class="col-12 col-md-9">
                         <input asp-for="Quantity" class="form-control" />
                         <span asp-validation-for="Quantity" class="text-danger"></span>
                     </div>
                 </div>
+
 
                 <div class="row form-group">
                     <div class="col col-md-3">
@@ -43,6 +42,7 @@
                         <select asp-for="ID_Color_Product" class="form-control" asp-items="ViewBag.ID_Color_Product"></select>
                     </div>
                 </div>
+
                 <div class="form-group card-footer">
                     <input type="submit" value="Create" class="btn btn-primary col-2" />
                     <input type="reset" value="Reset" class="btn btn-danger col-2" />

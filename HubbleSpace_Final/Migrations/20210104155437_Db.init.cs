@@ -11,14 +11,14 @@ namespace HubbleSpace_Final.Migrations
                 name: "Account",
                 columns: table => new
                 {
-                    ID_Account = table.Column<int>(type: "int", nullable: false)
+                    ID_Account = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Level = table.Column<int>(type: "int", nullable: false),
-                    Date_Create = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UserName = table.Column<string>(maxLength: 100, nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    Avatar = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: false),
+                    Level = table.Column<int>(nullable: false),
+                    Date_Create = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,11 +29,11 @@ namespace HubbleSpace_Final.Migrations
                 name: "Banner",
                 columns: table => new
                 {
-                    ID_Banner = table.Column<int>(type: "int", nullable: false)
+                    ID_Banner = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Banner_Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date_Upload = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Banner_Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Photo = table.Column<string>(nullable: false),
+                    Date_Upload = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,9 +44,9 @@ namespace HubbleSpace_Final.Migrations
                 name: "Brand",
                 columns: table => new
                 {
-                    ID_Brand = table.Column<int>(type: "int", nullable: false)
+                    ID_Brand = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Brand_Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Brand_Name = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,10 +57,10 @@ namespace HubbleSpace_Final.Migrations
                 name: "Category",
                 columns: table => new
                 {
-                    ID_Categorie = table.Column<int>(type: "int", nullable: false)
+                    ID_Categorie = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Category_Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Object = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Category_Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Object = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,12 +71,12 @@ namespace HubbleSpace_Final.Migrations
                 name: "Discount",
                 columns: table => new
                 {
-                    ID_Discount = table.Column<int>(type: "int", nullable: false)
+                    ID_Discount = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Code_Discount = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Expire = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Value = table.Column<int>(type: "int", nullable: false),
-                    NumberofTurns = table.Column<int>(type: "int", nullable: false)
+                    Code_Discount = table.Column<string>(maxLength: 100, nullable: false),
+                    Expire = table.Column<DateTime>(nullable: false),
+                    Value = table.Column<int>(nullable: false),
+                    NumberofTurns = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,14 +87,14 @@ namespace HubbleSpace_Final.Migrations
                 name: "Client",
                 columns: table => new
                 {
-                    ID_Client = table.Column<int>(type: "int", nullable: false)
+                    ID_Client = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Client_Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DOB = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
-                    CreditCard = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ID_Account = table.Column<int>(type: "int", nullable: false)
+                    Client_Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Phone = table.Column<string>(nullable: false),
+                    DOB = table.Column<DateTime>(nullable: false),
+                    Gender = table.Column<int>(nullable: false),
+                    CreditCard = table.Column<string>(nullable: true),
+                    ID_Account = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -111,14 +111,14 @@ namespace HubbleSpace_Final.Migrations
                 name: "Employee",
                 columns: table => new
                 {
-                    ID_Employee = table.Column<int>(type: "int", nullable: false)
+                    ID_Employee = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Employee_Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DOB = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
-                    Salary = table.Column<double>(type: "float", nullable: false),
-                    ID_Account = table.Column<int>(type: "int", nullable: false)
+                    Employee_Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Phone = table.Column<string>(nullable: false),
+                    DOB = table.Column<DateTime>(nullable: false),
+                    Gender = table.Column<int>(nullable: false),
+                    Salary = table.Column<double>(nullable: false),
+                    ID_Account = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -135,15 +135,15 @@ namespace HubbleSpace_Final.Migrations
                 name: "Order",
                 columns: table => new
                 {
-                    ID_Order = table.Column<int>(type: "int", nullable: false)
+                    ID_Order = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TotalMoney = table.Column<double>(type: "float", nullable: false),
-                    Date_Create = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Receiver = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SDT = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ID_Account = table.Column<int>(type: "int", nullable: false),
-                    Process = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    TotalMoney = table.Column<double>(nullable: false),
+                    Date_Create = table.Column<DateTime>(nullable: false),
+                    Address = table.Column<string>(nullable: false),
+                    Receiver = table.Column<string>(nullable: false),
+                    SDT = table.Column<string>(nullable: false),
+                    ID_Account = table.Column<int>(nullable: false),
+                    Process = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -160,14 +160,14 @@ namespace HubbleSpace_Final.Migrations
                 name: "Product",
                 columns: table => new
                 {
-                    ID_Product = table.Column<int>(type: "int", nullable: false)
+                    ID_Product = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Product_Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price_Product = table.Column<double>(type: "float", nullable: false),
-                    Price_Sale = table.Column<double>(type: "float", nullable: false),
-                    ID_Brand = table.Column<int>(type: "int", nullable: false),
-                    ID_Categorie = table.Column<int>(type: "int", nullable: false)
+                    Product_Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Image = table.Column<string>(nullable: false),
+                    Price_Product = table.Column<double>(nullable: false),
+                    Price_Sale = table.Column<double>(nullable: false),
+                    ID_Brand = table.Column<int>(nullable: false),
+                    ID_Categorie = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -190,10 +190,10 @@ namespace HubbleSpace_Final.Migrations
                 name: "DiscountUsed",
                 columns: table => new
                 {
-                    ID_DiscountUsed = table.Column<int>(type: "int", nullable: false)
+                    ID_DiscountUsed = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ID_Account = table.Column<int>(type: "int", nullable: false),
-                    ID_Discount = table.Column<int>(type: "int", nullable: false)
+                    ID_Account = table.Column<int>(nullable: false),
+                    ID_Discount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -216,11 +216,11 @@ namespace HubbleSpace_Final.Migrations
                 name: "Color_Product",
                 columns: table => new
                 {
-                    ID_Color_Product = table.Column<int>(type: "int", nullable: false)
+                    ID_Color_Product = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Color_Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ID_Product = table.Column<int>(type: "int", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Color_Name = table.Column<string>(maxLength: 100, nullable: false),
+                    ID_Product = table.Column<int>(nullable: false),
+                    Image = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -237,10 +237,10 @@ namespace HubbleSpace_Final.Migrations
                 name: "Img_Product",
                 columns: table => new
                 {
-                    ID_Img_Product = table.Column<int>(type: "int", nullable: false)
+                    ID_Img_Product = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ID_Color_Product = table.Column<int>(type: "int", nullable: false)
+                    Photo = table.Column<string>(nullable: false),
+                    ID_Color_Product = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -257,12 +257,12 @@ namespace HubbleSpace_Final.Migrations
                 name: "OrderDetail",
                 columns: table => new
                 {
-                    ID_OrderDetail = table.Column<int>(type: "int", nullable: false)
+                    ID_OrderDetail = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ID_Color_Product = table.Column<int>(type: "int", nullable: false),
-                    Size = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    ID_Order = table.Column<int>(type: "int", nullable: false)
+                    ID_Color_Product = table.Column<int>(nullable: false),
+                    Size = table.Column<string>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false),
+                    ID_Order = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -285,11 +285,11 @@ namespace HubbleSpace_Final.Migrations
                 name: "Size",
                 columns: table => new
                 {
-                    ID_Size_Product = table.Column<int>(type: "int", nullable: false)
+                    ID_Size_Product = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    size = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    ID_Color_Product = table.Column<int>(type: "int", nullable: false)
+                    SizeNumber = table.Column<string>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    ID_Color_Product = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

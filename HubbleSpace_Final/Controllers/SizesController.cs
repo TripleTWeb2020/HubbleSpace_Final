@@ -51,7 +51,7 @@ namespace HubbleSpace_Final.Controllers
                                      select new
                                      {
                                          ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.Color_Name + " - "  + c.product.Product_Name
+                                         Name = c.Color_Name + " - " + c.product.Product_Name
                                      };
             ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name");
             return View();
@@ -62,7 +62,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_Size_Product,size,Quantity,ID_Color_Product")] Size size)
+        public async Task<IActionResult> Create([Bind("ID_Size_Product,SizeNumber,Quantity,ID_Color_Product")] Size size)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +108,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID_Size_Product,size,Quantity,ID_Color_Product")] Size size)
+        public async Task<IActionResult> Edit(int id, [Bind("ID_Size_Product,SizeNumber,Quantity,ID_Color_Product")] Size size)
         {
             if (id != size.ID_Size_Product)
             {

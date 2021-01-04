@@ -16,7 +16,7 @@ namespace HubbleSpace_Final.Entities
 
         [Required(ErrorMessage ="Không được để trống")]
         [Display(Name = "Size")]
-        public string size { get; set; }
+        public string SizeNumber { get; set; }
 
         [Required(ErrorMessage = "Không được để trống")]
         [Display(Name = "Số lượng")]

@@ -1,39 +1,52 @@
 ﻿@model HubbleSpace_Final.Entities.Size
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete - Size";
+    Layout = "_AdminLayout";
+
 }
 
-<h2>Delete</h2>
+<div class="row">
+    <div class="card card-body">
+        <div class="card-header title--sbold">
+            Xóa size của sản phẩm <br>
+            Bạn chắc chắn muốn xóa size của sản phẩm này?
+        </div>
+        <div class="card-body card-block">
+            <input type="hidden" asp-for="ID_Size_Product" />
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.SizeNumber)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.SizeNumber)
+                </div>
+            </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Size</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.size)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.size)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.color_Product)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.color_Product.Color_Name)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="ID_Size_Product" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Quantity)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    Sản phẩm - Màu
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.color_Product.product.Product_Name) -
+                    @Html.DisplayFor(model => model.color_Product.Color_Name)
+                </div>
+            </div>
+
+            <div class="form-group card-footer">
+                <a asp-action="Delete" class="btn btn-danger col-2" asp-route-id="@Model.ID_Size_Product">Delete</a>
+                <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+            </div>
+        </div>
+    </div>
 </div>
+
