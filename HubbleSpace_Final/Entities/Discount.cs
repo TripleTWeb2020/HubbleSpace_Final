@@ -32,5 +32,12 @@ namespace HubbleSpace_Final.Entities
         [Required(ErrorMessage = "Không được để trống")]
         [Range(0,100,ErrorMessage ="Không hợp lệ")]
         public int NumberofTurns { get; set; }
+
+        public ICollection<DiscountUsed> DiscountUseds { get; set; }
+        public Discount()
+        {
+            DiscountUseds = new HashSet<DiscountUsed>();
+
+        }
     }
 }

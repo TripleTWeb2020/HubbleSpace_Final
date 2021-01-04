@@ -43,10 +43,14 @@ namespace HubbleSpace_Final.Entities
         public DateTime Date_Create { get; set; }
 
         public ICollection<Order> Orders { get; set; }
+
+        public ICollection<DiscountUsed> DiscountUseds { get; set; }
+
         public Account()
         {
             Orders = new HashSet<Order>();
             Date_Create = DateTime.Now;
+            DiscountUseds = new HashSet<DiscountUsed>();
         }
     }
 }
