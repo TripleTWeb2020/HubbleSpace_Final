@@ -1,45 +1,59 @@
 ﻿@model HubbleSpace_Final.Entities.Discount
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete - Discount";
+    Layout = "_AdminLayout";
+
 }
 
-<h2>Delete</h2>
+<div class="row">
+    <div class="card card-body">
+        <div class="card-header title--sbold">
+            Xóa khuyến mãi <br>
+            Bạn chắc chắn muốn xóa khuyến mãi này?
+        </div>
+        <div class="card-body card-block">
+            <input type="hidden" asp-for="ID_Discount" />
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Code_Discount)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Code_Discount)
+                </div>
+            </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Discount</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Code_Discount)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Code_Discount)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Expire)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Expire)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Value)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Value)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NumberofTurns)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NumberofTurns)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="ID_Discount" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Expire)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Expire)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Value)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Value)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.NumberofTurns)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.NumberofTurns)
+                </div>
+            </div>
+
+            <div class="form-group card-footer">
+                <a asp-action="Delete" class="btn btn-danger col-2" asp-route-id="@Model.ID_Discount">Delete</a>
+                <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+            </div>
+        </div>
+    </div>
 </div>

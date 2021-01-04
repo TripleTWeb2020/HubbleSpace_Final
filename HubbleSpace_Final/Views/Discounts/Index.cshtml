@@ -42,13 +42,13 @@
                         <th class="col-3">
                             @Html.DisplayNameFor(model => model.Expire)
                         </th>
-                        <th class="col-3">
+                        <th class="col-2">
                             @Html.DisplayNameFor(model => model.Value)
                         </th>
-                        <th class="col-3">
+                        <th class="col-2">
                             @Html.DisplayNameFor(model => model.NumberofTurns)
                         </th>
-                        <th class="col-3"></th>
+                        <th class="col-2"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,13 +61,13 @@
                             <td class="col-3">
                                 @Html.DisplayFor(modelItem => item.Expire)
                             </td>
-                            <td class="col-3">
+                            <td class="col-2">
                                 @Html.DisplayFor(modelItem => item.Value)
                             </td>
-                            <td class="col-3">
+                            <td class="col-2">
                                 @Html.DisplayFor(modelItem => item.NumberofTurns)
                             </td>
-                            <td class="col-3">
+                            <td class="col-2">
                                 <div class="table-data-feature">
                                     <a class="item" asp-action="Edit" asp-route-id="@item.ID_Discount" data-toggle="tooltip" data-placement="top" title="Edit">
                                         <i class="zmdi zmdi-edit"></i>
