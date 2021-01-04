@@ -27,6 +27,5 @@ namespace HubbleSpace_Final.Entities
         [ForeignKey("ID_Color_Product")]
         public Color_Product color_Product { get; set; }
 
-        
     }
 }

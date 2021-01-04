@@ -1,60 +1,88 @@
 ﻿@model HubbleSpace_Final.Entities.Order
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details - Order";
+    Layout = "_AdminLayout";
+
 }
 
-<h2>Details</h2>
+<div class="row">
+    <div class="card card-body">
+        <div class="card-header title--sbold">
+            Thông tin đơn hàng
+        </div>
+        <div class="card-body card-block">
+            <input type="hidden" asp-for="ID_Order" />
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.TotalMoney)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.TotalMoney)
+                </div>
+            </div>
 
-<div>
-    <h4>Order</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalMoney)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TotalMoney)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Date_Create)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Date_Create)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Receiver)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Receiver)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SDT)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SDT)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.account)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.account.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Process)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Process)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ID_Order">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Date_Create)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Date_Create)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Address)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Address)
+                </div>
+
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Receiver)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Receiver)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.SDT)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.SDT)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.account)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.account.Email)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Process)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Process)
+                </div>
+            </div>
+
+
+            <div class="form-group card-footer">
+                <a asp-action="OrderDetails" class="btn btn-danger col-2" asp-route-id="@Model.ID_Order">Details</a>
+                <a asp-action="Edit" class="btn btn-danger col-2" asp-route-id="@Model.ID_Order">Edit</a>
+                <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+            </div>
+        </div>
+    </div>
 </div>

@@ -26,30 +26,10 @@
 
                 <div class="row form-group">
                     <div class="col col-md-3">
-                        <label asp-for="Product" class="control-label "></label>
-                    </div>
-                    <div class="col-12 col-md-9">
-                        <input asp-for="Product" class="form-control" />
-                    </div>
-                </div>
-
-                <div class="row form-group">
-                    <div class="col col-md-3">
                         <label asp-for="Size" class="control-label "></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input asp-for="Size" class="form-control" />
                         <select asp-for="Size" class="form-control" asp-items="ViewBag.Size"></select>
-                    </div>
-                </div>
-
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label asp-for="UnitPrice" class="control-label "></label>
-                    </div>
-                    <div class="col-12 col-md-9">
-                        <input asp-for="UnitPrice" class="form-control disabled" />
-                        <span asp-validation-for="UnitPrice" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -78,7 +58,6 @@
                         <label asp-for="ID_Order" class="control-label "></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input asp-for="ID_Order" class="form-control" />
                         <select asp-for="ID_Order" class="form-control" asp-items="ViewBag.ID_Order"></select>
                     </div>
                 </div>

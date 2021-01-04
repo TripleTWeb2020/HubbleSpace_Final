@@ -51,7 +51,7 @@ namespace HubbleSpace_Final.Controllers
                                      select new
                                      {
                                          ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.Color_Name + c.product.Product_Name
+                                         Name = c.Color_Name + " - "  + c.product.Product_Name
                                      };
             ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name");
             return View();
@@ -74,7 +74,7 @@ namespace HubbleSpace_Final.Controllers
                                      select new
                                      {
                                          ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.Color_Name + c.product.Product_Name
+                                         Name = c.Color_Name + " - " + c.product.Product_Name
                                      };
             ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name", size.ID_Color_Product);
             return View(size);
@@ -97,7 +97,7 @@ namespace HubbleSpace_Final.Controllers
                                      select new
                                      {
                                          ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.Color_Name + c.product.Product_Name
+                                         Name = c.Color_Name + " - " + c.product.Product_Name
                                      };
             ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name", size.ID_Color_Product);
             return View(size);
@@ -139,7 +139,7 @@ namespace HubbleSpace_Final.Controllers
                                      select new
                                      {
                                          ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.Color_Name + c.product.Product_Name
+                                         Name = c.Color_Name + " - " + c.product.Product_Name
                                      };
             ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name", size.ID_Color_Product);
             return View(size);

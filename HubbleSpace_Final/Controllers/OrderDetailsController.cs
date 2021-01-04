@@ -19,10 +19,19 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: OrderDetails
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
-            var myDbContext = _context.OrderDetail.Include(o => o.Color_Product).Include(o => o.order);
-            return View(await myDbContext.ToListAsync());
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var myDbContext = await _context.OrderDetail.Include(o => o.Color_Product).Include(o => o.order).AllAsync(m => m.ID_OrderDetail == id);
+            if (myDbContext == null)
+            {
+                return NotFound();
+            }
+
+            return View(myDbContext);
         }
 
         // GET: OrderDetails/Details/5
@@ -52,14 +61,14 @@ namespace HubbleSpace_Final.Controllers
                                      select new
                                      {
                                          ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.Color_Name + c.product.Product_Name
+                                         Name = c.Color_Name + " - " + c.product.Product_Name
                                      };
             ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name");
             var Order_Name = from c in _context.Order
                              select new
                              {
                                  ID_Order = c.ID_Order,
-                                 Name = c.Address + c.SDT
+                                 Name = c.Address + " - " + c.SDT
                              };
             ViewData["ID_Order"] = new SelectList(Order_Name, "ID_Order", "Name");
             return View();
@@ -82,7 +91,7 @@ namespace HubbleSpace_Final.Controllers
                                      select new
                                      {
                                          ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.Color_Name + c.product.Product_Name
+                                         Name = c.Color_Name+ " - "+ c.product.Product_Name
                                      };
             ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name", orderDetail.ID_Color_Product);
 
@@ -90,7 +99,7 @@ namespace HubbleSpace_Final.Controllers
                              select new
                              {
                                  ID_Order = c.ID_Order,
-                                 Name = c.Address + c.SDT
+                                 Name = c.Address+ " - " +c.SDT
                              };
             ViewData["ID_Order"] = new SelectList(Order_Name, "ID_Order", "Name", orderDetail.ID_Order);
             return View(orderDetail);
@@ -113,7 +122,7 @@ namespace HubbleSpace_Final.Controllers
                                      select new
                                      {
                                          ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.Color_Name + c.product.Product_Name
+                                         Name = c.Color_Name + " - "+ c.product.Product_Name
                                      };
             ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name", orderDetail.ID_Color_Product);
 
@@ -121,7 +130,7 @@ namespace HubbleSpace_Final.Controllers
                              select new
                              {
                                  ID_Order = c.ID_Order,
-                                 Name = c.Address + c.SDT
+                                 Name = c.Address + " - " + c.SDT
                              };
             ViewData["ID_Order"] = new SelectList(Order_Name, "ID_Order", "Name", orderDetail.ID_Order);
             return View(orderDetail);
@@ -164,7 +173,7 @@ namespace HubbleSpace_Final.Controllers
                                      select new
                                      {
                                          ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.Color_Name + c.product.Product_Name
+                                         Name = c.Color_Name + " - "+ c.product.Product_Name
                                      };
             ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name", orderDetail.ID_Color_Product);
 
@@ -172,7 +181,7 @@ namespace HubbleSpace_Final.Controllers
                                      select new
                                      {
                                          ID_Order = c.ID_Order,
-                                         Name = c.Address + c.SDT
+                                         Name = c.Address + " - "+ c.SDT
                                      };
             ViewData["ID_Order"] = new SelectList(Order_Name, "ID_Order", "Name", orderDetail.ID_Order);
             return View(orderDetail);

@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h3 class="title-5 m-b-35">Quản lý chi tiết đơn hàng</h3>
+        <h3 class="title-5 m-b-35">Quản lý đơn hàng</h3>
         <div class="table-data__tool">
             <div class="table-data__tool-left">
                 <form>
@@ -46,7 +46,7 @@
                             @Html.DisplayNameFor(model => model.Address)
                         </th>
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.account.Email)
+                            @Html.DisplayNameFor(model => model.SDT)
                         </th>
                         <th class="col-2">
                             @Html.DisplayNameFor(model => model.Process)
@@ -68,7 +68,7 @@
                                 @Html.DisplayFor(modelItem => item.Address)
                             </td>
                             <td class="col-2">
-                                @Html.DisplayFor(modelItem => item.account.Email)
+                                @Html.DisplayFor(modelItem => item.SDT)
                             </td>
                             <td class="col-2">
                                 @Html.DisplayFor(modelItem => item.Process)

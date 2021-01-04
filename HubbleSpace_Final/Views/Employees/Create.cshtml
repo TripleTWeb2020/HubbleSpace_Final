@@ -38,7 +38,7 @@
                         <label asp-for="DOB" class="control-label "></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input asp-for="DOB" class="form-control" type="datetime"/>
+                        <input asp-for="DOB" class="form-control" type="date"/>
                         <span asp-validation-for="DOB" class="text-danger"></span>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                         <label asp-for="ID_Account" class="control-label "></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <select asp-for="ID_Account" class="form-control" asp-items="ViewBag.Account.UserName"></select>
+                        <select asp-for="ID_Account" class="form-control" asp-items="ViewBag.ID_Account"></select>
                     </div>
                 </div>
 

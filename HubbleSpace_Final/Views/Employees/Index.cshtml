@@ -35,7 +35,7 @@
             <table class="table table-data2">
                 <thead>
                     <tr class="row">
-                        <th class="col-3">
+                        <th class="col-2">
                             @Html.DisplayNameFor(model => model.Employee_Name)
                         </th>
                         <th class="col-2">
@@ -44,15 +44,12 @@
                         <th class="col-2">
                             @Html.DisplayNameFor(model => model.DOB)
                         </th>
-                        <th class="col-1">
+                        <th class="col-2">
                             @Html.DisplayNameFor(model => model.Gender)
                         </th>
                         
                         <th class="col-2">
                             @Html.DisplayNameFor(model => model.Salary)
-                        </th>
-                        <th class="col-3">
-                            @Html.DisplayNameFor(model => model.Account)
                         </th>
                         <th class="col-2"></th>
                     </tr>
@@ -61,7 +58,7 @@
                     @foreach (var item in Model)
                     {
                         <tr class="tr-shadow row">
-                            <td class="col-3">
+                            <td class="col-2">
                                 @Html.DisplayFor(modelItem => item.Employee_Name)
                             </td>
                             <td class="col-2">
@@ -70,14 +67,11 @@
                             <td class="col-2">
                                 @Html.DisplayFor(modelItem => item.DOB)
                             </td>
-                            <td class="col-1">
+                            <td class="col-2">
                                 @Html.DisplayFor(modelItem => item.Gender)
                             </td>
                             <td class="col-2">
                                 @Html.DisplayFor(modelItem => item.Salary)
-                            </td>
-                            <td class="col-3">
-                                @Html.DisplayFor(modelItem => item.Account.Email)
                             </td>
                             <td class="col-2">
                                 <div class="table-data-feature">

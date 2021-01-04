@@ -9,7 +9,7 @@
 <div class="row">
     <div class="card card-body">
         <div class="card-header title--sbold">
-            Thêm đơn hàng
+            Thêm đơn hàng mới
         </div>
         <div class="card-body card-block">
             <form asp-action="Create" method="post" class="form-horizontal">
@@ -22,16 +22,6 @@
                     <div class="col-12 col-md-9">
                         <input asp-for="TotalMoney" class="form-control" />
                         <span asp-validation-for="TotalMoney" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label asp-for="Date_Create" class="control-label "></label>
-                    </div>
-                    <div class="col-12 col-md-9">
-                        <input asp-for="Date_Create" class="form-control" />
-                        <span asp-validation-for="Date_Create" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -79,7 +69,13 @@
                         <label asp-for="Process" class="control-label "></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input asp-for="Process" class="form-control" />
+                        <select asp-for="Process" class="form-control">
+                            <option value="Mới đặt">Mới đặt</option>
+                            <option value="Đang đóng gói">Đang đóng gói</option>
+                            <option value="Đang vận chuyển">Đang vận chuyển</option>
+                            <option value="Đã giao">Đã giao</option>
+                            <option value="Hủy">Hủy</option>
+                        </select>
                         <span asp-validation-for="Process" class="text-danger"></span>
                     </div>
                 </div>

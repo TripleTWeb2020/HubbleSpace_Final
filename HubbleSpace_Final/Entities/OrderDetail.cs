@@ -13,7 +13,7 @@ namespace HubbleSpace_Final.Entities
         [Key]
         public int ID_OrderDetail { get; set; }
 
-        [Display(Name = "Màu sắc")]
+        [Display(Name = "Sản phẩm")]
         public int ID_Color_Product { get; set; }
         [ForeignKey("ID_Color_Product")]
         public Color_Product Color_Product { get; set; }
