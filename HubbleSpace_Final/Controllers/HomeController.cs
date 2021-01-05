@@ -12,6 +12,7 @@ namespace HubbleSpace_Final.Controllers
 {
     public class HomeController : Controller
     {
+
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -45,10 +46,15 @@ namespace HubbleSpace_Final.Controllers
         {
             return View();
         }
+        public IActionResult Checkout_Review()
+        {
+            return View();
+        }
         public IActionResult Checkout_Payment()
         {
             return View();
         }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
