@@ -69,9 +69,16 @@
     <Compile Remove="Migrations\20210102074309_Db.init.Designer.cs" />
     <Compile Remove="Migrations\20210102093643_Db.init.cs" />
     <Compile Remove="Migrations\20210102093643_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20210104155437_Db.init.cs" />
+    <Compile Remove="Migrations\20210104155437_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20210105070931_Db.init.cs" />
+    <Compile Remove="Migrations\20210105070931_Db.init.Designer.cs" />
+    <Compile Remove="Migrations\20210105074548_Db.init.cs" />
+    <Compile Remove="Migrations\20210105074548_Db.init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="jQuery" Version="3.4.1" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.10" />

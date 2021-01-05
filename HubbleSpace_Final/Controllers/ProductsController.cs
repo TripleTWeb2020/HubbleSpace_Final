@@ -53,7 +53,7 @@ namespace HubbleSpace_Final.Controllers
                                      select new
                                      {
                                          ID_Categorie = c.ID_Categorie,
-                                         Category_Name = c.Category_Name + c.Object
+                                         Category_Name = c.Category_Name + " - " + c.Object
                                      };
             ViewData["ID_Categorie"] = new SelectList(Category_Name, "ID_Categorie", "Category_Name");
             return View();
@@ -77,7 +77,7 @@ namespace HubbleSpace_Final.Controllers
                                 select new
                                 {
                                     ID_Categorie = c.ID_Categorie,
-                                    Category_Name = c.Category_Name + c.Object
+                                    Category_Name = c.Category_Name + " - " + c.Object
                                 };
             ViewData["ID_Categorie"] = new SelectList(Category_Name, "ID_Categorie", "Category_Name", product.ID_Categorie);
             return View(product);
@@ -101,7 +101,7 @@ namespace HubbleSpace_Final.Controllers
                                 select new
                                 {
                                     ID_Categorie = c.ID_Categorie,
-                                    Category_Name = c.Category_Name + c.Object
+                                    Category_Name = c.Category_Name + " - " + c.Object
                                 };
             ViewData["ID_Categorie"] = new SelectList(Category_Name, "ID_Categorie", "Category_Name", product.ID_Categorie);
             return View(product);
@@ -144,7 +144,7 @@ namespace HubbleSpace_Final.Controllers
                                 select new
                                 {
                                     ID_Categorie = c.ID_Categorie,
-                                    Category_Name = c.Category_Name + c.Object
+                                    Category_Name = c.Category_Name + " - " + c.Object
                                 };
             ViewData["ID_Categorie"] = new SelectList(Category_Name, "ID_Categorie", "Category_Name", product.ID_Categorie);
             return View(product);

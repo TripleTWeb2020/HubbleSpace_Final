@@ -31,7 +31,7 @@
                         <label asp-for="Size" class="control-label"></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input asp-for="Size" class="form-control" />
+                        <select id="size" asp-for="Size" class="form-control"></select>
                         <span asp-validation-for="Size" class="text-danger"></span>
                     </div>
                 </div>
@@ -65,3 +65,21 @@
         </div>
     </div>
 </div>
+
+@section ajax{
+    <script>
+        $(function () {
+            $("#ID_Color_Product").change(function () {
+                $.ajax({
+                    url: "/OrderDetails/GetSize",
+                    data: {
+                        "id": $(this).val(),
+                    },
+                    success: function (response) {
+                        $("select#size").html(response);
+                    }
+                });
+            });
+        });
+    </script>
+}

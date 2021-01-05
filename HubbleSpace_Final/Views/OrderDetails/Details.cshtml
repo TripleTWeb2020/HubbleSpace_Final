@@ -18,6 +18,8 @@
                     @Html.DisplayNameFor(model => model.Color_Product)
                 </div>
                 <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Color_Product.product.Product_Name) - 
+
                     @Html.DisplayFor(model => model.Color_Product.Color_Name)
                 </div>
             </div>
@@ -46,7 +48,9 @@
                     @Html.DisplayNameFor(model => model.order)
                 </div>
                 <div class="col-12 col-md-9">
-                    @Html.DisplayFor(model => model.Color_Product.Color_Name)
+                    @Html.DisplayFor(model => model.order.Address) -
+                    @Html.DisplayFor(model => model.order.SDT)
+
                 </div>
             </div>
 

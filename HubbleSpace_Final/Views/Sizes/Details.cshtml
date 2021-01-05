@@ -36,7 +36,7 @@
                     Sản phẩm - Màu
                 </div>
                 <div class="col-12 col-md-9">
-                   <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(model => model.color_Product.Image)" />
+                    @Html.DisplayFor(model => model.color_Product.Color_Name)
                 </div>
             </div>
 
@@ -44,8 +44,7 @@
                 <div class="col col-md-3">
                 </div>
                 <div class="col-12 col-md-9">
-                    @Html.DisplayFor(model => model.color_Product.product.Product_Name) -
-                    @Html.DisplayFor(model => model.color_Product.Color_Name)
+                    <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(model => model.color_Product.Image)" />
                 </div>
             </div>
 
