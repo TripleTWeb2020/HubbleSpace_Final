@@ -12,6 +12,7 @@ namespace HubbleSpace_Final.Controllers
 {
     public class HomeController : Controller
     {
+
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -45,7 +46,28 @@ namespace HubbleSpace_Final.Controllers
         {
             return View();
         }
+        public IActionResult Checkout_Review()
+        {
+            return View();
+        }
         public IActionResult Checkout_Payment()
+        {
+            return View();
+        }
+        public IActionResult Categories()
+        {
+            return View();
+        }
+        public IActionResult Product_Detail()
+        {
+            return View();
+        }
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        public IActionResult Contact()
         {
             return View();
         }
