@@ -54,7 +54,15 @@ namespace HubbleSpace_Final.Controllers
         {
             return View();
         }
-        
+        public IActionResult Categories()
+        {
+            return View();
+        }
+        public IActionResult Product_Detail()
+        {
+            return View();
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
