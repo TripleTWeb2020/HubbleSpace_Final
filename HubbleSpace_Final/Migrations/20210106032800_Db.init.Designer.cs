@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HubbleSpace_Final.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20210105075637_Db.init")]
+    [Migration("20210106032800_Db.init")]
     partial class Dbinit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
