@@ -60,7 +60,10 @@
                         <label asp-for="Level" class="control-label "></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input asp-for="Level" class="form-control"/>
+                        <select asp-for="Level" class="form-control">
+                            <option value="Admin">Admin</option>
+                            <option value="Member">Member</option>
+                        </select>
                         <span asp-validation-for="Level" class="text-danger"></span>
                     </div>
                 </div>
