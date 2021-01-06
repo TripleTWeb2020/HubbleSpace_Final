@@ -37,18 +37,22 @@
                 <thead>
                     <tr class="row">
                         <th class="col-2">
-                            Sản phẩm - Màu
+                            @Html.DisplayNameFor(model => model.Color_Product.product.Product_Name)
                         </th>
 
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.Size)
+                            @Html.DisplayNameFor(model => model.Color_Product.Color_Name)
                         </th>
 
                         <th class="col-2">
                             @Html.DisplayNameFor(model => model.Color_Product.Image)
                         </th>
 
-                        <th class="col-2">
+                        <th class="col-1">
+                            @Html.DisplayNameFor(model => model.Size)
+                        </th>
+
+                        <th class="col-1">
                             @Html.DisplayNameFor(model => model.Quantity)
                         </th>
 
@@ -64,16 +68,22 @@
                     {
                         <tr class="tr-shadow row">
                             <td class="col-2">
-                                
-
+                                @Html.DisplayFor(modelItem => item.Color_Product.product.Product_Name)
                             </td>
+
                             <td class="col-2">
+                                @Html.DisplayFor(modelItem => item.Color_Product.Color_Name)
+                            </td>
+
+                            <td class="col-2">
+                                <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Color_Product.Image)" />
+                            </td>
+
+                            <td class="col-1">
                                 @Html.DisplayFor(modelItem => item.Size)
                             </td>
-                            <td class="col-2">
-                                <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Color_Product.Image)" /> 
-                            </td>
-                            <td class="col-2">
+
+                            <td class="col-1">
                                 @Html.DisplayFor(modelItem => item.Quantity)
                             </td>
                             <td class="col-2">

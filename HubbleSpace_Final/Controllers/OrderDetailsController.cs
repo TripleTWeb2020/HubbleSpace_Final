@@ -24,10 +24,10 @@ namespace HubbleSpace_Final.Controllers
 
             if (id == null)
             {
-                var myDbContext_all = _context.OrderDetail.Include(o => o.Color_Product).Include(o => o.order);
+                var myDbContext_all = _context.OrderDetail.Include(o => o.Color_Product).Include(o => o.order).Include(o => o.Color_Product.product);
                 return View(await myDbContext_all.ToListAsync());
             }
-            var myDbContext = _context.OrderDetail.Include(o => o.Color_Product).Include(o => o.order).AllAsync(m => m.ID_Order == id);
+            var myDbContext = _context.OrderDetail.Include(o => o.Color_Product).Include(o => o.order).Include(o => o.Color_Product.product).AllAsync(m => m.ID_Order == id);
 
             if (myDbContext == null)
             {
@@ -56,6 +56,7 @@ namespace HubbleSpace_Final.Controllers
             var orderDetail = await _context.OrderDetail
                 .Include(o => o.Color_Product)
                 .Include(o => o.order)
+                .Include(o => o.Color_Product.product)
                 .FirstOrDefaultAsync(m => m.ID_OrderDetail == id);
             if (orderDetail == null)
             {
@@ -236,6 +237,7 @@ namespace HubbleSpace_Final.Controllers
             var orderDetail = await _context.OrderDetail
                 .Include(o => o.Color_Product)
                 .Include(o => o.order)
+                .Include(o => o.Color_Product.product)
                 .FirstOrDefaultAsync(m => m.ID_OrderDetail == id);
             if (orderDetail == null)
             {

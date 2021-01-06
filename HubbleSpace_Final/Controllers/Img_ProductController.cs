@@ -21,7 +21,7 @@ namespace HubbleSpace_Final.Controllers
         // GET: Img_Product
         public async Task<IActionResult> Index()
         {
-            var myDbContext = _context.Img_Product.Include(i => i.color_Product);
+            var myDbContext = _context.Img_Product.Include(i => i.color_Product).Include(i => i.color_Product.product);
             return View(await myDbContext.ToListAsync());
         }
 
@@ -35,6 +35,7 @@ namespace HubbleSpace_Final.Controllers
 
             var img_Product = await _context.Img_Product
                 .Include(i => i.color_Product)
+                .Include(i => i.color_Product.product)
                 .FirstOrDefaultAsync(m => m.ID_Img_Product == id);
             if (img_Product == null)
             {
@@ -154,6 +155,7 @@ namespace HubbleSpace_Final.Controllers
 
             var img_Product = await _context.Img_Product
                 .Include(i => i.color_Product)
+                .Include(i => i.color_Product.product)
                 .FirstOrDefaultAsync(m => m.ID_Img_Product == id);
             if (img_Product == null)
             {

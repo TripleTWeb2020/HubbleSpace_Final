@@ -13,6 +13,17 @@
         </div>
         <div class="card-body card-block">
             <input type="hidden" asp-for="ID_Color_Product" />
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.product.Product_Name)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.product.Product_Name)
+                </div>
+            </div>
+
+
             <div class="row form-group">
                 <div class="col col-md-3">
                     @Html.DisplayNameFor(model => model.Color_Name)
@@ -22,14 +33,6 @@
                 </div>
             </div>
 
-            <div class="row form-group">
-                <div class="col col-md-3">
-                    @Html.DisplayNameFor(model => model.product)
-                </div>
-                <div class="col-12 col-md-9">
-                    @Html.DisplayFor(model => model.product.Product_Name)
-                </div>
-            </div>
 
             <div class="row form-group">
                 <div class="col col-md-3">

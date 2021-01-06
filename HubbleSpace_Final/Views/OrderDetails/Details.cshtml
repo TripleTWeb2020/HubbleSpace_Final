@@ -15,12 +15,36 @@
             <input type="hidden" asp-for="ID_OrderDetail" />
             <div class="row form-group">
                 <div class="col col-md-3">
-                    @Html.DisplayNameFor(model => model.Color_Product)
+                    @Html.DisplayNameFor(model => model.Color_Product.product.Product_Name)
                 </div>
                 <div class="col-12 col-md-9">
-                    @Html.DisplayFor(model => model.Color_Product.product.Product_Name) - 
+                    @Html.DisplayFor(model => model.Color_Product.product.Product_Name)
+                </div>
+            </div>
 
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Color_Product.Color_Name)
+                </div>
+                <div class="col-12 col-md-9">
                     @Html.DisplayFor(model => model.Color_Product.Color_Name)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Color_Product.Image)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Color_Product.Image)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                </div>
+                <div class="col-12 col-md-9">
+                   <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(model => model.Color_Product.Image)" />
                 </div>
             </div>
 
