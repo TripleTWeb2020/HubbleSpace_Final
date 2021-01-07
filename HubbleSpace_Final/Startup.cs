@@ -27,6 +27,16 @@ namespace HubbleSpace_Final
         {
             services.AddControllersWithViews();
             services.AddDbContext<MyDbContext>(option => { option.UseSqlServer(Configuration.GetConnectionString("HubbleSpace_Final")); });
+            services.AddAuthentication()
+                    .AddGoogle(options =>
+                    {
+                        options.ClientId = Configuration["App:GoogleClientId"];
+                        options.ClientSecret = Configuration["App:GoogleClientSecret"];
+                    })
+                    .AddFacebook(options => {
+                        options.ClientId = Configuration["App:FacebookClientId"];
+                        options.ClientSecret = Configuration["App:FacebookClientSecret"];
+                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
