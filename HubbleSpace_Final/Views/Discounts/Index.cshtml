@@ -6,24 +6,22 @@
 
 }
 
-<div class="row">
+<div id="discount" class="row">
     <div class="col-md-12">
         <h3 class="title-5 m-b-35">Quản lý khuyến mãi</h3>
         <div class="table-data__tool">
             <div class="table-data__tool-left">
-                <form>
                     <div class="rs-select2--light rs-select2--sm">
-                        <select class="js-select2" name="time">
-                            <option selected="selected" value="today">Today</option>
-                            <option value="week">This week</option>
-                            <option value="month">This month</option>
+                        <select class="js-select2" id="typeofsort">
+                            <option selected="selected"> </option>
+                            <option value="0">A-Z</option>
+                            <option value="1">Z-A</option>
                         </select>
                         <div class="dropDownSelect2"></div>
                     </div>
-                    <button asp-action="Filter" class="au-btn-filter" type="submit">
-                        <i class="zmdi zmdi-filter-list"></i>filters
+                    <button id="Sort" class="au-btn-filter">
+                        <i class="zmdi zmdi-filter-list"></i>Sort
                     </button>
-                </form>
             </div>
             <div class="table-data__tool-right">
                 <a class="au-btn au-btn-icon au-btn--green au-btn--small" asp-action="Create">
@@ -89,3 +87,20 @@
         <!-- END DATA TABLE -->
     </div>
 </div>
+@section ajax{
+    <script>
+        $(function () {
+            $("#Sort").click(function () {
+                $.ajax({
+                    url: "/Discounts/Index",
+                    data: {
+                        "id": $("#typeofsort").val(),
+                    },
+                    success: function (response) {
+                        $("#discount").html(response);
+                    }
+                });
+            });
+        });
+    </script>
+}

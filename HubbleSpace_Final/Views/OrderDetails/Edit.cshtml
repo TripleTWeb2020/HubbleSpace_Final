@@ -59,7 +59,7 @@
                 <div class="form-group card-footer">
                     <input type="submit" value="Save" class="btn btn-primary col-2" />
                     <input type="reset" value="Reset" class="btn btn-danger col-2" />
-                    <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+                    <a asp-action="Index" class="btn btn-secondary col-2" asp-route-id="@Model.ID_Order">Back</a>
                 </div>
             </form>
         </div>

@@ -25,6 +25,9 @@ namespace HubbleSpace_Final.Entities
 
         }
 
+
+        public DbSet<HubbleSpace_Final.Entities.DiscountUsed> DiscountUsed { get; set; }
+
         
     }
 }

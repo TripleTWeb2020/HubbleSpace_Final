@@ -19,9 +19,24 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Discounts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
-            return View(await _context.Discount.ToListAsync());
+            if(id == 0)
+            {
+                var myDbContext = _context.Discount.OrderBy(o => o.Code_Discount);
+                return Json( myDbContext.ToListAsync(), JsonRequestBehavior.AllowGet);
+            }
+            if (id == 1)
+            {
+                var myDbContext = _context.Discount.OrderByDescending(o => o.Code_Discount);
+                return PartialView(await myDbContext.ToListAsync());
+
+            }
+            else
+            {
+                return PartialView(await _context.Discount.ToListAsync());
+            }
+
         }
 
         // GET: Discounts/Details/5
@@ -148,5 +163,6 @@ namespace HubbleSpace_Final.Controllers
         {
             return _context.Discount.Any(e => e.ID_Discount == id);
         }
+        
     }
 }
