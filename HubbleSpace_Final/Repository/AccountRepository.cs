@@ -33,9 +33,16 @@ namespace HubbleSpace_Final.Repository
         }
         public async Task<SignInResult> PasswordSignInAsync(SignInModel signInModel)
         {
-            var result= await _signInManager.PasswordSignInAsync(signInModel.Email, signInModel.Password, signInModel.RememberMe, false);
-            return result;
 
+            return await _signInManager.PasswordSignInAsync(signInModel.Username, signInModel.Password, signInModel.RememberMe,false);
+            
+           
+            
+
+        }
+        public async Task SignOutAsync()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }

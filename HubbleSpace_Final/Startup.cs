@@ -65,6 +65,7 @@ namespace HubbleSpace_Final
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

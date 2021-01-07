@@ -52,13 +52,19 @@ namespace HubbleSpace_Final.Controllers
             if (ModelState.IsValid)
             {
                var result=await _accountRepository.PasswordSignInAsync(signInModel);
-                if (result.Succeeded)
+               if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Invalid credentials");
             }
             return View(signInModel);
+        }
+        
+        public async Task<IActionResult> Logout()
+        {
+            await _accountRepository.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
