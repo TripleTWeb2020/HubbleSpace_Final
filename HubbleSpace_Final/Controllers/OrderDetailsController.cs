@@ -27,22 +27,12 @@ namespace HubbleSpace_Final.Controllers
                 var myDbContext_all = _context.OrderDetail.Include(o => o.Color_Product).Include(o => o.order).Include(o => o.Color_Product.product);
                 return View(await myDbContext_all.ToListAsync());
             }
-            var myDbContext = _context.OrderDetail.Include(o => o.Color_Product).Include(o => o.order).Include(o => o.Color_Product.product).AllAsync(m => m.ID_Order == id);
-
+            var myDbContext =  _context.OrderDetail.Include(o => o.Color_Product).Include(o => o.order).Include(o => o.Color_Product.product).Where(m => m.ID_Order == id);
             if (myDbContext == null)
             {
                 return NotFound();
             }
-
-            var Product_Color_Name = from c in _context.Color_Product
-                                     select new
-                                     {
-                                         ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.product.Product_Name + " - " +  c.Color_Name
-                                     };
-            ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name");
-
-            return View(myDbContext);
+            return View(await myDbContext.ToListAsync());
         }
 
         // GET: OrderDetails/Details/5
@@ -62,15 +52,6 @@ namespace HubbleSpace_Final.Controllers
             {
                 return NotFound();
             }
-
-            var Product_Color_Name = from c in _context.Color_Product
-                                     select new
-                                     {
-                                         ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.product.Product_Name + " - " + c.Color_Name
-                                     };
-            ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name");
-
             return View(orderDetail);
         }
 
@@ -244,14 +225,6 @@ namespace HubbleSpace_Final.Controllers
                 return NotFound();
             }
 
-            var Product_Color_Name = from c in _context.Color_Product
-                                     select new
-                                     {
-                                         ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.product.Product_Name + " - " + c.Color_Name
-                                     };
-            ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name");
-
             return View(orderDetail);
         }
 
@@ -272,3 +245,4 @@ namespace HubbleSpace_Final.Controllers
         }
     }
 }
+

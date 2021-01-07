@@ -1,17 +1,17 @@
-﻿@model IEnumerable<HubbleSpace_Final.Entities.Order>
+﻿@model IEnumerable<HubbleSpace_Final.Entities.Discount>
 
 @{
-    ViewData["Title"] = "Order - Manage";
+    ViewData["Title"] = "Discount - Manage";
     Layout = "_AdminLayout";
 
 }
 
 <div class="row">
     <div class="col-md-12">
-        <h3 class="title-5 m-b-35">Quản lý đơn hàng</h3>
+        <h3 class="title-5 m-b-35">Quản lý khuyến mãi</h3>
         <div class="table-data__tool">
             <div class="table-data__tool-left">
-                <form>
+                <form asp-action="Filter" method="get">
                     <div class="rs-select2--light rs-select2--sm">
                         <select class="js-select2" name="time">
                             <option selected="selected" value="all">All</option>
@@ -21,7 +21,7 @@
                         </select>
                         <div class="dropDownSelect2"></div>
                     </div>
-                    <button asp-action="Filter" class="au-btn-filter" type="submit">
+                    <button class="au-btn-filter" type="submit">
                         <i class="zmdi zmdi-filter-list"></i>filters
                     </button>
                 </form>
@@ -37,20 +37,17 @@
             <table class="table table-data2">
                 <thead>
                     <tr class="row">
-                        <th class="col-2">
-                            @Html.DisplayNameFor(model => model.TotalMoney)
+                        <th class="col-3">
+                            @Html.DisplayNameFor(model => model.Code_Discount)
+                        </th>
+                        <th class="col-3">
+                            @Html.DisplayNameFor(model => model.Expire)
                         </th>
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.Date_Create)
+                            @Html.DisplayNameFor(model => model.Value)
                         </th>
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.Address)
-                        </th>
-                        <th class="col-2">
-                            @Html.DisplayNameFor(model => model.SDT)
-                        </th>
-                        <th class="col-2">
-                            @Html.DisplayNameFor(model => model.Process)
+                            @Html.DisplayNameFor(model => model.NumberofTurns)
                         </th>
                         <th class="col-2"></th>
                     </tr>
@@ -59,30 +56,27 @@
                     @foreach (var item in Model)
                     {
                         <tr class="tr-shadow row">
-                            <td class="col-2">
-                                @Html.DisplayFor(modelItem => item.TotalMoney)
+                            <td class="col-3">
+                                @Html.DisplayFor(modelItem => item.Code_Discount)
+                            </td>
+                            <td class="col-3">
+                                @Html.DisplayFor(modelItem => item.Expire)
                             </td>
                             <td class="col-2">
-                                @Html.DisplayFor(modelItem => item.Date_Create)
+                                @Html.DisplayFor(modelItem => item.Value)
                             </td>
                             <td class="col-2">
-                                @Html.DisplayFor(modelItem => item.Address)
-                            </td>
-                            <td class="col-2">
-                                @Html.DisplayFor(modelItem => item.SDT)
-                            </td>
-                            <td class="col-2">
-                                @Html.DisplayFor(modelItem => item.Process)
+                                @Html.DisplayFor(modelItem => item.NumberofTurns)
                             </td>
                             <td class="col-2">
                                 <div class="table-data-feature">
-                                    <a class="item" asp-action="Edit" asp-route-id="@item.ID_Order" data-toggle="tooltip" data-placement="top" title="Edit">
+                                    <a class="item" asp-action="Edit" asp-route-id="@item.ID_Discount" data-toggle="tooltip" data-placement="top" title="Edit">
                                         <i class="zmdi zmdi-edit"></i>
                                     </a>
-                                    <a class="item" asp-action="Delete" asp-route-id="@item.ID_Order" data-toggle="tooltip" data-placement="top" title="Delete">
+                                    <a class="item" asp-action="Delete" asp-route-id="@item.ID_Discount" data-toggle="tooltip" data-placement="top" title="Delete">
                                         <i class="zmdi zmdi-delete"></i>
                                     </a>
-                                    <a class="item" asp-action="Details" asp-route-id="@item.ID_Order " data-toggle="tooltip" data-placement="top" title="More">
+                                    <a class="item" asp-action="Details" asp-route-id="@item.ID_Discount" data-toggle="tooltip" data-placement="top" title="More">
                                         <i class="zmdi zmdi-more"></i>
                                     </a>
                                 </div>
