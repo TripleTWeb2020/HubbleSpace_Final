@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<HubbleSpace_Final.Entities.Banner>
+
+@{
     ViewData["Title"] = "Home Page";
     Layout = "_FrontendLayout";
 }
@@ -6,10 +8,12 @@
     <div class="row">
         <div class="col-md-12">
             <div id="main-slider" class="owl-carousel owl-theme">
-                <div class="item"><img src="~/distribution/img/main-slider1.jpg" alt="" class="img-fluid"></div>
-                <div class="item"><img src="~/distribution/img/main-slider2.jpg" alt="" class="img-fluid"></div>
-                <div class="item"><img src="~/distribution/img/main-slider3.jpg" alt="" class="img-fluid"></div>
-                <div class="item"><img src="~/distribution/img/main-slider4.jpg" alt="" class="img-fluid"></div>
+                @foreach (var item in Model)
+                {
+                    <div class="item">
+                        <img style="height:960px" src="~/Images/Banner/@Html.DisplayFor(modelItem => item.Photo)" class="img-fluid owl-height">
+                    </div>
+                }
             </div>
             <!-- /#main-slider-->
         </div>

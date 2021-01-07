@@ -1,5 +1,4 @@
-﻿
-using HubbleSpace_Final.Models;
+﻿using HubbleSpace_Final.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,6 +6,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using HubbleSpace_Final.Entities;
+
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -14,15 +16,17 @@ namespace HubbleSpace_Final.Controllers
     {
 
         private readonly ILogger<HomeController> _logger;
+        private readonly MyDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, MyDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await _context.Banner.ToListAsync());
         }
 
         public IActionResult Admin()
@@ -54,9 +58,12 @@ namespace HubbleSpace_Final.Controllers
         {
             return View();
         }
-        public IActionResult Categories()
+        public async Task<IActionResult> Categories(string Object, string Name, string Brand)
         {
-            return View();
+            return View(await _context.Product.Where(p => p.category.Object.Contains(Object))
+                                              .Where(p => p.category.Category_Name.Contains(Name))
+                                              .Where(p => p.Brand.Brand_Name.Contains(Name))
+                                              .ToListAsync());
         }
         public IActionResult Product_Detail()
         {

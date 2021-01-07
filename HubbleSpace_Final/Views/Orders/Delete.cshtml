@@ -79,10 +79,14 @@
             </div>
 
 
-            <div class="form-group card-footer">
-                <a asp-action="Delete" class="btn btn-danger col-2" asp-route-id="@Model.ID_Order">Delete</a>
-                <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
-            </div>
+            <form asp-action="Delete">
+                <div class="form-group card-footer">
+                    <input type="hidden" asp-for="ID_Order" />
+                    <input type="submit" value="Delete" class="btn btn-danger col-2" />
+                    <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
