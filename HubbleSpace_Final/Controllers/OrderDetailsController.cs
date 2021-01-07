@@ -243,6 +243,11 @@ namespace HubbleSpace_Final.Controllers
         {
             return _context.OrderDetail.Any(e => e.ID_OrderDetail == id);
         }
+
+        public IActionResult Search(string term)
+        {
+            return View("Index", _context.OrderDetail.Include(o => o.Color_Product).Include(o => o.order).Include(o => o.Color_Product.product).Where(m => m.Color_Product.product.Product_Name.Contains(term)));
+        }
     }
 }
 

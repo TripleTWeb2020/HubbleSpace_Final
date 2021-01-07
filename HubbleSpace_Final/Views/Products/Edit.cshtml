@@ -12,7 +12,7 @@
             Cập nhật thông tin sản phẩm
         </div>
         <div class="card-body card-block">
-            <form asp-action="Edit" class="form-horizontal">
+            <form asp-action="Edit" class="form-horizontal" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="ID_Product" />
 
@@ -31,7 +31,7 @@
                         <label asp-for="Image" class="control-label"></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input asp-for="Image" class="form-control"/>
+                        <input asp-for="Image" class="form-control-file" type="file"/>
                         <span asp-validation-for="Image" class="text-danger"></span>
                     </div>
                 </div>

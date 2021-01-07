@@ -180,5 +180,10 @@ namespace HubbleSpace_Final.Controllers
         {
             return _context.Img_Product.Any(e => e.ID_Img_Product == id);
         }
+
+        public IActionResult Search(string term)
+        {
+            return View("Index", _context.Img_Product.Include(i => i.color_Product).Include(i => i.color_Product.product).Where(m => m.color_Product.product.Product_Name.Contains(term)));
+        }
     }
 }

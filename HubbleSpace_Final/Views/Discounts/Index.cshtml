@@ -6,22 +6,20 @@
 
 }
 
-<div id="discount" class="row">
+<div class="row">
     <div class="col-md-12">
         <h3 class="title-5 m-b-35">Quản lý khuyến mãi</h3>
         <div class="table-data__tool">
             <div class="table-data__tool-left">
+                <form asp-action="Search" method="get">
                     <div class="rs-select2--light rs-select2--sm">
-                        <select class="js-select2" id="typeofsort">
-                            <option selected="selected"> </option>
-                            <option value="0">A-Z</option>
-                            <option value="1">Z-A</option>
-                        </select>
+                        <input type="text" class="form-control" placeholder="Search for" name="term" />
                         <div class="dropDownSelect2"></div>
                     </div>
-                    <button id="Sort" class="au-btn-filter">
-                        <i class="zmdi zmdi-filter-list"></i>Sort
+                    <button class="au-btn-filter" type="submit">
+                        <i class="zmdi zmdi-view-list"></i>Search
                     </button>
+                </form>
             </div>
             <div class="table-data__tool-right">
                 <a class="au-btn au-btn-icon au-btn--green au-btn--small" asp-action="Create">
@@ -87,20 +85,3 @@
         <!-- END DATA TABLE -->
     </div>
 </div>
-@section ajax{
-    <script>
-        $(function () {
-            $("#Sort").click(function () {
-                $.ajax({
-                    url: "/Discounts/Index",
-                    data: {
-                        "id": $("#typeofsort").val(),
-                    },
-                    success: function (response) {
-                        $("#discount").html(response);
-                    }
-                });
-            });
-        });
-    </script>
-}

@@ -12,7 +12,7 @@
             Cập nhật thông tin người dùng
         </div>
         <div class="card-body card-block">
-            <form asp-action="Edit" class="form-horizontal">
+            <form asp-action="Edit" class="form-horizontal" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="ID_Account" />
 
@@ -41,7 +41,7 @@
                         <label asp-for="Avatar" class="control-label"></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input asp-for="Avatar" class="form-control" />
+                        <input asp-for="Avatar" class="form-control-file" type="file"/>
                         <span asp-validation-for="Avatar" class="text-danger"></span>
                     </div>
                 </div>

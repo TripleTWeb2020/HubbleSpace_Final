@@ -155,5 +155,10 @@ namespace HubbleSpace_Final.Controllers
         {
             return _context.Order.Any(e => e.ID_Order == id);
         }
+
+        public IActionResult Search(string term)
+        {
+            return View("Index", _context.Order.Include(o => o.account).Where(m => m.Address.Contains(term)));
+        }
     }
 }

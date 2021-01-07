@@ -148,5 +148,10 @@ namespace HubbleSpace_Final.Controllers
         {
             return _context.Category.Any(e => e.ID_Categorie == id);
         }
+
+        public IActionResult Search(string term)
+        {
+            return View("Index", _context.Category.Where(m => m.Category_Name.Contains(term)));
+        }
     }
 }

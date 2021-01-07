@@ -148,5 +148,9 @@ namespace HubbleSpace_Final.Controllers
         {
             return _context.Brand.Any(e => e.ID_Brand == id);
         }
+        public IActionResult Search(string term)
+        {
+            return View("Index", _context.Brand.Where(m => m.Brand_Name.Contains(term)));
+        }
     }
 }

@@ -879,7 +879,7 @@ section {
 }
 
 .rs-select2--sm {
-    width: 114px;
+    width: auto;
 }
 
 .rs-select2--md {

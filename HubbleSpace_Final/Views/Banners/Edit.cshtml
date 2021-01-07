@@ -11,7 +11,7 @@
             Cập nhật thông tin Banner
         </div>
         <div class="card-body card-block">
-            <form asp-action="Edit" class="form-horizontal">
+            <form asp-action="Edit" class="form-horizontal" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="ID_Banner" />
                 <div class="row form-group">
@@ -28,7 +28,7 @@
                         <label asp-for="Photo" class="control-label"></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input asp-for="Photo" class="form-control" type="url" />
+                        <input asp-for="Photo" class="form-control-file" type="file" />
                         <span asp-validation-for="Photo" class="text-danger"></span>
                     </div>
                 </div>

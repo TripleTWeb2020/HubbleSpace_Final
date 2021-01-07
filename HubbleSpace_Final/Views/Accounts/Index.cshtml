@@ -10,18 +10,13 @@
         <h3 class="title-5 m-b-35">Quản lý người dùng</h3>
         <div class="table-data__tool">
             <div class="table-data__tool-left">
-                <form>
+                <form asp-action="Search" method="get">
                     <div class="rs-select2--light rs-select2--sm">
-                        <select class="js-select2" name="time">
-                            <option selected="selected" value="all">All</option>
-                            <option value="today">Today</option>
-                            <option value="month">This month</option>
-                            <option value="year">This year</option>
-                        </select>
+                        <input type="text" class="form-control" placeholder="Search for" name="term" />
                         <div class="dropDownSelect2"></div>
                     </div>
-                    <button asp-action="Filter" class="au-btn-filter" type="submit">
-                        <i class="zmdi zmdi-filter-list"></i>filters
+                    <button class="au-btn-filter" type="submit">
+                        <i class="zmdi zmdi-view-list"></i>Search
                     </button>
                 </form>
             </div>
