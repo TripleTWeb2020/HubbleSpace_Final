@@ -1,7 +1,9 @@
 using HubbleSpace_Final.Entities;
+using HubbleSpace_Final.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +29,8 @@ namespace HubbleSpace_Final
         {
             services.AddControllersWithViews();
             services.AddDbContext<MyDbContext>(option => { option.UseSqlServer(Configuration.GetConnectionString("HubbleSpace_Final")); });
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<MyDbContext>();
             services.AddAuthentication()
                     .AddGoogle(options =>
                     {
@@ -37,6 +41,10 @@ namespace HubbleSpace_Final
                         options.ClientId = Configuration["App:FacebookClientId"];
                         options.ClientSecret = Configuration["App:FacebookClientSecret"];
                     });
+            
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            //services.AddIdentity<IAccountRepository, AccountRepository>();
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
