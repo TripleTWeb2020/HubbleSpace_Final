@@ -5,82 +5,9 @@
     <UserSecretsId>5c67c80a-e37f-40e8-a406-82c5cac2be6f</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Migrations\20201224065709_Db.init.cs" />
-    <Compile Remove="Migrations\20201224065709_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201225065413_Db.init.cs" />
-    <Compile Remove="Migrations\20201225065413_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201227052749_Db.init.cs" />
-    <Compile Remove="Migrations\20201227052749_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201227053224_Db.init.cs" />
-    <Compile Remove="Migrations\20201227053224_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201227054424_Db.init.cs" />
-    <Compile Remove="Migrations\20201227054424_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201227101325_Db.init.cs" />
-    <Compile Remove="Migrations\20201227101325_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201227101806_Db.init.cs" />
-    <Compile Remove="Migrations\20201227101806_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201227103700_Db.init.cs" />
-    <Compile Remove="Migrations\20201227103700_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201227104641_Db.init.cs" />
-    <Compile Remove="Migrations\20201227104641_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201227104913_Db.init.cs" />
-    <Compile Remove="Migrations\20201227104913_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201227105231_Db.init.cs" />
-    <Compile Remove="Migrations\20201227105231_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201228032419_Db.init.cs" />
-    <Compile Remove="Migrations\20201228032419_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201228034047_Db.init.cs" />
-    <Compile Remove="Migrations\20201228034047_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201228035407_Db.init.cs" />
-    <Compile Remove="Migrations\20201228035407_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201228035656_Db.init.cs" />
-    <Compile Remove="Migrations\20201228035656_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201230151134_Db.init.cs" />
-    <Compile Remove="Migrations\20201230151134_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201230163954_Db.init.cs" />
-    <Compile Remove="Migrations\20201230163954_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201230175352_Db.init.cs" />
-    <Compile Remove="Migrations\20201230175352_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201231072423_Dbinit.cs" />
-    <Compile Remove="Migrations\20201231072423_Dbinit.Designer.cs" />
-    <Compile Remove="Migrations\20201231072720_Db.init.cs" />
-    <Compile Remove="Migrations\20201231072720_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201231073042_Db.init.cs" />
-    <Compile Remove="Migrations\20201231073042_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201231073545_db.init.cs" />
-    <Compile Remove="Migrations\20201231073545_db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201231080112_Db.init.cs" />
-    <Compile Remove="Migrations\20201231080112_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20201231082810_Db.init.cs" />
-    <Compile Remove="Migrations\20201231082810_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20210101084217_Db.init.cs" />
-    <Compile Remove="Migrations\20210101084217_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20210101090858_Db.init.cs" />
-    <Compile Remove="Migrations\20210101090858_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20210101101321_Db.init.cs" />
-    <Compile Remove="Migrations\20210101101321_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20210101172136_Db.init.cs" />
-    <Compile Remove="Migrations\20210101172136_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20210101173442_Db.init.cs" />
-    <Compile Remove="Migrations\20210101173442_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20210102062941_Db.init.cs" />
-    <Compile Remove="Migrations\20210102062941_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20210102074309_Db.init.cs" />
-    <Compile Remove="Migrations\20210102074309_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20210102093643_Db.init.cs" />
-    <Compile Remove="Migrations\20210102093643_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20210104155437_Db.init.cs" />
-    <Compile Remove="Migrations\20210104155437_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20210105070931_Db.init.cs" />
-    <Compile Remove="Migrations\20210105070931_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20210105074548_Db.init.cs" />
-    <Compile Remove="Migrations\20210105074548_Db.init.Designer.cs" />
-    <Compile Remove="Migrations\20210105075637_Db.init.cs" />
-    <Compile Remove="Migrations\20210105075637_Db.init.Designer.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.10" />
@@ -90,8 +17,5 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>

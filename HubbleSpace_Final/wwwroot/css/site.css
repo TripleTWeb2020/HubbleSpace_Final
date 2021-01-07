@@ -67,7 +67,17 @@ html {
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
+div.center {
+    display: block;
+    text-align: center;
+}
 
+center {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
 button.accept-policy {
   font-size: 1rem;
   line-height: inherit;
