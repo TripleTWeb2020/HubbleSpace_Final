@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Login Page";
+    Layout = "_FrontendLayout";
+}
+<div class="col-lg-6">
+    <div class="box">
+        <h1>Login</h1>
+        <p class="lead">Already our customer?</p>
+        <hr>
+        <form action="customer-orders.html" method="post">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input id="password" type="password" class="form-control">
+            </div>
+            <div class="text-center">
+                <a href="ForgotPassword">Forgot Password?</a>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i> Log in</button>
+            </div>
+
+        </form>
+        <div>
+            <form action="#" method="post">
+                <button type="submit" href="#" class="btn"><i class="fa fa-facebook">    Sign In with Facebook</i></button>
+            </form>
+            <form action="#" method="post">
+                <button type="submit" href="#" class="btn"><i class="fa fa-google">      Sign In with Google</i></button>
+            </form>
+    </div>
+</div>
+</div>
