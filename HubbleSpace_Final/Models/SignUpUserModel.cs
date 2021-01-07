@@ -16,8 +16,8 @@ namespace HubbleSpace_Final.Models
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Please enter your username")]
-        [Display(Name = "Email address")]
-        [EmailAddress(ErrorMessage = "Please enter a true username")]
+        [Display(Name = "Username")]
+        
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Please enter your email")]

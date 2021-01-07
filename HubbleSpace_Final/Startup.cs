@@ -1,4 +1,5 @@
 using HubbleSpace_Final.Entities;
+using HubbleSpace_Final.Models;
 using HubbleSpace_Final.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,7 +30,7 @@ namespace HubbleSpace_Final
         {
             services.AddControllersWithViews();
             services.AddDbContext<MyDbContext>(option => { option.UseSqlServer(Configuration.GetConnectionString("HubbleSpace_Final")); });
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<MyDbContext>();
             services.AddAuthentication()
                     .AddGoogle(options =>
