@@ -21,10 +21,11 @@ namespace HubbleSpace_Final.Controllers
         // GET: Discounts
         public async Task<IActionResult> Index(int id)
         {
-            if(id == 0)
+            if (id == 0)
             {
                 var myDbContext = _context.Discount.OrderBy(o => o.Code_Discount);
-                return Json( myDbContext.ToListAsync(), JsonRequestBehavior.AllowGet);
+                return PartialView(await myDbContext.ToListAsync());
+
             }
             if (id == 1)
             {
