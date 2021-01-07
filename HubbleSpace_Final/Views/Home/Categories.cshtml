@@ -34,30 +34,30 @@
                             <ul class="nav nav-pills flex-column category-menu">
                               
                                     <li>
-                                        <a href="~/../Home/Categories/Object=Men" class="nav-link">Men</a>
+                                        <a asp-action="Categories" asp-route-Object="Men" class="nav-link">Men</a>
                                         <ul class="list-unstyled">
-                                            <li><a href="Categories" class="nav-link">T-shirts</a></li>
-                                            <li><a href="Categories" class="nav-link">Shirts</a></li>
-                                            <li><a href="Categories" class="nav-link">Pants</a></li>
-                                            <li><a href="Categories" class="nav-link">Accessories</a></li>
+                                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Originals" class="nav-link">Originals</a></li>
+                                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Running" class="nav-link">Running</a></li>
+                                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Training" class="nav-link">Training</a></li>
+                                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Football" class="nav-link">Football</a></li>
+                                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Basketball" class="nav-link">Basketball</a></li>
+                                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Tennis" class="nav-link">Tennis</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="Categories" class="nav-link active">Ladies  <span class="badge badge-light">123</span></a>
+                                        <a asp-action="Categories" asp-route-Object="Women" class="nav-link">Women</a>
                                         <ul class="list-unstyled">
-                                            <li><a href="Categories" class="nav-link">T-shirts</a></li>
-                                            <li><a href="Categories" class="nav-link">Skirts</a></li>
-                                            <li><a href="Categories" class="nav-link">Pants</a></li>
-                                            <li><a href="Categories" class="nav-link">Accessories</a></li>
+                                            <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Originals" class="nav-link">Originals</a></li>
+                                            <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Running" class="nav-link">Running</a></li>
+                                            <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Training" class="nav-link">Training</a></li>
+                                            <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Tennis" class="nav-link">Tennis</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="Categories" class="nav-link">Kids  <span class="badge badge-secondary">11</span></a>
+                                        <a asp-action="Categories" asp-route-Object="Kids" class="nav-link">Kids</a>
                                         <ul class="list-unstyled">
-                                            <li><a href="Categories" class="nav-link">T-shirts</a></li>
-                                            <li><a href="Categories" class="nav-link">Skirts</a></li>
-                                            <li><a href="Categories" class="nav-link">Pants</a></li>
-                                            <li><a href="Categories" class="nav-link">Accessories</a></li>
+                                            <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-Name="Originals" class="nav-link">Originals</a></li>
+                                            <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-Name="Running" class="nav-link">Running</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -133,13 +133,9 @@
                             </div>
                         </div>
                         <!-- *** MENUS AND FILTERS END ***-->
-                        <div class="banner"><a href="#"><img src="img/banner.jpg" alt="sales 2014" class="img-fluid"></a></div>
                     </div>
                 <div class="col-lg-9">
-                    <div class="box">
-                        <h1>Ladies</h1>
-                        <p>In our Ladies department we offer wide selection of the best products we have found and carefully selected worldwide.</p>
-                    </div>
+                    
                     <div class="box info-bar">
                         <div class="row">
                             <div class="col-md-12 col-lg-4 products-showing">Showing <strong>12</strong> of <strong>25</strong> products</div>

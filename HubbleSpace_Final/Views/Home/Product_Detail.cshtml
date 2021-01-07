@@ -24,45 +24,49 @@
                 </div>
                 <div class="col-lg-3 order-2 order-lg-1">
                     <!--
-                    *** MENUS AND FILTERS ***
-                    _________________________________________________________
-                    -->
+    *** MENUS AND FILTERS ***
+    _________________________________________________________
+    -->
+                    <!--Category -->
                     <div class="card sidebar-menu mb-4">
                         <div class="card-header">
                             <h3 class="h4 card-title">Categories</h3>
                         </div>
                         <div class="card-body">
                             <ul class="nav nav-pills flex-column category-menu">
+
                                 <li>
-                                    <a href="Categories" class="nav-link">Men <span class="badge badge-secondary">42</span></a>
+                                    <a asp-action="Categories" asp-route-Object="Men" class="nav-link">Men</a>
                                     <ul class="list-unstyled">
-                                        <li><a href="Categories" class="nav-link">T-shirts</a></li>
-                                        <li><a href="Categories" class="nav-link">Shirts</a></li>
-                                        <li><a href="Categories" class="nav-link">Pants</a></li>
-                                        <li><a href="Categories" class="nav-link">Accessories</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Originals" class="nav-link">Originals</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Running" class="nav-link">Running</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Training" class="nav-link">Training</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Football" class="nav-link">Football</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Basketball" class="nav-link">Basketball</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Tennis" class="nav-link">Tennis</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="Categories" class="nav-link active">Ladies  <span class="badge badge-light">123</span></a>
+                                    <a asp-action="Categories" asp-route-Object="Women" class="nav-link">Women</a>
                                     <ul class="list-unstyled">
-                                        <li><a href="Categories" class="nav-link">T-shirts</a></li>
-                                        <li><a href="Categories" class="nav-link">Skirts</a></li>
-                                        <li><a href="Categories" class="nav-link">Pants</a></li>
-                                        <li><a href="Categories" class="nav-link">Accessories</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Originals" class="nav-link">Originals</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Running" class="nav-link">Running</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Training" class="nav-link">Training</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Tennis" class="nav-link">Tennis</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="category.html" class="nav-link">Kids  <span class="badge badge-secondary">11</span></a>
+                                    <a asp-action="Categories" asp-route-Object="Kids" class="nav-link">Kids</a>
                                     <ul class="list-unstyled">
-                                        <li><a href="category.html" class="nav-link">T-shirts</a></li>
-                                        <li><a href="category.html" class="nav-link">Skirts</a></li>
-                                        <li><a href="category.html" class="nav-link">Pants</a></li>
-                                        <li><a href="category.html" class="nav-link">Accessories</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-Name="Originals" class="nav-link">Originals</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-Name="Running" class="nav-link">Running</a></li>
                                     </ul>
                                 </li>
                             </ul>
                         </div>
                     </div>
+
+                    <!--Filter by Brand -->
                     <div class="card sidebar-menu mb-4">
                         <div class="card-header">
                             <h3 class="h4 card-title">Brands <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
@@ -95,6 +99,8 @@
                             </form>
                         </div>
                     </div>
+
+                    <!--Filter by Color (Recommend->Price) -->
                     <div class="card sidebar-menu mb-4">
                         <div class="card-header">
                             <h3 class="h4 card-title">Colours <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
@@ -133,7 +139,6 @@
                         </div>
                     </div>
                     <!-- *** MENUS AND FILTERS END ***-->
-                    <div class="banner"><a href="#"><img src="img/banner.jpg" alt="sales 2014" class="img-fluid"></a></div>
                 </div>
                 <div class="col-lg-9 order-1 order-lg-2">
                     <div id="productMain" class="row">

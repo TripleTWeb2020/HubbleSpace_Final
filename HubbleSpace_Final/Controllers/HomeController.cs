@@ -58,11 +58,18 @@ namespace HubbleSpace_Final.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> Categories(string Object, string Name, string Brand)
+        public async Task<IActionResult> Categories(string Object="", string Name="", string Brand="")
         {
             return View(await _context.Product.Where(p => p.category.Object.Contains(Object))
                                               .Where(p => p.category.Category_Name.Contains(Name))
-                                              .Where(p => p.Brand.Brand_Name.Contains(Name))
+                                              .Where(p => p.Brand.Brand_Name.Contains(Brand))
+                                              .ToListAsync());
+        }
+        public async Task<IActionResult> Filter(string Object, string Name, string Brand)
+        {
+            return View("Categories", await _context.Product.Where(p => p.category.Object.Contains(Object))
+                                              .Where(p => p.category.Category_Name.Contains(Name))
+                                              .Where(p => p.Brand.Brand_Name.Contains(Brand))
                                               .ToListAsync());
         }
         public IActionResult Product_Detail()
