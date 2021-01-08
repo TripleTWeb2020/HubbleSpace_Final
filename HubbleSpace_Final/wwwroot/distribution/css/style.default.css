@@ -79,12 +79,12 @@ h1 {
 *
 */
 #top {
-  background: #333;
-  padding: 10px 0;
+    background: #7d585b;
+    padding: 10px 0;
 }
-
 #top .offer {
-  color: #fff;
+        color: #ffdcb8;
+
 }
 
 #top .offer .btn {

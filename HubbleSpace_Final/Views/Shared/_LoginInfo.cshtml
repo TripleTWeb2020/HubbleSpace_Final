@@ -5,9 +5,9 @@
 {
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Hello @(_userManager.GetUserName(User)!)
+           <a></a>
         </a>
-        <div class="dropdown-menu">
+        <div class="dropdown-menu" aria-labelledby="navbarDropDown">
             <a class="dropdown-item" asp-action="Logout" asp-controller="Client-Accounts">Logout</a>
             <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Account">Change password</a>
         </div>
@@ -16,7 +16,7 @@
 else
 {
     <li class="nav-item">
-        <a class="btn btn-outline-primary" asp-action="login" asp-route-returnUrl="@Context.Request.Path">Login</a>
+        <a class="btn btn-outline-primary" href="login">Login</a>
         <a class="btn btn-primary" href="signup">Register</a>
     </li>
 }
