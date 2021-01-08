@@ -58,23 +58,32 @@ namespace HubbleSpace_Final.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> Categories(string Object="", string Name="", string Brand="")
+        public async Task<IActionResult> Categories(string Object="", string Name="")
         {
-            return View(await _context.Product.Where(p => p.category.Object.Contains(Object))
-                                              .Where(p => p.category.Category_Name.Contains(Name))
-                                              .Where(p => p.Brand.Brand_Name.Contains(Brand))
+            ViewData["Object"] = Object;
+            ViewData["Name"] = Name;
+            return View(await _context.Color_Product.Include(p => p.product)
+                                                    .Include(p => p.product.category)
+                                                    .Where(p => p.product.category.Object.Contains(Object))
+                                                    .Where(p => p.product.category.Category_Name.Contains(Name))
+                                                    .ToListAsync());
+        }
+        public async Task<IActionResult> Filter(string Brand="")
+        {
+            return View("Categories", await _context.Color_Product.Where(p => p.product.Brand.Brand_Name.Contains(Brand))
                                               .ToListAsync());
         }
-        public async Task<IActionResult> Filter(string Object, string Name, string Brand)
+        
+        public async Task<IActionResult> Product_Detail(int id)
         {
-            return View("Categories", await _context.Product.Where(p => p.category.Object.Contains(Object))
-                                              .Where(p => p.category.Category_Name.Contains(Name))
-                                              .Where(p => p.Brand.Brand_Name.Contains(Brand))
-                                              .ToListAsync());
+            return View(await _context.Img_Product.Include(p => p.color_Product.product)
+                                                  .Include(p => p.color_Product.product.category)
+                                                  .Where(p => p.ID_Color_Product == id)
+                                                  .ToListAsync());
         }
-        public IActionResult Product_Detail()
+        public async Task<IActionResult> GetColor(int id)
         {
-            return View();
+            return View(await _context.Img_Product.Where(p => p.ID_Color_Product == id).ToListAsync());
         }
         public IActionResult Register()
         {

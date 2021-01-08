@@ -45,7 +45,7 @@
                     <li class="list-inline-item"><a href="#">Recently viewed</a></li>
                 </ul>
             </div>
-            
+
             <!-- *** TOP BAR END ***-->
 
 
@@ -141,15 +141,18 @@
             @RenderBody()
         </div>
     </div>
-   
+
     @await Html.PartialAsync("_FrontendFooter")
 
     <!-- JavaScript files-->
+    <script src="~/CoolAdmin-master/vendor/jquery-3.4.1.min.js"></script>
     <script src="~/distribution/vendor/jquery/jquery.min.js"></script>
     <script src="~/distribution/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/distribution/vendor/jquery.cookie/jquery.cookie.js"></script>
     <script src="~/distribution/vendor/owl.carousel/owl.carousel.min.js"></script>
     <script src="~/distribution/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.js"></script>
     <script src="~/distribution/js/front.js"></script>
+    @RenderSection("ajax", required: false)
+
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HubbleSpace_Final.Entities.Product>
+﻿@model IEnumerable<HubbleSpace_Final.Entities.Color_Product>
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -16,8 +16,15 @@
                     <!-- breadcrumb-->
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li aria-current="page" class="breadcrumb-item active">Ladies</li>
+                            <li class="breadcrumb-item"><a href="~/../Home">Home</a></li>
+                            @{
+                                var breadcrumb_item = Model.FirstOrDefault();
+                                <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="ViewBag.Object">@ViewBag.Object</a></li>
+                                @if (ViewBag.Name != "")
+                                {
+                                    <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="ViewBag.Name">@ViewBag.Name</a></li>
+                                }
+                            }
                         </ol>
                     </nav>
                 </div>
@@ -72,22 +79,22 @@
                                     <div class="form-group">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox"> Armani  (10)
+                                                <input type="checkbox"> Adidas
                                             </label>
                                         </div>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox"> Versace  (12)
+                                                <input type="checkbox"> Nike
                                             </label>
                                         </div>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox"> Carlo Bruni  (15)
+                                                <input type="checkbox"> Puma
                                             </label>
                                         </div>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox"> Jack Honey  (14)
+                                                <input type="checkbox"> Reebok
                                             </label>
                                         </div>
                                     </div>
@@ -97,34 +104,29 @@
                         </div>
                         <div class="card sidebar-menu mb-4">
                             <div class="card-header">
-                                <h3 class="h4 card-title">Colours <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
+                                <h3 class="h4 card-title">Price <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
                             </div>
                             <div class="card-body">
                                 <form>
                                     <div class="form-group">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox"><span class="colour white"></span> White (14)
+                                                <input type="checkbox"> Less than 1.000.000
                                             </label>
                                         </div>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox"><span class="colour blue"></span> Blue (10)
+                                                <input type="checkbox"> 1.000.000 - 3.000.000
                                             </label>
                                         </div>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox"><span class="colour green"></span>  Green (20)
+                                                <input type="checkbox"> 3.000.000 - 5.000.000
                                             </label>
                                         </div>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox"><span class="colour yellow"></span>  Yellow (13)
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"><span class="colour red"></span>  Red (10)
+                                                <input type="checkbox"> More than 5.000.000
                                             </label>
                                         </div>
                                     </div>
@@ -158,21 +160,21 @@
                         @foreach (var item in Model){
                             <div class="col-lg-4 col-md-6">
                                 <div class="product">
-                                    <a href = "Product_Detail"><img src = "~/Images/Product_Avatar/@Html.DisplayFor(modelItem => item.Image)"alt="@Html.DisplayFor(modelItem => item.Product_Name)" class="img-fluid"></a>
+                                    <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product"><img src = "~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)"alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid"></a>
                                     <div class="text">
-                                        <h3><a href="Product_Detail">@Html.DisplayFor(modelItem => item.Product_Name)</a></h3>
+                                        <h3><a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">@Html.DisplayFor(modelItem => item.product.Product_Name)</a></h3>
                                         <p class="price">
                                             <del>
-                                                @if (item.Price_Sale < item.Price_Product)
+                                                @if (item.product.Price_Sale < item.product.Price_Product)
                                                 {
-                                                    @Html.DisplayFor(modelItem => item.Price_Sale)
+                                                    @Html.DisplayFor(modelItem => item.product.Price_Sale)
 
                                                 }
-                                        </del>   @Html.DisplayFor(modelItem => item.Price_Product)
+                                        </del>   @Html.DisplayFor(modelItem => item.product.Price_Product)
                                         </p>
                                         <p class="buttons">
-                                            <a href = "Product_Detail" class="btn btn-outline-secondary">View detail</a>
-                                            <a href = "Cart" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product" class="btn btn-outline-secondary">View detail</a>
+                                            <a asp-action="Cart" asp-route-id="@item.ID_Color_Product" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                         </p>
                                     </div>
                                     <!-- /.text-->

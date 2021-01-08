@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<HubbleSpace_Final.Entities.Img_Product>
 
 @{
     ViewData["Title"] = "Details Page";
@@ -15,18 +13,22 @@
                     <!-- breadcrumb-->
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Ladies</a></li>
-                            <li class="breadcrumb-item"><a href="#">Tops</a></li>
-                            <li aria-current="page" class="breadcrumb-item active">White Blouse Armani</li>
+                            <li class="breadcrumb-item"><a href="~/../Home">Home</a></li>
+                            @{
+                                var breadcrumb_item = Model.FirstOrDefault();
+                                <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="@breadcrumb_item.color_Product.product.category.Object">@Html.DisplayFor(modelItem => breadcrumb_item.color_Product.product.category.Object)</a></li>
+                                <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="@breadcrumb_item.color_Product.product.category.Object" asp-route-Name="@breadcrumb_item.color_Product.product.category.Category_Name">@Html.DisplayFor(modelItem => breadcrumb_item.color_Product.product.category.Category_Name)</a></li>
+                                <li aria-current="page" class="breadcrumb-item active">@Html.DisplayFor(modelItem => breadcrumb_item.color_Product.product.Product_Name)</li>
+                            }
                         </ol>
                     </nav>
                 </div>
+                <!--
+                *** MENUS AND FILTERS ***
+                _________________________________________________________
+                -->
                 <div class="col-lg-3 order-2 order-lg-1">
-                    <!--
-    *** MENUS AND FILTERS ***
-    _________________________________________________________
-    -->
+
                     <!--Category -->
                     <div class="card sidebar-menu mb-4">
                         <div class="card-header">
@@ -66,142 +68,84 @@
                         </div>
                     </div>
 
-                    <!--Filter by Brand -->
-                    <div class="card sidebar-menu mb-4">
-                        <div class="card-header">
-                            <h3 class="h4 card-title">Brands <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="form-group">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"> Armani  (10)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"> Versace  (12)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"> Carlo Bruni  (15)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"> Jack Honey  (14)
-                                        </label>
-                                    </div>
-                                </div>
-                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!--Filter by Color (Recommend->Price) -->
-                    <div class="card sidebar-menu mb-4">
-                        <div class="card-header">
-                            <h3 class="h4 card-title">Colours <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="form-group">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"><span class="colour white"></span> White (14)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"><span class="colour blue"></span> Blue (10)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"><span class="colour green"></span>  Green (20)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"><span class="colour yellow"></span>  Yellow (13)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"><span class="colour red"></span>  Red (10)
-                                        </label>
-                                    </div>
-                                </div>
-                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- *** MENUS AND FILTERS END ***-->
                 </div>
+                <!-- *** MENUS AND FILTERS END ***-->
+                <!--ProductMain-->
                 <div class="col-lg-9 order-1 order-lg-2">
                     <div id="productMain" class="row">
                         <div class="col-md-6">
-                            <div data-slider-id="1" class="owl-carousel shop-detail-carousel">
-                                <div class="item"> <img src="img/detailbig1.jpg" alt="" class="img-fluid"></div>
-                                <div class="item"> <img src="img/detailbig2.jpg" alt="" class="img-fluid"></div>
-                                <div class="item"> <img src="img/detailbig3.jpg" alt="" class="img-fluid"></div>
+                            <!--product_color_slider-->
+                            <div class="owl-carousel shop-detail-carousel">
+                            @foreach (var item in Model)
+                            {
+                                <div class="item">
+                                    <img src="~/Images/Product_Color_Image/@Html.DisplayFor(modelItem => item.color_Product.product.Product_Name)/@Html.DisplayFor(modelItem => item.Photo)" class="img-fluid owl-height">
+                                </div>
+                            }
                             </div>
+                            @{var product = Model.FirstOrDefault();
+                                if (product.color_Product.product.Price_Sale < product.color_Product.product.Price_Product)
+                                {
+                            <!-- /.ribbon-->
                             <div class="ribbon sale">
                                 <div class="theribbon">SALE</div>
                                 <div class="ribbon-background"></div>
                             </div>
                             <!-- /.ribbon-->
+
+                            <!-- /.ribbon
                             <div class="ribbon new">
                                 <div class="theribbon">NEW</div>
                                 <div class="ribbon-background"></div>
-                            </div>
+
                             <!-- /.ribbon-->
+                                }
+                            }
                         </div>
+
                         <div class="col-md-6">
-                            <div class="box">
-                                <h1 class="text-center">White Blouse Armani</h1>
-                                <p class="goToDescription"><a href="#details" class="scroll-to">Scroll to product details, material &amp; care and sizing</a></p>
-                                <p class="price">$124.00</p>
-                                <p class="text-center buttons"><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
+                        @{ var mainproduct = Model.FirstOrDefault();
+                                                    <div class="box">
+                                                        <h1 class="text-center">@Html.DisplayFor(modelItem => mainproduct.color_Product.product.Product_Name)</h1>
+                                                        <p class="price">
+                                                            @if (mainproduct.color_Product.product.Price_Sale < mainproduct.color_Product.product.Price_Product)
+                                                            {
+                                                            <p class="sale">@Html.DisplayFor(modelItem => mainproduct.color_Product.product.Price_Sale)</p>}
+                                                            @Html.DisplayFor(modelItem => mainproduct.color_Product.product.Price_Sale)
+                                                            </p>
+                                                            <p class="text-center buttons"><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
+                                                        </div>
+                        }
+                        </div>
+
+                    </div>
+
+                    <!-- /.Share in social-->
+                    <div class="row same-height-row">
+                        <div class="col-md-6 text-center align-middle">
+                            <div id="getcolor"  class="same-height">
+                                    
                             </div>
-                            <div data-slider-id="1" class="owl-thumbs">
-                                <button class="owl-thumb-item"><img src="img/detailsquare.jpg" alt="" class="img-fluid"></button>
-                                <button class="owl-thumb-item"><img src="img/detailsquare2.jpg" alt="" class="img-fluid"></button>
-                                <button class="owl-thumb-item"><img src="img/detailsquare3.jpg" alt="" class="img-fluid"></button>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <div id="details" class="box same-height">
+                                <h4>Show it to your friends</h4>
+                                <div class="social">
+                                    <p style="text-align: center"><a href="#" class="external facebook"><i class="fa fa-facebook"></i></a><a href="#" class="external gplus"><i class="fa fa-google-plus"></i></a><a href="#" class="external twitter"><i class="fa fa-twitter"></i></a><a href="#" class="email"><i class="fa fa-envelope"></i></a></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div id="details" class="box">
-                        <p></p>
-                        <h4>Product details</h4>
-                        <p>White lace top, woven, has a round neck, short sleeves, has knitted lining attached</p>
-                        <h4>Material &amp; care</h4>
-                        <ul>
-                            <li>Polyester</li>
-                            <li>Machine wash</li>
-                        </ul>
-                        <h4>Size &amp; Fit</h4>
-                        <ul>
-                            <li>Regular fit</li>
-                            <li>The model (height 5'8" and chest 33") is wearing a size S</li>
-                        </ul>
-                        <blockquote>
-                            <p><em>Define style this season with Armani's new range of trendy tops, crafted with intricate details. Create a chic statement look by teaming this lace number with skinny jeans and pumps.</em></p>
-                        </blockquote>
-                        <hr>
-                        <div class="social">
-                            <h4>Show it to your friends</h4>
-                            <p><a href="#" class="external facebook"><i class="fa fa-facebook"></i></a><a href="#" class="external gplus"><i class="fa fa-google-plus"></i></a><a href="#" class="external twitter"><i class="fa fa-twitter"></i></a><a href="#" class="email"><i class="fa fa-envelope"></i></a></p>
-                        </div>
-                    </div>
+
+
+                    <!-- /.Recommend-->
                     <div class="row same-height-row">
                         <div class="col-md-3 col-sm-6">
                             <div class="box same-height">
-                                <h3>You may also like these products</h3>
+                                <h3>Recommend products</h3>
                             </div>
                         </div>
+                        <!-- /.product-->
                         <div class="col-md-3 col-sm-6">
                             <div class="product same-height">
                                 <div class="flip-container">
@@ -248,10 +192,12 @@
                             <!-- /.product-->
                         </div>
                     </div>
+
+                    <!-- /.Recently-->
                     <div class="row same-height-row">
                         <div class="col-md-3 col-sm-6">
                             <div class="box same-height">
-                                <h3>Products viewed recently</h3>
+                                <h3>Viewed recently</h3>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
@@ -301,7 +247,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.col-md-9-->
+                    <!-- /.col-md-9-->
             </div>
         </div>
     </div>
