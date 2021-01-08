@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using HubbleSpace_Final.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using HubbleSpace_Final.Models;
 
 namespace HubbleSpace_Final.Entities
 {
-    public class MyDbContext: DbContext
+    public class MyDbContext: IdentityDbContext<ApplicationUser>
     {
         public DbSet<Brand> Brand { get; set; }
         public DbSet<Category> Category { get; set; }

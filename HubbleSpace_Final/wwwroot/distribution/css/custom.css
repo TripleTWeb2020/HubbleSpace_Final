@@ -1,0 +1,12 @@
+/* your styles go here */
+div.center {
+    display: block;
+    text-align: center;
+}
+
+center {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}

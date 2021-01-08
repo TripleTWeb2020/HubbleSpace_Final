@@ -1,7 +1,12 @@
 using HubbleSpace_Final.Entities;
+using HubbleSpace_Final.Helpers;
+using HubbleSpace_Final.Models;
+using HubbleSpace_Final.Repository;
+using HubbleSpace_Final.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +32,8 @@ namespace HubbleSpace_Final
         {
             services.AddControllersWithViews();
             services.AddDbContext<MyDbContext>(option => { option.UseSqlServer(Configuration.GetConnectionString("HubbleSpace_Final")); });
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<MyDbContext>();
             services.AddAuthentication()
                     .AddGoogle(options =>
                     {
@@ -37,6 +44,15 @@ namespace HubbleSpace_Final
                         options.ClientId = Configuration["App:FacebookClientId"];
                         options.ClientSecret = Configuration["App:FacebookClientSecret"];
                     });
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.LoginPath = Configuration["Application:LoginPath"];
+            });
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            //services.AddIdentity<IAccountRepository, AccountRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +72,7 @@ namespace HubbleSpace_Final
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

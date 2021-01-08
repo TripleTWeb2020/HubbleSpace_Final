@@ -79,12 +79,12 @@ h1 {
 *
 */
 #top {
-  background: #333;
-  padding: 10px 0;
+    background: #7d585b;
+    padding: 10px 0;
 }
-
 #top .offer {
-  color: #fff;
+        color: #ffdcb8;
+
 }
 
 #top .offer .btn {
@@ -477,11 +477,12 @@ h1 {
 */
 .box {
   background: #fff;
-  margin: 0 0 30px;
+  margin: 15px 0 30px;
   border: solid 1px #e6e6e6;
-  padding: 30px;
+  padding: 60px;
   -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  margin-left:20px
 }
 
 .box .box-header {
