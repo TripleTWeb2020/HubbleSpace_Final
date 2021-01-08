@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HubbleSpace_Final.Migrations
 {
-    public partial class DbInit : Migration
+    public partial class Dbinit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -313,7 +313,6 @@ namespace HubbleSpace_Final.Migrations
                     ID_Product = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Product_Name = table.Column<string>(maxLength: 100, nullable: false),
-                    Image = table.Column<string>(nullable: false),
                     Price_Product = table.Column<double>(nullable: false),
                     Price_Sale = table.Column<double>(nullable: false),
                     ID_Brand = table.Column<int>(nullable: false),
@@ -370,7 +369,8 @@ namespace HubbleSpace_Final.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Color_Name = table.Column<string>(maxLength: 100, nullable: false),
                     ID_Product = table.Column<int>(nullable: false),
-                    Image = table.Column<string>(nullable: false)
+                    Image = table.Column<string>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

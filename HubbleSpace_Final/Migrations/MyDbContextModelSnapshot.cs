@@ -163,6 +163,9 @@ namespace HubbleSpace_Final.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("ID_Product")
                         .HasColumnType("int");
 
@@ -360,10 +363,6 @@ namespace HubbleSpace_Final.Migrations
 
                     b.Property<int>("ID_Categorie")
                         .HasColumnType("int");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price_Product")
                         .HasColumnType("float");

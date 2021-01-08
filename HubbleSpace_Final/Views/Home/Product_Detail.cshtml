@@ -16,9 +16,12 @@
                             <li class="breadcrumb-item"><a href="~/../Home">Home</a></li>
                             @{
                                 var breadcrumb_item = Model.FirstOrDefault();
-                                <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="@breadcrumb_item.color_Product.product.category.Object">@Html.DisplayFor(modelItem => breadcrumb_item.color_Product.product.category.Object)</a></li>
-                                <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="@breadcrumb_item.color_Product.product.category.Object" asp-route-Name="@breadcrumb_item.color_Product.product.category.Category_Name">@Html.DisplayFor(modelItem => breadcrumb_item.color_Product.product.category.Category_Name)</a></li>
-                                <li aria-current="page" class="breadcrumb-item active">@Html.DisplayFor(modelItem => breadcrumb_item.color_Product.product.Product_Name)</li>
+                                if (breadcrumb_item != null)
+                                {
+                                    <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="@breadcrumb_item.color_Product.product.category.Object">@Html.DisplayFor(modelItem => breadcrumb_item.color_Product.product.category.Object)</a></li>
+                                    <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="@breadcrumb_item.color_Product.product.category.Object" asp-route-Name="@breadcrumb_item.color_Product.product.category.Category_Name">@Html.DisplayFor(modelItem => breadcrumb_item.color_Product.product.category.Category_Name)</a></li>
+                                    <li aria-current="page" class="breadcrumb-item active">@Html.DisplayFor(modelItem => breadcrumb_item.color_Product.product.Product_Name)</li>
+                                }
                             }
                         </ol>
                     </nav>
@@ -72,59 +75,63 @@
                 <!-- *** MENUS AND FILTERS END ***-->
                 <!--ProductMain-->
                 <div class="col-lg-9 order-1 order-lg-2">
-                    <div id="productMain" class="row">
+                    <div id="productMain" class="row same-height-row">
                         <div class="col-md-6">
                             <!--product_color_slider-->
-                            <div class="owl-carousel shop-detail-carousel">
-                            @foreach (var item in Model)
-                            {
-                                <div class="item">
-                                    <img src="~/Images/Product_Color_Image/@Html.DisplayFor(modelItem => item.color_Product.product.Product_Name)/@Html.DisplayFor(modelItem => item.Photo)" class="img-fluid owl-height">
-                                </div>
-                            }
+                            <div id="main-slider" class="owl-carousel owl-theme same-height">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="item">
+                                        <img src="~/Images/Product_Color_Image/@Html.DisplayFor(modelItem => item.color_Product.product.Product_Name)/@Html.DisplayFor(modelItem => item.Photo)" class="img-fluid owl-height">
+                                    </div>
+                                }
                             </div>
                             @{var product = Model.FirstOrDefault();
                                 if (product.color_Product.product.Price_Sale < product.color_Product.product.Price_Product)
                                 {
-                            <!-- /.ribbon-->
-                            <div class="ribbon sale">
-                                <div class="theribbon">SALE</div>
-                                <div class="ribbon-background"></div>
-                            </div>
-                            <!-- /.ribbon-->
-
-                            <!-- /.ribbon
-                            <div class="ribbon new">
-                                <div class="theribbon">NEW</div>
-                                <div class="ribbon-background"></div>
-
-                            <!-- /.ribbon-->
+                                    <!-- /.ribbon-->
+                                    <div class="ribbon sale">
+                                        <div class="theribbon">SALE</div>
+                                        <div class="ribbon-background"></div>
+                                    </div>
+                                }
+                                <!-- /.ribbon-->
+                                if (product.color_Product.Date > DateTime.Today.AddDays(-1))
+                                {
+                                    <!-- /.ribbon-->
+                                    <div class="ribbon new">
+                                        <div class="theribbon">NEW</div>
+                                        <div class="ribbon-background"></div>
+                                    </div>
+                                    <!-- /.ribbon-->
                                 }
                             }
                         </div>
 
                         <div class="col-md-6">
-                        @{ var mainproduct = Model.FirstOrDefault();
-                                                    <div class="box">
-                                                        <h1 class="text-center">@Html.DisplayFor(modelItem => mainproduct.color_Product.product.Product_Name)</h1>
-                                                        <p class="price">
-                                                            @if (mainproduct.color_Product.product.Price_Sale < mainproduct.color_Product.product.Price_Product)
-                                                            {
-                                                            <p class="sale">@Html.DisplayFor(modelItem => mainproduct.color_Product.product.Price_Sale)</p>}
-                                                            @Html.DisplayFor(modelItem => mainproduct.color_Product.product.Price_Sale)
-                                                            </p>
-                                                            <p class="text-center buttons"><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
-                                                        </div>
-                        }
+                            @{ var mainproduct = Model.FirstOrDefault();
+                                <div class="box same-height">
+                                    <h3 class="text-center">@Html.DisplayFor(modelItem => mainproduct.color_Product.product.Product_Name)</h3>
+                                    <h6 class="text-center"><i>@Html.DisplayFor(modelItem => mainproduct.color_Product.Color_Name)</i></h6>
+                                    <p class="price">
+                                        @if (mainproduct.color_Product.product.Price_Sale < mainproduct.color_Product.product.Price_Product)
+                                        {
+                                        <p class="sale">@Html.DisplayFor(modelItem => mainproduct.color_Product.product.Price_Sale)</p>}
+                                        @Html.DisplayFor(modelItem => mainproduct.color_Product.product.Price_Sale)
+                                        </p>
+                                        <div id="getsize" class="sizes" data-auto-id="size-selector">
+                                        </div>
+                                        <p class="text-center buttons"><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
+                                    </div>
+                            }
                         </div>
-
                     </div>
 
                     <!-- /.Share in social-->
                     <div class="row same-height-row">
                         <div class="col-md-6 text-center align-middle">
-                            <div id="getcolor"  class="same-height">
-                                    
+                            <div id="getcolor" class="class=" box same-height"">
+
                             </div>
                         </div>
                         <div class="col-md-6 text-center">
@@ -187,8 +194,25 @@
                         </div>
                     </div>
                 </div>
-                    <!-- /.col-md-9-->
+                <!-- /.col-md-9-->
             </div>
         </div>
     </div>
 </div>
+@section ajax{
+    <script>
+        $(function () {
+            $(document).ready(function () {
+                $.ajax({
+                    url: "GetSize",
+                    data: {
+                        "id": @Model.FirstOrDefault().ID_Color_Product,
+                    },
+                    success: function (response) {
+                        $("#getsize").html(response)
+                    }
+                });
+            });
+        });
+    </script>
+}

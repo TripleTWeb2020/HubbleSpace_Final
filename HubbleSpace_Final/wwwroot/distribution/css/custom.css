@@ -10,3 +10,56 @@ center {
     margin-right: auto;
     text-align: left;
 }
+
+.sizes {
+    font-family: Noto Sans,AdihausDIN,Helvetica,Arial,sans-serif !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(70px,1fr));
+    border-left: 1px solid #d7d7d7;
+    flex-wrap: wrap;
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    font-weight: 400;
+    background-color: #fff;
+    color: #000;
+    margin: 20px 0;
+    padding: 0;
+    text-rendering: optimizeLegibility;
+    text-transform: none;
+}
+.gl-label {
+    width: auto;
+    border: 1px solid #d7d7d7;
+    border-left: none;
+    margin-bottom: -1px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    line-height: 1em;
+    letter-spacing: -.2px;
+    font-size: 13px;
+    font-family: Noto Sans,AdihausDIN,Helvetica,Arial,sans-serif !important;
+    text-transform: uppercase;
+    font-weight: 400;
+    background: none;
+    color: inherit;
+    font: inherit;
+    box-shadow: none;
+    outline: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    touch-action: manipulation;
+    appearance: button;
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    word-spacing: normal;
+    text-indent: 0px;
+    text-shadow: none;
+    border-radius: 2px;
+    -webkit-font-smoothing: antialiased;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
