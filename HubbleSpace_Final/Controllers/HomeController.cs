@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using HubbleSpace_Final.Entities;
-
+using HubbleSpace_Final.Services;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -17,15 +17,20 @@ namespace HubbleSpace_Final.Controllers
 
         private readonly ILogger<HomeController> _logger;
         private readonly MyDbContext _context;
+        private readonly IUserService _userService;
 
-        public HomeController(ILogger<HomeController> logger, MyDbContext context)
+        public HomeController(ILogger<HomeController> logger, MyDbContext context,IUserService userService)
         {
             _logger = logger;
             _context = context;
+            _userService = userService;
+
         }
 
         public async Task<IActionResult> Index()
         {
+            string? userId = _userService.GetUserId();
+            var isLoggedIn = _userService.IsAuthenticated();
             return View(await _context.Banner.ToListAsync());
         }
 

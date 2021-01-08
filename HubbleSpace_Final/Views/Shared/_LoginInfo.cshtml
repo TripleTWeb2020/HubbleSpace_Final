@@ -5,11 +5,11 @@
 {
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-           <a></a>
+            Hello @(User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value )
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropDown">
-            <a class="dropdown-item" asp-action="Logout" asp-controller="Client-Accounts">Logout</a>
-            <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Account">Change password</a>
+            <a class="dropdown-item" asp-action="Logout" asp-controller="Client_Accounts">Logout</a>
+            <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Client_Accounts">Change password</a>
         </div>
     </li>
 }

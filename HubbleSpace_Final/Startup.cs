@@ -1,6 +1,8 @@
 using HubbleSpace_Final.Entities;
+using HubbleSpace_Final.Helpers;
 using HubbleSpace_Final.Models;
 using HubbleSpace_Final.Repository;
+using HubbleSpace_Final.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -42,9 +44,14 @@ namespace HubbleSpace_Final
                         options.ClientId = Configuration["App:FacebookClientId"];
                         options.ClientSecret = Configuration["App:FacebookClientSecret"];
                     });
-            
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.LoginPath = Configuration["Application:LoginPath"];
+            });
             services.AddScoped<IAccountRepository, AccountRepository>();
             //services.AddIdentity<IAccountRepository, AccountRepository>();
+            services.AddScoped<IUserService, UserService>();
             services.AddHttpClient();
         }
 
