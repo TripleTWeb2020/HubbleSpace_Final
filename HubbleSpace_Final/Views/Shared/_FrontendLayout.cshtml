@@ -41,22 +41,18 @@
             <div class="container" style="text-align: end; padding: 0 22pt;">
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="menu list-inline mb-0">
-                        <li class="nav-item" >
-                            <partial name="_LoginInfo" />
-                        </li>                        
+                        <li class="list-inline-item"><a href="~/../Signin">Sign in</a></li>
+                        <li class="list-inline-item"><a href="~/../Signup">Sign up</a></li>
                         <li class="list-inline-item"><a href="#">Recently viewed</a></li>
                     </ul>
                 </div>
-                
             </div>
-
             <!-- *** TOP BAR END ***-->
-
-
         </div>
+
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a href="index.html" class="navbar-brand home"><img src="img/logo.png" alt="Obaju logo" class="d-none d-md-inline-block"><img src="img/logo-small.png" alt="Obaju logo" class="d-inline-block d-md-none"><span class="sr-only">Obaju - go to homepage</span></a>
+                <a href="~/../Home" class="navbar-brand home"><img src="~/Images/Untitled.png" alt="HS logo" class="d-none d-md-inline-block" style="width: 255px"><img src="~/Images/Untitled.png" alt="HS logo" class="d-inline-block d-md-none" style="width: 255px"><span class="sr-only">Hubble Space</span></a>
                 <div class="navbar-buttons">
                     <button type="button" data-toggle="collapse" data-target="#navigation" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
                     <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></button><a href="basket.html" class="btn btn-outline-secondary navbar-toggler"><i class="fa fa-shopping-cart"></i></a>
@@ -66,7 +62,7 @@
                         
                     </ul>
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a href="#" class="nav-link active">Home</a></li>
+                        <li class="nav-item"><a href="~/../Home" class="nav-link active">Home</a></li>
                         <li class="nav-item dropdown menu-sidebar">
                             <a asp-action="Categories" asp-route-Object="Men" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Men<b class="caret"></b></a>
                             <ul class="dropdown-menu megamenu">

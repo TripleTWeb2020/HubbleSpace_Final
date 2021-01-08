@@ -40,12 +40,12 @@ namespace HubbleSpace_Final.Controllers
             }
             return View(userModel);
         }
-        [Route("login")]
-        public IActionResult Login()
+        [Route("Signin")]
+        public IActionResult Signin()
         {
             return View();
         }
-        [Route("login")]
+        [Route("Signin")]
         [HttpPost]
         public async Task<IActionResult> Login(SignInModel signInModel)
         {
@@ -60,8 +60,8 @@ namespace HubbleSpace_Final.Controllers
             }
             return View(signInModel);
         }
-        [Route("logout")]
-        public async Task<IActionResult> Logout()
+        [Route("Signout")]
+        public async Task<IActionResult> Signout()
         {
             await _accountRepository.SignOutAsync();
             return RedirectToAction("Index", "Home");

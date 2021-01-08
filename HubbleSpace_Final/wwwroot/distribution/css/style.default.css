@@ -79,7 +79,7 @@ h1 {
 *
 */
 #top {
-    background: #7d585b;
+    background: #333;
     padding: 10px 0;
 }
 #top .offer {
@@ -327,18 +327,19 @@ h1 {
 }
 
 #advantages .box .icon {
-  position: absolute;
-  font-size: 120px;
-  width: 100%;
-  text-align: center;
-  top: -20px;
-  left: 0;
-  height: 100%;
-  float: left;
-  color: #eee;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-  z-index: 1;
+    position: absolute;
+    font-size: 120px;
+    width: 100%;
+    text-align: center;
+    top: auto;
+    bottom: auto;
+    left: 0;
+    height: 100%;
+    float: left;
+    color: #caeff4;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    z-index: 1;
 }
 
 #advantages .box h3 {

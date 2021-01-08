@@ -1,22 +1,23 @@
 ﻿@model HubbleSpace_Final.Models.SignInModel
 
 @{
+    ViewData["Title"] = "Sign in";
     Layout = "_FrontendLayout";
 }
-<div class="row">
-    <div class="col-lg-12">
-        <!-- breadcrumb-->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li aria-current="page" class="breadcrumb-item active">New account / Sign in</li>
-            </ol>
-        </nav>
-    </div>
+<div class="container">
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <!-- breadcrumb-->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="~/../Home">Home</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">Sign in</li>
+                </ol>
+            </nav>
+        </div>
         <div class="col-lg-6">
             <div class="box">
-                <h1>Login</h1>
-                <p class="lead">Already our customer?</p>
+                <h1>Sign in</h1>
                 <hr>
                 <form asp-action="Login">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -36,11 +37,12 @@
                         </label>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-user-md"></i> Login</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-user-md"></i> Sign in</button>
                         <p><a asp-action="ForgotPassword" asp-controller="Account">Forgot password?</a></p>
-                        <p>Click <a asp-action="SignUp" asp-controller="Client_Accounts">here</a> to SignUp</p>
+                        <p>Click <a asp-action="SignUp" asp-controller="Client_Accounts">here</a> to Sign Up</p>
                     </div>
                 </form>
             </div>
+        </div>
     </div>
 </div>
