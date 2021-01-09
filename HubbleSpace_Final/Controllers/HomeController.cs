@@ -86,6 +86,10 @@ namespace HubbleSpace_Final.Controllers
                                                   .Where(p => p.ID_Color_Product == id)
                                                   .ToListAsync());
         }
+        public async Task<IActionResult> GetSize(int id)
+        {
+            return PartialView(await _context.Size.Where(p => p.ID_Color_Product == id).ToListAsync());
+        }
         public async Task<IActionResult> GetColor(int id)
         {
             return View(await _context.Img_Product.Where(p => p.ID_Color_Product == id).ToListAsync());
