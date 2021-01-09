@@ -70,3 +70,13 @@ center {
 #getcolor {
     text-align: left;
 }
+
+.plflipper .front a img{
+    width: 840px;
+    height: 840px;
+}
+
+.plflipper .back a img {
+    width: 840px;
+    height: 840px;
+}

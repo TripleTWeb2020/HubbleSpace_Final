@@ -77,8 +77,8 @@
                 <div class="col-lg-9 order-1 order-lg-2">
                     <div id="productMain" class="row same-height-row">
                         <div class="col-md-6">
-                                <!--product_color_slider-->
-                                <div id="main-slider" class="owl-carousel owl-theme same-height">
+                            <div class="same-height">
+                                <div id="main-slider" class="owl-carousel owl-theme">
                                     @foreach (var item in Model)
                                     {
                                         <div class="item">
@@ -86,29 +86,31 @@
                                         </div>
                                     }
                                 </div>
-                                @{var product = Model.FirstOrDefault();
-                                    if (product != null)
+                            </div>
+                            <!--product_color_slider-->
+                            @{var product = Model.FirstOrDefault();
+                                if (product != null)
+                                {
+                                    if (product.color_Product.product.Price_Sale < product.color_Product.product.Price_Product)
                                     {
-                                        if (product.color_Product.product.Price_Sale < product.color_Product.product.Price_Product)
-                                        {
-                                            <!-- /.ribbon-->
-                                            <div class="ribbon sale">
-                                                <div class="theribbon">SALE</div>
-                                                <div class="ribbon-background"></div>
-                                            </div>
-                                        }
                                         <!-- /.ribbon-->
-                                        if (product.color_Product.Date > DateTime.Today.AddDays(-1))
-                                        {
-                                            <!-- /.ribbon-->
-                                            <div class="ribbon new">
-                                                <div class="theribbon">NEW</div>
-                                                <div class="ribbon-background"></div>
-                                            </div>
-                                            <!-- /.ribbon-->
-                                        }
+                                        <div class="ribbon sale">
+                                            <div class="theribbon">SALE</div>
+                                            <div class="ribbon-background"></div>
+                                        </div>
+                                    }
+                                    <!-- /.ribbon-->
+                                    if (product.color_Product.Date > DateTime.Today.AddDays(-1))
+                                    {
+                                        <!-- /.ribbon-->
+                                        <div class="ribbon new">
+                                            <div class="theribbon">NEW</div>
+                                            <div class="ribbon-background"></div>
+                                        </div>
+                                        <!-- /.ribbon-->
                                     }
                                 }
+                            }
                         </div>
 
                         <div class="col-md-6">
@@ -144,7 +146,7 @@
 
                     <!-- /.Recommend 4 product-->
                     <div id="get_recommend_products" class="row same-height-row">
-                        
+
                     </div>
                 </div>
                 <!-- /.col-md-9-->
@@ -152,45 +154,54 @@
         </div>
     </div>
 </div>
-@section ajax{
-    <script>
-        $(function () {
-            $(document).ready(function () {
-                $.ajax({
-                    url: "../GetSize",
-                    data: {
-                        "id": @Model.First().ID_Color_Product,
-                    },
-                    success: function (response) {
-                        $("#getsize").html(response)
-                    }
-                });
-            });
+@{
+    var ajax = Model.FirstOrDefault();
+    if (ajax != null)
+    {
+        @section ajax{
+            <script>
+                $(function () {
+                    $(document).ready(function () {
+                        $.ajax({
+                            url: "../GetSize",
+                            data: {
+                                "id": @Model.FirstOrDefault().ID_Color_Product,
+                            },
+                            success: function (response) {
+                                $("#getsize").html(response)
+                            }
+                        });
+                    });
 
-            $(document).ready(function () {
-                $.ajax({
-                    url: "../GetColor",
-                    data: {
-                        "id": @Model.First().color_Product.product.ID_Product,
-                    },
-                    success: function (response) {
-                        $("#getcolor").html(response)
-                    }
-                });
-            });
+                    $(document).ready(function () {
+                        $.ajax({
+                            url: "../GetColor",
+                            data: {
+                                "id": @Model.FirstOrDefault().color_Product.product.ID_Product,
+                            },
+                            success: function (response) {
+                                $("#getcolor").html(response)
+                            }
+                        });
+                    });
 
-            $(document).ready(function () {
-                $.ajax({
-                    url: "../GetRecommendProducts",
-                    data: {
-                        "Name": "@Model.First().color_Product.product.category.Category_Name.ToString()",
-                    },
-                    success: function (response) {
-                        $("#get_recommend_products").html(response)
-                    }
-                });
-            });
+                    $(document).ready(function () {
+                        $.ajax({
+                            url: "../GetRecommendProducts",
+                            data: {
+                                "Object": "@Model.FirstOrDefault().color_Product.product.category.Object.ToString()",
+                                "Name": "@Model.FirstOrDefault().color_Product.product.category.Category_Name.ToString()",
+                                "Brand_Name": "@Model.FirstOrDefault().color_Product.product.Brand.Brand_Name.ToString()",
+                            },
+                            success: function (response) {
+                                $("#get_recommend_products").html(response)
+                            }
+                        });
+                    });
 
-        });
-    </script>
+                });
+            </script>
+        }
+    }
 }
+
