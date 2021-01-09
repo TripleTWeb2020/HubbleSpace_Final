@@ -92,7 +92,7 @@ namespace HubbleSpace_Final.Controllers
         }
         public async Task<IActionResult> GetColor(int id)
         {
-            return View(await _context.Img_Product.Where(p => p.ID_Color_Product == id).ToListAsync());
+            return PartialView(await _context.Color_Product.Where(p => p.product.ID_Product == id).ToListAsync());
         }
 
         public IActionResult Contact()

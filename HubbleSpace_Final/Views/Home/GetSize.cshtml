@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<HubbleSpace_Final.Entities.Size>
 
-<div id="getsize" class="sizes">
     @foreach (var item in Model)
     {
         <button data-container="@item.SizeNumber" class="gl-label"><span>@Html.DisplayFor(modelItem => item.SizeNumber)</span></button>
     }
-</div>

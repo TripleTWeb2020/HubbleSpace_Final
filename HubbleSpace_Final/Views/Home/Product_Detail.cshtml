@@ -87,39 +87,43 @@
                                 }
                             </div>
                             @{var product = Model.FirstOrDefault();
-                                if (product.color_Product.product.Price_Sale < product.color_Product.product.Price_Product)
+                                if (product != null)
                                 {
+                                    if (product.color_Product.product.Price_Sale < product.color_Product.product.Price_Product)
+                                    {
+                                        <!-- /.ribbon-->
+                                        <div class="ribbon sale">
+                                            <div class="theribbon">SALE</div>
+                                            <div class="ribbon-background"></div>
+                                        </div>
+                                    }
                                     <!-- /.ribbon-->
-                                    <div class="ribbon sale">
-                                        <div class="theribbon">SALE</div>
-                                        <div class="ribbon-background"></div>
-                                    </div>
-                                }
-                                <!-- /.ribbon-->
-                                if (product.color_Product.Date > DateTime.Today.AddDays(-1))
-                                {
-                                    <!-- /.ribbon-->
-                                    <div class="ribbon new">
-                                        <div class="theribbon">NEW</div>
-                                        <div class="ribbon-background"></div>
-                                    </div>
-                                    <!-- /.ribbon-->
+                                    if (product.color_Product.Date > DateTime.Today.AddDays(-1))
+                                    {
+                                        <!-- /.ribbon-->
+                                        <div class="ribbon new">
+                                            <div class="theribbon">NEW</div>
+                                            <div class="ribbon-background"></div>
+                                        </div>
+                                        <!-- /.ribbon-->
+                                    }
                                 }
                             }
                         </div>
 
                         <div class="col-md-6">
-                            @{ var mainproduct = Model.FirstOrDefault();
+                            @if (product != null)
+                            {
                                 <div class="box same-height">
-                                    <h3 class="text-center">@Html.DisplayFor(modelItem => mainproduct.color_Product.product.Product_Name)</h3>
-                                    <h6 class="text-center"><i>@Html.DisplayFor(modelItem => mainproduct.color_Product.Color_Name)</i></h6>
-                                    <p class="price">
-                                        @if (mainproduct.color_Product.product.Price_Sale < mainproduct.color_Product.product.Price_Product)
+                                    <h2>@Html.DisplayFor(modelItem => product.color_Product.product.Product_Name)</h2>
+                                    <h4><i>@Html.DisplayFor(modelItem => product.color_Product.Color_Name)</i></h4>
+                                    <p>
+                                        @if (product.color_Product.product.Price_Sale < product.color_Product.product.Price_Product)
                                         {
-                                        <p class="sale">@Html.DisplayFor(modelItem => mainproduct.color_Product.product.Price_Sale)</p>}
-                                        @Html.DisplayFor(modelItem => mainproduct.color_Product.product.Price_Sale)
+                                        <p class="sale">@Html.DisplayFor(modelItem => product.color_Product.product.Price_Sale)</p>}
+                                        @Html.DisplayFor(modelItem => product.color_Product.product.Price_Sale)
                                         </p>
-                                        <div id="getsize" class="sizes" data-auto-id="size-selector">
+                                        <div id="getsize" class="sizes" data-auto-id="@product.ID_Color_Product">
                                         </div>
                                         <p class="text-center buttons"><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
                                     </div>
@@ -130,7 +134,7 @@
                     <!-- /.Share in social-->
                     <div class="row same-height-row">
                         <div class="col-md-6 text-center align-middle">
-                            <div id="getcolor" class="class=" box same-height"">
+                            <div id="getcolor" class="box same-height">
 
                             </div>
                         </div>
@@ -204,12 +208,24 @@
         $(function () {
             $(document).ready(function () {
                 $.ajax({
-                    url: "GetSize",
+                    url: "../GetSize",
                     data: {
-                        "id": @Model.FirstOrDefault().ID_Color_Product,
+                        "id": @Model.First().ID_Color_Product,
                     },
                     success: function (response) {
                         $("#getsize").html(response)
+                    }
+                });
+            });
+
+            $(document).ready(function () {
+                $.ajax({
+                    url: "../GetColor",
+                    data: {
+                        "id": @Model.First().color_Product.product.ID_Product,
+                    },
+                    success: function (response) {
+                        $("#getcolor").html(response)
                     }
                 });
             });
