@@ -48,7 +48,7 @@ namespace HubbleSpace_Final.Controllers
         }
         [Route("Signin")]
         [HttpPost]
-        public async Task<IActionResult> Login(SignInModel signInModel)
+        public async Task<IActionResult> Signin(SignInModel signInModel)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,6 @@ namespace HubbleSpace_Final.Controllers
             }
             return View(signInModel);
         }
-        [Route("Signout")]
         public async Task<IActionResult> Signout()
         {
             await _accountRepository.SignOutAsync();
