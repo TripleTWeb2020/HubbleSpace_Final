@@ -18,35 +18,28 @@ namespace HubbleSpace_Final.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly MyDbContext _context;
         private readonly IUserService _userService;
-        private readonly IEmailService _emailService;
-        public HomeController(ILogger<HomeController> logger, MyDbContext context,IUserService userService,IEmailService emailService)
+
+        public HomeController(ILogger<HomeController> logger, MyDbContext context,IUserService userService)
         {
             _logger = logger;
             _context = context;
             _userService = userService;
-            _emailService = emailService;
 
         }
 
         public async Task<IActionResult> Index()
         {
-
-            //UserEmailOptions options = new UserEmailOptions
-            //{
-            //    ToEmails = new List<string>()
-            //    {
-            //        "test@gmail.com"
-            //    },
-            //    PlaceHolders = new List<KeyValuePair<string, string>>()
-            //    {
-            //        new KeyValuePair<string, string>("{{Username}}","Tuyen")
-            //    }
-
-            //};
-            //await _emailService.SendTestEmail(options);
             string? userId = _userService.GetUserId();
             var isLoggedIn = _userService.IsAuthenticated();
             return View(await _context.Banner.ToListAsync());
+        }
+
+        public async Task<IActionResult> GetNewProducts()
+        {
+            return PartialView(await _context.Color_Product.Include(p => p.product)
+                                                    .Include(p => p.product.category)
+                                                    .OrderBy(p => p.Date)
+                                                    .ToListAsync());
         }
 
         public IActionResult Admin()
@@ -88,6 +81,18 @@ namespace HubbleSpace_Final.Controllers
                                                     .Where(p => p.product.category.Category_Name.Contains(Name))
                                                     .ToListAsync());
         }
+
+        public IActionResult Search()
+        {
+            var search = Request.Form["Search"];
+            if( search == "")
+            {
+                return View("Categories", _context.Color_Product.Include(p => p.product));
+            }
+            return View("Categories", _context.Color_Product.Include(p => p.product)
+                                                            .Where(m => m.product.Product_Name.Contains(search)));
+        }
+
         public async Task<IActionResult> Filter(string Brand="")
         {
             return View("Categories", await _context.Color_Product.Where(p => p.product.Brand.Brand_Name.Contains(Brand))
@@ -107,7 +112,15 @@ namespace HubbleSpace_Final.Controllers
         }
         public async Task<IActionResult> GetColor(int id)
         {
-            return PartialView(await _context.Color_Product.Where(p => p.product.ID_Product == id).ToListAsync());
+            return PartialView(await _context.Color_Product.Where(p => p.ID_Product == id).ToListAsync());
+        }
+        public async Task<IActionResult> GetRecommendProducts(string name="", string _object ="")
+        {
+            return PartialView(await _context.Color_Product.Include(p => p.product)
+                                                    .Include(p => p.product.category)
+                                                    .Where(p => p.product.category.Object.Contains(_object))
+                                                    .Where(p => p.product.category.Category_Name.Contains(name))
+                                                    .ToListAsync());
         }
 
         public IActionResult Contact()

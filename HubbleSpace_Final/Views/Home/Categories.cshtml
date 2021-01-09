@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<HubbleSpace_Final.Entities.Color_Product>
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+
 @{
     ViewData["Title"] = "Categories Page";
     Layout = "_FrontendLayout";
@@ -39,105 +37,104 @@
                         </div>
                         <div class="card-body">
                             <ul class="nav nav-pills flex-column category-menu">
-                              
-                                    <li>
-                                        <a asp-action="Categories" asp-route-Object="Men" class="nav-link">Men</a>
-                                        <ul class="list-unstyled">
-                                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Originals" class="nav-link">Originals</a></li>
-                                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Running" class="nav-link">Running</a></li>
-                                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Training" class="nav-link">Training</a></li>
-                                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Football" class="nav-link">Football</a></li>
-                                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Basketball" class="nav-link">Basketball</a></li>
-                                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Tennis" class="nav-link">Tennis</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a asp-action="Categories" asp-route-Object="Women" class="nav-link">Women</a>
-                                        <ul class="list-unstyled">
-                                            <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Originals" class="nav-link">Originals</a></li>
-                                            <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Running" class="nav-link">Running</a></li>
-                                            <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Training" class="nav-link">Training</a></li>
-                                            <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Tennis" class="nav-link">Tennis</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a asp-action="Categories" asp-route-Object="Kids" class="nav-link">Kids</a>
-                                        <ul class="list-unstyled">
-                                            <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-Name="Originals" class="nav-link">Originals</a></li>
-                                            <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-Name="Running" class="nav-link">Running</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
+                                <li>
+                                    <a asp-action="Categories" asp-route-Object="Men" class="nav-link">Men</a>
+                                    <ul class="list-unstyled">
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Originals" class="nav-link">Originals</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Running" class="nav-link">Running</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Training" class="nav-link">Training</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Football" class="nav-link">Football</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Basketball" class="nav-link">Basketball</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Tennis" class="nav-link">Tennis</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a asp-action="Categories" asp-route-Object="Women" class="nav-link">Women</a>
+                                    <ul class="list-unstyled">
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Originals" class="nav-link">Originals</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Running" class="nav-link">Running</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Training" class="nav-link">Training</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Tennis" class="nav-link">Tennis</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a asp-action="Categories" asp-route-Object="Kids" class="nav-link">Kids</a>
+                                    <ul class="list-unstyled">
+                                        <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-Name="Originals" class="nav-link">Originals</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-Name="Running" class="nav-link">Running</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="card sidebar-menu mb-4">
-                            <div class="card-header">
-                                <h3 class="h4 card-title">Brands <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
-                            </div>
-                            <div class="card-body">
-                                <form>
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Adidas
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Nike
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Puma
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Reebok
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="card sidebar-menu mb-4">
-                            <div class="card-header">
-                                <h3 class="h4 card-title">Price <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
-                            </div>
-                            <div class="card-body">
-                                <form>
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Less than 1.000.000
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> 1.000.000 - 3.000.000
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> 3.000.000 - 5.000.000
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> More than 5.000.000
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- *** MENUS AND FILTERS END ***-->
                     </div>
+                    <div class="card sidebar-menu mb-4">
+                        <div class="card-header">
+                            <h3 class="h4 card-title">Brands <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> Adidas
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> Nike
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> Puma
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> Reebok
+                                        </label>
+                                    </div>
+                                </div>
+                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card sidebar-menu mb-4">
+                        <div class="card-header">
+                            <h3 class="h4 card-title">Price <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> Less than 1.000.000
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> 1.000.000 - 3.000.000
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> 3.000.000 - 5.000.000
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> More than 5.000.000
+                                        </label>
+                                    </div>
+                                </div>
+                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- *** MENUS AND FILTERS END ***-->
+                </div>
+
                 <div class="col-lg-9">
-                    
                     <div class="box info-bar">
                         <div class="row">
                             <div class="col-md-12 col-lg-4 products-showing">Showing <strong>12</strong> of <strong>25</strong> products</div>
@@ -157,10 +154,27 @@
                         </div>
                     </div>
                     <div class="row products">
-                        @foreach (var item in Model){
+                        @foreach (var item in Model)
+                        {
                             <div class="col-lg-4 col-md-6">
                                 <div class="product">
-                                    <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product"><img src = "~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)"alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid"></a>
+                                    <div class="flip-container">
+                                        <div class="flipper">
+                                            <div class="front">
+                                                <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                                                    <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                                                </a>
+                                            </div>
+                                            <div class="back">
+                                                <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                                                    <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                                        <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                                    </a>
                                     <div class="text">
                                         <h3><a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">@Html.DisplayFor(modelItem => item.product.Product_Name)</a></h3>
                                         <p class="price">
@@ -170,7 +184,7 @@
                                                     @Html.DisplayFor(modelItem => item.product.Price_Sale)
 
                                                 }
-                                        </del>   @Html.DisplayFor(modelItem => item.product.Price_Product)
+                                            </del>   @Html.DisplayFor(modelItem => item.product.Price_Product)
                                         </p>
                                         <p class="buttons">
                                             <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product" class="btn btn-outline-secondary">View detail</a>
@@ -178,9 +192,33 @@
                                         </p>
                                     </div>
                                     <!-- /.text-->
+                                    @{var product = Model.FirstOrDefault();
+                                        if (product != null)
+                                        {
+                                            if (product.product.Price_Sale < product.product.Price_Product)
+                                            {
+                                                <!-- /.ribbon-->
+                                                <div class="ribbon sale">
+                                                    <div class="theribbon">SALE</div>
+                                                    <div class="ribbon-background"></div>
+                                                </div>
+                                            }
+                                            <!-- /.ribbon-->
+                                            if (product.Date > DateTime.Today.AddDays(-1))
+                                            {
+                                                <!-- /.ribbon-->
+                                                <div class="ribbon new">
+                                                    <div class="theribbon">NEW</div>
+                                                    <div class="ribbon-background"></div>
+                                                </div>
+                                                <!-- /.ribbon-->
+                                            }
+                                        }
+                                    }
                                 </div>
                                 <!-- /.product-->
                             </div>
+                            <!-- /.products-->
                         }
                     </div>
                     <div class="pages">

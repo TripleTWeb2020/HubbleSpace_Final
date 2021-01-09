@@ -1,0 +1,53 @@
+﻿@model IEnumerable<HubbleSpace_Final.Entities.Color_Product>
+@{
+    var count = 0;
+    @foreach (var item in Model)
+    {
+        if (count < 4)
+        {
+            <!-- /.product-->
+            <div class="col-md-3 col-sm-6">
+                <div class="product same-height">
+                    <div class="flip-container">
+                        <div class="flipper">
+                            <div class="front">
+                                <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                                    <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                                </a>
+                            </div>
+                            <div class="back">
+                                <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                                    <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                        <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                    </a>
+                    <div class="text">
+                        <h3>@Html.DisplayFor(modelItem => item.product.Product_Name)</h3>
+                        <p class="price">
+                            <del>
+                                @if (item.product.Price_Sale < item.product.Price_Product)
+                                {
+                                    @Html.DisplayFor(modelItem => item.product.Price_Sale)
+
+                                }
+                            </del>
+                            @Html.DisplayFor(modelItem => item.product.Price_Product)
+                        </p>
+                    </div>
+                </div>
+                <!-- /.product-->
+            </div>
+            count++;
+        }
+
+        else
+        {
+            break;
+        }
+    }
+}
+

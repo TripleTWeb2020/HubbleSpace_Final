@@ -63,3 +63,10 @@ center {
     padding: 0;
 }
 
+#details{
+    margin: 10px 0;
+}
+
+#getcolor {
+    text-align: left;
+}

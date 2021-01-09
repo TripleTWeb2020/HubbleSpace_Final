@@ -1,0 +1,78 @@
+﻿@model IEnumerable<HubbleSpace_Final.Entities.Color_Product>
+@{
+    var count = 0;
+    <div class="product-slider owl-carousel owl-theme">
+    @foreach (var item in Model)
+    {
+        if (count < 10)
+        {
+            <div class="item">
+                <div class="product">
+                    <div class="flip-container">
+                        <div class="flipper">
+                            <div class="front">
+                                <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                                    <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                                </a>
+                            </div>
+                            <div class="back">
+                                <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                                    <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                        <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                    </a>
+                    <div class="text">
+                        <h3><a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">@Html.DisplayFor(modelItem => item.product.Product_Name)</a></h3>
+                        <p class="price">
+                            <del>
+                                @if (item.product.Price_Sale < item.product.Price_Product)
+                                {
+                                    @Html.DisplayFor(modelItem => item.product.Price_Sale)
+
+                                }
+                            </del>
+                            @Html.DisplayFor(modelItem => item.product.Price_Product)
+                        </p>
+                        <p class="buttons">
+                            <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product" class="btn btn-outline-secondary">View detail</a>
+                            <a asp-action="Cart" asp-route-id="@item.ID_Color_Product" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        </p>
+                    </div>
+                    <!-- /.text-->
+                    <!-- /.ribbon-->
+                    <div class="ribbon new">
+                        <div class="theribbon">NEW</div>
+                        <div class="ribbon-background"></div>
+                    </div>
+                    <!-- /.ribbon-->
+                    @{var product = Model.FirstOrDefault();
+                        if (product != null)
+                        {
+                            if (product.product.Price_Sale < product.product.Price_Product)
+                            {
+                                <!-- /.ribbon-->
+                                <div class="ribbon sale">
+                                    <div class="theribbon">SALE</div>
+                                    <div class="ribbon-background"></div>
+                                </div>
+                            }
+                            <!-- /.ribbon-->
+                         }
+                    }
+                </div>
+                <!-- /.product-->
+            </div>
+            <!-- /.products-->
+            count++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    </div>
+}
