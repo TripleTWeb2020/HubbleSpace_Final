@@ -85,18 +85,36 @@ namespace HubbleSpace_Final.Controllers
         public IActionResult Search()
         {
             var search = Request.Form["Search"];
-            if( search == "")
+            ViewData["Object"] = "Search";
+            ViewData["Name"] = "";
+            if (search == "")
             {
                 return View("Categories", _context.Color_Product.Include(p => p.product));
             }
-            return View("Categories", _context.Color_Product.Include(p => p.product)
-                                                            .Where(m => m.product.Product_Name.Contains(search)));
+            return View("Categories", _context.Color_Product.Where(m => m.product.Product_Name.Contains(search)).Include(p => p.product));
         }
 
-        public async Task<IActionResult> Filter(string Brand="")
+        [HttpPost]
+        public IActionResult Filter()
         {
-            return View("Categories", await _context.Color_Product.Where(p => p.product.Brand.Brand_Name.Contains(Brand))
-                                              .ToListAsync());
+            Console.WriteLine(Request.Form["brand"]);
+            if (Request.Form["brand"] == "Adidas")
+            {
+                return View("Categories", _context.Color_Product.Include(p => p.product).Where(p => p.product.Brand.Brand_Name == "Adidas"));
+            }
+            if (Request.Form["brand"] == "Nike")
+            {
+                return View("Categories", _context.Color_Product.Include(p => p.product).Where(p => p.product.Brand.Brand_Name == "Nike"));
+            }
+            if (Request.Form["brand"] == "Reebok")
+            {
+                return View("Categories", _context.Color_Product.Include(p => p.product).Where(p => p.product.Brand.Brand_Name == "Reebok"));
+            }
+            if (Request.Form["brand"] == "Puma")
+            {
+                return View("Categories", _context.Color_Product.Include(p => p.product).Where(p => p.product.Brand.Brand_Name == "Puma"));
+            }
+            return View("Categories", _context.Color_Product.Include(p => p.product));
         }
         
         public async Task<IActionResult> Product_Detail(int id)

@@ -17,13 +17,16 @@
                             <li class="breadcrumb-item"><a href="~/../Home">Home</a></li>
                             @{
                                 var breadcrumb_item = Model.FirstOrDefault();
-                                <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="ViewBag.Object">@ViewBag.Object</a></li>
+                                @if (ViewBag.Object != "")
+                                {
+                                    <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="ViewBag.Object">@ViewBag.Object</a></li>
+                                }
                                 @if (ViewBag.Name != "")
                                 {
                                     <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="ViewBag.Name">@ViewBag.Name</a></li>
                                 }
                             }
-                        </ol>
+                            </ol>
                     </nav>
                 </div>
                 <div class="col-lg-3">
@@ -69,33 +72,33 @@
                     </div>
                     <div class="card sidebar-menu mb-4">
                         <div class="card-header">
-                            <h3 class="h4 card-title">Brands <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
+                            <h3 class="h4 card-title">Brands <a asp-action="Categories" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
                         </div>
                         <div class="card-body">
-                            <form>
+                            <form asp-action="Filter">
                                 <div class="form-group">
-                                    <div class="checkbox">
+                                    <div class="zmdi-radio">
                                         <label>
-                                            <input type="checkbox"> Adidas
+                                            <input id="brand" name="brand" type="radio" value="Adidas"> Adidas
                                         </label>
                                     </div>
-                                    <div class="checkbox">
+                                    <div class="zmdi-radio">
                                         <label>
-                                            <input type="checkbox"> Nike
+                                            <input id="brand" name="brand" type="radio" value="Nike"> Nike
                                         </label>
                                     </div>
-                                    <div class="checkbox">
+                                    <div class="zmdi-radio">
                                         <label>
-                                            <input type="checkbox"> Puma
+                                            <input id="brand" name="brand" type="radio" value="Puma"> Puma
                                         </label>
                                     </div>
-                                    <div class="checkbox">
+                                    <div class="zmdi-radio">
                                         <label>
-                                            <input type="checkbox"> Reebok
+                                            <input id="brand" name="brand" type="radio" value="Reebok"> Reebok
                                         </label>
                                     </div>
                                 </div>
-                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
+                                <button class="btn btn-default btn-sm btn-primary" type="submit"><i class="fa fa-pencil"></i> Apply</button>
                             </form>
                         </div>
                     </div>
@@ -153,77 +156,83 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row products">
-                        @foreach (var item in Model)
+                    @{
+                        if (Model.Count() > 1)
                         {
-                            <div class="col-lg-4 col-md-6">
-                                <div class="product">
-                                    <div class="flip-container">
-                                        <div class="flipper">
-                                            <div class="front">
-                                                <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
-                                                    <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
-                                                </a>
+                            <div class="row products">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="product">
+                                            <div class="flip-container">
+                                                <div class="flipper">
+                                                    <div class="front">
+                                                        <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                                                            <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                                                        </a>
+                                                    </div>
+                                                    <div class="back">
+                                                        <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                                                            <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                                                        </a>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="back">
-                                                <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
-                                                    <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
-                                        <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
-                                    </a>
-                                    <div class="text">
-                                        <h3><a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">@Html.DisplayFor(modelItem => item.product.Product_Name)</a></h3>
-                                        <p class="price">
-                                            <del>
-                                                @if (item.product.Price_Sale < item.product.Price_Product)
-                                                {
-                                                    @Html.DisplayFor(modelItem => item.product.Price_Sale)
+                                            <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                                                <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                                            </a>
+                                            <div class="text">
+                                                <h3><a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">@Html.DisplayFor(modelItem => item.product.Product_Name)</a></h3>
+                                                <p class="price">
+                                                    <del>
+                                                        @if (item.product.Price_Sale < item.product.Price_Product)
+                                                        {
+                                                            @Html.DisplayFor(modelItem => item.product.Price_Sale)
 
+                                                        }
+                                                    </del>   @Html.DisplayFor(modelItem => item.product.Price_Product)
+                                                </p>
+                                                <p class="buttons">
+                                                    <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product" class="btn btn-outline-secondary">View detail</a>
+                                                    <a asp-action="Cart" asp-route-id="@item.ID_Color_Product" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                </p>
+                                            </div>
+                                            <!-- /.text-->
+                                            @{var product = Model.FirstOrDefault();
+                                                if (product != null)
+                                                {
+                                                    if (product.product.Price_Sale < product.product.Price_Product)
+                                                    {
+                                                        <!-- /.ribbon-->
+                                                        <div class="ribbon sale">
+                                                            <div class="theribbon">SALE</div>
+                                                            <div class="ribbon-background"></div>
+                                                        </div>
+                                                    }
+                                                    <!-- /.ribbon-->
+                                                    if (product.Date > DateTime.Today.AddDays(-1))
+                                                    {
+                                                        <!-- /.ribbon-->
+                                                        <div class="ribbon new">
+                                                            <div class="theribbon">NEW</div>
+                                                            <div class="ribbon-background"></div>
+                                                        </div>
+                                                        <!-- /.ribbon-->
+                                                    }
                                                 }
-                                            </del>   @Html.DisplayFor(modelItem => item.product.Price_Product)
-                                        </p>
-                                        <p class="buttons">
-                                            <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product" class="btn btn-outline-secondary">View detail</a>
-                                            <a asp-action="Cart" asp-route-id="@item.ID_Color_Product" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </p>
+                                            }
+                                        </div>
+                                        <!-- /.product-->
                                     </div>
-                                    <!-- /.text-->
-                                    @{var product = Model.FirstOrDefault();
-                                        if (product != null)
-                                        {
-                                            if (product.product.Price_Sale < product.product.Price_Product)
-                                            {
-                                                <!-- /.ribbon-->
-                                                <div class="ribbon sale">
-                                                    <div class="theribbon">SALE</div>
-                                                    <div class="ribbon-background"></div>
-                                                </div>
-                                            }
-                                            <!-- /.ribbon-->
-                                            if (product.Date > DateTime.Today.AddDays(-1))
-                                            {
-                                                <!-- /.ribbon-->
-                                                <div class="ribbon new">
-                                                    <div class="theribbon">NEW</div>
-                                                    <div class="ribbon-background"></div>
-                                                </div>
-                                                <!-- /.ribbon-->
-                                            }
-                                        }
-                                    }
-                                </div>
-                                <!-- /.product-->
+                                    <!-- /.products-->
+                                }
                             </div>
-                            <!-- /.products-->
+                            <div class="pages">
+                                <p class="loadMore"><a href="#" class="btn btn-primary btn-lg"><i class="fa fa-chevron-down"></i> Load more</a></p>
+                            </div>
                         }
-                    </div>
-                    <div class="pages">
-                        <p class="loadMore"><a href="#" class="btn btn-primary btn-lg"><i class="fa fa-chevron-down"></i> Load more</a></p>
-                    </div>
+                    }
+
                 </div>
                     <!-- /.col-lg-9-->
                 </div>
