@@ -47,6 +47,22 @@ namespace HubbleSpace_Final.Repository
             return result;
 
         }
+        public async Task GenerateEmailConfirmationTokenAsync(ApplicationUser user)
+        {
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            if (!string.IsNullOrEmpty(token))
+            {
+                await SendEmailConfirmationEmail(user, token);
+            }
+        }
+        public async Task GenerateForgotPasswordTokenAsync(ApplicationUser user)
+        {
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            if (!string.IsNullOrEmpty(token))
+            {
+                await SendForgotPasswordEmail(user, token);
+            }
+        }
         public async Task<SignInResult> PasswordSignInAsync(SignInModel signInModel)
         {
 
@@ -66,6 +82,11 @@ namespace HubbleSpace_Final.Repository
             var user = await _userManager.FindByIdAsync(userId);
             return await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
         }
+        public async Task<ApplicationUser> GetUserByEmailAsync(string email)
+        {
+            return await _userManager.FindByEmailAsync(email);
+        }
+
         public async Task<IdentityResult> ConfirmEmailAsync(string uid,string token)
         {
             return await _userManager.ConfirmEmailAsync(await _userManager.FindByIdAsync(uid), token);
@@ -86,6 +107,23 @@ namespace HubbleSpace_Final.Repository
 
             };
             await _emailService.SendEmailForEmailConfirmation(options);
+        }
+        private async Task SendForgotPasswordEmail(ApplicationUser user, string token)
+        {
+            string appDomain = _configuration.GetSection("Application:AppDomain").Value;
+            string confirmationLink = _configuration.GetSection("Application:ForgotPassword").Value;
+
+            UserEmailOptions options = new UserEmailOptions
+            {
+                ToEmails = new List<string>() { user.Email },
+                PlaceHolders = new List<KeyValuePair<string, string>>()
+                {
+                    new KeyValuePair<string, string>("{{Username}}",user.FirstName),
+                    new KeyValuePair<string, string>("{{Link}}",string.Format(appDomain+confirmationLink,user.Id,token))
+                }
+
+            };
+            await _emailService.SendEmailForForgotPassword(options);
         }
     }
 }
