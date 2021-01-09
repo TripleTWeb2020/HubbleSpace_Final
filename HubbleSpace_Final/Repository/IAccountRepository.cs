@@ -10,5 +10,6 @@ namespace HubbleSpace_Final.Repository
         Task<SignInResult> PasswordSignInAsync(SignInModel signInModel);
         Task SignOutAsync();
         Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model);
+        Task<IdentityResult> ConfirmEmailAsync(string uid, string token);
     }
 }

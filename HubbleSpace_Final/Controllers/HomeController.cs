@@ -18,17 +18,32 @@ namespace HubbleSpace_Final.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly MyDbContext _context;
         private readonly IUserService _userService;
-
-        public HomeController(ILogger<HomeController> logger, MyDbContext context,IUserService userService)
+        private readonly IEmailService _emailService;
+        public HomeController(ILogger<HomeController> logger, MyDbContext context,IUserService userService,IEmailService emailService)
         {
             _logger = logger;
             _context = context;
             _userService = userService;
+            _emailService = emailService;
 
         }
 
         public async Task<IActionResult> Index()
         {
+
+            //UserEmailOptions options = new UserEmailOptions
+            //{
+            //    ToEmails = new List<string>()
+            //    {
+            //        "test@gmail.com"
+            //    },
+            //    PlaceHolders = new List<KeyValuePair<string, string>>()
+            //    {
+            //        new KeyValuePair<string, string>("{{Username}}","Tuyen")
+            //    }
+
+            //};
+            //await _emailService.SendTestEmail(options);
             string? userId = _userService.GetUserId();
             var isLoggedIn = _userService.IsAuthenticated();
             return View(await _context.Banner.ToListAsync());

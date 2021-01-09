@@ -33,7 +33,7 @@ namespace HubbleSpace_Final
             services.AddControllersWithViews();
             services.AddDbContext<MyDbContext>(option => { option.UseSqlServer(Configuration.GetConnectionString("HubbleSpace_Final")); });
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<MyDbContext>();
+                .AddEntityFrameworkStores<MyDbContext>().AddDefaultTokenProviders();
             services.AddAuthentication()
                     .AddGoogle(options =>
                     {
@@ -49,10 +49,16 @@ namespace HubbleSpace_Final
             {
                 config.LoginPath = Configuration["Application:LoginPath"];
             });
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.SignIn.RequireConfirmedEmail = true;
+            });
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IEmailService, EmailService>();
             //services.AddIdentity<IAccountRepository, AccountRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddHttpClient();
+            services.Configure<SMTPConfigModel>(Configuration.GetSection("SMTPConfig"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

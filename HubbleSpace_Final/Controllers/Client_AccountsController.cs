@@ -37,6 +37,7 @@ namespace HubbleSpace_Final.Controllers
                     return View(userModel);
                 }
                 ModelState.Clear();
+                return RedirectToAction("ConfirmEmail", new { email = userModel.Email });
             }
             return View(userModel);
         }
@@ -56,7 +57,12 @@ namespace HubbleSpace_Final.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", "Invalid credentials");
+                if (result.IsNotAllowed)
+                {
+                    ModelState.AddModelError("", "Not Allowed to login");
+                }
+                else { ModelState.AddModelError("", "Invalid credentials"); }
+                
             }
             return View(signInModel);
         }
@@ -90,6 +96,21 @@ namespace HubbleSpace_Final.Controllers
                 }
             }
             return View(model);
+        }
+        [HttpGet("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail(string uid,string token)
+        {
+            if(!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(token))
+            {
+                token = token.Replace(' ', '+');
+                var result = await _accountRepository.ConfirmEmailAsync(uid, token);
+                if (result.Succeeded)
+                {
+                    ViewBag.IsSuccess = true;
+                }
+            }
+            return View();
+           
         }
     }
 }
