@@ -5,6 +5,10 @@
     <UserSecretsId>5c67c80a-e37f-40e8-a406-82c5cac2be6f</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Migrations\20210107135045_DbInit.cs" />
+    <Compile Remove="Migrations\20210107135045_DbInit.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.0" />
@@ -18,5 +22,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>

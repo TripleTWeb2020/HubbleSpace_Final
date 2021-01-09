@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HubbleSpace_Final.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20210107135045_DbInit")]
-    partial class DbInit
+    [Migration("20210108154614_Db.init")]
+    partial class Dbinit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -164,6 +164,9 @@ namespace HubbleSpace_Final.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("ID_Product")
                         .HasColumnType("int");
@@ -362,10 +365,6 @@ namespace HubbleSpace_Final.Migrations
 
                     b.Property<int>("ID_Categorie")
                         .HasColumnType("int");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price_Product")
                         .HasColumnType("float");

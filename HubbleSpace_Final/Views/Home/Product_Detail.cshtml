@@ -75,49 +75,53 @@
                     <div id="productMain" class="row">
                         <div class="col-md-6">
                             <!--product_color_slider-->
-                            <div class="owl-carousel shop-detail-carousel">
-                            @foreach (var item in Model)
-                            {
-                                <div class="item">
-                                    <img src="~/Images/Product_Color_Image/@Html.DisplayFor(modelItem => item.color_Product.product.Product_Name)/@Html.DisplayFor(modelItem => item.Photo)" class="img-fluid owl-height">
-                                </div>
-                            }
+                            <div id="main-slider" class="owl-carousel owl-theme">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="item">
+                                        <img src="~/Images/Product_Color_Image/@Html.DisplayFor(modelItem => item.color_Product.product.Product_Name)/@Html.DisplayFor(modelItem => item.Photo)" class="img-fluid owl-height">
+                                    </div>
+                                }
                             </div>
                             @{var product = Model.FirstOrDefault();
                                 if (product.color_Product.product.Price_Sale < product.color_Product.product.Price_Product)
                                 {
-                            <!-- /.ribbon-->
-                            <div class="ribbon sale">
-                                <div class="theribbon">SALE</div>
-                                <div class="ribbon-background"></div>
-                            </div>
-                            <!-- /.ribbon-->
-
-                            <!-- /.ribbon
-                            <div class="ribbon new">
-                                <div class="theribbon">NEW</div>
-                                <div class="ribbon-background"></div>
-
-                            <!-- /.ribbon-->
+                                    <!-- /.ribbon-->
+                                    <div class="ribbon sale">
+                                        <div class="theribbon">SALE</div>
+                                        <div class="ribbon-background"></div>
+                                    </div>
+                                }
+                                <!-- /.ribbon-->
+                                if (product.color_Product.Date > DateTime.Today.AddDays(-1))
+                                {
+                                    <!-- /.ribbon-->
+                                    <div class="ribbon new">
+                                        <div class="theribbon">NEW</div>
+                                        <div class="ribbon-background"></div>
+                                    </div>
+                                    <!-- /.ribbon-->
                                 }
                             }
                         </div>
 
                         <div class="col-md-6">
-                        @{ var mainproduct = Model.FirstOrDefault();
-                                                    <div class="box">
-                                                        <h1 class="text-center">@Html.DisplayFor(modelItem => mainproduct.color_Product.product.Product_Name)</h1>
-                                                        <p class="price">
-                                                            @if (mainproduct.color_Product.product.Price_Sale < mainproduct.color_Product.product.Price_Product)
-                                                            {
-                                                            <p class="sale">@Html.DisplayFor(modelItem => mainproduct.color_Product.product.Price_Sale)</p>}
-                                                            @Html.DisplayFor(modelItem => mainproduct.color_Product.product.Price_Sale)
-                                                            </p>
-                                                            <p class="text-center buttons"><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
-                                                        </div>
-                        }
-                        </div>
+                            @{ var mainproduct = Model.FirstOrDefault();
+                            <div class="box">
+                                <h1 class="text-center">@Html.DisplayFor(modelItem => mainproduct.color_Product.product.Product_Name)</h1>
+                                <p class="price">
+                                    @if (mainproduct.color_Product.product.Price_Sale < mainproduct.color_Product.product.Price_Product)
+                                    {
+                                    <p class="sale">@Html.DisplayFor(modelItem => mainproduct.color_Product.product.Price_Sale)</p>}
+                                    @Html.DisplayFor(modelItem => mainproduct.color_Product.product.Price_Sale)
+                                </p>
+                                <div class="sizes" data-auto-id="size-selector">
+                                </div>
+                                <p class="text-center buttons"><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
 
+                            </div>
+                            }
+                        </div>
                     </div>
 
                     <!-- /.Share in social-->

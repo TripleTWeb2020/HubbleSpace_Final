@@ -28,6 +28,11 @@ namespace HubbleSpace_Final.Entities
         [DataType(DataType.ImageUrl)]
         public String Image { get; set; }
 
+        [Display(Name = "Ngày  nhập")]
+        [Required(ErrorMessage = "Không được để trống")]
+        [DataType(DataType.DateTime)]
+        public DateTime Date { get; set; }
+
         public ICollection<Img_Product> Img_Products { get; set; }
         public ICollection<Size> Sizes { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }
@@ -37,6 +42,7 @@ namespace HubbleSpace_Final.Entities
             Img_Products = new HashSet<Img_Product>();
             Sizes = new HashSet<Size>();
             OrderDetails = new HashSet<OrderDetail>();
+            Date = DateTime.Now;
         }
 
     }
