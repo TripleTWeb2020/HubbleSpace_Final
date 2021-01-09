@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HubbleSpace_Final.Models;
 using HubbleSpace_Final.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HubbleSpace_Final.Controllers
@@ -97,19 +98,67 @@ namespace HubbleSpace_Final.Controllers
             return View(model);
         }
         [HttpGet("confirm-email")]
-        public async Task<IActionResult> ConfirmEmail(string uid,string token)
+        public async Task<IActionResult> ConfirmEmail(string uid,string token,string email)
         {
-            if(!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(token))
+            EmailConfirmModel model = new EmailConfirmModel
             {
-                token = token.Replace(' ', '+');
+                Email = email
+            };
+            if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(token))
+            {
+                //token = token.Replace(' ', '+');
                 var result = await _accountRepository.ConfirmEmailAsync(uid, token);
                 if (result.Succeeded)
                 {
-                    ViewBag.IsSuccess = true;
+                    model.EmailVerified = true;
                 }
             }
-            return View();
+            return View(model);
            
         }
+        [HttpPost("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail(EmailConfirmModel model)
+        {
+            var user = await _accountRepository.GetUserByEmailAsync(model.Email);
+            if (user != null)
+            {
+                if (user.EmailConfirmed)
+                {
+                    model.EmailVerified = true;
+                    return View(model);
+                }
+
+                await _accountRepository.GenerateEmailConfirmationTokenAsync(user);
+                model.EmailSent = true;
+                ModelState.Clear();
+            }
+            else
+            {
+                ModelState.AddModelError("", "Something went wrong.");
+            }
+            return View(model);
+        }
+        [AllowAnonymous,HttpGet("forgot-password")]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [AllowAnonymous, HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _accountRepository.GetUserByEmailAsync(model.Email);
+                if (user !=null)
+                {
+                    await _accountRepository.GenerateForgotPasswordTokenAsync(user);
+                }
+                ModelState.Clear();
+                model.EmailSent = true;
+            }
+            return View(model);
+        }
+
+
     }
 }

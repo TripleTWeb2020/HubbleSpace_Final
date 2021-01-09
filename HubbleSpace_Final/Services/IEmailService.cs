@@ -6,6 +6,7 @@ namespace HubbleSpace_Final.Services
     public interface IEmailService
     {
         Task SendTestEmail(UserEmailOptions userEmailOptions);
-        Task SendEmailForEmailConfirmation(UserEmailOptions options);
+        Task SendEmailForEmailConfirmation(UserEmailOptions userEmailOptions);
+        Task SendEmailForForgotPassword(UserEmailOptions userEmailOptions);
     }
 }
