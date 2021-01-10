@@ -91,11 +91,11 @@ namespace HubbleSpace_Final.Controllers
         }
         /// xóa item trong cart
         [Route("/removecart/{productid:int}", Name = "removecart")]
-        public IActionResult RemoveCart(int productid)
+        public IActionResult RemoveCart([FromRoute]     int id)
         {
 
             var cart = GetCartItems();
-            var cartitem = cart.Find(p => p.product.ID_Product == productid);
+            var cartitem = cart.Find(p => p.product.ID_Product == id);
             if (cartitem != null)
             {
                 // Đã tồn tại, tăng thêm 1
@@ -108,16 +108,16 @@ namespace HubbleSpace_Final.Controllers
         /// Cập nhật
         [Route("/updatecart", Name = "updatecart")]
         [HttpPost]
-        public IActionResult UpdateCart([FromForm] int productid, [FromForm] int quantity)
+        public IActionResult UpdateCart([FromForm] int id, [FromForm] int Amount)
         {
             // Cập nhật Cart thay đổi số lượng quantity ...
 
             var cart = GetCartItems();
-            var cartitem = cart.Find(p => p.product.ID_Product == productid);
+            var cartitem = cart.Find(p => p.product.ID_Product == id);
             if (cartitem != null)
             {
                 // Đã tồn tại, tăng thêm 1
-                cartitem.Amount = quantity;
+                cartitem.Amount = Amount;
             }
             SaveCartSession(cart);
             // Trả về mã thành công (không có nội dung gì - chỉ để Ajax gọi)
