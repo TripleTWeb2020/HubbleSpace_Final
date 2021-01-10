@@ -125,7 +125,7 @@
                                     @Html.DisplayFor(modelItem => product.color_Product.product.Price_Sale)
                                     <div id="getsize" class="sizes" data-auto-id="@product.ID_Color_Product">
                                     </div>
-                                    <p class="text-center buttons"><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
+                                    <p class="text-center buttons"><a asp-controller="Client_ProductCarts" asp-action="AddToCart" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a asp-route="cart" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
 
                                     <!-- /.Share in social-->
                                     <div id="details" class="center">

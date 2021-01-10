@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using HubbleSpace_Final.Entities;
 using HubbleSpace_Final.Services;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -51,26 +53,7 @@ namespace HubbleSpace_Final.Controllers
         {
             return View();
         }
-        public IActionResult Cart()
-        {
-            return View();
-        }
-        public IActionResult Checkout_AddInfo()
-        {
-            return View();
-        }
-        public IActionResult Checkout_Delivery()
-        {
-            return View();
-        }
-        public IActionResult Checkout_Review()
-        {
-            return View();
-        }
-        public IActionResult Checkout_Payment()
-        {
-            return View();
-        }
+        
         
         public async Task<IActionResult> Categories(string sortOrder,string brand, string price, string searchString, int CountForTake = 1, string Object="", string Name="")
         {

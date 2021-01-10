@@ -49,6 +49,13 @@ namespace HubbleSpace_Final
             {
                 config.LoginPath = Configuration["Application:LoginPath"];
             });
+            services.AddDistributedMemoryCache();
+            services.AddSession(cfg =>
+            {
+                cfg.Cookie.Name = "hubblespaceteam";
+                cfg.IdleTimeout = new TimeSpan(0, 30, 0);
+
+            });
             services.Configure<IdentityOptions>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = true;
@@ -79,6 +86,7 @@ namespace HubbleSpace_Final
 
             app.UseRouting();
             app.UseAuthentication();
+            app.UseSession();
 
             app.UseAuthorization();
 
