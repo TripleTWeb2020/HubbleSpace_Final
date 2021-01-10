@@ -19,11 +19,58 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Accounts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
         {
-            return View(await _context.Account.ToListAsync());
-        }
+            ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
+            ViewData["Name"] = sortOrder == "Name" ? "name_desc" : "Name";
+            ViewData["Level"] = sortOrder == "Level" ? "level_desc" : "Name";
 
+            ViewData["Search"] = searchString;
+
+
+
+            var Accounts = from a in _context.Account
+                                 select a;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Accounts = Accounts.Where(p => p.UserName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "date_desc":
+                    Accounts = Accounts.OrderBy(a => a.Date_Create);
+                    break;
+                case "Name":
+                    Accounts = Accounts.OrderBy(a => a.UserName);
+                    break;
+                case "name_desc":
+                    Accounts = Accounts.OrderByDescending(a => a.UserName);
+                    break;
+                case "Level":
+                    Accounts = Accounts.OrderBy(a => a.Level);
+                    break;
+                case "level_desc":
+                    Accounts = Accounts.OrderByDescending(a => a.Level);
+                    break;
+                default:
+                    Accounts = Accounts.OrderByDescending(a => a.Date_Create);
+                    break;
+            }
+
+            int take = 5;
+            double total_product = Accounts.Count();
+
+            int total_take = (int)Math.Ceiling(total_product / take);
+
+            Accounts = Accounts.Skip((CountForTake - 1) * take).Take(take);
+            ViewData["total_take"] = total_take;
+            ViewData["CountForTake"] = CountForTake + 1;
+
+            return View(await Accounts.AsNoTracking().ToListAsync());
+        }
+        
         // GET: Accounts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -149,9 +196,5 @@ namespace HubbleSpace_Final.Controllers
             return _context.Account.Any(e => e.ID_Account == id);
         }
 
-        public IActionResult Search(string term)
-        {
-            return View("Index", _context.Account.Where(m => m.UserName.Contains(term)));
-        }
     }
 }

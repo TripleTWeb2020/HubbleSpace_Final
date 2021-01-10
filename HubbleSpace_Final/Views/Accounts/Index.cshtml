@@ -10,13 +10,13 @@
         <h3 class="title-5 m-b-35">Quản lý người dùng</h3>
         <div class="table-data__tool">
             <div class="table-data__tool-left">
-                <form asp-action="Search" method="get">
+                <form asp-action="Index" method="get">
                     <div class="rs-select2--light rs-select2--sm">
-                        <input type="text" class="form-control" placeholder="Search for" name="term" />
+                        <input type="text" class="form-control" placeholder="Search for" name="SearchString" value="@ViewData["Search"]"/>
                         <div class="dropDownSelect2"></div>
                     </div>
                     <button class="au-btn-filter" type="submit">
-                        <i class="zmdi zmdi-view-list"></i>Search
+                        <i class="fa-search"></i>Search
                     </button>
                 </form>
             </div>
@@ -32,7 +32,7 @@
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.UserName)
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]" >@Html.DisplayNameFor(model => model.UserName)</a>
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.Password)
@@ -44,10 +44,10 @@
                             @Html.DisplayNameFor(model => model.Email)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Level)
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Level"]">@Html.DisplayNameFor(model => model.Level)</a>
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Date_Create)
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Date"]">@Html.DisplayNameFor(model => model.Date_Create)</a>
                         </th>
                         <th></th>
                     </tr>

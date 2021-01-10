@@ -185,7 +185,7 @@ namespace HubbleSpace_Final.Controllers
         }
         public async Task<IActionResult> GetSize(int id)
         {
-            return PartialView(await _context.Size.Where(p => p.ID_Color_Product == id).ToListAsync());
+            return PartialView(await _context.Size.Where(s => s.ID_Color_Product == id).OrderBy(s => s.SizeNumber).ToListAsync());
         }
         public async Task<IActionResult> GetColor(int id)
         {
