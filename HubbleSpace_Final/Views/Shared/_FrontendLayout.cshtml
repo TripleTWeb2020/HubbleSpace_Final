@@ -68,12 +68,12 @@
                                     <div class="row">
                                         <div class="col-md-6 col-lg-4">
                                             <ul class="list-unstyled mb-3">
-                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Men&Name=Originals" class="nav-link">Originals</a></li>
-                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Men&Name=Running" class="nav-link">Running</a></li>
-                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Men&Name=Training" class="nav-link">Training</a></li>
-                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Men&Name=Football" class="nav-link">Football</a></li>
-                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Men&Name=Basketball" class="nav-link">Basketball</a></li>
-                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Men&Name=Tennis" class="nav-link">Tennis</a></li>
+                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Men&Name=Originals" class="nav-link-custom">Originals</a></li>
+                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Men&Name=Running" class="nav-link-custom">Running</a></li>
+                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Men&Name=Training" class="nav-link-custom">Training</a></li>
+                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Men&Name=Football" class="nav-link-custom">Football</a></li>
+                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Men&Name=Basketball" class="nav-link-custom">Basketball</a></li>
+                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Men&Name=Tennis" class="nav-link-custom">Tennis</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -87,10 +87,10 @@
                                     <div class="row">
                                         <div class="col-md-6 col-lg-4">
                                             <ul class="list-unstyled mb-3">
-                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Women&Name=Originals" class="nav-link">Originals</a></li>
-                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Women&Name=Running" class="nav-link">Running</a></li>
-                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Women&Name=Training" class="nav-link">Training</a></li>
-                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Women&Name=Tennis" class="nav-link">Tennis</a></li>
+                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Women&Name=Originals" class="nav-link-custom">Originals</a></li>
+                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Women&Name=Running" class="nav-link-custom">Running</a></li>
+                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Women&Name=Training" class="nav-link-custom">Training</a></li>
+                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Women&Name=Tennis" class="nav-link-custom">Tennis</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -105,8 +105,8 @@
                                     <div class="row">
                                         <div class="col-md-6 col-lg-4">
                                             <ul class="list-unstyled mb-3">
-                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Kids&Name=Originals" class="nav-link">Originals</a></li>
-                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Kids&Name=Running" class="nav-link">Running</a></li>
+                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Kids&Name=Originals" class="nav-link-custom">Originals</a></li>
+                                                <li class="nav-item"><a href="~/../Home/Categories?Object=Kids&Name=Running" class="nav-link-custom">Running</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -125,9 +125,9 @@
         </nav>
         <div id="search" class="collapse">
             <div class="container">
-                <form asp-action="Search" role="search" class="ml-auto" method="post">
+                <form asp-action="Categories" method="get" class="ml-auto">
                     <div class="input-group">
-                        <input id="Search" name="Search" type="text" placeholder="Search" class="form-control">
+                        <input name="SearchString" type="text" placeholder="Search" class="form-control" value="@ViewData["Search"]">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </div>

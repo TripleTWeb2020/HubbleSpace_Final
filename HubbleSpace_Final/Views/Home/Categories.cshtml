@@ -17,23 +17,42 @@
                             <li class="breadcrumb-item"><a href="~/../Home">Home</a></li>
                             @{
                                 var breadcrumb_item = Model.FirstOrDefault();
-                                @if (ViewBag.Object != "")
+                                if (ViewData["Object"] != "")
                                 {
-                                    <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="ViewBag.Object">@ViewBag.Object</a></li>
+                                    <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="@ViewData["Object"]">@ViewData["Object"]</a></li>
                                 }
-                                @if (ViewBag.Name != "")
+                                else
                                 {
-                                    <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="ViewBag.Name">@ViewBag.Name</a></li>
+                                    if (breadcrumb_item != null)
+                                    {
+                                        <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="@breadcrumb_item.product.category.Object">@Html.DisplayFor(modelItem => breadcrumb_item.product.category.Object)</a></li>
+
+                                    }
                                 }
+                                if (ViewData["Name"] != "")
+                                {
+                                    <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Name="@ViewData["Name"]">@ViewData["Name"]</a></li>
+                                }
+                                else
+                                {
+                                    if (breadcrumb_item != null)
+                                    {
+                                        <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="@breadcrumb_item.product.category.Category_Name)">@Html.DisplayFor(modelItem => breadcrumb_item.product.category.Category_Name)</a></li>
+
+                                    }
+                                }
+                                if (ViewData["Search"] != null)
+                                {
+                                    <li class="breadcrumb-item"><a asp-action="Categories" asp-route-searchString="@ViewData["Search"]">Search @ViewData["Search"]</a></li>
+                                }
+
                             }
-                            </ol>
+                        </ol>
                     </nav>
                 </div>
+
+                <!--*** MENUS AND FILTERS ***-->
                 <div class="col-lg-3">
-                    <!--
-                    *** MENUS AND FILTERS ***
-                    _________________________________________________________
-                    -->
                     <div class="card sidebar-menu mb-4">
                         <div class="card-header">
                             <h3 class="h4 card-title">Categories</h3>
@@ -72,85 +91,104 @@
                     </div>
                     <div class="card sidebar-menu mb-4">
                         <div class="card-header">
-                            <h3 class="h4 card-title">Brands <a asp-action="Categories" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
+                            <h3 class="h4 card-title">Filter <a asp-action="Categories" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
                         </div>
                         <div class="card-body">
-                            <form asp-action="Filter">
+                            <form asp-action="Categories" method="get">
                                 <div class="form-group">
+                                    <div class="form-header">
+                                        <h3 class="h4 card-title">
+                                            Brand
+                                        </h3>
+                                    </div>
                                     <div class="zmdi-radio">
                                         <label>
-                                            <input id="brand" name="brand" type="radio" value="Adidas"> Adidas
+                                            <input name="brand" type="radio" asp-route-brand="@ViewData["Adidas"]" value="Adidas"> Adidas
                                         </label>
                                     </div>
                                     <div class="zmdi-radio">
                                         <label>
-                                            <input id="brand" name="brand" type="radio" value="Nike"> Nike
+                                            <input name="brand" type="radio" asp-route-brand="@ViewData["Nike"]" value="Nike"> Nike
                                         </label>
                                     </div>
                                     <div class="zmdi-radio">
                                         <label>
-                                            <input id="brand" name="brand" type="radio" value="Puma"> Puma
+                                            <input name="brand" type="radio" asp-route-brand="@ViewData["Puma"]" value="Puma"> Puma
                                         </label>
                                     </div>
                                     <div class="zmdi-radio">
                                         <label>
-                                            <input id="brand" name="brand" type="radio" value="Reebok"> Reebok
+                                            <input name="brand" type="radio" asp-route-brand="@ViewData["Reebok"]" value="Reebok"> Reebok
                                         </label>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <div class="form-header2">
+                                        <h3 class="h4 card-title">
+                                            Price
+                                        </h3>
+                                    </div>
+                                    <div class="zmdi-radio">
+                                        <label>
+                                            <input name="price" type="radio" asp-route-price="@ViewData["0"]" value="0"> Less than 1.000.000
+                                        </label>
+                                    </div>
+                                    <div class="zmdi-radio">
+                                        <label>
+                                            <input name="price" type="radio" asp-route-price="@ViewData["1000000"]" value="1000000"> 1.000.000 - 3.000.000
+                                        </label>
+                                    </div>
+                                    <div class="zmdi-radio">
+                                        <label>
+                                            <input name="price" type="radio" asp-route-price="@ViewData["3000000"]" value="3000000"> 3.000.000 - 5.000.000
+                                        </label>
+                                    </div>
+                                    <div class="zmdi-radio">
+                                        <label>
+                                            <input name="price" type="radio" asp-route-price="@ViewData["5000000"]" value="5000000"> More than 5.000.000
+                                        </label>
+                                    </div>
+                                </div>
+
                                 <button class="btn btn-default btn-sm btn-primary" type="submit"><i class="fa fa-pencil"></i> Apply</button>
                             </form>
                         </div>
                     </div>
-                    <div class="card sidebar-menu mb-4">
-                        <div class="card-header">
-                            <h3 class="h4 card-title">Price <a href="Categories" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
-                        </div>
-                        <div class="card-body">
-                            <form asp-action="Filter">
-                                <div class="form-group">
-                                    <div class="zmdi-radio">
-                                        <label>
-                                            <input id="price" name="price" type="radio" value="0"> Less than 1.000.000
-                                        </label>
-                                    </div>
-                                    <div class="zmdi-radio">
-                                        <label>
-                                            <input id="price" name="price" type="radio" value="1000000"> 1.000.000 - 3.000.000
-                                        </label>
-                                    </div>
-                                    <div class="zmdi-radio">
-                                        <label>
-                                            <input id="price" name="price" type="radio" value="3000000"> 3.000.000 - 5.000.000
-                                        </label>
-                                    </div>
-                                    <div class="zmdi-radio">
-                                        <label>
-                                            <input id="price" name="price" type="radio" value="5000000"> More than 5.000.000
-                                        </label>
-                                    </div>
-                                </div>
-                                <button class="btn btn-default btn-sm btn-primary" type="submit"><i class="fa fa-pencil"></i> Apply</button>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- *** MENUS AND FILTERS END ***-->
                 </div>
+                <!-- *** MENUS AND FILTERS END ***-->
+
 
                 <div class="col-lg-9">
                     <div class="box info-bar">
                         <div class="row">
-                            <div class="col-md-12 col-lg-4 products-showing">Showing <strong>@ViewBag.products_taked</strong> of <strong></strong> products</div>
+                            <div class="col-md-12 col-lg-4 products-showing">Showing <strong>@ViewBag.products_taked</strong> of <strong>@ViewBag.total_product</strong> products</div>
                             <div class="col-md-12 col-lg-7 products-number-sort">
                                 <form class="form-inline d-block d-lg-flex justify-content-between flex-column flex-md-row">
-                                    <div class="products-number"><strong>Show</strong><a href="#" class="btn btn-sm btn-primary">12</a><a href="#" class="btn btn-outline-secondary btn-sm">24</a><a href="#" class="btn btn-outline-secondary btn-sm">All</a><span>products</span></div>
+                                    <div class="products-number">
+                                        <strong>Show</strong>
+                                        <a href="#" class="btn btn-sm btn-primary">@ViewBag.products_taked</a>
+                                        <a asp-action="Categories" asp-route-CountForTake="@ViewBag.total_take" class="btn btn-outline-secondary btn-sm">All</a>
+                                        <span>products</span>
+                                    </div>
                                     <div class="products-sort-by mt-2 mt-lg-0">
-                                        <strong>Sort by</strong>
-                                        <select name="sort-by" class="form-control">
-                                            <option>Price</option>
-                                            <option>Name</option>
-                                            <option>Sales first</option>
-                                        </select>
+                                        <a href="/../Home/Categories?Object=Men" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">
+                                            <strong>Sort by</strong>
+                                            <b class="caret"></b>
+                                        </a>
+                                        <ul class="dropdown-menu megamenu">
+                                            <li>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-lg-4">
+                                                        <ul class="list-unstyled mb-3">
+                                                            <li class="nav-item"><a class="nav-link-custom" asp-action="Categories" asp-route-sortOrder="Name">Name</a></li>
+                                                            <li class="nav-item"><a class="nav-link-custom" asp-action="Categories" asp-route-sortOrder="Price">Price</a></li>
+                                                            <li class="nav-item"><a class="nav-link-custom" asp-action="Categories" asp-route-sortOrder="Date" >Date</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </form>
                             </div>
@@ -227,15 +265,23 @@
                                     <!-- /.products-->
                                 }
                             </div>
-                            <div class="pages">
-                                <p class="loadMore"><a asp-action="Categories" asp-route-CountForTake="@ViewBag.CountForTake" class="btn btn-primary btn-lg"><i class="fa fa-chevron-down"></i> Load more</a></p>
-                            </div>
+                            if (ViewBag.CountForTake <= ViewBag.total_take)
+                            {
+                                <div class="pages">
+                                    <p class="loadMore">
+                                        <a asp-action="Categories" asp-route-CountForTake="@ViewBag.CountForTake" asp-route-Object="@ViewBag.Object" asp-route-Name="@ViewBag.Name" class="btn btn-primary btn-lg">
+                                            <i class="fa fa-chevron-down"></i>Load more
+                                        </a>
+                                    </p>
+                                </div>
+                            }
+
                         }
                     }
 
                 </div>
-                    <!-- /.col-lg-9-->
-                </div>
+                <!-- /.col-lg-9-->
+            </div>
             </div>
         </div>
     </div>

@@ -80,3 +80,10 @@ center {
     width: 840px;
     height: 840px;
 }
+
+.nav-link-custom {
+    font-weight: 800;
+    color: #999;
+    display: block;
+    padding: 0.3rem 1rem;
+}
