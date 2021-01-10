@@ -11,13 +11,13 @@
         <h3 class="title-5 m-b-35">Quản lý hình ảnh sản phẩm</h3>
         <div class="table-data__tool">
             <div class="table-data__tool-left">
-                <form asp-action="Search" method="get">
+                <form asp-action="Index" method="get">
                     <div class="rs-select2--light rs-select2--sm">
-                        <input type="text" class="form-control" placeholder="Search for" name="term" />
+                        <input type="text" class="form-control" placeholder="Search for" name="SearchString" value="@ViewData["Search"]" />
                         <div class="dropDownSelect2"></div>
                     </div>
                     <button class="au-btn-filter" type="submit">
-                        <i class="zmdi zmdi-view-list"></i>Search
+                        <i class="fa-search"></i>Search
                     </button>
                 </form>
             </div>
@@ -33,10 +33,10 @@
                 <thead>
                     <tr class="row">
                         <th class="col-3">
-                            @Html.DisplayNameFor(model => model.color_Product.product.Product_Name)
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.color_Product.product.Product_Name)</a>
                         </th>
                         <th class="col-3">
-                            @Html.DisplayNameFor(model => model.color_Product.Color_Name)
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["ColorName"]">@Html.DisplayNameFor(model => model.color_Product.Color_Name)</a>
                         </th>
                         <th class="col-3">
                             @Html.DisplayNameFor(model => model.Photo)
@@ -47,37 +47,68 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr class="tr-shadow row">
-                        <td class="col-3">
-                            @Html.DisplayFor(modelItem => item.color_Product.product.Product_Name)
-                        </td>
+                        <tr class="tr-shadow row">
+                            <td class="col-3">
+                                @Html.DisplayFor(modelItem => item.color_Product.product.Product_Name)
+                            </td>
 
-                        <td class="col-3">
-                            @Html.DisplayFor(modelItem => item.color_Product.Color_Name)
-                        </td>
+                            <td class="col-3">
+                                @Html.DisplayFor(modelItem => item.color_Product.Color_Name)
+                            </td>
 
-                        <td class="col-3">
-                            <img class="img-circle" src="~/Images/Product_Color_Image/@Html.DisplayFor(modelItem => item.color_Product.product.Product_Name)/@Html.DisplayFor(modelItem => item.Photo)" />
-                        </td>
+                            <td class="col-3">
+                                <img class="img-circle" src="~/Images/Product_Color_Image/@Html.DisplayFor(modelItem => item.color_Product.product.Product_Name)/@Html.DisplayFor(modelItem => item.Photo)" />
+                            </td>
 
-                        <td class="col-3">
-                            <div class="table-data-feature">
-                                <a class="item" asp-action="Edit" asp-route-id="@item.ID_Img_Product" data-toggle="tooltip" data-placement="top" title="Edit">
-                                    <i class="zmdi zmdi-edit"></i>
-                                </a>
-                                <a class="item" asp-action="Delete" asp-route-id="@item.ID_Img_Product" data-toggle="tooltip" data-placement="top" title="Delete">
-                                    <i class="zmdi zmdi-delete"></i>
-                                </a>
-                                <a class="item" asp-action="Details" asp-route-id="@item.ID_Img_Product" data-toggle="tooltip" data-placement="top" title="More">
-                                    <i class="zmdi zmdi-more"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                            <td class="col-3">
+                                <div class="table-data-feature">
+                                    <a class="item" asp-action="Edit" asp-route-id="@item.ID_Img_Product" data-toggle="tooltip" data-placement="top" title="Edit">
+                                        <i class="zmdi zmdi-edit"></i>
+                                    </a>
+                                    <a class="item" asp-action="Delete" asp-route-id="@item.ID_Img_Product" data-toggle="tooltip" data-placement="top" title="Delete">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </a>
+                                    <a class="item" asp-action="Details" asp-route-id="@item.ID_Img_Product" data-toggle="tooltip" data-placement="top" title="More">
+                                        <i class="zmdi zmdi-more"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
                         <tr class="spacer"></tr>
                     }
                 </tbody>
             </table>
+            <div class="pages" style="margin: 20px">
+                <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                    <ul class="pagination">
+                        @{
+                            int count = 1;
+                            if ((int)ViewData["CountForTake"] - 1 != 1)
+                            {
+                                <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@ViewData["CountForTake"]-2" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                            }
+                            while (count <= (int)ViewData["total_take"])
+                            {
+                                if (count == (int)ViewData["CountForTake"] - 1)
+                                {
+                                    <li class="page-item active"><a class="page-link"><text>@count</text></a></li>
+                                    count++;
+                                }
+                                else
+                                {
+                                    <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@count" class="page-link"><text>@count</text></a></li>
+                                    count++;
+                                }
+                            }
+
+                            if ((int)ViewData["CountForTake"] - 1 < (int)ViewData["total_take"])
+                            {
+                                <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@ViewData["CountForTake"]" aria-label="Next" class="page-link"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                            }
+                        }
+                    </ul>
+                </nav>
+            </div>
         </div>
         <!-- END DATA TABLE -->
     </div>

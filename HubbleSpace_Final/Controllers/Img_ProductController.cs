@@ -19,11 +19,51 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Img_Product
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
         {
-            var myDbContext = _context.Img_Product.Include(i => i.color_Product).Include(i => i.color_Product.product);
-            return View(await myDbContext.ToListAsync());
+            ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";
+
+            ViewData["Search"] = searchString;
+
+
+
+            var Img_Products = from i in _context.Img_Product.Include(i => i.color_Product).Include(i => i.color_Product.product)
+                                 select i;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Img_Products = Img_Products.Where(i => i.color_Product.product.Product_Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    Img_Products = Img_Products.OrderByDescending(c => c.color_Product.product.Product_Name);
+                    break;
+                case "ColorName":
+                    Img_Products = Img_Products.OrderBy(c => c.color_Product.Color_Name);
+                    break;
+                case "colorname_desc":
+                    Img_Products = Img_Products.OrderByDescending(c => c.color_Product.Color_Name);
+                    break;
+                default:
+                    Img_Products = Img_Products.OrderBy(c => c.color_Product.product.Product_Name);
+                    break;
+            }
+
+            int take = 10;
+            double total_product = Img_Products.Count();
+
+            int total_take = (int)Math.Ceiling(total_product / take);
+
+            Img_Products = Img_Products.Skip((CountForTake - 1) * take).Take(take);
+            ViewData["total_take"] = total_take;
+            ViewData["CountForTake"] = CountForTake + 1;
+
+            return View(await Img_Products.AsNoTracking().ToListAsync());
         }
+
 
         // GET: Img_Product/Details/5
         public async Task<IActionResult> Details(int? id)

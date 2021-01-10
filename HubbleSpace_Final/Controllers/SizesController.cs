@@ -19,6 +19,65 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Sizes
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
+        {
+            ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";
+            ViewData["Size"] = sortOrder == "Size" ? "size_desc" : "Size";
+            ViewData["Quantity"] = sortOrder == "Quantity" ? "quantity_desc" : "Quantity";
+
+            ViewData["Search"] = searchString;
+
+
+
+            var Sizes = from s in _context.Size.Include(s => s.color_Product).Include(s => s.color_Product.product)
+                               select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Sizes = Sizes.Where(s => s.color_Product.product.Product_Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    Sizes = Sizes.OrderByDescending(c => c.color_Product.product.Product_Name);
+                    break;
+                case "ColorName":
+                    Sizes = Sizes.OrderBy(c => c.color_Product.Color_Name);
+                    break;
+                case "colorname_desc":
+                    Sizes = Sizes.OrderByDescending(c => c.color_Product.Color_Name);
+                    break;
+                case "Size":
+                    Sizes = Sizes.OrderBy(c => c.SizeNumber);
+                    break;
+                case "size_desc":
+                    Sizes = Sizes.OrderByDescending(c => c.SizeNumber);
+                    break;
+                case "Quantity":
+                    Sizes = Sizes.OrderBy(c => c.Quantity);
+                    break;
+                case "quantity_desc":
+                    Sizes = Sizes.OrderByDescending(c => c.Quantity);
+                    break;
+                default:
+                    Sizes = Sizes.OrderBy(c => c.color_Product.product.Product_Name);
+                    break;
+            }
+
+            int take = 10;
+            double total_product = Sizes.Count();
+
+            int total_take = (int)Math.Ceiling(total_product / take);
+
+            Sizes = Sizes.Skip((CountForTake - 1) * take).Take(take);
+            ViewData["total_take"] = total_take;
+            ViewData["CountForTake"] = CountForTake + 1;
+
+            return View(await Sizes.AsNoTracking().ToListAsync());
+        }
+
         public async Task<IActionResult> Index()
         {
             var myDbContext = _context.Size.Include(s => s.color_Product).Include(s => s.color_Product.product);

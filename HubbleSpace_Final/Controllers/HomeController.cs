@@ -72,7 +72,7 @@ namespace HubbleSpace_Final.Controllers
             return View();
         }
         
-        public async Task<IActionResult> Categories(string sortOrder,string brand, string price, string searchString, int CountForTake = 1, string Object="", string Name="")
+        public async Task<IActionResult> Categories(string sortOrder, string brand, string price, string searchString, int CountForTake = 1, string Object="", string Name="")
         {
             ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["Price"] = sortOrder == "Price" ? "price_desc" : "Price";
@@ -89,10 +89,12 @@ namespace HubbleSpace_Final.Controllers
             ViewData["5000000"] = price == "5000000" ? "" : "5000000";
 
             ViewData["Search"] = searchString;
-
-            
+            ViewData["CategoriesName"] = Name;
+            ViewData["Object"] = Object;
 
             var color_Products = from p in _context.Color_Product.Include(p => p.product).Include(p => p.product.category)
+                                 .Where(p => p.product.category.Category_Name.Contains(Name))
+                                 .Where(p => p.product.category.Object.Contains(Object))
                                  select p;
 
             if (!String.IsNullOrEmpty(searchString))
@@ -158,7 +160,7 @@ namespace HubbleSpace_Final.Controllers
                     break;
             }
 
-            int take = 5;
+            int take = 6;
             double total_product = color_Products.Count();
 
             int total_take = (int)Math.Ceiling(total_product / take);

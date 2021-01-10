@@ -18,13 +18,61 @@ namespace HubbleSpace_Final.Controllers
             _context = context;
         }
 
-        // GET: Color_Product
-        public async Task<IActionResult> Index()
-        {
-            var myDbContext = _context.Color_Product.Include(c => c.product);
-            return View(await myDbContext.ToListAsync());
-        }
 
+
+        // GET: Color_Product
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
+        {
+            ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
+            ViewData["Name"] = sortOrder == "Name" ? "name_desc" : "Name";
+            ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";
+
+            ViewData["Search"] = searchString;
+
+
+
+            var color_Products = from c in _context.Color_Product.Include(c => c.product)
+                           select c;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                color_Products = color_Products.Where(c => c.product.Product_Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "date_desc":
+                    color_Products = color_Products.OrderBy(c => c.Date);
+                    break;
+                case "Name":
+                    color_Products = color_Products.OrderBy(c => c.product.Product_Name);
+                    break;
+                case "name_desc":
+                    color_Products = color_Products.OrderByDescending(c => c.product.Product_Name);
+                    break;
+                case "ColorName":
+                    color_Products = color_Products.OrderBy(c => c.Color_Name);
+                    break;
+                case "colorname_desc":
+                    color_Products = color_Products.OrderByDescending(c => c.Color_Name);
+                    break;
+                default:
+                    color_Products = color_Products.OrderByDescending(c => c.Date);
+                    break;
+            }
+
+            int take = 10;
+            double total_product = color_Products.Count();
+
+            int total_take = (int)Math.Ceiling(total_product / take);
+
+            color_Products = color_Products.Skip((CountForTake - 1) * take).Take(take);
+            ViewData["total_take"] = total_take;
+            ViewData["CountForTake"] = CountForTake + 1;
+
+            return View(await color_Products.AsNoTracking().ToListAsync());
+        }
+        
         // GET: Color_Product/Details/5
         public async Task<IActionResult> Details(int? id)
         {

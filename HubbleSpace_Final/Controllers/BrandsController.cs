@@ -19,10 +19,40 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Brands
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
         {
-            return View(await _context.Brand.ToListAsync());
+            ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["Search"] = searchString;
+
+            var Brands = from b in _context.Brand
+                           select b;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Brands = Brands.Where(b => b.Brand_Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    Brands = Brands.OrderByDescending(b => b.Brand_Name);
+                    break;
+                default:
+                    Brands = Brands.OrderBy(b => b.Brand_Name);
+                    break;
+            }
+
+            int take = 10;
+            double total_product = Brands.Count();
+
+            int total_take = (int)Math.Ceiling(total_product / take);
+
+            Brands = Brands.Skip((CountForTake - 1) * take).Take(take);
+            ViewData["total_take"] = total_take;
+            ViewData["CountForTake"] = CountForTake + 1;
+            return View(await Brands.AsNoTracking().ToListAsync());
         }
+
 
         // GET: Brands/Details/5
         public async Task<IActionResult> Details(int? id)

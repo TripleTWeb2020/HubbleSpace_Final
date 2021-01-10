@@ -19,11 +19,51 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Orders
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
         {
-            var myDbContext = _context.Order.Include(o => o.account);
-            return View(await myDbContext.ToListAsync());
+            ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
+            ViewData["Process"] = sortOrder == "Process" ? "process_desc" : "Process";
+
+            ViewData["Search"] = searchString;
+
+
+
+            var Orders = from o in _context.Order.Include(o => o.account)
+                           select o;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Orders = Orders.Where(o => o.SDT.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "date_desc":
+                    Orders = Orders.OrderBy(o => o.Date_Create);
+                    break;
+                case "Process":
+                    Orders = Orders.OrderBy(o => o.Process);
+                    break;
+                case "process_desc":
+                    Orders = Orders.OrderByDescending(o => o.Process);
+                    break;
+                default:
+                    Orders = Orders.OrderByDescending(o => o.Date_Create);
+                    break;
+            }
+
+            int take = 10;
+            double total_product = Orders.Count();
+
+            int total_take = (int)Math.Ceiling(total_product / take);
+
+            Orders = Orders.Skip((CountForTake - 1) * take).Take(take);
+            ViewData["total_take"] = total_take;
+            ViewData["CountForTake"] = CountForTake + 1;
+
+            return View(await Orders.AsNoTracking().ToListAsync());
         }
+
 
         // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -154,11 +194,6 @@ namespace HubbleSpace_Final.Controllers
         private bool OrderExists(int id)
         {
             return _context.Order.Any(e => e.ID_Order == id);
-        }
-
-        public IActionResult Search(string term)
-        {
-            return View("Index", _context.Order.Include(o => o.account).Where(m => m.Address.Contains(term)));
         }
     }
 }

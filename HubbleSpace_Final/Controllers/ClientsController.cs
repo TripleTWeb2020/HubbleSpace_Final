@@ -19,6 +19,52 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Clients
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
+        {
+            ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["Date"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            ViewData["Search"] = searchString;
+
+
+
+            var Clients = from b in _context.Client.Include(c => c.Account)
+                         select b;
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Clients = Clients.Where(c => c.Account.Email.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "date_desc":
+                    Clients = Clients.OrderByDescending(c => c.DOB);
+                    break;
+                case "Date":
+                    Clients = Clients.OrderBy(c => c.DOB);
+                    break;
+                case "name_desc":
+                    Clients = Clients.OrderByDescending(c => c.Client_Name);
+                    break;
+                default:
+                    Clients = Clients.OrderBy(c => c.Client_Name);
+                    break;
+            }
+
+            int take = 10;
+            double total_product = Clients.Count();
+
+            int total_take = (int)Math.Ceiling(total_product / take);
+
+            Clients = Clients.Skip((CountForTake - 1) * take).Take(take);
+            ViewData["total_take"] = total_take;
+            ViewData["CountForTake"] = CountForTake + 1;
+
+            return View(await Clients.AsNoTracking().ToListAsync());
+        }
+
         public async Task<IActionResult> Index()
         {
             var myDbContext = _context.Client.Include(c => c.Account);

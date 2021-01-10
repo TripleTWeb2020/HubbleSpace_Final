@@ -23,7 +23,7 @@ namespace HubbleSpace_Final.Controllers
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Name"] = sortOrder == "Name" ? "name_desc" : "Name";
-            ViewData["Level"] = sortOrder == "Level" ? "level_desc" : "Name";
+            ViewData["Level"] = sortOrder == "Level" ? "level_desc" : "Level";
 
             ViewData["Search"] = searchString;
 
@@ -34,7 +34,7 @@ namespace HubbleSpace_Final.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                Accounts = Accounts.Where(p => p.UserName.Contains(searchString));
+                Accounts = Accounts.Where(a => a.UserName.Contains(searchString));
             }
 
             switch (sortOrder)
@@ -59,7 +59,7 @@ namespace HubbleSpace_Final.Controllers
                     break;
             }
 
-            int take = 5;
+            int take = 10;
             double total_product = Accounts.Count();
 
             int total_take = (int)Math.Ceiling(total_product / take);

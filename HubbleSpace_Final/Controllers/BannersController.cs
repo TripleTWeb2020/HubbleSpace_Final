@@ -19,6 +19,51 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Banners
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
+        {
+            ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
+            ViewData["Name"] = sortOrder == "Name" ? "name_desc" : "Name";
+            
+            ViewData["Search"] = searchString;
+
+
+
+            var Banners = from b in _context.Banner
+                           select b;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Banners = Banners.Where(b => b.Banner_Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "date_desc":
+                    Banners = Banners.OrderBy(a => a.Date_Upload);
+                    break;
+                case "Name":
+                    Banners = Banners.OrderBy(a => a.Banner_Name);
+                    break;
+                case "name_desc":
+                    Banners = Banners.OrderByDescending(a => a.Banner_Name);
+                    break;
+                default:
+                    Banners = Banners.OrderByDescending(a => a.Date_Upload);
+                    break;
+            }
+
+            int take = 10;
+            double total_product = Banners.Count();
+
+            int total_take = (int)Math.Ceiling(total_product / take);
+
+            Banners = Banners.Skip((CountForTake - 1) * take).Take(take);
+            ViewData["total_take"] = total_take;
+            ViewData["CountForTake"] = CountForTake + 1;
+
+            return View(await Banners.AsNoTracking().ToListAsync());
+        }
+
         public async Task<IActionResult> Index()
         {
             return View(await _context.Banner.ToListAsync());

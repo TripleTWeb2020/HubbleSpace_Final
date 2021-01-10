@@ -117,24 +117,32 @@
                         <div class="col-md-6">
                             @if (product != null)
                             {
-                                <div class="box" style="height: 100%; padding-bottom: 0">
-                                    <h2>@Html.DisplayFor(modelItem => product.color_Product.product.Product_Name)</h2>
-                                    <h4><i>@Html.DisplayFor(modelItem => product.color_Product.Color_Name)</i></h4>
-                                    @if (product.color_Product.product.Price_Sale < product.color_Product.product.Price_Product)
-                                    {<p class="sale">@Html.DisplayFor(modelItem => product.color_Product.product.Price_Sale)</p>}
-                                    @Html.DisplayFor(modelItem => product.color_Product.product.Price_Sale)
-                                    <div id="getsize" class="sizes" data-auto-id="@product.ID_Color_Product">
-                                    </div>
-                                    <p class="text-center buttons"><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
+                            <div class="box" style="height: 100%; padding-bottom: 0">
+                                <h2>@Html.DisplayFor(modelItem => product.color_Product.product.Product_Name)</h2>
+                                <h4><i>@Html.DisplayFor(modelItem => product.color_Product.Color_Name)</i></h4>
+                                <p class="price">
+                                    <del>
+                                        @if (product.color_Product.product.Price_Sale < product.color_Product.product.Price_Product)
+                                        {
+                                            <text> @String.Format("{0:0,0}", product.color_Product.product.Price_Product) VNĐ </text>
+                                        }
+                                    </del>
+                                </p>
+                                <p class="price-sale" style="font-size: 1.5rem;">
+                                    <text> @String.Format("{0:0,0}", product.color_Product.product.Price_Sale) VNĐ </text>
+                                </p>
+                                <div id="getsize" class="sizes" data-auto-id="@product.ID_Color_Product">
+                                </div>
+                                <p class="text-center buttons"><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
 
-                                    <!-- /.Share in social-->
-                                    <div id="details" class="center">
-                                        <h4>Show it to your friends</h4>
-                                        <div class="social">
-                                            <p style="text-align: center"><a href="#" class="external facebook"><i class="fa fa-facebook"></i></a><a href="#" class="external gplus"><i class="fa fa-google-plus"></i></a><a href="#" class="external twitter"><i class="fa fa-twitter"></i></a><a href="#" class="email"><i class="fa fa-envelope"></i></a></p>
-                                        </div>
+                                <!-- /.Share in social-->
+                                <div id="details" class="center">
+                                    <h4>Show it to your friends</h4>
+                                    <div class="social">
+                                        <p style="text-align: center"><a href="#" class="external facebook"><i class="fa fa-facebook"></i></a><a href="#" class="external gplus"><i class="fa fa-google-plus"></i></a><a href="#" class="external twitter"><i class="fa fa-twitter"></i></a><a href="#" class="email"><i class="fa fa-envelope"></i></a></p>
                                     </div>
                                 </div>
+                            </div>
                             }
                         </div>
                     </div>

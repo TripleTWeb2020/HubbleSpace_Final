@@ -19,11 +19,51 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
         {
-            var myDbContext = _context.Product.Include(p => p.Brand).Include(p => p.category);
-            return View(await myDbContext.ToListAsync());
+            ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["Price"] = sortOrder == "Price" ? "price_desc" : "Price";
+
+            ViewData["Search"] = searchString;
+
+
+
+            var Products = from p in _context.Product.Include(p => p.Brand).Include(p => p.category)
+                           select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Products = Products.Where(a => a.Product_Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    Products = Products.OrderByDescending(p => p.Product_Name);
+                    break;
+                case "Price":
+                    Products = Products.OrderBy(p => p.Price_Sale);
+                    break;
+                case "price_desc":
+                    Products = Products.OrderByDescending(p => p.Price_Sale);
+                    break;
+                default:
+                    Products = Products.OrderBy(p => p.Product_Name);
+                    break;
+            }
+
+            int take = 10;
+            double total_product = Products.Count();
+
+            int total_take = (int)Math.Ceiling(total_product / take);
+
+            Products = Products.Skip((CountForTake - 1) * take).Take(take);
+            ViewData["total_take"] = total_take;
+            ViewData["CountForTake"] = CountForTake + 1;
+
+            return View(await Products.AsNoTracking().ToListAsync());
         }
+
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)

@@ -19,9 +19,45 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Categories
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
         {
-            return View(await _context.Category.ToListAsync());
+            ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["Object"] = sortOrder == "Object" ? "object_desc" : "Object";
+            ViewData["Search"] = searchString;
+
+            var Categories = from c in _context.Category
+                         select c;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Categories = Categories.Where(c => c.Category_Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    Categories = Categories.OrderByDescending(c => c.Category_Name);
+                    break;
+                case "Object":
+                    Categories = Categories.OrderBy(c => c.Object);
+                    break;
+                case "object_desc":
+                    Categories = Categories.OrderByDescending(a => a.Object);
+                    break;
+                default:
+                    Categories = Categories.OrderBy(c => c.Category_Name);
+                    break;
+            }
+
+            int take = 10;
+            double total_product = Categories.Count();
+
+            int total_take = (int)Math.Ceiling(total_product / take);
+
+            Categories = Categories.Skip((CountForTake - 1) * take).Take(take);
+            ViewData["total_take"] = total_take;
+            ViewData["CountForTake"] = CountForTake + 1;
+            return View(await Categories.AsNoTracking().ToListAsync());
         }
 
         // GET: Categories/Details/5

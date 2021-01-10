@@ -29,9 +29,9 @@
 
                                     }
                                 }
-                                if (ViewData["Name"] != "")
+                                if (ViewData["CategoriesName"] != "")
                                 {
-                                    <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Name="@ViewData["Name"]">@ViewData["Name"]</a></li>
+                                    <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Name="@ViewData["CategoriesName"]">@ViewData["CategoriesName"]</a></li>
                                 }
                                 else
                                 {
@@ -166,10 +166,6 @@
                             <div class="col-md-12 col-lg-7 products-number-sort">
                                 <form class="form-inline d-block d-lg-flex justify-content-between flex-column flex-md-row">
                                     <div class="products-number">
-                                        <strong>Show</strong>
-                                        <a href="#" class="btn btn-sm btn-primary">@ViewBag.products_taked</a>
-                                        <a asp-action="Categories" asp-route-CountForTake="@ViewBag.total_take" class="btn btn-outline-secondary btn-sm">All</a>
-                                        <span>products</span>
                                     </div>
                                     <div class="products-sort-by mt-2 mt-lg-0">
                                         <a href="/../Home/Categories?Object=Men" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">
@@ -183,7 +179,7 @@
                                                         <ul class="list-unstyled mb-3">
                                                             <li class="nav-item"><a class="nav-link-custom" asp-action="Categories" asp-route-sortOrder="Name">Name</a></li>
                                                             <li class="nav-item"><a class="nav-link-custom" asp-action="Categories" asp-route-sortOrder="Price">Price</a></li>
-                                                            <li class="nav-item"><a class="nav-link-custom" asp-action="Categories" asp-route-sortOrder="Date" >Date</a></li>
+                                                            <li class="nav-item"><a class="nav-link-custom" asp-action="Categories" asp-route-sortOrder="Date">Date</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -225,10 +221,13 @@
                                                     <del>
                                                         @if (item.product.Price_Sale < item.product.Price_Product)
                                                         {
-                                                            @Html.DisplayFor(modelItem => item.product.Price_Sale)
-
+                                                            <text> @String.Format("{0:0,0}", item.product.Price_Product) VNĐ </text>
                                                         }
-                                                    </del>   @Html.DisplayFor(modelItem => item.product.Price_Product)
+                                                    </del>
+                                                </p>
+                                                <p class="price-sale">
+                                                    <br />
+                                                    <text> @String.Format("{0:0,0}", item.product.Price_Sale) VNĐ </text>
                                                 </p>
                                                 <p class="buttons">
                                                     <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product" class="btn btn-outline-secondary">View detail</a>
@@ -282,6 +281,6 @@
                 </div>
                 <!-- /.col-lg-9-->
             </div>
-            </div>
         </div>
     </div>
+</div>

@@ -31,11 +31,13 @@
                             <del>
                                 @if (item.product.Price_Sale < item.product.Price_Product)
                                 {
-                                    @Html.DisplayFor(modelItem => item.product.Price_Sale)
-
+                                    <text> @String.Format("{0:0,0}", item.product.Price_Product) VNĐ </text>
                                 }
                             </del>
-                            @Html.DisplayFor(modelItem => item.product.Price_Product)
+                        </p>
+                        <p class="price-sale">
+                            <br />
+                            <text> @String.Format("{0:0,0}", item.product.Price_Sale) VNĐ </text>
                         </p>
                     </div>
                 </div>

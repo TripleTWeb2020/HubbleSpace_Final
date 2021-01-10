@@ -19,11 +19,64 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Discounts
-        public async Task<IActionResult> Index(int id)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
         {
-            
-                return View(await _context.Discount.ToListAsync());
-            
+            ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
+            ViewData["Name"] = sortOrder == "Name" ? "name_desc" : "Name";
+            ViewData["Value"] = sortOrder == "Value" ? "value_desc" : "Value";
+            ViewData["Turn"] = sortOrder == "Turn" ? "turn_desc" : "Turn";
+
+
+            ViewData["Search"] = searchString;
+
+
+
+            var Discounts = from d in _context.Discount
+                           select d;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Discounts = Discounts.Where(d => d.Code_Discount.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "date_desc":
+                    Discounts = Discounts.OrderByDescending(d => d.Expire);
+                    break;
+                case "Name":
+                    Discounts = Discounts.OrderBy(d => d.Code_Discount);
+                    break;
+                case "name_desc":
+                    Discounts = Discounts.OrderByDescending(d => d.Code_Discount);
+                    break;
+                case "Value":
+                    Discounts = Discounts.OrderBy(d => d.Value);
+                    break;
+                case "value_desc":
+                    Discounts = Discounts.OrderByDescending(d => d.Value);
+                    break;
+                case "Turn":
+                    Discounts = Discounts.OrderByDescending(d => d.NumberofTurns);
+                    break;
+                case "turn_desc":
+                    Discounts = Discounts.OrderBy(d => d.NumberofTurns);
+                    break;
+                default:
+                    Discounts = Discounts.OrderBy(d => d.Expire);
+                    break;
+            }
+
+            int take = 10;
+            double total_product = Discounts.Count();
+
+            int total_take = (int)Math.Ceiling(total_product / take);
+
+            Discounts = Discounts.Skip((CountForTake - 1) * take).Take(take);
+            ViewData["total_take"] = total_take;
+            ViewData["CountForTake"] = CountForTake + 1;
+
+            return View(await Discounts.AsNoTracking().ToListAsync());
         }
 
         // GET: Discounts/Details/5

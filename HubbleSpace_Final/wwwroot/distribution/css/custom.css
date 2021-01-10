@@ -87,3 +87,16 @@ center {
     display: block;
     padding: 0.3rem 1rem;
 }
+.price-sale {
+    font-size: 1.125rem;
+    text-align: center;
+    font-weight: 900;
+    font-size: 1.3rem;
+    color: #4fbfa8;
+}
+.price {
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 300;
+    margin-bottom:0;
+}

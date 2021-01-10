@@ -11,13 +11,13 @@
         <h3 class="title-5 m-b-35">Quản lý khuyến mãi</h3>
         <div class="table-data__tool">
             <div class="table-data__tool-left">
-                <form asp-action="Search" method="get">
+                <form asp-action="Index" method="get">
                     <div class="rs-select2--light rs-select2--sm">
-                        <input type="text" class="form-control" placeholder="Search for" name="term" />
+                        <input type="text" class="form-control" placeholder="Search for" name="SearchString" value="@ViewData["Search"]" />
                         <div class="dropDownSelect2"></div>
                     </div>
                     <button class="au-btn-filter" type="submit">
-                        <i class="zmdi zmdi-view-list"></i>Search
+                        <i class="fa-search"></i>Search
                     </button>
                 </form>
             </div>
@@ -33,16 +33,16 @@
                 <thead>
                     <tr class="row">
                         <th class="col-3">
-                            @Html.DisplayNameFor(model => model.Code_Discount)
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.Code_Discount)</a>
                         </th>
                         <th class="col-3">
-                            @Html.DisplayNameFor(model => model.Expire)
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Date"]">@Html.DisplayNameFor(model => model.Expire)</a>
                         </th>
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.Value)
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Value"]">@Html.DisplayNameFor(model => model.Value)</a>
                         </th>
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.NumberofTurns)
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Turn"]">@Html.DisplayNameFor(model => model.NumberofTurns)</a>
                         </th>
                         <th class="col-2"></th>
                     </tr>
@@ -81,6 +81,38 @@
                     }
                 </tbody>
             </table>
+            <div class="pages" style="margin: 20px">
+                <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                    <ul class="pagination">
+                        @{
+                            int count = 1;
+                            if ((int)ViewData["CountForTake"] - 1 != 1)
+                            {
+                                <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@ViewData["CountForTake"]-2" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                            }
+                            while (count <= (int)ViewData["total_take"])
+                            {
+                                if (count == (int)ViewData["CountForTake"] - 1)
+                                {
+                                    <li class="page-item active"><a class="page-link"><text>@count</text></a></li>
+                                    count++;
+                                }
+                                else
+                                {
+                                    <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@count" class="page-link"><text>@count</text></a></li>
+                                    count++;
+                                }
+                            }
+
+                            if ((int)ViewData["CountForTake"] - 1 < (int)ViewData["total_take"])
+                            {
+                                <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@ViewData["CountForTake"]" aria-label="Next" class="page-link"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                            }
+                        }
+                    </ul>
+                </nav>
+            </div>
+
         </div>
         <!-- END DATA TABLE -->
     </div>
