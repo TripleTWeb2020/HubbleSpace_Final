@@ -20,6 +20,10 @@ namespace HubbleSpace_Final.Helpers
             var identity = await base.GenerateClaimsAsync(user);
             identity.AddClaim(new Claim("UserFirstName", user.FirstName ?? ""));
             identity.AddClaim(new Claim("UserLastName", user.LastName ?? ""));
+            identity.AddClaim(new Claim("UserEmail", user.Email ?? ""));
+            identity.AddClaim(new Claim("UserAddress", user.Address ?? ""));
+            identity.AddClaim(new Claim("UserPhoneNumber", user.PhoneNumber ?? ""));
+
             return identity;
         }
     }

@@ -1,6 +1,7 @@
 ﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
 @inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager
 
+
 @if (_signInManager.IsSignedIn(User))
 {
     <li class="nav-item dropdown">
@@ -16,7 +17,7 @@
 else
 {
     <li class="nav-item">
-        <li class="list-inline-item"><a href="~/../Signin">Sign in</a></li>
-        <li class="list-inline-item"><a href="~/../Signup">Sign up</a></li>
+    <li class="list-inline-item"><a href="~/../Signin">Sign in</a></li>
+    <li class="list-inline-item"><a href="~/../Signup">Sign up</a></li>
     </li>
 }
