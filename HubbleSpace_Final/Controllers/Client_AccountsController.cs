@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HubbleSpace_Final.Entities;
 using HubbleSpace_Final.Models;
 using HubbleSpace_Final.Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -13,9 +14,11 @@ namespace HubbleSpace_Final.Controllers
        
     {
         private readonly IAccountRepository _accountRepository;
-        public Client_AccountsController(IAccountRepository accountRepository)
+        private readonly MyDbContext _context;
+        public Client_AccountsController(IAccountRepository accountRepository,MyDbContext context)
         {
             _accountRepository = accountRepository;
+            _context = context;
         }
        [Route("signup")]
         public IActionResult SignUp()
@@ -196,6 +199,30 @@ namespace HubbleSpace_Final.Controllers
                 }
             }
             return View(model);
+        }
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Profile(UserProfileModel userProfile)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _accountRepository.ChangeProfileDetail(userProfile);
+
+                if (!result.Succeeded)
+                {
+                    foreach (var errorMessage in result.Errors)
+                    {
+                        ModelState.AddModelError("", errorMessage.Description);
+                    }
+                    return View(userProfile);
+                }
+                ModelState.Clear();
+            }
+            return View(userProfile);
         }
 
 
