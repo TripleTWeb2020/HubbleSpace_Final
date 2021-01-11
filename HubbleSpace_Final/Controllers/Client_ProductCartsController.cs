@@ -124,7 +124,7 @@ namespace HubbleSpace_Final.Controllers
             return Ok();
         }
 
-        public IActionResult Checkout_AddInfo()
+        public IActionResult Checkout()
         {
             return View();
         }

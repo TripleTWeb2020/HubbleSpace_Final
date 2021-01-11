@@ -1,0 +1,56 @@
+﻿@model HubbleSpace_Final.Models.CheckOutModel
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager
+
+@{
+    Layout = "_FrontendLayout";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <!-- breadcrumb-->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li aria-current="page" class="breadcrumb-item active">Checkout - Address</li>
+            </ol>
+        </nav>
+    </div>
+    
+    @if (_signInManager.IsSignedIn(User)) {
+    <div class="col-md-4">
+        <form asp-action="Checkout">
+            
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" value="@User.FindFirst("UserFirstName").Value" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" value="@User.FindFirst("UserLastName").Value"class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" value="@User.FindFirst("UserEmail").Value"class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" value ="@User.Equals("UserAddress").Value" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" value ="@User.FindFirst("UserPhoneNumber").Value" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+}
+
+</div>
