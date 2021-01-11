@@ -125,5 +125,21 @@ namespace HubbleSpace_Final.Repository
             };
             await _emailService.SendEmailForForgotPassword(options);
         }
+        public async Task<IdentityResult> ChangeProfileDetail(UserProfileModel userProfile)
+        {
+            var userId = _userService.GetUserId();
+            var user = await _userManager.FindByIdAsync(userId);
+
+            user.LastName = userProfile.LastName;
+            user.FirstName = userProfile.FirstName;
+            user.Email = userProfile.Email;
+            user.Address = userProfile.Address;
+            user.PhoneNumber = userProfile.Phone;
+            user.DateOfBirth = userProfile.DOB;
+            user.CreditCard = userProfile.CreditCard;
+
+            return await _userManager.UpdateAsync(user);
+            
+        }
     }
 }
