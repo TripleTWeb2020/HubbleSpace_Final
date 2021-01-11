@@ -7,6 +7,7 @@ using HubbleSpace_Final.Models;
 using HubbleSpace_Final.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -23,16 +24,18 @@ namespace HubbleSpace_Final.Controllers
         public const string CARTKEY = "cart";
 
         // Lấy cart từ Session (danh sách CartItem)
-        List<CartItemModel> GetCartItems()
+        public List<CartItemModel> GetCartItems()
         {
-
-            var session = HttpContext.Session;
-            string jsoncart = session.GetString(CARTKEY);
-            if (jsoncart != null)
-            {
-                return JsonConvert.DeserializeObject<List<CartItemModel>>(jsoncart);
+            get{
+                var data = HttpContext.Session.Get<List<CartItemModel>>("cart");
+                string jsoncart = session.GetString(CARTKEY);
+                if (jsoncart != null)
+                {
+                    return JsonConvert.DeserializeObject<List<CartItemModel>>(jsoncart);
+                }
+                return new List<CartItemModel>();
             }
-            return new List<CartItemModel>();
+            
         }
 
         // Xóa cart khỏi session
@@ -67,11 +70,11 @@ namespace HubbleSpace_Final.Controllers
         //[HttpPost]
         public IActionResult AddToCart([FromRoute] int id)
         {
-            var product = _context.Product.Where(p => p.ID_Product == id).FirstOrDefault();
-            if (product == null)
+            var color_Product = _context.Color_Product.Include(p => p.product).Where(p => p.ID_Color_Product == id).FirstOrDefault();
+            if (color_Product == null)
                 return NotFound("No available products");
             var cart = GetCartItems();
-            var cartitem = cart.Find(p => p.product.ID_Product == id);
+            var cartitem = cart.Find(p => p.product.ID_Color_Product == id);
             if (cartitem != null)
             {
 
@@ -81,12 +84,11 @@ namespace HubbleSpace_Final.Controllers
             else
             {
                 //  Thêm mới
-                cart.Add(new CartItemModel() { Amount = 1, product = product });
+                cart.Add(new CartItemModel() { Amount = 1, product = color_Product });
             }
 
             // Lưu cart vào Session
             SaveCartSession(cart);
-            // Chuyển đến trang hiện thị Cart
             return RedirectToAction(nameof(Cart));
         }
         /// xóa item trong cart

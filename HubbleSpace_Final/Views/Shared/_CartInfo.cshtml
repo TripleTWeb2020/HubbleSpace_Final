@@ -9,11 +9,11 @@
     if (jsoncart != null)
     {
         var cart = JsonConvert.DeserializeObject<List<CartItemModel>>(jsoncart);
-        <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a asp-route="cart" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span>(@cart.Count)items in cart</span></a></div>
+        <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a asp-route="cart" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span>@cart.Count item(s) in cart</span></a></div>
 
     }
     else
     {
-        <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a asp-route="cart" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span>0 items in cart</span></a></div>
+        <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a asp-route="cart" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span>0 item(s) in cart</span></a></div>
     }
 }

@@ -65,12 +65,6 @@ namespace HubbleSpace_Final.Controllers
             return View(await Clients.AsNoTracking().ToListAsync());
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var myDbContext = _context.Client.Include(c => c.Account);
-            return View(await myDbContext.ToListAsync());
-        }
-
         // GET: Clients/Details/5
         public async Task<IActionResult> Details(int? id)
         {

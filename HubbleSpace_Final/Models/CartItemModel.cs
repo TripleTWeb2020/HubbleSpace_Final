@@ -9,7 +9,7 @@ namespace HubbleSpace_Final.Models
     public class CartItemModel
     {
         public int Amount { get; set; }
-        public Product product { get; set; }
+        public Color_Product product { get; set; }
         
     }
 }
