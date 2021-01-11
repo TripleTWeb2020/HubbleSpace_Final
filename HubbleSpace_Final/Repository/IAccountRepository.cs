@@ -14,5 +14,7 @@ namespace HubbleSpace_Final.Repository
         Task<IdentityResult> ConfirmEmailAsync(string uid, string token);
         Task GenerateEmailConfirmationTokenAsync(ApplicationUser user);
         Task GenerateForgotPasswordTokenAsync(ApplicationUser user);
+
+        Task<IdentityResult> ResetPasswordAsync(ResetPasswordModel model);
     }
 }

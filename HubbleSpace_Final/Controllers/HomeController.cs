@@ -31,8 +31,8 @@ namespace HubbleSpace_Final.Controllers
 
         public async Task<IActionResult> Index()
         {
-            string? userId = _userService.GetUserId();
-            var isLoggedIn = _userService.IsAuthenticated();
+            //string? userId = _userService.GetUserId();
+            //var isLoggedIn = _userService.IsAuthenticated();
             return View(await _context.Banner.ToListAsync());
         }
 
