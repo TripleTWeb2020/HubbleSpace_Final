@@ -131,10 +131,16 @@
                                 <p class="price-sale" style="font-size: 1.5rem;">
                                     <text> @String.Format("{0:0,0}", product.color_Product.product.Price_Sale) VNĐ </text>
                                 </p>
-                                <div id="getsize" class="sizes" data-auto-id="@product.ID_Color_Product">
-                                </div>
-                                <p class="text-center buttons"><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
-
+                                <form asp-controller="Client_ProductCarts" asp-action="AddToCart" method="get">
+                                    <input type="hidden" name="id" value="@product.ID_Color_Product" />
+                                    <input type="hidden" name="name" value="@product.color_Product.product.Product_Name" />
+                                    <input type="hidden" name="price" value="@product.color_Product.product.Price_Sale" />
+                                    <div id="getsize" class="sizes" data-auto-id="@product.ID_Color_Product"></div>
+                                    <p class="text-center buttons">
+                                        <input type="submit" class="btn btn-primary" value="Add to cart" /><!--<i class="fa fa-shopping-cart"></i>-->
+                                    </p>
+                                </form>
+                                
                                 <!-- /.Share in social-->
                                 <div id="details" class="center">
                                     <h4>Show it to your friends</h4>

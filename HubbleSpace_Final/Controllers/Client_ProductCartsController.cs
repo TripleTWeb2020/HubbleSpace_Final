@@ -23,19 +23,24 @@ namespace HubbleSpace_Final.Controllers
         // Key lưu chuỗi json của Cart
         public const string CARTKEY = "cart";
 
-        // Lấy cart từ Session (danh sách CartItem)
-        public List<CartItemModel> GetCartItems()
+        public Client_ProductCartsController(ILogger<HomeController> logger, MyDbContext context, IUserService userService)
         {
-            get{
-                var data = HttpContext.Session.Get<List<CartItemModel>>("cart");
-                string jsoncart = session.GetString(CARTKEY);
-                if (jsoncart != null)
-                {
-                    return JsonConvert.DeserializeObject<List<CartItemModel>>(jsoncart);
-                }
-                return new List<CartItemModel>();
+            _logger = logger;
+            _context = context;
+            _userService = userService;
+
+        }
+
+        // Lấy cart từ Session (danh sách CartItem)
+        List<CartItemModel> GetCartItems()
+        {
+            var session = HttpContext.Session;
+            string jsoncart = session.GetString(CARTKEY);
+            if (jsoncart != null)
+            {
+                return JsonConvert.DeserializeObject<List<CartItemModel>>(jsoncart);
             }
-            
+            return new List<CartItemModel>();
         }
 
         // Xóa cart khỏi session
@@ -53,13 +58,6 @@ namespace HubbleSpace_Final.Controllers
             session.SetString(CARTKEY, jsoncart);
         }
 
-        public Client_ProductCartsController(ILogger<HomeController> logger, MyDbContext context, IUserService userService)
-        {
-            _logger = logger;
-            _context = context;
-            _userService = userService;
-
-        }
         [Route("/cart", Name = "cart")]
         [HttpGet]
         public IActionResult Cart()
@@ -68,13 +66,14 @@ namespace HubbleSpace_Final.Controllers
         }
        // [Route("/addcart/{productid:int}")]
         //[HttpPost]
-        public IActionResult AddToCart([FromRoute] int id)
+        public IActionResult AddToCart( int id, double price, string name, string size)
         {
-            var color_Product = _context.Color_Product.Include(p => p.product).Where(p => p.ID_Color_Product == id).FirstOrDefault();
+            var color_Product = _context.Color_Product.Where(p => p.ID_Color_Product == id).FirstOrDefault();
+
             if (color_Product == null)
                 return NotFound("No available products");
             var cart = GetCartItems();
-            var cartitem = cart.Find(p => p.product.ID_Color_Product == id);
+            var cartitem = cart.Find(p => p.Color_Product.ID_Color_Product == id);
             if (cartitem != null)
             {
 
@@ -84,7 +83,7 @@ namespace HubbleSpace_Final.Controllers
             else
             {
                 //  Thêm mới
-                cart.Add(new CartItemModel() { Amount = 1, product = color_Product });
+                cart.Add(new CartItemModel() { Amount = 1, Color_Product = color_Product, Name = name, Price = price, Size = size });
             }
 
             // Lưu cart vào Session
@@ -97,10 +96,10 @@ namespace HubbleSpace_Final.Controllers
         {
 
             var cart = GetCartItems();
-            var cartitem = cart.Find(p => p.product.ID_Product == id);
+            var cartitem = cart.Find(p => p.Color_Product.ID_Color_Product == id);
             if (cartitem != null)
             {
-                // Đã tồn tại, tăng thêm 1
+                // Đã tồn tại, xóa đi
                 cart.Remove(cartitem);
             }
 
@@ -110,15 +109,15 @@ namespace HubbleSpace_Final.Controllers
         /// Cập nhật
         [Route("/updatecart", Name = "updatecart")]
         [HttpPost]
-        public IActionResult UpdateCart([FromForm] int id, [FromForm] int Amount)
+        public IActionResult UpdateCart(int id, int Amount)
         {
             // Cập nhật Cart thay đổi số lượng quantity ...
 
             var cart = GetCartItems();
-            var cartitem = cart.Find(p => p.product.ID_Product == id);
+            var cartitem = cart.Find(p => p.Color_Product.ID_Color_Product == id);
             if (cartitem != null)
             {
-                // Đã tồn tại, tăng thêm 1
+                // Đã tồn tại, tăng thêm
                 cartitem.Amount = Amount;
             }
             SaveCartSession(cart);

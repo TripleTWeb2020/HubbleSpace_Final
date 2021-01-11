@@ -1,6 +1,18 @@
 ﻿@model IEnumerable<HubbleSpace_Final.Entities.Size>
 
-    @foreach (var item in Model)
+@{
+    var size = Model.FirstOrDefault();
+    if (size != null)
     {
-        <button data-container="@item.SizeNumber" class="gl-label"><span>@Html.DisplayFor(modelItem => item.SizeNumber)</span></button>
+        @foreach (var item in Model)
+        {
+            <div class="gl-label">
+                <input name="size" type="radio" value="@item.SizeNumber" />
+                <span>@Html.DisplayFor(modelItem => item.SizeNumber)</span>
+            </div>
+            
+        }
+
     }
+}
+
