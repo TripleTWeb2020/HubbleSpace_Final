@@ -43,12 +43,7 @@ namespace HubbleSpace_Final.Controllers
                                                     .OrderBy(p => p.Date)
                                                     .ToListAsync());
         }
-
-        public IActionResult Admin()
-        {
-            return View();
-        }
-
+        
         public IActionResult Privacy()
         {
             return View();

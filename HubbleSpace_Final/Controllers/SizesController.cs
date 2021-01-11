@@ -31,7 +31,7 @@ namespace HubbleSpace_Final.Controllers
 
 
             var Sizes = from s in _context.Size.Include(s => s.color_Product).Include(s => s.color_Product.product)
-                               select s;
+                        select s;
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -78,11 +78,6 @@ namespace HubbleSpace_Final.Controllers
             return View(await Sizes.AsNoTracking().ToListAsync());
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var myDbContext = _context.Size.Include(s => s.color_Product).Include(s => s.color_Product.product);
-            return View(await myDbContext.ToListAsync());
-        }
 
         // GET: Sizes/Details/5
         public async Task<IActionResult> Details(int? id)

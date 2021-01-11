@@ -64,11 +64,6 @@ namespace HubbleSpace_Final.Controllers
             return View(await Banners.AsNoTracking().ToListAsync());
         }
 
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Banner.ToListAsync());
-        }
-
         // GET: Banners/Details/5
         public async Task<IActionResult> Details(int? id)
         {

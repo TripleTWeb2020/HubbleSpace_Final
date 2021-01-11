@@ -29,7 +29,7 @@
                         <label asp-for="Size" class="control-label "></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <select id="size" asp-for="Size" class="form-control"></select>
+                        <select id="size" asp-for="Size"  class="form-control"></select>
                     </div>
                 </div>
 
@@ -64,6 +64,17 @@
 @section ajax{
     <script>
         $(function () {
+            $(document).ready(function () {
+                $.ajax({
+                    url: "/OrderDetails/GetSize",
+                    data: {
+                        "id": $("#ID_Color_Product").val(),
+                    },
+                    success: function (response) {
+                        $("#size").html(response);
+                    }
+                });
+            });
             $("#ID_Color_Product").change(function () {
                 $.ajax({
                     url: "/OrderDetails/GetSize",
@@ -71,6 +82,7 @@
                         "id": $(this).val(),
                     },
                     success: function (response) {
+                        $("#size").html(response);
                     }
                 });
             });

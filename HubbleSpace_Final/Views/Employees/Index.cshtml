@@ -10,13 +10,12 @@
         <h3 class="title-5 m-b-35">Quản lý nhân viên</h3>
         <div class="table-data__tool">
             <div class="table-data__tool-left">
-                <form asp-action="Search" method="get">
+                <form asp-action="Index" method="get">
                     <div class="rs-select2--light rs-select2--sm">
-                        <input type="text" class="form-control" placeholder="Search for" name="term" />
-                        <div class="dropDownSelect2"></div>
+                        <input type="text" class="form-control" placeholder="Search for" name="SearchString" value="@ViewData["Search"]" />
                     </div>
                     <button class="au-btn-filter" type="submit">
-                        <i class="zmdi zmdi-view-list"></i>Search
+                        <i class="fa fa-search"></i>
                     </button>
                 </form>
             </div>
