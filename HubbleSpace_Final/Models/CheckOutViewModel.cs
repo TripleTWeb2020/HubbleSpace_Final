@@ -9,7 +9,7 @@ namespace HubbleSpace_Final.Models
     {
         public List<CartItemModel> CartItems { get; set; }
 
-        public CheckOutModel CheckoutModel { get; set; }
+        public CheckoutRequest CheckoutModel { get; set; }
         public virtual ApplicationUser appUser { get; set; }
     }
 }

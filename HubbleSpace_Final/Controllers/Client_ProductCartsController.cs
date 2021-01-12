@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -152,11 +154,12 @@ namespace HubbleSpace_Final.Controllers
 
         public IActionResult Checkout()
         {
+            
             return View(GetCheckoutViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Checkout(CheckOutViewModel request)
+        public async Task<IActionResult> Checkout(CheckoutRequest request)
         {
             var userId = _userService.GetUserId();
             var user = await _userManager.FindByIdAsync(userId);
@@ -172,12 +175,12 @@ namespace HubbleSpace_Final.Controllers
                     colorProduct=item.Color_Product,
                 });
             }
-            var checkoutRequest = new CheckOutModel()
+            var checkoutRequest = new CheckoutRequest()
             {
-                Address = request.CheckoutModel.Address,
-                FirstName = request.CheckoutModel.FirstName,
-                Email = request.CheckoutModel.Email,
-                Phone = request.CheckoutModel.Phone,
+                Address = request.Address,
+                FirstName = request.FirstName,
+                Email = request.Email,
+                Phone = request .Phone,
                 //OrderDetails = orderDetails
             };
             //TODO: Add to API
@@ -194,7 +197,7 @@ namespace HubbleSpace_Final.Controllers
             var checkoutVm = new CheckOutViewModel()
             {
                 CartItems = currentCart,
-                CheckoutModel = new CheckOutModel()
+                CheckoutModel = new CheckoutRequest()
             };
             return checkoutVm;
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Models
 {
-    public class CheckOutModel
+    public class CheckoutRequest
     {
         [Required(ErrorMessage = "Please enter your first name")]
         [Display(Name = "First name")]
@@ -27,6 +27,8 @@ namespace HubbleSpace_Final.Models
         [Display(Name = "Phone Number")]
         [Phone(ErrorMessage = "Please enter a valid Phone Number")]
         public string Phone { get; set; }
+
+        public List<OrderDetailsModel> OrderDetails { get; set; }
 
 
     }

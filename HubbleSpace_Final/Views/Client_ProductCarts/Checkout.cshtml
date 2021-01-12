@@ -1,4 +1,4 @@
-﻿@model HubbleSpace_Final.Models.CheckOutModel
+﻿@model HubbleSpace_Final.Models.CheckOutViewModel
 @inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
 @inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager
 
@@ -22,29 +22,29 @@
             
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" value="@User.FindFirst("UserFirstName").Value" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <label asp-for="CheckoutModel.FirstName" class="control-label"></label>
+                <input asp-for="CheckoutModel.FirstName" value="@User.FindFirst("UserFirstName").Value" class="form-control" />
+                <span asp-validation-for="CheckoutModel.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" value="@User.FindFirst("UserLastName").Value"class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <label asp-for="CheckoutModel.LastName" class="control-label"></label>
+                <input asp-for="CheckoutModel.LastName" value="@User.FindFirst("UserLastName").Value"class="form-control" />
+                <span asp-validation-for="CheckoutModel.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" value="@User.FindFirst("UserEmail").Value"class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="CheckoutModel.Email" class="control-label"></label>
+                <input asp-for="CheckoutModel.Email" value="@User.FindFirst("UserEmail").Value"class="form-control" />
+                <span asp-validation-for="CheckoutModel.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" value ="@User.FindFirst("UserAddress").Value" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
+                <label asp-for="CheckoutModel.Address" class="control-label"></label>
+                <input asp-for="CheckoutModel.Address" value ="@User.FindFirst("UserAddress").Value" class="form-control" />
+                <span asp-validation-for="CheckoutModel.Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" value ="@User.FindFirst("UserPhoneNumber").Value" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
+                <label asp-for="CheckoutModel.Phone" class="control-label"></label>
+                <input asp-for="CheckoutModel.Phone" value ="@User.FindFirst("UserPhoneNumber").Value" class="form-control" />
+                <span asp-validation-for="CheckoutModel.Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
