@@ -133,20 +133,18 @@ namespace HubbleSpace_Final.Controllers
         {
             // Tìm khuyến mãi
             var discount = _context.Discount.Where(p => p.Code_Discount == code).FirstOrDefault();
-            if (discount != null)
+            if (discount == null)
+                return NotFound();
+            var cart = GetCartItems();
+            var discountitem = cart.Find(p => p.Discount == code);
+            //if (discountitem == null)
             {
-                // Có tồn tại, xét lượt sử dụng, hạn sử dụng
-                if (discount.NumberofTurns <= 0)
-                    return RedirectToAction(nameof(Cart));
-                if (discount.Expire.Date < DateTime.Today)
-                    return RedirectToAction(nameof(Cart));
-                ViewData["discount"] = (int)discount.Value;
-                Console.WriteLine(ViewData["discount"].ToString());
-                // Trả về giá trị
-                return RedirectToAction(nameof(Cart));
+                // Chưa tồn tại, thêm discount
+                cart.Add(new CartItemModel() { Amount = 1, Discount = code, Value_Discount = discount.Value });
             }
-
-            return RedirectToAction(nameof(Cart));
+            // Lưu cart vào Session
+            SaveCartSession(cart);
+            return Ok();
         }
 
         public IActionResult Checkout()

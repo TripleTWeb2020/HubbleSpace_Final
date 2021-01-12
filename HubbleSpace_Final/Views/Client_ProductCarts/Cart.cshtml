@@ -45,28 +45,29 @@
                                                     var stt = 0;
                                                     @foreach (var cartitem in Model)
                                                     {
-                                                        var totalmoney = cartitem.Amount * cartitem.Price;
-                                                        total += totalmoney;
-                                                        stt++;
-                                            <tr>
-                                                <td><a asp-controller="Home" asp-action="Product_Detail" asp-route-id="@cartitem.Color_Product.ID_Color_Product"><img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => cartitem.Color_Product.Image)" alt="@Html.DisplayFor(modelItem => cartitem.Name)"></a></td>
-                                                <td><a asp-controller="Home" asp-action="Product_Detail" asp-route-id="@cartitem.Color_Product.ID_Color_Product">@Html.DisplayFor(modelItem => cartitem.Name)</a></td>
-                                                <td>@(cartitem.Color_Product.Color_Name)</td>
-                                                <td>@(cartitem.Size)<input type="hidden" value="@(cartitem.Size)" id="size" /></td>
-                                                <td>
-                                                    <input type="number" min="1" max="10" asp-for="@cartitem.Amount" id="@($"Amount-{stt}")" />
-                                                </td>
-                                                <td>@(cartitem.Price.ToString("n0"))</td>
-                                                <td>@(totalmoney.ToString("n0"))</td>
-                                                <td><button class="btn btn-success removecart" data-id="@stt"><i class="fa fa-trash-o"></i></button></td>
-                                                <td><button class="btn btn-success updatecartitem" data-id="@stt"><i class="fa fa-refresh"></i> </button></td>
-                                            </tr>
+                                                        if (cartitem.Discount == null)
+                                                        {
+                                                            var totalmoney = cartitem.Amount * cartitem.Price;
+                                                            total += totalmoney;
+                                                            stt++;
+                                                            <tr>
+                                                                <td><a asp-controller="Home" asp-action="Product_Detail" asp-route-id="@cartitem.Color_Product.ID_Color_Product"><img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => cartitem.Color_Product.Image)" alt="@Html.DisplayFor(modelItem => cartitem.Name)"></a></td>
+                                                                <td><a asp-controller="Home" asp-action="Product_Detail" asp-route-id="@cartitem.Color_Product.ID_Color_Product">@Html.DisplayFor(modelItem => cartitem.Name)</a></td>
+                                                                <td>@(cartitem.Color_Product.Color_Name)</td>
+                                                                <td>@(cartitem.Size)<input type="hidden" value="@(cartitem.Size)" id="size" /></td>
+                                                                <td>
+                                                                    <input type="number" min="1" max="10" asp-for="@cartitem.Amount" id="@($"Amount-{stt}")" />
+                                                                </td>
+                                                                <td>@(cartitem.Price.ToString("n0"))</td>
+                                                                <td>@(totalmoney.ToString("n0"))</td>
+                                                                <td><button class="btn btn-success removecart" data-id="@stt"><i class="fa fa-trash-o"></i></button></td>
+                                                                <td><button class="btn btn-success updatecartitem" data-id="@stt"><i class="fa fa-refresh"></i> </button></td>
+                                                            </tr>
+                                                            }
+                                                        }
                                                     }
-                                                }
                                             }
-
                                         </tbody>
-
                                         <tfoot>
                                             <tr>
                                                 <th colspan="6">Total</th>
@@ -98,33 +99,36 @@
                                     <tbody>
                                         @foreach (var cartitem in Model)
                                         {
-                                            <tr>
-                                                <td>@(cartitem.Name) - @(cartitem.Size)</td>
-                                                <td>x@(cartitem.Amount)</td>
-                                                <th>@(cartitem.Price.ToString("n0"))</th>
-                                            </tr>
+                                            if (cartitem.Discount == null)
+                                            {
+                                                <tr>
+                                                    <td>@(cartitem.Name) - @(cartitem.Size)</td>
+                                                    <td>@(cartitem.Amount)</td>
+                                                    <th>@(cartitem.Price.ToString("n0"))</th>
+                                                </tr>
+                                            }
                                         }
-                                        @if (ViewData["discount"] != null)
-                                        {
-                                            <tr id="discount">
-                                                <td>Discount</td>
-                                                <td></td>
-                                                <th>@(ViewData["discount"]) </th>
-                                            </tr>
-                                            <tr class="total">
-                                                <td> Total </td>
-                                                <td></td>
-                                                <th>@((total- (int)ViewData["discount"]).ToString("n0")) </th>
-                                            </tr>
+                                        @{
+                                            @foreach (var cartitem in Model)
+                                            {
+                                                if (cartitem.Discount != null)
+                                                {
+                                                    <tr id="discount">
+                                                        <td>Discount</td>
+                                                        <td>@(cartitem.Discount)</td>
+                                                        <th>- @(cartitem.Value_Discount.ToString("n0")) </th>
+                                                    </tr>
+                                                    total -= cartitem.Value_Discount;
+
+                                                }
+                                            }
+                                                <tr class="total">
+                                                    <td> Total </td>
+                                                    <td></td>
+                                                    <th>@((total).ToString("n0")) </th>
+                                                </tr>
                                         }
-                                        else
-                                        {
-                                            <tr class="total">
-                                                <td>Order subtotal</td>
-                                                <td></td>
-                                                <th>@(total.ToString("n0"))</th>
-                                            </tr>
-                                        }
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -182,9 +186,11 @@
                       type: "POST",
                       url: "@Url.RouteUrl("discount")",
                       data:{
-                        code: $("#codediscount").val()
+                          code: $("#codediscount").val()
                       },
                       success: function (result) {
+                          window.location.href = "@Url.RouteUrl("cart")";
+
                       }
               });
             });
@@ -192,7 +198,7 @@
                 </script>
                     }
 
-                }
+                } 
                 else
                 {
                     <p class="alert alert-danger">Giỏ hàng trống</p>
