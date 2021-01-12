@@ -6,6 +6,7 @@ using HubbleSpace_Final.Entities;
 using HubbleSpace_Final.Models;
 using HubbleSpace_Final.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -20,14 +21,16 @@ namespace HubbleSpace_Final.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly MyDbContext _context;
         private readonly IUserService _userService;
+        private readonly UserManager<ApplicationUser> _userManager;
         // Key lưu chuỗi json của Cart
         public const string CARTKEY = "cart";
 
-        public Client_ProductCartsController(ILogger<HomeController> logger, MyDbContext context, IUserService userService)
+        public Client_ProductCartsController(ILogger<HomeController> logger, MyDbContext context, IUserService userService, UserManager<ApplicationUser> userManager)
         {
             _logger = logger;
             _context = context;
             _userService = userService;
+            _userManager = userManager;
 
         }
 
@@ -149,19 +152,51 @@ namespace HubbleSpace_Final.Controllers
 
         public IActionResult Checkout()
         {
-            return View();
+            return View(GetCheckoutViewModel());
         }
-        public IActionResult Checkout_Delivery()
+
+        [HttpPost]
+        public async Task<IActionResult> Checkout(CheckOutViewModel request)
         {
-            return View();
+            var userId = _userService.GetUserId();
+            var user = await _userManager.FindByIdAsync(userId);
+
+            var model = GetCheckoutViewModel();
+            var orderDetails = new List<OrderDetailsModel>();
+            foreach (var item in model.CartItems)
+            {
+                orderDetails.Add(new OrderDetailsModel()
+                {
+                    Size = item.Size,
+                    Quantity = item.Amount,
+                    colorProduct=item.Color_Product,
+                });
+            }
+            var checkoutRequest = new CheckOutModel()
+            {
+                Address = request.CheckoutModel.Address,
+                FirstName = request.CheckoutModel.FirstName,
+                Email = request.CheckoutModel.Email,
+                Phone = request.CheckoutModel.Phone,
+                //OrderDetails = orderDetails
+            };
+            //TODO: Add to API
+            //TempData["SuccessMsg"] = "Order puschased successful";
+            return View(model);
         }
-        public IActionResult Checkout_Review()
+        private CheckOutViewModel GetCheckoutViewModel()
         {
-            return View();
-        }
-        public IActionResult Checkout_Payment()
-        {
-            return View();
+            var session = HttpContext.Session;
+            string jsoncart = session.GetString(CARTKEY);
+            List<CartItemModel> currentCart = new List<CartItemModel>();
+            if (session != null)
+                currentCart = JsonConvert.DeserializeObject<List<CartItemModel>>(jsoncart);
+            var checkoutVm = new CheckOutViewModel()
+            {
+                CartItems = currentCart,
+                CheckoutModel = new CheckOutModel()
+            };
+            return checkoutVm;
         }
     }
 }
