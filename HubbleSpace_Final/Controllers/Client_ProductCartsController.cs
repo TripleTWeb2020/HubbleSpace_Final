@@ -73,7 +73,7 @@ namespace HubbleSpace_Final.Controllers
             if (color_Product == null)
                 return NotFound("No available products");
             var cart = GetCartItems();
-            var cartitem = cart.Find(p => p.Color_Product.ID_Color_Product == id);
+            var cartitem = cart.Find(p => p.Color_Product.ID_Color_Product == id && p.Size == size);
             if (cartitem != null)
             {
 
@@ -91,12 +91,12 @@ namespace HubbleSpace_Final.Controllers
             return RedirectToAction(nameof(Cart));
         }
         /// xóa item trong cart
-        [Route("/removecart/{productid:int}", Name = "removecart")]
-        public IActionResult RemoveCart([FromRoute]     int id)
+        [Route("/removecart", Name = "removecart")]
+        public IActionResult RemoveCart(int id)
         {
 
             var cart = GetCartItems();
-            var cartitem = cart.Find(p => p.Color_Product.ID_Color_Product == id);
+            var cartitem = cart.Skip(id - 1).Take(1).FirstOrDefault();
             if (cartitem != null)
             {
                 // Đã tồn tại, xóa đi
@@ -104,7 +104,9 @@ namespace HubbleSpace_Final.Controllers
             }
 
             SaveCartSession(cart);
-            return RedirectToAction(nameof(Cart));
+            SaveCartSession(cart);
+            // Trả về mã thành công (không có nội dung gì - chỉ để Ajax gọi)
+            return Ok();
         }
         /// Cập nhật
         [Route("/updatecart", Name = "updatecart")]
@@ -114,7 +116,7 @@ namespace HubbleSpace_Final.Controllers
             // Cập nhật Cart thay đổi số lượng quantity ...
 
             var cart = GetCartItems();
-            var cartitem = cart.Find(p => p.Color_Product.ID_Color_Product == id);
+            var cartitem = cart.Skip(id - 1).Take(1).FirstOrDefault();
             if (cartitem != null)
             {
                 // Đã tồn tại, tăng thêm
@@ -123,6 +125,28 @@ namespace HubbleSpace_Final.Controllers
             SaveCartSession(cart);
             // Trả về mã thành công (không có nội dung gì - chỉ để Ajax gọi)
             return Ok();
+        }
+
+        /// Thêm discount
+        [Route("/discount", Name = "discount")]
+        public IActionResult discount(string code)
+        {
+            // Tìm khuyến mãi
+            var discount = _context.Discount.Where(p => p.Code_Discount == code).FirstOrDefault();
+            if (discount != null)
+            {
+                // Có tồn tại, xét lượt sử dụng, hạn sử dụng
+                if (discount.NumberofTurns <= 0)
+                    return RedirectToAction(nameof(Cart));
+                if (discount.Expire.Date < DateTime.Today)
+                    return RedirectToAction(nameof(Cart));
+                ViewData["discount"] = (int)discount.Value;
+                Console.WriteLine(ViewData["discount"].ToString());
+                // Trả về giá trị
+                return RedirectToAction(nameof(Cart));
+            }
+
+            return RedirectToAction(nameof(Cart));
         }
 
         public IActionResult Checkout()
@@ -143,3 +167,4 @@ namespace HubbleSpace_Final.Controllers
         }
     }
 }
+

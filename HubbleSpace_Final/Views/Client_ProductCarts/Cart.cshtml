@@ -42,23 +42,24 @@
                                             @{
                                                 @if (Model.FirstOrDefault() != null)
                                                 {
+                                                    var stt = 0;
                                                     @foreach (var cartitem in Model)
                                                     {
                                                         var totalmoney = cartitem.Amount * cartitem.Price;
                                                         total += totalmoney;
-
+                                                        stt++;
                                             <tr>
                                                 <td><a asp-controller="Home" asp-action="Product_Detail" asp-route-id="@cartitem.Color_Product.ID_Color_Product"><img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => cartitem.Color_Product.Image)" alt="@Html.DisplayFor(modelItem => cartitem.Name)"></a></td>
                                                 <td><a asp-controller="Home" asp-action="Product_Detail" asp-route-id="@cartitem.Color_Product.ID_Color_Product">@Html.DisplayFor(modelItem => cartitem.Name)</a></td>
                                                 <td>@(cartitem.Color_Product.Color_Name)</td>
-                                                <td>@(cartitem.Size)</td>
+                                                <td>@(cartitem.Size)<input type="hidden" value="@(cartitem.Size)" id="size" /></td>
                                                 <td>
-                                                    <input asp-for="@cartitem.Amount" id="@($"Amount-{cartitem.Color_Product.ID_Color_Product}")" />
+                                                    <input type="number" min="1" max="10" asp-for="@cartitem.Amount" id="@($"Amount-{stt}")" />
                                                 </td>
                                                 <td>@(cartitem.Price.ToString("n0"))</td>
                                                 <td>@(totalmoney.ToString("n0"))</td>
-                                                <td><a asp-route="removecart" asp-route-id="@cartitem.Color_Product.ID_Color_Product"><i class="fa fa-trash-o"></i></a></td>
-                                                <td><button class="btn btn-success updatecartitem" asp-controller="Client_ProductCarts" asp-action="UpdateCart" data-id="@cartitem.Color_Product.ID_Color_Product"><i class="fa fa-refresh"></i> </button></td>
+                                                <td><button class="btn btn-success removecart" data-id="@stt"><i class="fa fa-trash-o"></i></button></td>
+                                                <td><button class="btn btn-success updatecartitem" data-id="@stt"><i class="fa fa-refresh"></i> </button></td>
                                             </tr>
                                                     }
                                                 }
@@ -95,10 +96,35 @@
                             <div class="table-responsive">
                                 <table class="table">
                                     <tbody>
-                                        <tr>
-                                            <td>Order subtotal</td>
-                                            <th>@(total.ToString("n0"))</th>
-                                        </tr>
+                                        @foreach (var cartitem in Model)
+                                        {
+                                            <tr>
+                                                <td>@(cartitem.Name) - @(cartitem.Size)</td>
+                                                <td>x@(cartitem.Amount)</td>
+                                                <th>@(cartitem.Price.ToString("n0"))</th>
+                                            </tr>
+                                        }
+                                        @if (ViewData["discount"] != null)
+                                        {
+                                            <tr id="discount">
+                                                <td>Discount</td>
+                                                <td></td>
+                                                <th>@(ViewData["discount"]) </th>
+                                            </tr>
+                                            <tr class="total">
+                                                <td> Total </td>
+                                                <td></td>
+                                                <th>@((total- (int)ViewData["discount"]).ToString("n0")) </th>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr class="total">
+                                                <td>Order subtotal</td>
+                                                <td></td>
+                                                <th>@(total.ToString("n0"))</th>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -110,35 +136,60 @@
                             <p class="text-muted">If you have a coupon code, please enter it in the box below.</p>
                             <form>
                                 <div class="input-group">
-                                    <input type="text" class="form-control"><span class="input-group-append">
-                                        <button type="button" class="btn btn-primary"><i class="fa fa-gift"></i></button>
-                                    </span>
+                                    <input id="codediscount" type="text" class="form-control"><span class="input-group-append">
+                                    <button class="btn btn-success setcode"><i class="fa fa-gift"></i></button>
+                                </span>
                                 </div>
                                 <!-- /input-group-->
                             </form>
                         </div>
                     </div>
-                    @section Scripts {
-                        <script>
+@section Scripts {
+                <script>
           $(document).ready(function () {
               $(".updatecartitem").click(function (event) {
                   event.preventDefault();
                   var id = $(this).attr("data-id");
-                  var Amount = $("#Amount-" +id).val();
+                  var Amount = $("#Amount-" + id).val();
                   $.ajax({
                       type: "POST",
                       url:"@Url.RouteUrl("updatecart")",
                       data: {
                           id: id,
-                          Amount:Amount
+                          Amount: Amount,
                       },
                       success: function (result) {
                           window.location.href = "@Url.RouteUrl("cart")";
                       }
                   });
               });
+              $(".removecart").click(function (event) {
+                  event.preventDefault();
+                  $.ajax({
+                      type: "POST",
+                      url:"@Url.RouteUrl("removecart")",
+                      data: {
+                          id: $(this).attr("data-id"),
+                      },
+                      success: function (result) {
+                          window.location.href = "@Url.RouteUrl("cart")";
+                      }
+                  });
+              });
+              $(".setcode").click(function(event) {
+                  event.preventDefault();
+                  $.ajax({
+                      type: "POST",
+                      url: "@Url.RouteUrl("discount")",
+                      data:{
+                        code: $("#codediscount").val()
+                      },
+                      success: function (result) {
+                      }
+              });
+            });
           });
-                        </script>
+                </script>
                     }
 
                 }
