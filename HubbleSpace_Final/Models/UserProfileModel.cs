@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HubbleSpace_Final.Binder;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -40,6 +42,8 @@ namespace HubbleSpace_Final.Models
 
         [Display(Name = "Your Date of Birth")]
         [DataType(DataType.Date)]
-        public DateTime DOB { get; set; }
+        [ModelBinder(BinderType = typeof(DayMonthYearBinder))]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd//MM/yyyy}")]
+        public DateTime? DOB { get; set; }
     }
 }
