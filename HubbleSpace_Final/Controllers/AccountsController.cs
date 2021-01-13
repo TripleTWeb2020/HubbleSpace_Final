@@ -332,7 +332,7 @@ namespace HubbleSpace_Final.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("ListRoles");
+                    return RedirectToAction("ManageRole");
                 }
 
                 foreach (var error in result.Errors)
