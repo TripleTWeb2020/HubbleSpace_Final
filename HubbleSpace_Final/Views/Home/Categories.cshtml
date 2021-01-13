@@ -14,39 +14,8 @@
                     <!-- breadcrumb-->
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="~/../Home">Home</a></li>
-                            @{
-                                var breadcrumb_item = Model.FirstOrDefault();
-                                if (ViewData["Object"] != "")
-                                {
-                                    <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="@ViewData["Object"]">@ViewData["Object"]</a></li>
-                                }
-                                else
-                                {
-                                    if (breadcrumb_item != null)
-                                    {
-                                        <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="@breadcrumb_item.product.category.Object">@Html.DisplayFor(modelItem => breadcrumb_item.product.category.Object)</a></li>
-
-                                    }
-                                }
-                                if (ViewData["CategoriesName"] != "")
-                                {
-                                    <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Name="@ViewData["CategoriesName"]">@ViewData["CategoriesName"]</a></li>
-                                }
-                                else
-                                {
-                                    if (breadcrumb_item != null)
-                                    {
-                                        <li class="breadcrumb-item"><a asp-action="Categories" asp-route-Object="@breadcrumb_item.product.category.Category_Name)">@Html.DisplayFor(modelItem => breadcrumb_item.product.category.Category_Name)</a></li>
-
-                                    }
-                                }
-                                if (ViewData["Search"] != null)
-                                {
-                                    <li class="breadcrumb-item"><a asp-action="Categories" asp-route-searchString="@ViewData["Search"]">Search @ViewData["Search"]</a></li>
-                                }
-
-                            }
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item"><a asp-action="Categories">Categories</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -62,28 +31,28 @@
                                 <li>
                                     <a asp-action="Categories" asp-route-Object="Men" class="nav-link">Men</a>
                                     <ul class="list-unstyled">
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Originals" class="nav-link">Originals</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Running" class="nav-link">Running</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Training" class="nav-link">Training</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Football" class="nav-link">Football</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Basketball" class="nav-link">Basketball</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-Name="Tennis" class="nav-link">Tennis</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Originals" class="nav-link">Originals</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Running" class="nav-link">Running</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Training" class="nav-link">Training</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Football" class="nav-link">Football</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Basketball" class="nav-link">Basketball</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Tennis" class="nav-link">Tennis</a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a asp-action="Categories" asp-route-Object="Women" class="nav-link">Women</a>
                                     <ul class="list-unstyled">
-                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Originals" class="nav-link">Originals</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Running" class="nav-link">Running</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Training" class="nav-link">Training</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-Name="Tennis" class="nav-link">Tennis</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Originals" class="nav-link">Originals</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Running" class="nav-link">Running</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Training" class="nav-link">Training</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Tennis" class="nav-link">Tennis</a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a asp-action="Categories" asp-route-Object="Kids" class="nav-link">Kids</a>
                                     <ul class="list-unstyled">
-                                        <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-Name="Originals" class="nav-link">Originals</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-Name="Running" class="nav-link">Running</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Originals" class="nav-link">Originals</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Running" class="nav-link">Running</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -91,7 +60,8 @@
                     </div>
                     <div class="card sidebar-menu mb-4">
                         <div class="card-header">
-                            <h3 class="h4 card-title">Filter <a asp-action="Categories" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
+                            <h3 class="h4 card-title">Filter <a asp-action="Categories" asp-route-Object="@ViewBag.Object" asp-route-CategoriesName="@ViewBag.CategoriesName"
+                                                            asp-route-searchString="@ViewBag.Search" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
                         </div>
                         <div class="card-body">
                             <form asp-action="Categories" method="get">
@@ -101,24 +71,27 @@
                                             Brand
                                         </h3>
                                     </div>
+                                    <input name="Object" type="hidden" value="@ViewBag.Object" />
+                                    <input name="CategoriesName" type="hidden" value="@ViewBag.CategoriesName" />
+                                    <input name="searchString" type="hidden" value="@ViewBag.Search" />
                                     <div class="zmdi-radio">
                                         <label>
-                                            <input name="brand" type="radio" asp-route-brand="@ViewData["Adidas"]" value="Adidas"> Adidas
+                                            <input name="brand" type="radio" value="Adidas"> Adidas
                                         </label>
                                     </div>
                                     <div class="zmdi-radio">
                                         <label>
-                                            <input name="brand" type="radio" asp-route-brand="@ViewData["Nike"]" value="Nike"> Nike
+                                            <input name="brand" type="radio" value="Nike"> Nike
                                         </label>
                                     </div>
                                     <div class="zmdi-radio">
                                         <label>
-                                            <input name="brand" type="radio" asp-route-brand="@ViewData["Puma"]" value="Puma"> Puma
+                                            <input name="brand" type="radio" value="Puma"> Puma
                                         </label>
                                     </div>
                                     <div class="zmdi-radio">
                                         <label>
-                                            <input name="brand" type="radio" asp-route-brand="@ViewData["Reebok"]" value="Reebok"> Reebok
+                                            <input name="brand" type="radio"  value="Reebok"> Reebok
                                         </label>
                                     </div>
                                 </div>
@@ -131,27 +104,27 @@
                                     </div>
                                     <div class="zmdi-radio">
                                         <label>
-                                            <input name="price" type="radio" asp-route-price="@ViewData["0"]" value="0"> Less than 1.000.000
+                                            <input name="price" type="radio" value="0"> Less than 1.000.000
                                         </label>
                                     </div>
                                     <div class="zmdi-radio">
                                         <label>
-                                            <input name="price" type="radio" asp-route-price="@ViewData["1000000"]" value="1000000"> 1.000.000 - 3.000.000
+                                            <input name="price" type="radio" value="1000000"> 1.000.000 - 3.000.000
                                         </label>
                                     </div>
                                     <div class="zmdi-radio">
                                         <label>
-                                            <input name="price" type="radio" asp-route-price="@ViewData["3000000"]" value="3000000"> 3.000.000 - 5.000.000
+                                            <input name="price" type="radio" value="3000000"> 3.000.000 - 5.000.000
                                         </label>
                                     </div>
                                     <div class="zmdi-radio">
                                         <label>
-                                            <input name="price" type="radio" asp-route-price="@ViewData["5000000"]" value="5000000"> More than 5.000.000
+                                            <input name="price" type="radio" value="5000000"> More than 5.000.000
                                         </label>
                                     </div>
                                 </div>
 
-                                <button class="btn btn-default btn-sm btn-primary" type="submit"><i class="fa fa-pencil"></i> Apply</button>
+                                <button class="btn btn-default btn-sm btn-primary" type="submit"><i class="fa fa-filter"></i> Apply</button>
                             </form>
                         </div>
                     </div>
@@ -175,11 +148,28 @@
                                         <ul class="dropdown-menu megamenu">
                                             <li>
                                                 <div class="row">
-                                                    <div class="col-md-6 col-lg-4">
+                                                    <div class="col-md-12 col-lg-12">
                                                         <ul class="list-unstyled mb-3">
-                                                            <li class="nav-item"><a class="nav-link-custom" asp-action="Categories" asp-route-sortOrder="Name">Name</a></li>
-                                                            <li class="nav-item"><a class="nav-link-custom" asp-action="Categories" asp-route-sortOrder="Price">Price</a></li>
-                                                            <li class="nav-item"><a class="nav-link-custom" asp-action="Categories" asp-route-sortOrder="Date">Date</a></li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link-custom" asp-action="Categories" asp-route-Object="@ViewBag.Object" asp-route-CategoriesName="@ViewBag.CategoriesName"
+                                                                   asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="A-Z">A - Z</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link-custom" asp-action="Categories" asp-route-Object="@ViewBag.Object" asp-route-CategoriesName="@ViewBag.CategoriesName"
+                                                                   asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="Z-A">Z - A</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link-custom" asp-action="Categories" asp-route-Object="@ViewBag.Object" asp-route-CategoriesName="@ViewBag.CategoriesName"
+                                                                   asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="Price(low-high)">Price (low-high)</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link-custom" asp-action="Categories" asp-route-Object="@ViewBag.Object" asp-route-CategoriesName="@ViewBag.CategoriesName"
+                                                                   asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="Price(high-low)">Price (high-low)</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link-custom" asp-action="Categories" asp-route-Object="@ViewBag.Object" asp-route-CategoriesName="@ViewBag.CategoriesName"
+                                                                   asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="New">New</a>
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -267,7 +257,8 @@
                             {
                                 <div class="pages">
                                     <p class="loadMore">
-                                        <a asp-action="Categories" asp-route-CountForTake="@ViewBag.CountForTake" asp-route-Object="@ViewBag.Object" asp-route-Name="@ViewBag.Name" class="btn btn-primary btn-lg">
+                                        <a asp-action="Categories" asp-route-CountForTake="@ViewBag.CountForTake" asp-route-Object="@ViewBag.Object" asp-route-CategoriesName="@ViewBag.CategoriesName" 
+                                           asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="@ViewBag.sortOrder" class="btn btn-primary btn-lg">
                                             <i class="fa fa-chevron-down"></i>Load more
                                         </a>
                                     </p>

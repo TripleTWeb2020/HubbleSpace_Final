@@ -48,32 +48,25 @@ namespace HubbleSpace_Final.Controllers
         {
             return View();
         }
-        
-        
-        public async Task<IActionResult> Categories(string sortOrder, string brand, string price, string searchString, int CountForTake = 1, string Object="", string Name="")
+
+        public async Task<IActionResult> Categories(string sortOrder, string Object, string CategoriesName, string brand, string price, string searchString, int CountForTake = 1)
         {
-            ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["Price"] = sortOrder == "Price" ? "price_desc" : "Price";
-            ViewData["Date"] = sortOrder == "Date" ? "date_desc" : "Date";
-
-            ViewData["Adidas"] = brand == "Adidas" ? "" : "Adidas";
-            ViewData["Nike"] = brand == "Nike" ? "" : "Nike";
-            ViewData["Puma"] = brand == "Puma" ? "" : "Puma";
-            ViewData["Reebok"] = brand == "Reebok" ? "" : "Reebok";
-
-            ViewData["0"] = price == "0" ? "" : "0";
-            ViewData["1000000"] = price == "1000000" ? "" : "1000000";
-            ViewData["3000000"] = price == "3000000" ? "" : "3000000";
-            ViewData["5000000"] = price == "5000000" ? "" : "5000000";
-
             ViewData["Search"] = searchString;
-            ViewData["CategoriesName"] = Name;
+            ViewData["CategoriesName"] = CategoriesName;
             ViewData["Object"] = Object;
 
             var color_Products = from p in _context.Color_Product.Include(p => p.product).Include(p => p.product.category)
-                                 .Where(p => p.product.category.Category_Name.Contains(Name))
-                                 .Where(p => p.product.category.Object.Contains(Object))
                                  select p;
+
+            if (!String.IsNullOrEmpty(Object))
+            {
+                color_Products = color_Products.Where(p => p.product.category.Object == Object);
+            }
+
+            if (!String.IsNullOrEmpty(CategoriesName))
+            {
+                color_Products = color_Products.Where(p => p.product.category.Category_Name == CategoriesName);
+            }
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -84,15 +77,19 @@ namespace HubbleSpace_Final.Controllers
             {
                 case "Adidas":
                     color_Products = color_Products.Where(p => p.product.Brand.Brand_Name == brand);
+                    ViewData["brand"] = brand;
                     break;
                 case "Nike":
                     color_Products = color_Products.Where(p => p.product.Brand.Brand_Name == brand);
+                    ViewData["brand"] = brand;
                     break;
                 case "Puma":
                     color_Products = color_Products.Where(p => p.product.Brand.Brand_Name == brand);
+                    ViewData["brand"] = brand;
                     break;
                 case "Reebok":
                     color_Products = color_Products.Where(p => p.product.Brand.Brand_Name == brand);
+                    ViewData["brand"] = brand;
                     break;
                 default:
                     break;
@@ -102,15 +99,19 @@ namespace HubbleSpace_Final.Controllers
             {
                 case "0":
                     color_Products = color_Products.Where(p => p.product.Price_Sale < 1000000);
+                    ViewData["price"] = price;
                     break;
                 case "1000000":
                     color_Products = color_Products.Where(p => p.product.Price_Sale > 1000000 && p.product.Price_Sale < 3000000);
+                    ViewData["price"] = price;
                     break;
                 case "3000000":
                     color_Products = color_Products.Where(p => p.product.Price_Sale > 3000000 && p.product.Price_Sale < 5000000);
+                    ViewData["price"] = price;
                     break;
                 case "5000000":
                     color_Products = color_Products.Where(p => p.product.Price_Sale > 5000000);
+                    ViewData["price"] = price;
                     break;
                 default:
                     break;
@@ -118,23 +119,25 @@ namespace HubbleSpace_Final.Controllers
 
             switch (sortOrder)
             {
-                case "name_desc":
+                case "Z-A":
                     color_Products = color_Products.OrderByDescending(p => p.product.Product_Name);
+                    ViewData["sortOrder"] = sortOrder;
                     break;
-                case "Date":
+                case "New":
                     color_Products = color_Products.OrderByDescending(p => p.Date);
+                    ViewData["sortOrder"] = sortOrder;
                     break;
-                case "date_desc":
-                    color_Products = color_Products.OrderBy(p => p.Date);
-                    break;
-                case "Price":
+                case "Price(low-high)":
                     color_Products = color_Products.OrderBy(p => p.product.Price_Sale);
+                    ViewData["sortOrder"] = sortOrder;
                     break;
-                case "price_desc":
+                case "Price(high-low)":
                     color_Products = color_Products.OrderByDescending(p => p.product.Price_Sale);
+                    ViewData["sortOrder"] = sortOrder;
                     break;
                 default:
                     color_Products = color_Products.OrderBy(p => p.product.Product_Name);
+                    ViewData["sortOrder"] = sortOrder;
                     break;
             }
 
@@ -149,7 +152,7 @@ namespace HubbleSpace_Final.Controllers
             ViewData["total_product"] = total_product;
             ViewData["products_taked"] = color_Products.Count();
             ViewData["Object"] = Object;
-            ViewData["Name"] = Name;
+            ViewData["CategoriesName"] = CategoriesName;
 
             return View(await color_Products.AsNoTracking().ToListAsync());
 
@@ -188,7 +191,7 @@ namespace HubbleSpace_Final.Controllers
 
        
 
-            [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

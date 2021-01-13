@@ -188,18 +188,21 @@ namespace HubbleSpace_Final.Controllers
 
             foreach (var item in model.CartItems)
             {
-                var orderdetail = new OrderDetail()
+                if(item.Color_Product != null)
                 {
-                    ID_Color_Product = item.Color_Product.ID_Color_Product, 
-                    Size = item.Size,
-                    Quantity = item.Amount,
-                    ID_Order = order_success.ID_Order,
-                };
-                _context.Add(orderdetail);
-                await _context.SaveChangesAsync();
+                    OrderDetail orderdetail = new OrderDetail()
+                    {
+                        ID_Color_Product = item.Color_Product.ID_Color_Product,
+                        Size = item.Size,
+                        Quantity = item.Amount,
+                        ID_Order = order_success.ID_Order,
+                    };
+                    _context.Add(orderdetail);
+                    await _context.SaveChangesAsync();
+                }
             }
             TempData["SuccessMsg"] = "Order puschased successful";
-            return View(model);
+            return RedirectToAction("HistoryOrder", "Client_Orders");
         }
         private CheckOutViewModel GetCheckoutViewModel()
         {

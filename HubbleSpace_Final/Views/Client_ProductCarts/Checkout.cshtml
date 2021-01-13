@@ -4,7 +4,8 @@
 
 @{
     Layout = "_FrontendLayout";
-  
+    ViewData["Title"] = "Checkout";
+
 }
 <div class="container" style="min-height: 400px;">
     <div class="row">
@@ -13,7 +14,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/../Home">Home</a></li>
-                    <li aria-current="page" class="breadcrumb-item active">Your Profile</li>
+                    <li aria-current="page" class="breadcrumb-item active">Checkout</li>
                 </ol>
             </nav>
         </div>
@@ -49,44 +50,21 @@
                             <span asp-validation-for="CheckoutModel.Phone" class="text-danger"></span>
                         </div>
                         <div class="form-group">
+                            <a asp-action="Cart" class="btn btn-outline-dark">Back to card</a>
+                            <input type="reset" value="Reset" class="btn btn-danger" />
                             <input type="submit" value="Save" class="btn btn-primary" />
                         </div>
                     </form>
-                }
-                else
-                {
-                    <form asp-action="Checkout">
+                        }
+                        else
+                        {
+                            <div class="alert alert-success" role="alert">
+                            <p>
+                                You have to sign in before
+                            </p>
+                            <a asp-controller= "Client_Accounts" asp-action= "Signin" class="btn btn-outline-secondary">Go to login</a>
 
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="CheckoutModel.FirstName" class="control-label"></label>
-                            <input asp-for="CheckoutModel.FirstName" class="form-control" />
-                            <span asp-validation-for="CheckoutModel.FirstName" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="CheckoutModel.LastName" class="control-label"></label>
-                            <input asp-for="CheckoutModel.LastName" class="form-control" />
-                            <span asp-validation-for="CheckoutModel.LastName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="CheckoutModel.Email" class="control-label"></label>
-                            <input asp-for="CheckoutModel.Email" class="form-control" />
-                            <span asp-validation-for="CheckoutModel.Email" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="CheckoutModel.Address" class="control-label"></label>
-                            <input asp-for="CheckoutModel.Address" class="form-control" />
-                            <span asp-validation-for="CheckoutModel.Address" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="CheckoutModel.Phone" class="control-label"></label>
-                            <input asp-for="CheckoutModel.Phone" class="form-control" />
-                            <span asp-validation-for="CheckoutModel.Phone" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn-primary" />
-                        </div>
-                    </form>
                 }
             </div>
         </div>
