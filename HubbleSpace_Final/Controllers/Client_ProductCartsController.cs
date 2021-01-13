@@ -159,32 +159,46 @@ namespace HubbleSpace_Final.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Checkout(CheckoutRequest request)
+        public async Task<IActionResult> Checkout(CheckOutViewModel request)
         {
             var userId = _userService.GetUserId();
             var user = await _userManager.FindByIdAsync(userId);
 
             var model = GetCheckoutViewModel();
-            var orderDetails = new List<OrderDetailsModel>();
-            foreach (var item in model.CartItems)
-            {
-                orderDetails.Add(new OrderDetailsModel()
-                {
-                    Size = item.Size,
-                    Quantity = item.Amount,
-                    colorProduct=item.Color_Product,
-                });
-            }
             var checkoutRequest = new CheckoutRequest()
             {
-                Address = request.Address,
-                FirstName = request.FirstName,
-                Email = request.Email,
-                Phone = request .Phone,
+                Address = request.CheckoutModel.Address,
+                FirstName = request.CheckoutModel.FirstName,
+                LastName = request.CheckoutModel.LastName,
+                Email = request.CheckoutModel.Email,
+                Phone = request.CheckoutModel.Phone,
                 //OrderDetails = orderDetails
             };
-            //TODO: Add to API
-            //TempData["SuccessMsg"] = "Order puschased successful";
+            var order = new Order() { 
+                TotalMoney = model.CartItems.Sum(m=>m.Price) - model.CartItems.Sum(m=>m.Value_Discount),
+                Address = checkoutRequest.Address,
+                Receiver = checkoutRequest.FirstName +' '+ checkoutRequest.LastName,
+                SDT = checkoutRequest.Phone,
+                User = user,
+                Process = "Mới đặt"
+            };
+            _context.Add(order);
+            await _context.SaveChangesAsync();
+            var order_success = _context.Order.ToList().LastOrDefault();
+
+            foreach (var item in model.CartItems)
+            {
+                var orderdetail = new OrderDetail()
+                {
+                    ID_Color_Product = item.Color_Product.ID_Color_Product, 
+                    Size = item.Size,
+                    Quantity = item.Amount,
+                    ID_Order = order_success.ID_Order,
+                };
+                _context.Add(orderdetail);
+                await _context.SaveChangesAsync();
+            }
+            TempData["SuccessMsg"] = "Order puschased successful";
             return View(model);
         }
         private CheckOutViewModel GetCheckoutViewModel()

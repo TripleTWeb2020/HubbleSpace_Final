@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HubbleSpace_Final.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20210108154614_Db.init")]
+    [Migration("20210113103044_Db.init")]
     partial class Dbinit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -293,15 +293,15 @@ namespace HubbleSpace_Final.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("AccountID_Account")
+                        .HasColumnType("int");
+
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date_Create")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("ID_Account")
-                        .HasColumnType("int");
 
                     b.Property<string>("Process")
                         .IsRequired()
@@ -318,9 +318,14 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<double>("TotalMoney")
                         .HasColumnType("float");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("ID_Order");
 
-                    b.HasIndex("ID_Account");
+                    b.HasIndex("AccountID_Account");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Order");
                 });
@@ -418,6 +423,9 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -476,6 +484,9 @@ namespace HubbleSpace_Final.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
+
+                    b.Property<int>("level")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -674,11 +685,13 @@ namespace HubbleSpace_Final.Migrations
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.Order", b =>
                 {
-                    b.HasOne("HubbleSpace_Final.Entities.Account", "account")
+                    b.HasOne("HubbleSpace_Final.Entities.Account", null)
                         .WithMany("Orders")
-                        .HasForeignKey("ID_Account")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AccountID_Account");
+
+                    b.HasOne("HubbleSpace_Final.Models.ApplicationUser", "User")
+                        .WithMany("ToDoes")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.OrderDetail", b =>

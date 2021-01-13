@@ -62,7 +62,9 @@ namespace HubbleSpace_Final.Migrations
                     LastName = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: true),
                     Gender = table.Column<int>(nullable: false),
-                    CreditCard = table.Column<string>(nullable: true)
+                    CreditCard = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    level = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -176,31 +178,6 @@ namespace HubbleSpace_Final.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
-                columns: table => new
-                {
-                    ID_Order = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TotalMoney = table.Column<double>(nullable: false),
-                    Date_Create = table.Column<DateTime>(nullable: false),
-                    Address = table.Column<string>(nullable: false),
-                    Receiver = table.Column<string>(nullable: false),
-                    SDT = table.Column<string>(nullable: false),
-                    ID_Account = table.Column<int>(nullable: false),
-                    Process = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Order", x => x.ID_Order);
-                    table.ForeignKey(
-                        name: "FK_Order_Account_ID_Account",
-                        column: x => x.ID_Account,
-                        principalTable: "Account",
-                        principalColumn: "ID_Account",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -304,6 +281,38 @@ namespace HubbleSpace_Final.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Order",
+                columns: table => new
+                {
+                    ID_Order = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TotalMoney = table.Column<double>(nullable: false),
+                    Date_Create = table.Column<DateTime>(nullable: false),
+                    Address = table.Column<string>(nullable: false),
+                    Receiver = table.Column<string>(nullable: false),
+                    SDT = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    Process = table.Column<string>(nullable: false),
+                    AccountID_Account = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order", x => x.ID_Order);
+                    table.ForeignKey(
+                        name: "FK_Order_Account_AccountID_Account",
+                        column: x => x.AccountID_Account,
+                        principalTable: "Account",
+                        principalColumn: "ID_Account",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Order_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -522,9 +531,14 @@ namespace HubbleSpace_Final.Migrations
                 column: "ID_Color_Product");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_ID_Account",
+                name: "IX_Order_AccountID_Account",
                 table: "Order",
-                column: "ID_Account");
+                column: "AccountID_Account");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Order_UserId",
+                table: "Order",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetail_ID_Color_Product",
@@ -594,9 +608,6 @@ namespace HubbleSpace_Final.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Discount");
 
             migrationBuilder.DropTable(
@@ -607,6 +618,9 @@ namespace HubbleSpace_Final.Migrations
 
             migrationBuilder.DropTable(
                 name: "Account");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Product");

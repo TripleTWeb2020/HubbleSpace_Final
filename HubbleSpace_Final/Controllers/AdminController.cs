@@ -29,7 +29,7 @@ namespace HubbleSpace_Final.Controllers
 
             ViewData["Search"] = searchString;
 
-            var Orders = from o in _context.Order.Include(o => o.account)
+            var Orders = from o in _context.Order.Include(o => o.User)
                             select o;
 
             if (!String.IsNullOrEmpty(time))

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HubbleSpace_Final.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -36,9 +37,8 @@ namespace HubbleSpace_Final.Entities
         public string SDT { get; set; }
 
         [Display(Name = "Email")]
-        public int ID_Account { get; set; }
-        [ForeignKey("ID_Account")]
-        public Account account { get; set; }
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
 
         [Display(Name = "Tình trạng")]
         [Required(ErrorMessage = "Không được để trống")]

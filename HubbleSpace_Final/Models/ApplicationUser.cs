@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using HubbleSpace_Final.Entities;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace HubbleSpace_Final.Models
         public string CreditCard { get; set; } 
         public string Address { get; set; }
         public int level { get; set; }
+        public virtual ICollection<Order> ToDoes { get; set; }
     }
 }

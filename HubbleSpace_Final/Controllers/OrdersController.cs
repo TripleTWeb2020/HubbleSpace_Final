@@ -28,7 +28,7 @@ namespace HubbleSpace_Final.Controllers
 
 
 
-            var Orders = from o in _context.Order.Include(o => o.account)
+            var Orders = from o in _context.Order.Include(o => o.User)
                            select o;
 
             if (!String.IsNullOrEmpty(searchString))
@@ -74,7 +74,7 @@ namespace HubbleSpace_Final.Controllers
             }
 
             var order = await _context.Order
-                .Include(o => o.account)
+                .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.ID_Order == id);
             if (order == null)
             {
@@ -87,7 +87,7 @@ namespace HubbleSpace_Final.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            ViewData["ID_Account"] = new SelectList(_context.Account, "ID_Account", "Email");
+            ViewData["id"] = new SelectList(_context.Users, "Id", "Email");
             return View();
         }
 
@@ -104,7 +104,7 @@ namespace HubbleSpace_Final.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ID_Account"] = new SelectList(_context.Account, "ID_Account", "Email", order.ID_Account);
+            ViewData["id"] = new SelectList(_context.Users, "Id", "Email", order.User.Id);
             return View(order);
         }
 
@@ -121,7 +121,7 @@ namespace HubbleSpace_Final.Controllers
             {
                 return NotFound();
             }
-            ViewData["ID_Account"] = new SelectList(_context.Account, "ID_Account", "Email", order.ID_Account);
+            ViewData["id"] = new SelectList(_context.Users, "Id", "Email", order.User.Id);
             return View(order);
         }
 
@@ -157,7 +157,7 @@ namespace HubbleSpace_Final.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ID_Account"] = new SelectList(_context.Account, "ID_Account", "Email", order.ID_Account);
+            ViewData["id"] = new SelectList(_context.Users, "Id", "Email", order.User.Id);
             return View(order);
         }
 
@@ -170,7 +170,7 @@ namespace HubbleSpace_Final.Controllers
             }
 
             var order = await _context.Order
-                .Include(o => o.account)
+                .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.ID_Order == id);
             if (order == null)
             {
