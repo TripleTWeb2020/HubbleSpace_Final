@@ -28,6 +28,19 @@
                             <li class="nav-item">
                                 <a class="dropdown-item nav-link-custom" asp-action="HistoryOrder" asp-controller="Client_Orders">Order's History</a>
                             </li>
+                            @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="dropdown-item nav-link-custom" asp-action="ManageRole" asp-controller="Admin" >
+                                        Manage Roles
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="dropdown-item nav-link-custom" asp-action="Index" asp-controller="Admin" >
+                                        Admin DashBoard
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>

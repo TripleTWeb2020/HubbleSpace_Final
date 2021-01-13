@@ -1,4 +1,7 @@
 ﻿using HubbleSpace_Final.Entities;
+using HubbleSpace_Final.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,13 +11,24 @@ using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly MyDbContext _context;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AdminController(MyDbContext context)
+        public AdminController(MyDbContext context, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _roleManager = roleManager;
+            _userManager = userManager;
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
 
         public IActionResult Index()
@@ -77,5 +91,7 @@ namespace HubbleSpace_Final.Controllers
 
             return View(await Orders.AsNoTracking().ToListAsync());
         }
+        
+
     }
 }

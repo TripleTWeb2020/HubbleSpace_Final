@@ -43,7 +43,17 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="DOB" class="control-label"></label>
-                            <input type="date" asp-for="DOB" value="@User.FindFirst("UserDateOfBirth").Value)" class="form-control" />
+
+                            @if ((User.FindFirst("UserDOB").Value) == "")
+                            {
+                                @Html.TextBoxFor(m => m.DOB, "{0:MM/dd/yyyy}", new { @class = "form-control" })
+                            }
+                            else
+                            {
+                            <a class="form-control">@User.FindFirst("UserLastName").Value</a>
+                                
+                            }
+
                             <span asp-validation-for="DOB" class="text-danger"></span>
                         </div>
                         <div class="form-group">
@@ -54,6 +64,7 @@
                         <div class="form-group">
                             <label asp-for="Address" class="control-label"></label>
                             <input asp-for="Address" value="@(User.FindFirst("UserAddress").Value)" class="form-control" />
+
                             <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                         <div class="form-group">
