@@ -235,7 +235,7 @@ namespace HubbleSpace_Final.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("ManageRole");
                 }
 
                 foreach (IdentityError error in result.Errors)
@@ -284,6 +284,33 @@ namespace HubbleSpace_Final.Controllers
 
             return View(model);
         }
+        [HttpPost]
+        public async Task<IActionResult> DeleteRole(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await _roleManager.DeleteAsync(role);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ManageRole");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View("ManageRole");
+            }
+        }
 
         // This action responds to HttpPost and receives EditRoleViewModel
         [HttpPost]
@@ -316,11 +343,56 @@ namespace HubbleSpace_Final.Controllers
                 return View(model);
             }
         }
+
         [HttpGet]
-        public IActionResult ManageUser()
+        public async Task<IActionResult> ManageUserAsync(string sortOrder, string searchString, int CountForTake = 1)
         {
-            var users = _userManager.Users;
-            return View(users);
+            ViewData["Username"] = sortOrder == "Username" ? "UserName_desc" : "UserName";
+            ViewData["Email"] = sortOrder == "Email" ? "Email_desc" : "Email";
+
+            ViewData["Search"] = searchString;
+
+
+
+            var Accounts = from a in _userManager.Users
+                           select a;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Accounts = Accounts.Where(a => a.UserName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                
+                case "UserName":
+                    Accounts = Accounts.OrderBy(a => a.UserName);
+                    break;
+                case "Userame_desc":
+                    Accounts = Accounts.OrderByDescending(a => a.UserName);
+                    break;
+                case "Email":
+                    Accounts = Accounts.OrderBy(a => a.Email);
+                    break;
+                case "Email_desc":
+                    Accounts = Accounts.OrderByDescending(a => a.Email);
+                    break;
+                default:
+                    Accounts = Accounts.OrderByDescending(a => a.Id);
+                    break;
+            }
+
+            int take = 10;
+            double total_product = Accounts.Count();
+
+            int total_take = (int)Math.Ceiling(total_product / take);
+
+            Accounts = Accounts.Skip((CountForTake - 1) * take).Take(take);
+            ViewData["total_take"] = total_take;
+            ViewData["CountForTake"] = CountForTake + 1;
+
+            return View(await _userManager.Users.AsNoTracking().ToListAsync());
+            
         }
         [HttpGet]
         public async Task<IActionResult> EditUser(string id)
@@ -420,6 +492,77 @@ namespace HubbleSpace_Final.Controllers
                 return View("ManageUser");
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> ManageUserRoles(string userId)
+        {
+            ViewBag.userId = userId;
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
+                return View("NotFound");
+            }
+
+            var model = new List<UserRoleViewModel>();
+
+            foreach (var role in _roleManager.Roles)
+            {
+                var userRoleViewModel = new UserRoleViewModel
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name
+                };
+
+                if (await _userManager.IsInRoleAsync(user, role.Name))
+                {
+                    userRoleViewModel.IsSelected = true;
+                }
+                else
+                {
+                    userRoleViewModel.IsSelected = false;
+                }
+
+                model.Add(userRoleViewModel);
+            }
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult>
+    ManageUserRoles(List<UserRoleViewModel> model, string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
+                return View("NotFound");
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var result = await _userManager.RemoveFromRolesAsync(user, roles);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot remove user existing roles");
+                return View(model);
+            }
+
+            result = await _userManager.AddToRolesAsync(user,
+                model.Where(x => x.IsSelected).Select(y => y.RoleName));
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot add selected roles to user");
+                return View(model);
+            }
+
+            return RedirectToAction("EditUser", new { Id = userId });
+        }
+
 
     }
+
 }
