@@ -30,8 +30,8 @@
         {
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">@user.UserName</h5>
-                    <h5 class="card-title">@user.Email</h5>
+                    <a asp-action="ManageUser" asp-route-sortOrder="@ViewData["UserName"]" class="card-title">@user.UserName</a>
+                    <h5 asp-action="ManageUser" asp-route-sortOrder="@ViewData["Email"] class="card-title">@user.Email</h5>
                     <h5 class="card-title">@user.PhoneNumber</h5>
                     <h5 class="card-title">@user.FirstName</h5>
                     <h5 class="card-title">@user.LastName</h5>
