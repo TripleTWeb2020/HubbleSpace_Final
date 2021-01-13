@@ -38,7 +38,7 @@ namespace HubbleSpace_Final.Controllers
 
         public async Task<IActionResult> GetNewProducts()
         {
-            return PartialView(await _context.Color_Product.Include(p => p.product)
+            return PartialView("Index",await _context.Color_Product.Include(p => p.product)
                                                     .Include(p => p.product.category)
                                                     .OrderBy(p => p.Date)
                                                     .ToListAsync());

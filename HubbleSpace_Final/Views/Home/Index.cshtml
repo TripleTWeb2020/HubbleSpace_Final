@@ -59,19 +59,7 @@ _________________________________________________________
 _________________________________________________________
 -->
 <div id="hot">
-    <div class="box py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 class="mb-0"><strong>New Arrivals</strong></h2>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="getnewproducts" class="container">
-        <!-- /.product-slider-->
-    </div>
-    <!-- /.container-->
+    
 </div>
 <!-- /#hot-->
 <!-- *** HOT END ***-->
@@ -141,7 +129,7 @@ _________________________________________________________
                 $.ajax({
                     url: "Home/GetNewProducts",
                     success: function (response) {
-                        $("#getnewproducts").html(response)
+                        $("#hot").html(response)
                     }
                 });
             });
