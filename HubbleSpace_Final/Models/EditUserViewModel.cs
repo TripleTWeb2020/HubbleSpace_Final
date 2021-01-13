@@ -8,35 +8,35 @@ using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Models
 {
-    public class UserProfileModel
+    public class EditUserViewModel
     {
-        [Display(Name = "Username")]
-        public string Username { get; set; }
+        public EditUserViewModel()
+        {
+            Claims = new List<string>();
+            Roles = new List<string>();
+        }
 
+        public string Id { get; set; }
+
+        [Required]
+        public string UserName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
         [Required(ErrorMessage = "Please enter your first name")]
-        [Display(Name = "First name")]
         public string FirstName { get; set; }
 
-        [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Please enter your email")]
-        [Display(Name = "Email address")]
-        [EmailAddress(ErrorMessage = "Please enter a valid email")]
-        public string Email { get; set; }
 
-        [Display(Name = "Address")]
+        [Required]
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Please enter your phone number")]
-        [Display(Name = "Phone Number")]
         [Phone(ErrorMessage = "Please enter a valid Phone Number")]
         public string Phone { get; set; }
 
-        [Display(Name = "Gender")]
-        public bool Gender { get; set; }
-
-        [Display(Name = "Your CreditCard")]
         [DataType(DataType.CreditCard)]
         public string CreditCard { get; set; }
 
@@ -46,6 +46,8 @@ namespace HubbleSpace_Final.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd//MM/yyyy}")]
         public DateTime? DOB { get; set; }
 
-        public virtual ApplicationUser applicationUser { get; set; }
+        public List<string> Claims { get; set; }
+
+        public IList<string> Roles { get; set; }
     }
 }

@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>5c67c80a-e37f-40e8-a406-82c5cac2be6f</UserSecretsId>
   </PropertyGroup>
+  
   <ItemGroup>
     <Compile Remove="Migrations\20210107135045_DbInit.cs" />
     <Compile Remove="Migrations\20210107135045_DbInit.Designer.cs" />
@@ -29,6 +30,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="3.4.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.1" />
+
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <ItemGroup>
