@@ -121,7 +121,7 @@ namespace HubbleSpace_Final.Controllers
             {
                 return NotFound();
             }
-            ViewData["id"] = new SelectList(_context.Users, "Id", "Email", order.User.Id);
+            
             return View(order);
         }
 
