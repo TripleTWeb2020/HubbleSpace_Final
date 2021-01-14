@@ -23,7 +23,14 @@
                 </div>
                 <div class="card-footer">
                     <a asp-controller="Accounts" asp-action="EditRole"  class="btn btn-primary">Edit</a>
-                    <a class="btn btn-danger"asp-controller="Accounts" asp-route-id="@role.Id" asp-action="DeleteRole">Delete</a>
+                    <form method="post" asp-action="DeleteRole" asp-route-id="@role.Id">
+                        <button type="submit">
+                            <a class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                <i class="zmdi zmdi-delete"></i>
+                            </a>
+                        </button>
+                    </form>
+                    
                 </div>
             </div>
         }

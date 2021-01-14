@@ -87,9 +87,14 @@
                                         <a class="item" asp-action="EditUser" asp-route-id="@user.Id" data-toggle="tooltip" data-placement="top" title="Edit">
                                             <i class="zmdi zmdi-edit"></i>
                                         </a>
-                                        <a class="item" asp-action="DeleteUser" asp-route-id="@user.Id" data-toggle="tooltip" data-placement="top" title="Delete">
-                                            <i class="zmdi zmdi-delete"></i>
-                                        </a>
+                                        <form method="post" asp-action="DeleteUser" asp-route-id="@user.Id" >
+                                            <button type="submit">
+                                                <a class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                    <i class="zmdi zmdi-delete"></i>
+                                                </a>
+                                            </button>
+                                        </form>
+                                        
 
                                     </div>
                                 </td>
