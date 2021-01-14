@@ -42,8 +42,7 @@ namespace HubbleSpace_Final.Models
 
         [Display(Name = "Your Date of Birth")]
         [DataType(DataType.Date)]
-        [ModelBinder(BinderType = typeof(DayMonthYearBinder))]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd//MM/yyyy}")]
+        
         public DateTime? DOB { get; set; }
 
         public virtual ApplicationUser applicationUser { get; set; }
