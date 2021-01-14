@@ -42,6 +42,7 @@ namespace HubbleSpace_Final.Models
 
         [Display(Name = "Your Date of Birth")]
         [DataType(DataType.Date)]
+        
         public DateTime? DOB { get; set; }
 
         public virtual ApplicationUser applicationUser { get; set; }

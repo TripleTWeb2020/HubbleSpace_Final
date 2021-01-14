@@ -4,94 +4,135 @@
     ViewBag.Title = "All Users";
     Layout = "_AdminLayout";
 }
-
-<h1>All Users</h1>
-<div class="table-data__tool">
-    <div class="table-data__tool-left">
-        <form asp-action="ManageUser" method="get">
-            <div class="rs-select2--light rs-select2--sm">
-                <input type="text" class="form-control" placeholder="Search for" name="SearchString" value="@ViewData["Search"]" />
-            </div>
-            <button class="au-btn-filter" type="submit">
-                <i class="fa fa-search"></i>
-            </button>
-        </form>
-    </div>
-</div>
-<div>
-    @if (Model.Any())
-    {
-        <a asp-action="Signup" asp-controller="Client_Accounts"
-           class="btn btn-primary mb-3" style="width:auto">
-            Add new user
-        </a>
-
-        foreach (var user in Model)
-        {
-            <div class="card mb-3">
-                <div class="card-body">
-                    <a asp-action="ManageUser" asp-route-sortOrder="@ViewData["UserName"]" class="card-title">@user.UserName</a>
-                    <h5 asp-action="ManageUser" asp-route-sortOrder="@ViewData["Email"] class="card-title">@user.Email</h5>
-                    <h5 class="card-title">@user.PhoneNumber</h5>
-                    <h5 class="card-title">@user.FirstName</h5>
-                    <h5 class="card-title">@user.LastName</h5>
-                    <h5 class="card-title">@user.DateOfBirth</h5>
-                    <h5 class="card-title">@user.CreditCard</h5>
-                    <h5 class="card-title">@user.Address</h5>
-                </div>
-                <div class="card-footer">
-                    <a asp-action="EditUser" asp-controller="Accounts" asp-route-id="@user.Id" class="btn btn-danger">Edit</a>
-                    <a asp-action="DeleteUser" asp-controller="Accounts" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
-                </div>
-            </div>
-        }
-    }
-    else
-    {
-        <div class="card">
-            <div class="card-header">
-                No users created yet
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">
-                    Use the button below to create a user
-                </h5>
-                <a class="btn btn-primary" style="width:auto"
-                   asp-controller="Client_Accounts" asp-action="Signup">
-                    Add new user
-                </a>
+<div class="row">
+    <div class="col-md-12">
+        <h1>All Users</h1>
+        <div class="table-data__tool">
+            <div class="table-data__tool-left">
+                <form asp-action="ManageUser" method="get">
+                    <div class="rs-select2--light rs-select2--sm">
+                        <input type="text" class="form-control" placeholder="Search for" name="SearchString" value="@ViewData["Search"]" />
+                    </div>
+                    <button class="au-btn-filter" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
             </div>
         </div>
-    }
-    <div class="pages" style="margin: 20px">
-        <nav aria-label="Page navigation example" class="d-flex justify-content-center">
-            <ul class="pagination">
-                @{
-                    int count = 1;
-                    if ((int)ViewData["CountForTake"] - 1 != 1)
-                    {
-                        <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@ViewData["CountForTake"]-2" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
-                    }
-                    while (count <= (int)ViewData["total_take"])
-                    {
-                        if (count == (int)ViewData["CountForTake"] - 1)
-                        {
-                            <li class="page-item active"><a class="page-link"><text>@count</text></a></li>
-                            count++;
-                        }
-                        else
-                        {
-                            <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@count" class="page-link"><text>@count</text></a></li>
-                            count++;
-                        }
-                    }
+        <div>
+            <a asp-action="Signup" asp-controller="Client_Accounts"
+               class="btn btn-primary mb-3" style="width:auto">
+                Add new user
+            </a>
 
-                    if ((int)ViewData["CountForTake"] - 1 < (int)ViewData["total_take"])
-                    {
-                        <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@ViewData["CountForTake"]" aria-label="Next" class="page-link"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
-                    }
-                }
-            </ul>
-        </nav>
-    </div>
-</div>
+
+            <!-- DATA TABLE -->
+            <div class="table-responsive table-responsive-data2">
+                <table class="table table-data2">
+                    <thead>
+                        <tr>
+                            <th>
+                                <h5 asp-action="Accounts" asp-route-sortOrder="@ViewData["UserName"]">Username</h5>
+                            </th>
+                            <th>
+                                <h5 asp-action="Accounts" asp-route-sortOrder="@ViewData["Email"]">Email</h5>
+                            </th>
+                            <th>
+                                <h5>PhoneNumber</h5>
+                            </th>
+                            <th>
+                                <h5>Name</h5>
+                            </th>
+                            <th>
+                                <h5>CreditCard</h5>
+                            </th>
+                            
+                            <th>
+                                <h5>Address</h5>
+                            </th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var user in Model)
+                        {
+
+
+                            <tr class="tr-shadow ">
+                                <td>
+                                    <a>@user.UserName</a>
+                                </td>
+                                <td>
+                                    <a>@user.Email</a>
+                                </td>
+
+                                <td>
+                                    <a>@user.PhoneNumber</a>
+                                </td>
+                                <td>
+                                    <a>@user.FirstName  @user.LastName</a>
+                                </td>
+                                
+                                <td>
+                                    <a>@user.CreditCard</a>
+                                </td>
+                               
+                                <td>
+                                    <a>@user.Address</a>
+                                </td>
+                                <td>
+                                    <div class="table-data-feature">
+                                        <a class="item" asp-action="EditUser" asp-route-id="@user.Id" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </a>
+                                        <form method="post" asp-action="DeleteUser" asp-route-id="@user.Id" >
+                                            <button type="submit">
+                                                <a class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                    <i class="zmdi zmdi-delete"></i>
+                                                </a>
+                                            </button>
+                                        </form>
+                                        
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="spacer"></tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="pages" style="margin: 20px">
+                    <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                        <ul class="pagination">
+                            @{
+                                int count = 1;
+                                if ((int)ViewData["CountForTake"] - 1 != 1)
+                                {
+                                    <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@ViewData["CountForTake"]-2" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                                }
+                                while (count <= (int)ViewData["total_take"])
+                                {
+                                    if (count == (int)ViewData["CountForTake"] - 1)
+                                    {
+                                        <li class="page-item active"><a class="page-link"><text>@count</text></a></li>
+                                        count++;
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@count" class="page-link"><text>@count</text></a></li>
+                                        count++;
+                                    }
+                                }
+
+                                if ((int)ViewData["CountForTake"] - 1 < (int)ViewData["total_take"])
+                                {
+                                    <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@ViewData["CountForTake"]" aria-label="Next" class="page-link"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                                }
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            </div></div>
