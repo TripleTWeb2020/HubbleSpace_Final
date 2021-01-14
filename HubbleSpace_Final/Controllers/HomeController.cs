@@ -43,7 +43,21 @@ namespace HubbleSpace_Final.Controllers
                                                     .OrderBy(p => p.Date)
                                                     .ToListAsync());
         }
-        
+
+        public async Task<IActionResult> GetBestSale()
+        {
+            var list_sale = from c in _context.Color_Product
+                            select new
+                            {
+                                ID_Color_Product = c.ID_Color_Product,
+                                Namecolor = c.Color_Name,
+                                Image = c.Image,
+                                product = c.product,
+                                Quantity = _context.OrderDetail.Where(o => o.ID_Color_Product == c.ID_Color_Product).Sum(o => o.Quantity)
+                            };
+            return PartialView(await list_sale.Include(p => p.product).OrderBy((p => p.Quantity)).ToListAsync());
+        }
+
         public IActionResult Privacy()
         {
             return View();

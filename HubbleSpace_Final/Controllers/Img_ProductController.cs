@@ -19,7 +19,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Img_Product
-        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int id, int CountForTake = 1)
         {
             ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";
@@ -30,6 +30,11 @@ namespace HubbleSpace_Final.Controllers
 
             var Img_Products = from i in _context.Img_Product.Include(i => i.color_Product).Include(i => i.color_Product.product)
                                  select i;
+            if (id != null && id != 0)
+            {
+                TempData["ID_Color_Product"] = id;
+                Img_Products = Img_Products.Where(s => s.color_Product.ID_Color_Product == id);
+            }
 
             if (!String.IsNullOrEmpty(searchString))
             {

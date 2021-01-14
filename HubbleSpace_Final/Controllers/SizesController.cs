@@ -19,7 +19,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Sizes
-        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int id, int CountForTake = 1)
         {
             ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";
@@ -32,6 +32,12 @@ namespace HubbleSpace_Final.Controllers
 
             var Sizes = from s in _context.Size.Include(s => s.color_Product).Include(s => s.color_Product.product)
                         select s;
+
+            if(id != null && id != 0)
+            {
+                TempData["ID_Color_Product"] = id;
+                Sizes = Sizes.Where(s => s.color_Product.ID_Color_Product == id);
+            }
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -100,7 +106,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Sizes/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
             var Product_Color_Name = from c in _context.Color_Product
                                      select new
@@ -108,7 +114,12 @@ namespace HubbleSpace_Final.Controllers
                                          ID_Color_Product = c.ID_Color_Product,
                                          Name = c.product.Product_Name + " - " + c.Color_Name
                                      };
-            ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name");
+            if (id != null && id != 0)
+            {
+                TempData["ID_Color_Product"] = id;
+                Product_Color_Name = Product_Color_Name.Where(s => s.ID_Color_Product == id);
+            }
+            ViewData["Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name");
             return View();
         }
 
@@ -117,7 +128,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_Size_Product,SizeNumber,Quantity,ID_Color_Product")] Size size)
+        public async Task<IActionResult> Create(int id, [Bind("ID_Size_Product,SizeNumber,Quantity,ID_Color_Product")] Size size)
         {
             if (ModelState.IsValid)
             {
@@ -131,7 +142,12 @@ namespace HubbleSpace_Final.Controllers
                                          ID_Color_Product = c.ID_Color_Product,
                                          Name = c.product.Product_Name + " - " + c.Color_Name
                                      };
-            ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name", size.ID_Color_Product);
+            if (id != null && id != 0)
+            {
+                TempData["ID_Color_Product"] = id;
+                Product_Color_Name = Product_Color_Name.Where(s => s.ID_Color_Product == id);
+            }
+            ViewData["Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name", size.ID_Color_Product);
             return View(size);
         }
 

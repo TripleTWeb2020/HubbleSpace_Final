@@ -138,17 +138,17 @@ namespace HubbleSpace_Final.Controllers
         {
             // Tìm khuyến mãi
             var discount = _context.Discount.Where(p => p.Code_Discount == code).FirstOrDefault();
-            if (discount == null)
-                return NotFound();
-            var cart = GetCartItems();
-            var discountitem = cart.Find(p => p.Discount == code);
-            //if (discountitem == null)
-            {
-                // Chưa tồn tại, thêm discount
-                cart.Add(new CartItemModel() { Amount = 1, Discount = code, Value_Discount = discount.Value });
-            }
-            // Lưu cart vào Session
-            SaveCartSession(cart);
+            if (discount != null) {
+                var cart = GetCartItems();
+                var discountitem = cart.Find(p => p.Discount == code);
+                //if (discountitem == null)
+                {
+                    // Chưa tồn tại, thêm discount
+                    cart.Add(new CartItemModel() { Amount = 1, Discount = code, Value_Discount = discount.Value });
+                }
+                // Lưu cart vào Session
+                SaveCartSession(cart);
+            }            
             return Ok();
         }
 
@@ -201,6 +201,7 @@ namespace HubbleSpace_Final.Controllers
                     await _context.SaveChangesAsync();
                 }
             }
+            ClearCart();
             TempData["SuccessMsg"] = "Order puschased successful";
             return RedirectToAction("HistoryOrder", "Client_Orders");
         }

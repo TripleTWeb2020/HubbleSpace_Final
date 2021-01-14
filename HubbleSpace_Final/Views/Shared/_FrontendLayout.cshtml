@@ -54,7 +54,7 @@
                 <a href="~/../Home" class="navbar-brand home"><img src="~/Images/Untitled.png" alt="HS logo" class="d-none d-md-inline-block" style="width: 255px"><img src="~/Images/Untitled.png" alt="HS logo" class="d-inline-block d-md-none" style="width: 255px"><span class="sr-only">Hubble Space</span></a>
                 <div class="navbar-buttons">
                     <button type="button" data-toggle="collapse" data-target="#navigation" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
-                    <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></button><a href="cart" class="btn btn-outline-secondary navbar-toggler"><i class="fa fa-shopping-cart"></i></a>
+                    <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></button><a asp-controller="Client_ProductCarts" asp-action="cart" class="btn btn-outline-secondary navbar-toggler"><i class="fa fa-shopping-cart"></i></a>
                 </div>
                 <div id="navigation" class="collapse navbar-collapse">
                     <ul class="navbar-nav">
@@ -68,12 +68,12 @@
                                     <div class="row">
                                         <div class="col-md-6 col-lg-4">
                                             <ul class="list-unstyled mb-3">
-                                                <li class="nav-item"><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Originals" class="nav-link-custom">Originals</a></li>
-                                                <li class="nav-item"><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Running" class="nav-link-custom">Running</a></li>
-                                                <li class="nav-item"><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Training" class="nav-link-custom">Training</a></li>
-                                                <li class="nav-item"><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Football" class="nav-link-custom">Football</a></li>
-                                                <li class="nav-item"><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Basketball" class="nav-link-custom">Basketball</a></li>
-                                                <li class="nav-item"><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Tennis" class="nav-link-custom">Tennis</a></li>
+                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Originals" class="nav-link-custom">Originals</a></li>
+                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Running" class="nav-link-custom">Running</a></li>
+                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Training" class="nav-link-custom">Training</a></li>
+                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Football" class="nav-link-custom">Football</a></li>
+                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Basketball" class="nav-link-custom">Basketball</a></li>
+                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Tennis" class="nav-link-custom">Tennis</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -87,10 +87,10 @@
                                     <div class="row">
                                         <div class="col-md-6 col-lg-4">
                                             <ul class="list-unstyled mb-3">
-                                                <li class="nav-item"><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Originals" class="nav-link-custom">Originals</a></li>
-                                                <li class="nav-item"><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Running" class="nav-link-custom">Running</a></li>
-                                                <li class="nav-item"><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Training" class="nav-link-custom">Training</a></li>
-                                                <li class="nav-item"><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Tennis" class="nav-link-custom">Tennis</a></li>
+                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Originals" class="nav-link-custom">Originals</a></li>
+                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Running" class="nav-link-custom">Running</a></li>
+                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Training" class="nav-link-custom">Training</a></li>
+                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Tennis" class="nav-link-custom">Tennis</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -105,8 +105,8 @@
                                     <div class="row">
                                         <div class="col-md-6 col-lg-4">
                                             <ul class="list-unstyled mb-3">
-                                                <li class="nav-item"><a asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Originals" class="nav-link-custom">Originals</a></li>
-                                                <li class="nav-item"><a asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Running" class="nav-link-custom">Running</a></li>
+                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Originals" class="nav-link-custom">Originals</a></li>
+                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Running" class="nav-link-custom">Running</a></li>
                                             </ul>
                                         </div>
                                     </div>

@@ -1,0 +1,90 @@
+﻿@model IEnumerable<HubbleSpace_Final.Entities.Color_Product>
+@section css{
+    <!-- owl carousel-->
+    <link rel="stylesheet" href="~/distribution/vendor/owl.carousel/assets/owl.carousel.css">
+    <link rel="stylesheet" href="~/distribution/vendor/owl.carousel/assets/owl.theme.default.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="~/distribution/css/style.default.css" id="theme-stylesheet">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="~/distribution/vendor/bootstrap/css/bootstrap.css">
+}
+<div class="box py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="mb-0"><strong>Best Seller</strong></h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="product-slider owl-carousel owl-theme">
+        @foreach (var item in Model.TakeLast(5))
+        {
+            <div class="item">
+                <div class="product">
+                    <div class="flip-container">
+                        <div class="flipper">
+                            <div class="front">
+                                <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                                    <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                                </a>
+                            </div>
+                            <div class="back">
+                                <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                                    <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product" class="invisible">
+                        <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                    </a>
+                    <div class="text">
+                        <h3><a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">@Html.DisplayFor(modelItem => item.product.Product_Name)</a></h3>
+                        <p class="price">
+                            <del>
+                                @if (item.product.Price_Sale < item.product.Price_Product)
+                                {
+                                    <text> @String.Format("{0:0,0}", item.product.Price_Product) VNĐ </text>
+                                }
+                            </del>
+                        </p>
+                        <p class="price-sale">
+                            <br />
+                            <text> @String.Format("{0:0,0}", item.product.Price_Sale) VNĐ </text>
+                        </p>
+                        <p class="buttons">
+                            <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product" class="btn btn-outline-secondary">View detail</a>
+                            <a asp-action="Cart" asp-route-id="@item.ID_Color_Product" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        </p>
+                    </div>
+                    <!-- /.text-->
+                    <!-- /.ribbon-->
+                    <div class="ribbon new">
+                        <div class="theribbon">NEW</div>
+                        <div class="ribbon-background"></div>
+                    </div>
+                    <!-- /.ribbon-->
+                    @{var product = Model.Where(c => c.ID_Product == item.ID_Product).FirstOrDefault();
+                        if (product != null)
+                        {
+                            if (product.product.Price_Sale < product.product.Price_Product)
+                            {
+                                <!-- /.ribbon-->
+                                <div class="ribbon sale">
+                                    <div class="theribbon">SALE</div>
+                                    <div class="ribbon-background"></div>
+                                </div>
+                            }
+                            <!-- /.ribbon-->
+                        }
+                    }
+                </div>
+                <!-- /.product-->
+            </div>
+            <!-- /.products-->
+        }
+    </div>
+    <!-- /.product-slider-->
+</div>

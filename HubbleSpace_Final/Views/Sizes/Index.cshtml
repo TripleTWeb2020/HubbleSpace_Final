@@ -21,7 +21,7 @@
                 </form>
             </div>
             <div class="table-data__tool-right">
-                <a class="au-btn au-btn-icon au-btn--green au-btn--small" asp-action="Create">
+                <a class="au-btn au-btn-icon au-btn--green au-btn--small" asp-action="Create" asp-route-id="@TempData["ID_Color_Product"]" >
                     Add item
                 </a>
             </div>
@@ -98,7 +98,7 @@
                             int count = 1;
                             if ((int)ViewData["CountForTake"] - 1 != 1)
                             {
-                                <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@ViewData["CountForTake"]-2" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                                <li class="page-item"><a asp-action="Index" asp-route-id="@TempData["ID_Color_Product"]" asp-route-CountForTake="@ViewData["CountForTake"]-2" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
                             }
                             while (count <= (int)ViewData["total_take"])
                             {
@@ -109,14 +109,14 @@
                                 }
                                 else
                                 {
-                                    <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@count" class="page-link"><text>@count</text></a></li>
+                                    <li class="page-item"><a asp-action="Index" asp-route-id="@TempData["ID_Color_Product"]" asp-route-CountForTake="@count" class="page-link"><text>@count</text></a></li>
                                     count++;
                                 }
                             }
 
                             if ((int)ViewData["CountForTake"] - 1 < (int)ViewData["total_take"])
                             {
-                                <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@ViewData["CountForTake"]" aria-label="Next" class="page-link"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                                <li class="page-item"><a asp-action="Index" asp-route-id="@TempData["ID_Color_Product"]" asp-route-CountForTake="@ViewData["CountForTake"]" aria-label="Next" class="page-link"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
                             }
                         }
                     </ul>

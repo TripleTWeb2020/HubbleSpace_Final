@@ -21,7 +21,7 @@ namespace HubbleSpace_Final.Controllers
 
 
         // GET: Color_Product
-        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int id, int CountForTake = 1)
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Name"] = sortOrder == "Name" ? "name_desc" : "Name";
@@ -33,7 +33,10 @@ namespace HubbleSpace_Final.Controllers
 
             var color_Products = from c in _context.Color_Product.Include(c => c.product)
                            select c;
-
+            if(id != null & id != 0)
+            {
+                color_Products = color_Products.Where(c => c.product.ID_Product == id);
+            }
             if (!String.IsNullOrEmpty(searchString))
             {
                 color_Products = color_Products.Where(c => c.product.Product_Name.Contains(searchString));
