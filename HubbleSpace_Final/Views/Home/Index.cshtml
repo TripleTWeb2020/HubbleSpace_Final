@@ -6,15 +6,7 @@
 }
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <div id="main-slider" class="owl-carousel owl-theme">
-                @foreach (var item in Model)
-                {
-                    <div class="item">
-                        <img style="height:960px" src="~/Images/Banner/@Html.DisplayFor(modelItem => item.Photo)" class="img-fluid owl-height">
-                    </div>
-                }
-            </div>
+        <div id="banner" class="col-md-12">
             <!-- /#main-slider-->
         </div>
     </div>
@@ -79,6 +71,23 @@ _________________________________________________________
     <script>
         $(function () {
             $(document).ready(function () {
+
+                $.ajax({
+                    url: "Home/GetBanners",
+                    success: function (response) {
+                        $("#banner").html(response);
+                        jQuery(".owl-carousel").owlCarousel({
+                            center: true,
+                            items: 1,
+                            loop: true,
+                            autoplay: true,
+                            margin: false,
+                            nav: false,
+                            autoheight: true,
+                        });
+                    }
+                });
+
                 $.ajax({
                     url: "Home/GetNewProducts",
                     success: function (response) {
@@ -87,17 +96,10 @@ _________________________________________________________
                             center: true,
                             items: 4,
                             loop: true,
+                            autoplay: true,
                             margin: 15,
                             nav: false,
-                            autoPlay: 1000,
-                            responsive: {
-                                640: {
-                                    items: 4,
-                                    autoWidth: false,
-                                    margin: 0,
-                                    autoPlay: 1000,
-                                }
-                            }
+                            autowidth: true,
                         });
                     }
                 });
@@ -112,15 +114,7 @@ _________________________________________________________
                             loop: true,
                             margin: 15,
                             nav: false,
-                            autoPlay: 1000,
-                            responsive: {
-                                640: {
-                                    items: 4,
-                                    autoWidth: false,
-                                    margin: 0,
-                                    autoPlay: 1000,
-                                }
-                            }
+                            
                         });
                     }
                 });

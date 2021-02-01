@@ -1,0 +1,17 @@
+﻿@model IEnumerable<HubbleSpace_Final.Entities.Banner>
+@section css{
+    <!-- owl carousel-->
+    <link rel="stylesheet" href="~/distribution/vendor/owl.carousel/assets/owl.carousel.css">
+    <link rel="stylesheet" href="~/distribution/vendor/owl.carousel/assets/owl.theme.default.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="~/distribution/css/style.default.css" id="theme-stylesheet">
+    <!-- Bootstrap CSS-->
+    <link />}
+<div id="main-slider" class="owl-carousel owl-theme">
+    @foreach (var item in Model)
+    {
+        <div class="item">
+            <img style="height: 960px;" src="~/Images/Banner/@Html.DisplayFor(modelItem => item.Photo)" class="img-fluid">
+        </div>
+    }
+</div>
