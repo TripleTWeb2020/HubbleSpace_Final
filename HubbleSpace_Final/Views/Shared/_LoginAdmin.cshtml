@@ -1,0 +1,43 @@
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+
+
+@if (_signInManager.IsSignedIn(User))
+{
+    <div class="account-wrap">
+        <div class="account-item clearfix js-item-menu">
+            <div class="content">
+                <a class="js-acc-btn" asp-controller="Client_Accounts" asp-action="Profile">@(User.FindFirst("UserFirstName").Value+" "+User.FindFirst("UserLastName").Value)</a>
+            </div>
+            <div class="account-dropdown js-dropdown">
+                <div class="info clearfix">
+
+                    <div class="content">
+                        <h5 class="name">
+                            <a asp-controller="Client_Accounts" asp-action="Profile">@(User.FindFirst("UserFirstName").Value+" "+User.FindFirst("UserLastName").Value)</a>
+                        </h5>
+                        <span class="email">@User.FindFirst("UserEmail").Value</span>
+                    </div>
+                </div>
+                <div class="account-dropdown__body">
+                    <div class="account-dropdown__item">
+                        <a asp-action="Signout" asp-controller="Client_Accounts">
+                            <i class="zmdi zmdi-account"></i>Signout
+                        </a>
+                    </div>
+                    <div class="account-dropdown__item">
+                        <a asp-action="ChangePassword" asp-controller="Client_Accounts">
+                            <i class="zmdi zmdi-key"></i>Change Password
+                        </a>
+                    </div>
+                    <div class="account-dropdown__item">
+                        <a asp-action="Index" asp-controller="Home">
+                            <i class="zmdi zmdi-settings"></i>Your Website
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}

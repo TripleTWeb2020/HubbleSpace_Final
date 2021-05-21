@@ -42,9 +42,6 @@
                 <thead>
                     <tr class="row">
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.TotalMoney)
-                        </th>
-                        <th class="col-2">
                             <a asp-controller="Admin" asp-action="statistic" asp-route-sortOrder="@ViewData["Date"]">@Html.DisplayNameFor(model => model.Date_Create)</a>
                         </th>
                         <th class="col-2">
@@ -56,41 +53,40 @@
                         <th class="col-2">
                             <a asp-controller="Admin" asp-action="statistic" asp-route-sortOrder="@ViewData["Process"]">@Html.DisplayNameFor(model => model.Process)</a>
                         </th>
+                        <th class="col-2">
+                            @Html.DisplayNameFor(model => model.TotalMoney)
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @{
-                        double sales = 0;
-                        @foreach (var item in Model)
-                        {
-                            sales += item.TotalMoney;
-                            <tr class="tr-shadow row">
-                                <td class="col-2">
-                                    @Html.DisplayFor(modelItem => item.TotalMoney)
-                                </td>
-                                <td class="col-2">
-                                    @Html.DisplayFor(modelItem => item.Date_Create)
-                                </td>
-                                <td class="col-2">
-                                    @Html.DisplayFor(modelItem => item.Address)
-                                </td>
-                                <td class="col-2">
-                                    @Html.DisplayFor(modelItem => item.SDT)
-                                </td>
-                                <td class="col-2">
-                                    @Html.DisplayFor(modelItem => item.Process)
-                                </td>
-                            </tr>
-                            <tr class="spacer"></tr>
-                        }
-
-                                }
-                            </tbody>
-                <tfoot>
+                    @foreach (var item in Model)
+                    {
                     <tr class="tr-shadow row">
-                        <td colspan="4">Doanh thu</td>
-                        <td colspan="2">@(sales.ToString("n0"))</td>
-                </tfoot>
+
+                        <td class="col-2">
+                            @Html.DisplayFor(modelItem => item.Date_Create)
+                        </td>
+                        <td class="col-2">
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td class="col-2">
+                            @Html.DisplayFor(modelItem => item.SDT)
+                        </td>
+                        <td class="col-2">
+                            @Html.DisplayFor(modelItem => item.Process)
+                        </td>
+                        <td class="col-2">
+                            @Html.DisplayFor(modelItem => item.TotalMoney.ToString("n0"))
+                        </td>
+
+                    </tr>
+                        <tr class="spacer"></tr>
+                    }
+                    <tr class="tr-shadow row">
+                        <td class="col-8">Doanh thu</td>
+                        <td class="col-2">@(ViewBag.totalMoney.ToString("n0"))</td>
+                    </tr>
+                </tbody>
             </table>
             <div class="pages" style="margin: 20px">
                 <nav aria-label="Page navigation example" class="d-flex justify-content-center">

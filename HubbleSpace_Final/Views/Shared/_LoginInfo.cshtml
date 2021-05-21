@@ -31,20 +31,20 @@
                             @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="dropdown-item nav-link-custom" asp-action="ManageRole" asp-controller="Accounts">
-                                        Manage Roles
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="dropdown-item nav-link-custom" asp-action="Index" asp-controller="Admin">
                                         Admin DashBoard
+                                    </a>
+                                </li>
+                                /*<li class="nav-item">
+                                    <a class="dropdown-item nav-link-custom" asp-action="ManageRole" asp-controller="Accounts">
+                                        Manage Roles
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="dropdown-item nav-link-custom" asp-action="ManageUser" asp-controller="Accounts">
                                         Manage User
                                     </a>
-                                </li>
+                                </li>*/
                             }
                         </ul>
                     </div>
