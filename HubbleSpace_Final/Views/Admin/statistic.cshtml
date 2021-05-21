@@ -76,7 +76,7 @@
                             @Html.DisplayFor(modelItem => item.Process)
                         </td>
                         <td class="col-2">
-                            @Html.DisplayFor(modelItem => item.TotalMoney.ToString("n0"))
+                            @item.TotalMoney.ToString("n0") VNĐ
                         </td>
 
                     </tr>
@@ -84,7 +84,7 @@
                     }
                     <tr class="tr-shadow row">
                         <td class="col-8">Doanh thu</td>
-                        <td class="col-2">@(ViewBag.totalMoney.ToString("n0"))</td>
+                        <td class="col-2">@(ViewBag.totalMoney.ToString("n0")) VNĐ</td>
                     </tr>
                 </tbody>
             </table>
