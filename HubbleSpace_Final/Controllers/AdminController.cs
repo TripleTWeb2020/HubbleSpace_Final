@@ -33,6 +33,11 @@ namespace HubbleSpace_Final.Controllers
 
         public IActionResult Index()
         {
+            ViewData["User Account"] = _context.Users.Count();
+            ViewData["Total Orders"] = _context.Order.Count();
+            var query = from total in _context.Order where total.TotalMoney >= 0 select total.TotalMoney;
+            ViewData["Total Earnings"] = query.Sum().ToString("n0");
+
             return View();
         }
 
