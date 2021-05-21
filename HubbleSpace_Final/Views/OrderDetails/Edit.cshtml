@@ -21,7 +21,7 @@
                         <label asp-for="ID_Color_Product" class="control-label "></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <select asp-for="ID_Color_Product" class="form-control" asp-items="ViewBag.ID_Color_Product"></select>
+                        <select id="colorProduct" asp-for="ID_Color_Product" class="form-control" asp-items="ViewBag.ColorProduct_Select"></select>
                         <span asp-validation-for="ID_Color_Product" class="text-danger"></span>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                         <label asp-for="ID_Order" class="control-label"></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <select asp-for="ID_Order" class="form-control" asp-items="ViewBag.ID_Order"></select>
+                        <select asp-for="ID_Order" class="form-control" asp-items="@ViewBag.orderSelect"></select>
                         <span asp-validation-for="ID_Order" class="text-danger"></span>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                 <div class="form-group card-footer">
                     <input type="submit" value="Save" class="btn btn-primary col-2" />
                     <input type="reset" value="Reset" class="btn btn-danger col-2" />
-                    <a asp-action="Index" class="btn btn-secondary col-2" asp-route-id="@Model.ID_Order">Back</a>
+                    <a asp-action="Index" class="btn btn-secondary col-2" asp-route-id="@ViewBag.ID_Order">Back</a>
                 </div>
             </form>
         </div>
@@ -69,11 +69,11 @@
 @section ajax{
     <script>
         $(function () {
-            $("#ID_Color_Product").change(function () {
+            $("document").ready(function () {
                 $.ajax({
                     url: "/OrderDetails/GetSize",
                     data: {
-                        "id": $(this).val(),
+                        "id": $("select#colorProduct").val(),
                     },
                     success: function (response) {
                         $("select#size").html(response);

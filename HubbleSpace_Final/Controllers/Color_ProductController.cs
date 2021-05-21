@@ -26,17 +26,17 @@ namespace HubbleSpace_Final.Controllers
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Name"] = sortOrder == "Name" ? "name_desc" : "Name";
             ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";
-
             ViewData["Search"] = searchString;
-
+            ViewData["ID_Product"] = id; 
 
 
             var color_Products = from c in _context.Color_Product.Include(c => c.product)
                            select c;
-            if(id != null & id != 0)
+            if(id > 0)
             {
                 color_Products = color_Products.Where(c => c.product.ID_Product == id);
             }
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 color_Products = color_Products.Where(c => c.product.Product_Name.Contains(searchString));
@@ -92,13 +92,22 @@ namespace HubbleSpace_Final.Controllers
                 return NotFound();
             }
 
+            ViewData["ID_Product"] = color_Product.product.ID_Product;
+
             return View(color_Product);
         }
 
         // GET: Color_Product/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name");
+            var product = _context.Product.Where(p => p.ID_Product == id).ToList();
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+            ViewData["ID_Product_Select"] = new SelectList(product, "ID_Product", "Product_Name");
+            ViewData["ID_Product"] = id;
             return View();
         }
 
@@ -107,15 +116,22 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_Color_Product,Color_Name,ID_Product,Image")] Color_Product color_Product)
+        public async Task<IActionResult> Create(int? id, [Bind("ID_Color_Product,Color_Name,ID_Product,Image")] Color_Product color_Product)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(color_Product);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", new { @id = id }) ;
             }
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name", color_Product.ID_Product);
+            var product = _context.Product.Where(p => p.ID_Product == id).ToList();
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+            ViewData["ID_Product_Select"] = new SelectList(product, "ID_Product", "Product_Name");
+            ViewData["ID_Product"] = id;
             return View(color_Product);
         }
 
@@ -128,11 +144,19 @@ namespace HubbleSpace_Final.Controllers
             }
 
             var color_Product = await _context.Color_Product.FindAsync(id);
+
             if (color_Product == null)
             {
                 return NotFound();
             }
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name", color_Product.ID_Product);
+            var product = _context.Product.Where(p => p.ID_Product == color_Product.ID_Product).ToList();
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+            ViewData["ID_Product_Select"] = new SelectList(product, "ID_Product", "Product_Name");
+            ViewData["ID_Product"] = color_Product.ID_Product;
             return View(color_Product);
         }
 
@@ -166,9 +190,16 @@ namespace HubbleSpace_Final.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", new { @id = id });
             }
-            ViewData["ID_Product"] = new SelectList(_context.Product, "ID_Product", "Product_Name", color_Product.ID_Product);
+            var product = _context.Product.Where(p => p.ID_Product == color_Product.ID_Product).ToList();
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+            ViewData["ID_Product_Select"] = new SelectList(product, "ID_Product", "Product_Name");
+            ViewData["ID_Product"] = id;
             return View(color_Product);
         }
 
@@ -187,7 +218,7 @@ namespace HubbleSpace_Final.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["ID_Product"] = color_Product.ID_Product;
             return View(color_Product);
         }
 
@@ -199,7 +230,7 @@ namespace HubbleSpace_Final.Controllers
             var color_Product = await _context.Color_Product.FindAsync(id);
             _context.Color_Product.Remove(color_Product);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", new { @id = id });
         }
 
         private bool Color_ProductExists(int id)
@@ -207,9 +238,6 @@ namespace HubbleSpace_Final.Controllers
             return _context.Color_Product.Any(e => e.ID_Color_Product == id);
         }
 
-        public IActionResult Search(string term)
-        {
-            return View("Index", _context.Color_Product.Where(m => m.Color_Name.Contains(term)));
-        }
+        
     }
 }

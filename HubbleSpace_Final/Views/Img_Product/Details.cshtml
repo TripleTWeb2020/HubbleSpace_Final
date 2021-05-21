@@ -51,7 +51,7 @@
 
             <div class="form-group card-footer">
                 <a asp-action="Edit" class="btn btn-danger col-2" asp-route-id="@Model.ID_Img_Product">Edit</a>
-                <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+                <a asp-action="Index" asp-route-id="@ViewBag.ID_ColorProduct" class="btn btn-secondary col-2">Back</a>
             </div>
         </div>
     </div>

@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="~/distribution/css/style.default.css" id="theme-stylesheet">
     <!-- Bootstrap CSS-->
     <link />}
-<div id="main-slider" class="owl-carousel owl-theme">
+<div class="owl-carousel owl-theme">
     @foreach (var item in Model)
     {
         <div class="item">
-            <img style="height: 960px;" src="~/Images/Banner/@Html.DisplayFor(modelItem => item.Photo)" class="img-fluid">
+            <img src="~/Images/Banner/@Html.DisplayFor(modelItem => item.Photo)">
         </div>
     }
 </div>

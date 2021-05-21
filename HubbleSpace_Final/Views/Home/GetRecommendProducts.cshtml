@@ -1,55 +1,65 @@
 ﻿@model IEnumerable<HubbleSpace_Final.Entities.Color_Product>
-@{
-    var count = 0;
-    @foreach (var item in Model)
-    {
-        if (count < 4)
-        {
-            <!-- /.product-->
-            <div class="col-md-3 col-sm-6">
-                <div class="product same-height">
-                    <div class="flip-container">
-                        <div class="flipper">
-                            <div class="front">
-                                <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
-                                    <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
-                                </a>
-                            </div>
-                            <div class="back">
-                                <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
-                                    <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
-                                </a>
-                            </div>
-                        </div>
+@foreach (var item in Model)
+{
+    <!-- /.product-->
+    <div class="col-md-3 col-sm-6">
+        <div class="product same-height">
+            <div class="flip-container">
+                <div class="flipper">
+                    <div class="front">
+                        <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                            <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                        </a>
                     </div>
-                    <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
-                        <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
-                    </a>
-                    <div class="text">
-                        <h3>@Html.DisplayFor(modelItem => item.product.Product_Name)</h3>
-                        <p class="price">
-                            <del>
-                                @if (item.product.Price_Sale < item.product.Price_Product)
-                                {
-                                    <text> @String.Format("{0:0,0}", item.product.Price_Product) VNĐ </text>
-                                }
-                            </del>
-                        </p>
-                        <p class="price-sale">
-                            <br />
-                            <text> @String.Format("{0:0,0}", item.product.Price_Sale) VNĐ </text>
-                        </p>
+                    <div class="back">
+                        <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                            <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                        </a>
                     </div>
                 </div>
-                <!-- /.product-->
             </div>
-            count++;
-        }
+            <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+            </a>
+            <div class="text">
+                <h3>@Html.DisplayFor(modelItem => item.product.Product_Name)</h3>
+                <p class="price">
+                    <del>
+                        @if (item.product.Price_Sale < item.product.Price_Product)
+                        {
+                            <text> @String.Format("{0:0,0}", item.product.Price_Product) VNĐ </text>
+                        }
+                    </del>
+                </p>
+                <p class="price-sale">
+                    <text> @String.Format("{0:0,0}", item.product.Price_Sale) VNĐ </text>
+                </p>
+                <p class="buttons">
+                    <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product" class="btn btn-outline-secondary">View detail</a>
+                </p>
+            </div>
+            <!-- /.ribbon-->
+            @if (item.Date > DateTime.Now.AddDays(-14))
+            {
+                <div class="ribbon new">
+                    <div class="theribbon">NEW</div>
+                    <div class="ribbon-background"></div>
+                </div>
+            }
+            <!-- /.ribbon-->
+            @if (item.product.Price_Sale < item.product.Price_Product)
+            {
+                <!-- /.ribbon-->
+                <div class="ribbon sale">
+                    <div class="theribbon">SALE</div>
+                    <div class="ribbon-background"></div>
+                </div>
+            }
+            <!-- /.ribbon-->
+        </div>
+        <!-- /.product-->
+    </div>
 
-        else
-        {
-            break;
-        }
-    }
 }
+
 

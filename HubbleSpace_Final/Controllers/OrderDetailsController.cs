@@ -24,110 +24,56 @@ namespace HubbleSpace_Final.Controllers
             ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";
             ViewData["Quantity"] = sortOrder == "Quantity" ? "quantity_desc" : "Quantity";
-
-
             ViewData["Search"] = searchString;
 
-            if (id == null)
+            var OrderDetails = from o in _context.OrderDetail.Include(o => o.Color_Product)
+                                                                .Include(o => o.order)
+                                                                .Include(o => o.Color_Product.product)
+                                select o;
+            if(id > 0)
             {
-                var OrderDetails = from o in _context.OrderDetail.Include(o => o.Color_Product)
-                                                                 .Include(o => o.order)
-                                                                 .Include(o => o.Color_Product.product)
-                                   select o;
-                if (!String.IsNullOrEmpty(searchString))
-                {
-                    OrderDetails = OrderDetails.Where(a => a.Color_Product.product.Product_Name.Contains(searchString));
-                }
-
-                switch (sortOrder)
-                {
-                    case "name_desc":
-                        OrderDetails = OrderDetails.OrderByDescending(a => a.Color_Product.product.Product_Name);
-                        break;
-                    case "ColorName":
-                        OrderDetails = OrderDetails.OrderBy(a => a.Color_Product.Color_Name);
-                        break;
-                    case "colorname_desc":
-                        OrderDetails = OrderDetails.OrderByDescending(a => a.Color_Product.Color_Name);
-                        break;
-                    case "Quantity":
-                        OrderDetails = OrderDetails.OrderBy(a => a.Quantity);
-                        break;
-                    case "quantity_desc":
-                        OrderDetails = OrderDetails.OrderByDescending(a => a.Quantity);
-                        break;
-                    default:
-                        OrderDetails = OrderDetails.OrderBy(a => a.Color_Product.product.Product_Name);
-                        break;
-                }
-
-                int take = 10;
-                double total_product = OrderDetails.Count();
-
-                int total_take = (int)Math.Ceiling(total_product / take);
-
-                OrderDetails = OrderDetails.Skip((CountForTake - 1) * take).Take(take);
-                ViewData["total_take"] = total_take;
-                ViewData["CountForTake"] = CountForTake + 1;
-
-                return View(await OrderDetails.AsNoTracking().ToListAsync());
+                OrderDetails = OrderDetails.Where(o => o.ID_Order == id);
+                ViewData["ID_Order"] = id;
             }
-            else
+            if (!String.IsNullOrEmpty(searchString))
             {
-                var OrderDetails = from o in _context.OrderDetail.Include(o => o.Color_Product)
-                                                                 .Include(o => o.order)
-                                                                 .Include(o => o.Color_Product.product)
-                                                                 .Where(m => m.ID_Order == id)
-                                   select o;
-                if (OrderDetails == null)
-                {
-                    return NotFound();
-                }
-
-
-                if (!String.IsNullOrEmpty(searchString))
-                {
-                    OrderDetails = OrderDetails.Where(a => a.Color_Product.product.Product_Name.Contains(searchString));
-                }
-
-                switch (sortOrder)
-                {
-                    case "name_desc":
-                        OrderDetails = OrderDetails.OrderByDescending(a => a.Color_Product.product.Product_Name);
-                        break;
-                    case "ColorName":
-                        OrderDetails = OrderDetails.OrderBy(a => a.Color_Product.Color_Name);
-                        break;
-                    case "colorname_desc":
-                        OrderDetails = OrderDetails.OrderByDescending(a => a.Color_Product.Color_Name);
-                        break;
-                    case "Quantity":
-                        OrderDetails = OrderDetails.OrderBy(a => a.Quantity);
-                        break;
-                    case "quantity_desc":
-                        OrderDetails = OrderDetails.OrderByDescending(a => a.Quantity);
-                        break;
-                    default:
-                        OrderDetails = OrderDetails.OrderBy(a => a.Color_Product.product.Product_Name);
-                        break;
-                }
-
-                int take = 10;
-                double total_product = OrderDetails.Count();
-
-                int total_take = (int)Math.Ceiling(total_product / take);
-
-                OrderDetails = OrderDetails.Skip((CountForTake - 1) * take).Take(take);
-                ViewData["total_take"] = total_take;
-                ViewData["CountForTake"] = CountForTake + 1;
-
-                return View(await OrderDetails.AsNoTracking().ToListAsync());
-
+                OrderDetails = OrderDetails.Where(a => a.Color_Product.product.Product_Name.Contains(searchString));
             }
-                        
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    OrderDetails = OrderDetails.OrderByDescending(a => a.Color_Product.product.Product_Name);
+                    break;
+                case "ColorName":
+                    OrderDetails = OrderDetails.OrderBy(a => a.Color_Product.Color_Name);
+                    break;
+                case "colorname_desc":
+                    OrderDetails = OrderDetails.OrderByDescending(a => a.Color_Product.Color_Name);
+                    break;
+                case "Quantity":
+                    OrderDetails = OrderDetails.OrderBy(a => a.Quantity);
+                    break;
+                case "quantity_desc":
+                    OrderDetails = OrderDetails.OrderByDescending(a => a.Quantity);
+                    break;
+                default:
+                    OrderDetails = OrderDetails.OrderBy(a => a.Color_Product.product.Product_Name);
+                    break;
+            }
+
+            int take = 5;
+            double total_product = OrderDetails.Count();
+
+            int total_take = (int)Math.Ceiling(total_product / take);
+
+            OrderDetails = OrderDetails.Skip((CountForTake - 1) * take).Take(take);
+            ViewData["total_take"] = total_take;
+            ViewData["CountForTake"] = CountForTake + 1;
+
+            return View(await OrderDetails.AsNoTracking().ToListAsync());
         }
-
-
+            
         // GET: OrderDetails/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -145,46 +91,37 @@ namespace HubbleSpace_Final.Controllers
             {
                 return NotFound();
             }
+            ViewData["ID_Order"] = orderDetail.ID_Order;
             return View(orderDetail);
         }
 
         // GET: OrderDetails/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
-            var Product_Color_Name = from c in _context.Color_Product
+            
+            var colorProduct = from c in _context.Color_Product
                                      select new
                                      {
                                          ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.product.Product_Name + " - " + c.Color_Name
+                                         Name = c.product.Product_Name + " - " + c.Color_Name,
                                      };
-            ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name");
 
-            var Order_Name = from c in _context.Order
+            ViewData["ColorProduct_Select"] = new SelectList(colorProduct, "ID_Color_Product", "Name");
+
+            var order = from c in _context.Order
                              select new
                              {
                                  ID_Order = c.ID_Order,
                                  Name = c.Address + " - " + c.SDT
                              };
-            ViewData["ID_Order"] = new SelectList(Order_Name, "ID_Order", "Name");
-            return View();
-        }
-
-        public IActionResult GetSize(int? id)
-        {
-            var Get_Size = from c in _context.Size
-                           where c.ID_Color_Product == id
-                           select new
-                           {
-                               ID_Size_Product = c.ID_Size_Product,
-                               SizeNumber = c.SizeNumber
-                           };
-            if (Get_Size == null)
+            if (id > 0)
             {
-                return NotFound();
+                order = order.Where(o => o.ID_Order == id);
+                ViewData["ID_Order"] = id;
             }
-            ViewData["Size"] = new SelectList(Get_Size, "SizeNumber", "SizeNumber");
-            return PartialView();
+            ViewData["orderSelect"] = new SelectList(order, "ID_Order", "Name");
 
+            return View();
         }
 
         // POST: OrderDetails/Create
@@ -192,29 +129,35 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_OrderDetail,ID_Color_Product,Size,Quantity,ID_Order")] OrderDetail orderDetail)
+        public async Task<IActionResult> Create(int? id, [Bind("ID_OrderDetail,ID_Color_Product,Size,Quantity,ID_Order")] OrderDetail orderDetail)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(orderDetail);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", new { @id = id });
             }
-            var Product_Color_Name = from c in _context.Color_Product
-                                     select new
-                                     {
-                                         ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.product.Product_Name + " - " + c.Color_Name
-                                     };
-            ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name", orderDetail.ID_Color_Product);
+            var colorProduct = from c in _context.Color_Product
+                               select new
+                               {
+                                   ID_Color_Product = c.ID_Color_Product,
+                                   Name = c.product.Product_Name + " - " + c.Color_Name,
+                               };
 
-            var Order_Name = from c in _context.Order
+            ViewData["ColorProduct_Select"] = new SelectList(colorProduct, "ID_Color_Product", "Name", orderDetail.ID_Color_Product);
+
+            var order = from c in _context.Order
                              select new
                              {
                                  ID_Order = c.ID_Order,
                                  Name = c.Address+ " - " +c.SDT
                              };
-            ViewData["ID_Order"] = new SelectList(Order_Name, "ID_Order", "Name", orderDetail.ID_Order);
+            if (id > 0)
+            {
+                order = order.Where(o => o.ID_Order == id);
+                ViewData["ID_Order"] = id;
+            }
+            ViewData["orderSelect"] = new SelectList(order, "ID_Order", "Name", orderDetail.ID_Order);
             return View(orderDetail);
         }
 
@@ -231,21 +174,23 @@ namespace HubbleSpace_Final.Controllers
             {
                 return NotFound();
             }
-            var Product_Color_Name = from c in _context.Color_Product
+
+            var colorProduct = from c in _context.Color_Product
                                      select new
                                      {
                                          ID_Color_Product = c.ID_Color_Product,
                                          Name = c.product.Product_Name + " - " + c.Color_Name
                                      };
-            ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name", orderDetail.ID_Color_Product);
+            ViewData["ColorProduct_Select"] = new SelectList(colorProduct, "ID_Color_Product", "Name", orderDetail.ID_Color_Product);
 
-            var Order_Name = from c in _context.Order
+            var order = from c in _context.Order where(c.ID_Order == orderDetail.ID_Order)
                              select new
                              {
                                  ID_Order = c.ID_Order,
                                  Name = c.Address + " - " + c.SDT
                              };
-            ViewData["ID_Order"] = new SelectList(Order_Name, "ID_Order", "Name", orderDetail.ID_Order);
+            ViewData["orderSelect"] = new SelectList(order, "ID_Order", "Name", orderDetail.ID_Order);
+            ViewData["ID_Order"] = orderDetail.ID_Order;
             return View(orderDetail);
         }
 
@@ -279,24 +224,27 @@ namespace HubbleSpace_Final.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", new { @id = orderDetail.ID_Order });
             }
 
-            var Product_Color_Name = from c in _context.Color_Product
-                                     select new
-                                     {
-                                         ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.product.Product_Name + " - " + c.Color_Name
-                                     };
-            ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name", orderDetail.ID_Color_Product);
+            var colorProduct = from c in _context.Color_Product
+                               select new
+                               {
+                                   ID_Color_Product = c.ID_Color_Product,
+                                   Name = c.product.Product_Name + " - " + c.Color_Name
+                               };
+            ViewData["ColorProduct_Select"] = new SelectList(colorProduct, "ID_Color_Product", "Name", orderDetail.ID_Color_Product);
 
-            var Order_Name = from c in _context.Order
-                                     select new
-                                     {
-                                         ID_Order = c.ID_Order,
-                                         Name = c.Address + " - "+ c.SDT
-                                     };
-            ViewData["ID_Order"] = new SelectList(Order_Name, "ID_Order", "Name", orderDetail.ID_Order);
+            var order = from c in _context.Order
+                        where (c.ID_Order == orderDetail.ID_Order)
+                        select new
+                        {
+                            ID_Order = c.ID_Order,
+                            Name = c.Address + " - " + c.SDT
+                        };
+            ViewData["orderSelect"] = new SelectList(order, "ID_Order", "Name", orderDetail.ID_Order);
+            ViewData["ID_Order"] = orderDetail.ID_Order;
+
             return View(orderDetail);
         }
 
@@ -317,6 +265,7 @@ namespace HubbleSpace_Final.Controllers
             {
                 return NotFound();
             }
+            ViewData["ID_Order"] = orderDetail.ID_Order;
 
             return View(orderDetail);
         }
@@ -329,7 +278,7 @@ namespace HubbleSpace_Final.Controllers
             var orderDetail = await _context.OrderDetail.FindAsync(id);
             _context.OrderDetail.Remove(orderDetail);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", new { @id = orderDetail.ID_Order });
         }
 
         private bool OrderDetailExists(int id)
@@ -340,6 +289,24 @@ namespace HubbleSpace_Final.Controllers
         public IActionResult Search(string term)
         {
             return View("Index", _context.OrderDetail.Include(o => o.Color_Product).Include(o => o.order).Include(o => o.Color_Product.product).Where(m => m.Color_Product.product.Product_Name.Contains(term)));
+        }
+
+        public IActionResult GetSize(int? id)
+        {
+            var Get_Size = from c in _context.Size
+                           where c.ID_Color_Product == id
+                           select new
+                           {
+                               ID_Size_Product = c.ID_Size_Product,
+                               SizeNumber = c.SizeNumber
+                           };
+            if (Get_Size == null)
+            {
+                return NotFound();
+            }
+            ViewData["Size"] = new SelectList(Get_Size, "SizeNumber", "SizeNumber");
+            return PartialView();
+
         }
     }
 }

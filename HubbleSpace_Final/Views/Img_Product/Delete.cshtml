@@ -54,7 +54,7 @@
                 <div class="form-group card-footer">
                     <input type="hidden" asp-for="ID_Img_Product" />
                     <input type="submit" value="Delete" class="btn btn-danger col-2" />
-                    <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+                    <a asp-action="Index" asp-route-id="@ViewBag.ID_ColorProduct" class="btn btn-secondary col-2">Back</a>
                 </div>
             </form>
 

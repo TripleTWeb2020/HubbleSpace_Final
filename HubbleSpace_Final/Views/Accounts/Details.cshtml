@@ -1,4 +1,4 @@
-﻿@model HubbleSpace_Final.Entities.Account
+﻿@model ApplicationUser
 
 @{
     ViewData["Title"] = "Details - Account";
@@ -12,40 +12,13 @@
             Thông tin người dùng
         </div>
         <div class="card-body card-block">
-            <input type="hidden" asp-for="ID_Account" />
+            <input type="hidden" asp-for="Id" />
             <div class="row form-group">
                 <div class="col col-md-3">
                     @Html.DisplayNameFor(model => model.UserName)
                 </div>
                 <div class="col-12 col-md-9">
                     @Html.DisplayFor(model => model.UserName)
-                </div>
-            </div>
-
-            <div class="row form-group">
-                <div class="col col-md-3">
-                    @Html.DisplayNameFor(model => model.Password)
-                </div>
-                <div class="col-12 col-md-9">
-                    @Html.DisplayFor(model => model.Password)
-                </div>
-            </div>
-
-            <div class="row form-group">
-                <div class="col col-md-3">
-                    @Html.DisplayNameFor(model => model.Avatar)
-                </div>
-                <div class="col-12 col-md-9">
-                    @Html.DisplayFor(model => model.Avatar)
-                </div>
-
-            </div>
-
-            <div class="row form-group">
-                <div class="col col-md-3">
-                </div>
-                <div class="col-12 col-md-3">
-                    <img src="~/Images/Admin_Avatar/@Html.DisplayFor(model => model.Avatar)" />
                 </div>
             </div>
 
@@ -60,24 +33,70 @@
 
             <div class="row form-group">
                 <div class="col col-md-3">
-                    @Html.DisplayNameFor(model => model.Level)
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
                 </div>
                 <div class="col-12 col-md-9">
-                    @Html.DisplayFor(model => model.Level)
+                    @Html.DisplayFor(model => model.PhoneNumber)
                 </div>
             </div>
 
             <div class="row form-group">
                 <div class="col col-md-3">
-                    @Html.DisplayNameFor(model => model.Date_Create)
+                    @Html.DisplayNameFor(model => model.FirstName)
                 </div>
                 <div class="col-12 col-md-9">
-                    @Html.DisplayFor(model => model.Date_Create)
+                    @Html.DisplayFor(model => model.FirstName)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.LastName)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.LastName)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.CreditCard)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.CreditCard)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Address)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Address)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.DateOfBirth)
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    Role
+                </div>
+                <div class="col-12 col-md-9">
+                    @if(Model.level == 0) { @Html.Raw("Member"); }
+                    else { @Html.Raw("Admin"); }
                 </div>
             </div>
 
             <div class="form-group card-footer">
-                <a asp-action="Edit" class="btn btn-danger col-2" asp-route-id="@Model.ID_Account">Edit</a>
+                <a asp-action="Edit" class="btn btn-danger col-2" asp-route-id="@Model.Id">Edit</a>
                 <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
             </div>
         </div>

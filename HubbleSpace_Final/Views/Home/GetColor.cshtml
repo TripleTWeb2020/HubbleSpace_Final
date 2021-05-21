@@ -3,15 +3,12 @@
 @{
     if (Model.Count() > 1)
     {
-        <p class="text-center">
-
             @foreach (var item in Model)
             {
                 <a href="~/../Home/Product_Detail/@Html.DisplayFor(modelItem => item.ID_Color_Product)">
-                    <img style="width: 80px" src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" />
+                    <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" />
                 </a>
             }
-        </p>
     }
     else return;
 }

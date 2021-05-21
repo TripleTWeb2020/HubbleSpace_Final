@@ -56,7 +56,7 @@ namespace HubbleSpace_Final.Controllers
         {
             if (ModelState.IsValid)
             {
-               var result=await _accountRepository.PasswordSignInAsync(signInModel);
+               var result = await _accountRepository.PasswordSignInAsync(signInModel);
                if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");

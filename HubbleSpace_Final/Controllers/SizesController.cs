@@ -19,13 +19,12 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Sizes
-        public async Task<IActionResult> Index(string sortOrder, string searchString, int id, int CountForTake = 1)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int? id, int CountForTake = 1)
         {
             ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";
             ViewData["Size"] = sortOrder == "Size" ? "size_desc" : "Size";
             ViewData["Quantity"] = sortOrder == "Quantity" ? "quantity_desc" : "Quantity";
-
             ViewData["Search"] = searchString;
 
 
@@ -33,9 +32,9 @@ namespace HubbleSpace_Final.Controllers
             var Sizes = from s in _context.Size.Include(s => s.color_Product).Include(s => s.color_Product.product)
                         select s;
 
-            if(id != null && id != 0)
+            if(id > 0)
             {
-                TempData["ID_Color_Product"] = id;
+                ViewData["ID_ColorProduct"] = id;
                 Sizes = Sizes.Where(s => s.color_Product.ID_Color_Product == id);
             }
 
@@ -101,25 +100,26 @@ namespace HubbleSpace_Final.Controllers
             {
                 return NotFound();
             }
+            ViewData["ID_ColorProduct"] = size.ID_Color_Product;
 
             return View(size);
         }
 
         // GET: Sizes/Create
-        public IActionResult Create(int id)
+        public IActionResult Create(int? id)
         {
-            var Product_Color_Name = from c in _context.Color_Product
+            var ColorProduct = from c in _context.Color_Product
                                      select new
                                      {
                                          ID_Color_Product = c.ID_Color_Product,
                                          Name = c.product.Product_Name + " - " + c.Color_Name
                                      };
-            if (id != null && id != 0)
+            if (id > 0)
             {
-                TempData["ID_Color_Product"] = id;
-                Product_Color_Name = Product_Color_Name.Where(s => s.ID_Color_Product == id);
+                ViewData["ID_ColorProduct"] = id;
+                ColorProduct = ColorProduct.Where(s => s.ID_Color_Product == id);
             }
-            ViewData["Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name");
+            ViewData["ColorProduct_Select"] = new SelectList(ColorProduct, "ID_Color_Product", "Name");
             return View();
         }
 
@@ -128,26 +128,34 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int id, [Bind("ID_Size_Product,SizeNumber,Quantity,ID_Color_Product")] Size size)
+        public async Task<IActionResult> Create(int? id, [Bind("ID_Size_Product,SizeNumber,Quantity,ID_Color_Product")] Size size)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(size);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (SizeNumberExists(size.ID_Size_Product, size.ID_Color_Product, size.SizeNumber))
+                {
+                    ViewData["Message"] = "Mẫu giày này đã tồn tại size trên. " +
+                        "Vui lòng chọn chỉnh sửa tại màn hình Quản lý size của sản phẩm nếu muốn điều chỉnh số lượng của size này";
+                }
+                else 
+                {
+                    _context.Add(size);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index", new { @id = id });
+                }
             }
-            var Product_Color_Name = from c in _context.Color_Product
+            var ColorProduct = from c in _context.Color_Product
                                      select new
                                      {
                                          ID_Color_Product = c.ID_Color_Product,
                                          Name = c.product.Product_Name + " - " + c.Color_Name
                                      };
-            if (id != null && id != 0)
+            if (id > 0)
             {
-                TempData["ID_Color_Product"] = id;
-                Product_Color_Name = Product_Color_Name.Where(s => s.ID_Color_Product == id);
+                ViewData["ID_ColorProduct"] = id;
+                ColorProduct = ColorProduct.Where(s => s.ID_Color_Product == id);
             }
-            ViewData["Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name", size.ID_Color_Product);
+            ViewData["ColorProduct_Select"] = new SelectList(ColorProduct, "ID_Color_Product", "Name", size.ID_Color_Product);
             return View(size);
         }
 
@@ -164,13 +172,15 @@ namespace HubbleSpace_Final.Controllers
             {
                 return NotFound();
             }
-            var Product_Color_Name = from c in _context.Color_Product
+            var ColorProduct = from c in _context.Color_Product
                                      select new
                                      {
                                          ID_Color_Product = c.ID_Color_Product,
                                          Name = c.product.Product_Name + " - " + c.Color_Name
                                      };
-            ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name", size.ID_Color_Product);
+            ViewData["ColorProduct_Select"] = new SelectList(ColorProduct, "ID_Color_Product", "Name", size.ID_Color_Product);
+
+            ViewData["ID_ColorProduct"] = size.ID_Color_Product;
             return View(size);
         }
 
@@ -195,7 +205,7 @@ namespace HubbleSpace_Final.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SizeExists(size.ID_Size_Product))
+                    if (!SizeExists(id))
                     {
                         return NotFound();
                     }
@@ -204,15 +214,17 @@ namespace HubbleSpace_Final.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", new { @id = size.ID_Color_Product });
             }
-            var Product_Color_Name = from c in _context.Color_Product
+            var ColorProduct = from c in _context.Color_Product
                                      select new
                                      {
                                          ID_Color_Product = c.ID_Color_Product,
                                          Name = c.product.Product_Name + " - " + c.Color_Name
                                      };
-            ViewData["ID_Color_Product"] = new SelectList(Product_Color_Name, "ID_Color_Product", "Name", size.ID_Color_Product);
+            ViewData["ColorProduct_Select"] = new SelectList(ColorProduct, "ID_Color_Product", "Name", size.ID_Color_Product);
+
+            ViewData["ID_ColorProduct"] = size.ID_Color_Product;
             return View(size);
         }
 
@@ -232,6 +244,7 @@ namespace HubbleSpace_Final.Controllers
             {
                 return NotFound();
             }
+            ViewData["ID_ColorProduct"] = size.ID_Color_Product;
 
             return View(size);
         }
@@ -244,12 +257,25 @@ namespace HubbleSpace_Final.Controllers
             var size = await _context.Size.FindAsync(id);
             _context.Size.Remove(size);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", new { @id = size.ID_Color_Product });
         }
 
         private bool SizeExists(int id)
         {
             return _context.Size.Any(e => e.ID_Size_Product == id);
+        }
+
+        private bool SizeNumberExists(int? id, int colorProduct, string sizeNumber)
+        {
+            var sizes = _context.Size.Where(s => s.ID_Color_Product == colorProduct).ToList();
+            sizeNumber = sizeNumber.Trim().ToLower();
+
+            foreach (var item in sizes)
+            {
+                if (_context.Size.Any(e => e.ID_Size_Product == id || e.SizeNumber.Trim().ToLower() == sizeNumber))
+                    return true;
+            }
+            return false;
         }
     }
 }

@@ -60,7 +60,7 @@
             </div>
 
             <div class="form-group card-footer">
-                <a asp-action="Index" class="btn btn-dark col-2">Back</a>
+                <a asp-action="Index" asp-route-id="@Model.ID_Product" class="btn btn-dark col-2">Back</a>
                 <a asp-action="Edit" class="btn btn-danger col-2" asp-route-id="@Model.ID_Color_Product">Edit</a>
                 <a asp-controller="Img_Product" asp-action="Index" class="btn btn-primary col-2" asp-route-id="@Model.ID_Color_Product">Image</a>
                 <a asp-controller="Sizes" asp-action="Index" class="btn btn-secondary col-2" asp-route-id="@Model.ID_Color_Product">Size</a>

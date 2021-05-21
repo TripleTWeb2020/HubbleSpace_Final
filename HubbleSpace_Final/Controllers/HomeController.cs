@@ -49,19 +49,28 @@ namespace HubbleSpace_Final.Controllers
             return PartialView(await _context.Banner.ToListAsync());
         }
 
-        public async Task<IActionResult> GetBestSale()
+        public IActionResult GetBestSale()
         {
             var list_sale = from c in _context.Color_Product
-                            select new
+                            select new BestSaleModel
                             {
                                 ID_Color_Product = c.ID_Color_Product,
-                                Namecolor = c.Color_Name,
+                                NameColor = c.Color_Name,
                                 Image = c.Image,
-                                product = c.product,
+                                Product = c.product,
+                                Date = c.Date,
                                 Quantity = _context.OrderDetail.Where(o => o.ID_Color_Product == c.ID_Color_Product).Sum(o => o.Quantity)
                             };
-            list_sale = list_sale.OrderBy(p => p.Quantity);
-            return PartialView(await list_sale.ToListAsync());
+            list_sale = list_sale.Distinct().OrderByDescending(p => p.Quantity);
+
+            List<BestSaleModel> listSales = new List<BestSaleModel>();
+
+            foreach(var item in list_sale.Take(8))
+            {
+                listSales.Add(item);
+
+            }
+            return PartialView(listSales);
         }
         
         public IActionResult Privacy()
@@ -189,7 +198,7 @@ namespace HubbleSpace_Final.Controllers
         
         public async Task<IActionResult> GetSize(int id)
         {
-            return PartialView(await _context.Size.Where(s => s.ID_Color_Product == id).Include(s=>s.color_Product.product).OrderBy(s => s.SizeNumber).ToListAsync());
+            return PartialView(await _context.Size.Where(s => s.ID_Color_Product == id).Include(s=>s.color_Product.product).OrderBy(s => s.ID_Size_Product).ToListAsync());
         }
         
         public async Task<IActionResult> GetColor(int id)
@@ -199,12 +208,18 @@ namespace HubbleSpace_Final.Controllers
         
         public async Task<IActionResult> GetRecommendProducts(string Object="", string Name ="", string Brand_Name = "")
         {
-            return PartialView(await _context.Color_Product.Include(p => p.product)
-                                                    .Include(p => p.product.category)
-                                                    .Where(p => p.product.category.Object.Contains(Object))
-                                                    .Where(p => p.product.category.Category_Name.Contains(Name))
-                                                    .Where(p => p.product.Brand.Brand_Name.Contains(Brand_Name))
-                                                    .ToListAsync());
+            var recommendProduct = from rp in _context.Color_Product
+                                   select rp;
+            Console.WriteLine(recommendProduct.Count());
+            recommendProduct = recommendProduct.Include(p => p.product.category)
+                                                .Where(p => p.product.category.Object.Contains(Object))
+                                                .Where(p => p.product.category.Category_Name.Contains(Name))
+                                                .Where(p => p.product.Brand.Brand_Name.Contains(Brand_Name));
+            Console.WriteLine(recommendProduct.Count());
+            if (recommendProduct.Count() >= 4)
+                recommendProduct = recommendProduct.Take(4);
+            Console.WriteLine(recommendProduct.Count());
+            return PartialView(await recommendProduct.ToListAsync());
         }
 
         public IActionResult Contact()

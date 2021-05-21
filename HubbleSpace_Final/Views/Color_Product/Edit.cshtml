@@ -31,7 +31,7 @@
                         <label asp-for="ID_Product" class="control-label"></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <select asp-for="ID_Product" class="form-control" asp-items="ViewBag.ID_Product"></select>
+                        <select asp-for="ID_Product" class="form-control" asp-items="ViewBag.ID_Product_Select"></select>
                         <span asp-validation-for="ID_Product" class="text-danger"></span>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                 <div class="form-group card-footer">
                     <input type="submit" value="Save" class="btn btn-primary col-2" />
                     <input type="reset" value="Reset" class="btn btn-danger col-2" />
-                    <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+                    <a asp-action="Index" asp-route-id="@Model.ID_Product" class="btn btn-secondary col-2">Back</a>
                 </div>
             </form>
         </div>

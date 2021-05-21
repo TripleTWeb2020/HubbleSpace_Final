@@ -303,7 +303,7 @@ h1 {
 }
 
 #hot .product-slider .item {
-  margin: 0 25px;
+  margin: 0 3px;
 }
 
 #hot .product-slider .product {
@@ -313,6 +313,51 @@ h1 {
 #hot .product-slider .owl-dots {
   position: relative;
   margin-bottom: 30px;
+}
+
+#hot img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/*
+*
+* ======================================================================
+* BESTSALE
+* ======================================================================
+*
+*/
+#bestsale h2 {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 2.25rem;
+    color: #4fbfa8;
+    font-weight: 100;
+    text-align: center;
+}
+
+#bestsale .product-slider {
+    clear: both;
+    margin-bottom: 20px;
+}
+
+#bestsale .product-slider .item {
+    margin: 0 3px;
+}
+
+#bestsale .product-slider .product {
+    margin-bottom: 0;
+}
+
+#bestsale .product-slider .owl-dots {
+    position: relative;
+    margin-bottom: 30px;
+}
+#bestsale img {
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
 /*
@@ -655,7 +700,7 @@ h1 {
   font-size: 0.738rem;
 }
 
-#content .card.sidebar-menu .card label::hover {
+#content .card.sidebar-menu .card label:hover {
   color: #555;
 }
 
@@ -2515,14 +2560,6 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .form-control::-moz-placeholder {
-  color: #6c757d;
-}
-
-.form-control::-ms-input-placeholder {
-  color: #6c757d;
-}
-
-.form-control::placeholder {
   color: #6c757d;
 }
 

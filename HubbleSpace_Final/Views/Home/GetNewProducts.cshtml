@@ -18,8 +18,8 @@
     </div>
 </div>
 <div class="container">
-    <div class="product-slider owl-carousel owl-theme">
-        @foreach (var item in Model.TakeLast(10))
+    <div class="owl-carousel owl-theme">
+        @foreach (var item in Model.TakeLast(8))
         {
             <div class="item">
                 <div class="product">
@@ -51,7 +51,6 @@
                             </del>
                         </p>
                         <p class="price-sale">
-                            <br />
                             <text> @String.Format("{0:0,0}", item.product.Price_Sale) VNĐ </text>
                         </p>
                         <p class="buttons">

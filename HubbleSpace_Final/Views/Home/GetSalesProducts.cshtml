@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="container">
-        <div class="product-slider owl-carousel owl-theme">
+        <div class="owl-carousel owl-theme">
             @foreach (var item in Model.TakeLast(5))
             {
                 <div class="item">
@@ -29,18 +29,18 @@
                             <div class="flipper">
                                 <div class="front">
                                     <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
-                                        <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                                        <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)">
                                     </a>
                                 </div>
                                 <div class="back">
                                     <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
-                                        <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                                        <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" />
                                     </a>
                                 </div>
                             </div>
                         </div>
                         <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product" class="invisible">
-                            <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
+                            <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)">
                         </a>
                         <div class="text">
                             <h3><a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">@Html.DisplayFor(modelItem => item.product.Product_Name)</a></h3>
@@ -53,7 +53,6 @@
                                 </del>
                             </p>
                             <p class="price-sale">
-                                <br />
                                 <text> @String.Format("{0:0,0}", item.product.Price_Sale) VNĐ </text>
                             </p>
                             <p class="buttons">

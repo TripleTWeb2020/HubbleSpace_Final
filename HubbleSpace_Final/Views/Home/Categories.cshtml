@@ -31,28 +31,28 @@
                                 <li>
                                     <a asp-action="Categories" asp-route-Object="Men" class="nav-link">Men</a>
                                     <ul class="list-unstyled">
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Originals" class="nav-link">Originals</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Running" class="nav-link">Running</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Training" class="nav-link">Training</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Football" class="nav-link">Football</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Basketball" class="nav-link">Basketball</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Tennis" class="nav-link">Tennis</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Originals" class="nav-link-custom">Originals</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Running" class="nav-link-custom">Running</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Training" class="nav-link-custom">Training</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Football" class="nav-link-custom">Football</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Basketball" class="nav-link-custom">Basketball</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Tennis" class="nav-link-custom">Tennis</a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a asp-action="Categories" asp-route-Object="Women" class="nav-link">Women</a>
                                     <ul class="list-unstyled">
-                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Originals" class="nav-link">Originals</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Running" class="nav-link">Running</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Training" class="nav-link">Training</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Tennis" class="nav-link">Tennis</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Originals" class="nav-link-custom">Originals</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Running" class="nav-link-custom">Running</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Training" class="nav-link-custom">Training</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Tennis" class="nav-link-custom">Tennis</a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a asp-action="Categories" asp-route-Object="Kids" class="nav-link">Kids</a>
                                     <ul class="list-unstyled">
-                                        <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Originals" class="nav-link">Originals</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Running" class="nav-link">Running</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Originals" class="nav-link-custom">Originals</a></li>
+                                        <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Running" class="nav-link-custom">Running</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -183,11 +183,11 @@
                     @{
                         if (Model.Count() > 1)
                         {
-                            <div class="row same-height-row">
+                            <div class="row ">
                                 @foreach (var item in Model)
                                 {
                                     <div class="col-lg-4 col-md-6 ">
-                                        <div class="product same-height">
+                                        <div class="product">
                                             <div class="flip-container">
                                                 <div class="flipper">
                                                     <div class="front">
@@ -216,7 +216,6 @@
                                                     </del>
                                                 </p>
                                                 <p class="price-sale">
-                                                    <br />
                                                     <text> @String.Format("{0:0,0}", item.product.Price_Sale) VNĐ </text>
                                                 </p>
                                                 <p class="buttons">
@@ -236,7 +235,7 @@
                                                         </div>
                                                     }
                                                     <!-- /.ribbon-->
-                                                    if (product.Date > DateTime.Today.AddDays(-1))
+                                                    if (product.Date > DateTime.Today.AddDays(-14))
                                                     {
                                                         <!-- /.ribbon-->
                                                         <div class="ribbon new">
