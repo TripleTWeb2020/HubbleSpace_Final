@@ -45,7 +45,6 @@ namespace HubbleSpace_Final.Controllers
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Process"] = sortOrder == "Process" ? "process_desc" : "Process";
-
             ViewData["Search"] = searchString;
 
             var Orders = from o in _context.Order.Include(o => o.User)
@@ -84,6 +83,9 @@ namespace HubbleSpace_Final.Controllers
                     Orders = Orders.OrderByDescending(o => o.Date_Create);
                     break;
             }
+            
+            //Lấy doanh thu
+            ViewData["totalMoney"] = Orders.Sum(o => o.TotalMoney);
 
             int take = 10;
             double total_product = Orders.Count();
@@ -93,7 +95,6 @@ namespace HubbleSpace_Final.Controllers
             Orders = Orders.Skip((CountForTake - 1) * take).Take(take);
             ViewData["total_take"] = total_take;
             ViewData["CountForTake"] = CountForTake + 1;
-
             return View(await Orders.AsNoTracking().ToListAsync());
         }
         
