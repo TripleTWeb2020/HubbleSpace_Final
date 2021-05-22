@@ -40,6 +40,11 @@ namespace HubbleSpace_Final.Controllers
             var querySold = from item in _context.OrderDetail where item.Quantity >= 0 select item.Quantity;
             var queryQuantity = from item in _context.Size where item.Quantity >= 0 select item.Quantity;
             ViewData["Merchandise Inventory"] = queryQuantity.Sum() - querySold.Sum();
+
+            // Item sold for bar chart
+            ViewData["Item Sold"] = querySold.Sum();
+
+            // pie chart
             var queryMenSold = (from od in _context.OrderDetail
                                 join cp in _context.Color_Product on od.ID_Color_Product.ToString() equals cp.ID_Color_Product.ToString()
                                 join p in _context.Product on cp.ID_Product.ToString() equals p.ID_Product.ToString()
@@ -63,6 +68,60 @@ namespace HubbleSpace_Final.Controllers
            
             ViewData["Women Item Sold"] = queryWomenSold.Sum();
             ViewData["Kids Item Sold"] = queryKidsSold.Sum();
+
+            // bar chart
+
+            //Profit
+            var queryProfitJan = from od in _context.Order
+                               where od.Date_Create.Month == 01 select od.TotalMoney;
+            var queryProfitFeb = from od in _context.Order
+                               where od.Date_Create.Month == 02
+                               select od.TotalMoney;
+            var queryProfitMarch = from od in _context.Order
+                                 where od.Date_Create.Month == 03
+                                 select od.TotalMoney;
+            var queryProfitApr = from od in _context.Order
+                               where od.Date_Create.Month == 04
+                               select od.TotalMoney;
+            var queryProfitMay = from od in _context.Order
+                               where od.Date_Create.Month == 05
+                               select od.TotalMoney;
+            ViewData["Profit Jan"] = queryProfitJan.Sum();
+            ViewData["Profit Feb"] = queryProfitFeb.Sum();
+            ViewData["Profit Mar"] = queryProfitMarch.Sum();
+            ViewData["Profit Apr"] = queryProfitApr.Sum();
+            ViewData["Profit May"] = queryProfitMay.Sum();
+
+
+            //Quantity
+            
+            var queryQuanJan = from od in _context.OrderDetail
+                                 join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
+                                 where profit.Date_Create.Month == 01 select od.Quantity;
+            var queryQuanFeb = from od in _context.OrderDetail
+                                 join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
+                                 where profit.Date_Create.Month == 02
+                                 select od.Quantity;
+            var queryQuanMarch = from od in _context.OrderDetail
+                                   join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
+                                   where profit.Date_Create.Month == 03
+                                   select od.Quantity;
+            var queryQuanApr = from od in _context.OrderDetail
+                                 join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
+                                 where profit.Date_Create.Month == 04
+                                 select od.Quantity;
+            var queryQuanMay = from od in _context.OrderDetail
+                                 join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
+                                 where profit.Date_Create.Month == 05
+                                 select od.Quantity;
+
+            ViewData["Quan Jan"] = queryQuanJan.Sum();
+            ViewData["Quan Feb"] = queryQuanFeb.Sum();
+            ViewData["Quan Mar"] = queryQuanMarch.Sum();
+            ViewData["Quan Apr"] = queryQuanApr.Sum();
+            ViewData["Quan May"] = queryQuanMay.Sum();
+            //User
+
 
             return View();
         }

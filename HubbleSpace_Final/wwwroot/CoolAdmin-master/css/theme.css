@@ -4073,6 +4073,12 @@ section {
     font-size: 14px;
 }
 
+.chart-note2 {
+    text-transform: capitalize;
+    display: inline-block;
+    margin-right: 5px;
+    font-size: 14px;
+}
 .chart-note .dot {
     margin-right: 7px;
 }
@@ -4099,7 +4105,12 @@ section {
 }
 
 .recent-report__chart canvas {
-    height: 250px;
+    height: 400px;
+    width: 100%;
+}
+
+.recent-report__chart5 canvas {
+    height: 400px;
     width: 100%;
 }
 

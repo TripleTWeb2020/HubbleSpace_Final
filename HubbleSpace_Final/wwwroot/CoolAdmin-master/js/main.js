@@ -249,37 +249,35 @@
     }
 
     // Recent Report
-    const brandProduct = 'rgba(0,181,233,0.8)'
-    const brandService = 'rgba(0,173,95,0.8)'
-
-    var elements = 10
-    var data1 = [52, 60, 55, 50, 65, 80, 57, 70, 105, 115]
-    var data2 = [102, 70, 80, 100, 56, 53, 80, 75, 65, 90]
+    const brandProfit = 'rgba(0,181,233,0.8)'
+    
 
     var ctx = document.getElementById("recent-rep-chart");
+    var proJan = ctx.getAttribute("data-proJan")
+    var proFeb = ctx.getAttribute("data-proFeb")
+    var proMar = ctx.getAttribute("data-proMar")
+    var proApr = ctx.getAttribute("data-proApr")
+    var proMay = ctx.getAttribute("data-proMay")
+    var proJanField = parseInt(proJan)
+    var proFebField = parseInt(proFeb)
+    var proMarField = parseInt(proMar)
+    var proAprField = parseInt(proApr)
+    var proMayField = parseInt(proMay)
+    var data1 = [proJanField, proFebField, proMarField, proAprField, proMayField]
     if (ctx) {
       ctx.height = 250;
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', ''],
+          labels: ['January', 'February', 'March', 'April', 'May'],
           datasets: [
             {
               label: 'My First dataset',
-              backgroundColor: brandService,
+              backgroundColor: brandProfit,
               borderColor: 'transparent',
               pointHoverBackgroundColor: '#fff',
               borderWidth: 0,
               data: data1
-
-            },
-            {
-              label: 'My Second dataset',
-              backgroundColor: brandProduct,
-              borderColor: 'transparent',
-              pointHoverBackgroundColor: '#fff',
-              borderWidth: 0,
-              data: data2
 
             }
           ]
@@ -305,8 +303,89 @@
               ticks: {
                 beginAtZero: true,
                 maxTicksLimit: 5,
-                stepSize: 50,
-                max: 150,
+                stepSize:40000000,
+                max: 200000000,
+                fontFamily: "Poppins",
+                fontSize: 12
+              },
+              gridLines: {
+                display: true,
+                color: '#f2f2f2'
+
+              }
+            }]
+          },
+          elements: {
+            point: {
+              radius: 0,
+              hitRadius: 10,
+              hoverRadius: 4,
+              hoverBorderWidth: 3
+            }
+          }
+
+
+        }
+      });
+    }
+
+    // Recent Report_1
+    const brandQuan = 'rgba(30,174,152,1)'
+    
+
+    var ctx = document.getElementById("recent-rep-chart5");
+    var quanJan = ctx.getAttribute("data-quanJan")
+    var quanFeb = ctx.getAttribute("data-quanFeb")
+    var quanMar = ctx.getAttribute("data-quanMar")
+    var quanApr = ctx.getAttribute("data-quanApr")
+    var quanMay = ctx.getAttribute("data-quanMay")
+    var quanJanField = parseInt(quanJan)
+    var quanFebField = parseInt(quanFeb)
+    var quanMarField = parseInt(quanMar)
+    var quanAprField = parseInt(quanApr)
+    var quanMayField = parseInt(quanMay)
+    var data1 = [quanJanField, quanFebField, quanMarField, quanAprField, quanMayField]
+    if (ctx) {
+      ctx.height = 250;
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['January', 'February', 'March', 'April', 'May'],
+          datasets: [
+            {
+              label: 'My First dataset',
+              backgroundColor: brandQuan,
+              borderColor: 'transparent',
+              pointHoverBackgroundColor: '#fff',
+              borderWidth: 0,
+              data: data1
+
+            }
+          ]
+        },
+        options: {
+          maintainAspectRatio: true,
+          legend: {
+            display: false
+          },
+          responsive: true,
+          scales: {
+            xAxes: [{
+              gridLines: {
+                drawOnChartArea: true,
+                color: '#f2f2f2'
+              },
+              ticks: {
+                fontFamily: "Poppins",
+                fontSize: 12
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                maxTicksLimit: 5,
+                stepSize:25,
+                max: 100,
                 fontFamily: "Poppins",
                 fontSize: 12
               },
