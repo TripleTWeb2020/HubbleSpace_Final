@@ -332,7 +332,14 @@
     }
 
     // Percent Chart
-    var ctx = document.getElementById("percent-chart");
+      var ctx = document.getElementById("percent-chart");
+      var MenItem = ctx.getAttribute("data-MenItem")
+      var WomenItem = ctx.getAttribute("data-WomenItem")
+      var KidsItem = ctx.getAttribute("data-KidsItem")
+      var MenField = parseInt(MenItem);
+      var WomenField = parseInt(WomenItem);
+      var KidsField = parseInt(KidsItem);
+    
     if (ctx) {
       ctx.height = 280;
       var myChart = new Chart(ctx, {
@@ -341,14 +348,16 @@
           datasets: [
             {
               label: "My First dataset",
-              data: [60, 40],
+              data: [MenField, WomenField, KidsField],
               backgroundColor: [
                 '#00b5e9',
-                '#fa4251'
+                '#fa4251',
+                '#1eae98'
               ],
               hoverBackgroundColor: [
                 '#00b5e9',
-                '#fa4251'
+                '#fa4251',
+                '#1eae98'
               ],
               borderWidth: [
                 0, 0
@@ -360,8 +369,9 @@
             }
           ],
           labels: [
-            'Products',
-            'Services'
+            'Men',
+            'Women',
+            'Kids'
           ]
         },
         options: {
@@ -385,6 +395,7 @@
         }
       });
     }
+
 
   } catch (error) {
     console.log(error);

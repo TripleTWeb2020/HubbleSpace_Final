@@ -4,6 +4,8 @@
 	ViewData["Title"] = "Admin Page";
 	Layout = "_AdminLayout";
 }
+
+
 <div class="row">
 	<div class="col-md-12">
 		<div class="overview-wrap">
@@ -38,8 +40,8 @@
 						<i class="zmdi zmdi-shopping-cart"></i>
 					</div>
 					<div class="text">
-						<h2>388,688</h2>
-						<span>items solid</span>
+						<h2>@ViewData["Merchandise Inventory"]</h2>
+						<span>Merchandise Inventory</span>
 					</div>
 				</div>
 				<div class="overview-chart">
@@ -125,23 +127,28 @@
 	<div class="col-lg-6">
 		<div class="au-card chart-percent-card">
 			<div class="au-card-inner">
-				<h3 class="title-2 tm-b-5">char by %</h3>
+				<h3 class="title-2 tm-b-5">Percentage of Consumer Target</h3>
 				<div class="row no-gutters">
 					<div class="col-xl-6">
 						<div class="chart-note-wrap">
 							<div class="chart-note mr-0 d-block">
 								<span class="dot dot--blue"></span>
-								<span>products</span>
+								<span>Men</span>
 							</div>
 							<div class="chart-note mr-0 d-block">
 								<span class="dot dot--red"></span>
-								<span>services</span>
+								<span>Women</span>
+							</div>
+							<div class="chart-note mr-0 d-block">
+								<span class="dot dot--green"></span>
+								<span>Kids</span>
 							</div>
 						</div>
 					</div>
 					<div class="col-xl-6">
 						<div class="percent-chart">
-							<canvas id="percent-chart"></canvas>
+							<canvas id="percent-chart" data-MenItem = "@ViewData["Men Item Sold"]" data-WomenItem=  "@ViewData["Women Item Sold"]" data-KidsItem=  @ViewData["Kids Item Sold"].ToString()  >
+							</canvas>
 						</div>
 					</div>
 				</div>
@@ -540,5 +547,7 @@
 			<p class="text-center">©2021 HubbleSpace</p>
 		</div>
 	</div>
+	var check = @ViewData["Men Item Sold"].ToString();
+	var check1 = @ViewData["Women Item Sold"].ToString();
 </div>
 

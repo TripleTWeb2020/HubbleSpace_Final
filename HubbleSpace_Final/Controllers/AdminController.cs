@@ -37,6 +37,32 @@ namespace HubbleSpace_Final.Controllers
             ViewData["Total Orders"] = _context.Order.Count();
             var query = from total in _context.Order where total.TotalMoney >= 0 select total.TotalMoney;
             ViewData["Total Earnings"] = query.Sum().ToString("n0");
+            var querySold = from item in _context.OrderDetail where item.Quantity >= 0 select item.Quantity;
+            var queryQuantity = from item in _context.Size where item.Quantity >= 0 select item.Quantity;
+            ViewData["Merchandise Inventory"] = queryQuantity.Sum() - querySold.Sum();
+            var queryMenSold = (from od in _context.OrderDetail
+                                join cp in _context.Color_Product on od.ID_Color_Product.ToString() equals cp.ID_Color_Product.ToString()
+                                join p in _context.Product on cp.ID_Product.ToString() equals p.ID_Product.ToString()
+                                join c in _context.Category on p.ID_Categorie.ToString() equals c.ID_Categorie.ToString()
+                                where c.Object.Equals("Men")
+                                select od.Quantity);
+
+            var queryWomenSold = from od in _context.OrderDetail
+                                 join cp in _context.Color_Product on od.ID_Color_Product.ToString() equals cp.ID_Color_Product.ToString()
+                                 join p in _context.Product on cp.ID_Product.ToString() equals p.ID_Product.ToString()
+                                 join c in _context.Category on p.ID_Categorie.ToString() equals c.ID_Categorie.ToString()
+                                 where c.Object.Equals("Women")
+                                 select od.Quantity;
+            var queryKidsSold = (from od in _context.OrderDetail
+                                 join cp in _context.Color_Product on od.ID_Color_Product.ToString() equals cp.ID_Color_Product.ToString()
+                                 join p in _context.Product on cp.ID_Product.ToString() equals p.ID_Product.ToString()
+                                 join c in _context.Category on p.ID_Categorie.ToString() equals c.ID_Categorie.ToString()
+                                 where c.Object.Equals("Kids")
+                                 select od.Quantity);
+            ViewData["Men Item Sold"] = queryMenSold.Sum();
+           
+            ViewData["Women Item Sold"] = queryWomenSold.Sum();
+            ViewData["Kids Item Sold"] = queryKidsSold.Sum();
 
             return View();
         }
