@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using HubbleSpace_Final.Entities;
 using HubbleSpace_Final.Models;
 using HubbleSpace_Final.Repository;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HubbleSpace_Final.Controllers
@@ -15,10 +17,14 @@ namespace HubbleSpace_Final.Controllers
     {
         private readonly IAccountRepository _accountRepository;
         private readonly MyDbContext _context;
-        public Client_AccountsController(IAccountRepository accountRepository,MyDbContext context)
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        public Client_AccountsController(IAccountRepository accountRepository,MyDbContext context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
             _accountRepository = accountRepository;
             _context = context;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
        [Route("signup")]
         public IActionResult SignUp()
@@ -65,15 +71,68 @@ namespace HubbleSpace_Final.Controllers
                 {
                     ModelState.AddModelError("", "Not Allowed to login");
                 }
+                else if (result.IsLockedOut)
+				{
+                    ModelState.AddModelError("","Your account is blocked.Please try again later");
+				}
                 else { ModelState.AddModelError("", "Invalid credentials"); }
                 
             }
             return View(signInModel);
         }
+        [AllowAnonymous]
+        //[Route("Signin-Google")]
+        public IActionResult GoogleLogin()
+        {
+            string redirectUrl = Url.Action("GoogleResponse", "Client_Accounts");
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);
+            return new ChallengeResult("Google", properties);
+        }
+        [AllowAnonymous]
+        public async Task<IActionResult> GoogleResponse()
+        {
+            ExternalLoginInfo info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+                return RedirectToAction(nameof(Signin));
+ 
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
+            string[] userInfo = { info.Principal.FindFirst(ClaimTypes.Name).Value, info.Principal.FindFirst(ClaimTypes.Email).Value };
+            if (result.Succeeded)
+                return RedirectToAction("Index", "Home");
+            else
+            {
+                ApplicationUser user = new ApplicationUser
+                {
+                    Email = info.Principal.FindFirst(ClaimTypes.Email).Value,
+                    UserName = info.Principal.FindFirst(ClaimTypes.Email).Value,
+                    FirstName = info.Principal.FindFirst(ClaimTypes.GivenName).Value ?? info.Principal.FindFirstValue(ClaimTypes.Name),
+                    LastName = info.Principal.FindFirst(ClaimTypes.Surname).Value,
+                    EmailConfirmed = true
+                };
+ 
+                IdentityResult identResult = await _userManager.CreateAsync(user);
+                if (identResult.Succeeded)
+                {
+                    identResult = await _userManager.AddLoginAsync(user, info);
+          
+                if (identResult.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user, false);
+                        return RedirectToAction("Index", "Home");
+                        //return View(userInfo);
+                    }
+                }
+                return AccessDenied();
+            }
+        }
         public async Task<IActionResult> Signout()
         {
             await _accountRepository.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
         [Route("change-password")]
         public async Task<IActionResult> ChangePassword()

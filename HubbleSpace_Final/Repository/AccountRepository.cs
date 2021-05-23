@@ -47,6 +47,7 @@ namespace HubbleSpace_Final.Repository
             return result;
 
         }
+        
         public async Task GenerateEmailConfirmationTokenAsync(ApplicationUser user)
         {
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -141,5 +142,5 @@ namespace HubbleSpace_Final.Repository
             return await _userManager.UpdateAsync(user);
             
         }
-    }
+	}
 }

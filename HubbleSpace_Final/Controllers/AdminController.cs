@@ -120,9 +120,14 @@ namespace HubbleSpace_Final.Controllers
             ViewData["Quan Mar"] = queryQuanMarch.Sum();
             ViewData["Quan Apr"] = queryQuanApr.Sum();
             ViewData["Quan May"] = queryQuanMay.Sum();
+
             //User
 
-
+            var queryDate = DateTime.Today.Day.ToString();
+            var queryMonth = DateTime.Today.Month.ToString();
+            var queryYear = DateTime.Today.Year.ToString();
+            var queryNow = queryDate + "/" + queryMonth + "/" + queryYear;
+            ViewData["Today"] = queryNow;
             return View();
         }
 

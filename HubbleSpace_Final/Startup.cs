@@ -33,12 +33,15 @@ namespace HubbleSpace_Final
             services.AddControllersWithViews();
             services.AddDbContext<MyDbContext>(option => { option.UseSqlServer(Configuration.GetConnectionString("HubbleSpace_Final")); });
             services.AddIdentity<ApplicationUser, IdentityRole>()
+            
                 .AddEntityFrameworkStores<MyDbContext>().AddDefaultTokenProviders();
             services.AddAuthentication()
                     .AddGoogle(options =>
                     {
+                        IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
                         options.ClientId = Configuration["App:GoogleClientId"];
                         options.ClientSecret = Configuration["App:GoogleClientSecret"];
+                        options.SignInScheme = IdentityConstants.ExternalScheme;
                     })
                     .AddFacebook(options => {
                         options.ClientId = Configuration["App:FacebookClientId"];
@@ -59,6 +62,9 @@ namespace HubbleSpace_Final
             services.Configure<IdentityOptions>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = true;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(60);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+               
             });
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IEmailService, EmailService>();
