@@ -51,8 +51,14 @@
 					<form asp-action="GoogleLogin">
 						<div class="social-login-content">
 							<div class="social-button">
-								<button class="btn au-btn--blue"><i class="fa fa-facebook"></i>Sign in with facebook</button>
 								<button type="submit" class="btn btn-primary" asp-action="GoogleLogin" asp-controller="Client_Accounts"><i class="fa fa-google-plus"></i>Sign in with Google</button>
+							</div>
+						</div>
+					</form>
+                    <form asp-action="FacebookLogin">
+						<div class="social-login-content">
+							<div class="social-button">
+								<button type="submit" class="btn au-btn--blue" asp-action="FacebookLogin" asp-controller="Client_Accounts"><i class="fa fa-facebook"></i>Sign in with Facebook</button>
 							</div>
 						</div>
 					</form>

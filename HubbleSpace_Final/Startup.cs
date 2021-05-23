@@ -44,8 +44,10 @@ namespace HubbleSpace_Final
                         options.SignInScheme = IdentityConstants.ExternalScheme;
                     })
                     .AddFacebook(options => {
-                        options.ClientId = Configuration["App:FacebookClientId"];
-                        options.ClientSecret = Configuration["App:FacebookClientSecret"];
+                        IConfigurationSection facebookAuthNSection = Configuration.GetSection("Authentication:Facebook");
+                        options.AppId = "385123116535823";
+                        options.AppSecret = "341b7385c231b8e878cb389d61d2a39b";
+                        options.SignInScheme = IdentityConstants.ExternalScheme;
                     });
             services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
             services.ConfigureApplicationCookie(config =>

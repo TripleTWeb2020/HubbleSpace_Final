@@ -81,7 +81,52 @@ namespace HubbleSpace_Final.Controllers
             return View(signInModel);
         }
         [AllowAnonymous]
-        //[Route("Signin-Google")]
+        public IActionResult FacebookLogin()
+        {
+            string redirectUrl = Url.Action("FacebookResponse", "Client_Accounts");
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties("Facebook", redirectUrl);
+            return new ChallengeResult("Facebook", properties);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> FacebookResponse()
+        {
+            ExternalLoginInfo info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+                return RedirectToAction(nameof(Signin));
+
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
+            string[] userInfo = { info.Principal.FindFirst(ClaimTypes.Name).Value, info.Principal.FindFirst(ClaimTypes.Email).Value };
+            if (result.Succeeded)
+                return RedirectToAction("Index", "Home");
+            else
+            {
+                ApplicationUser user = new ApplicationUser
+                {
+                    Email = info.Principal.FindFirst(ClaimTypes.Email).Value,
+                    UserName = info.Principal.FindFirst(ClaimTypes.Email).Value,
+                    FirstName = info.Principal.FindFirst(ClaimTypes.GivenName).Value ?? info.Principal.FindFirstValue(ClaimTypes.Name),
+                    LastName = info.Principal.FindFirst(ClaimTypes.Surname).Value,
+                    EmailConfirmed = true
+                };
+
+                IdentityResult identResult = await _userManager.CreateAsync(user);
+                if (identResult.Succeeded)
+                {
+                    identResult = await _userManager.AddLoginAsync(user, info);
+
+                    if (identResult.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user, false);
+                        return RedirectToAction("Index", "Home");
+                        //return View(userInfo);
+                    }
+                }
+                return AccessDenied();
+            }
+        }
+
+        [AllowAnonymous]
         public IActionResult GoogleLogin()
         {
             string redirectUrl = Url.Action("GoogleResponse", "Client_Accounts");
