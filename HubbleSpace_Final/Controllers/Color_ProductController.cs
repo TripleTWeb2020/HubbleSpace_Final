@@ -199,7 +199,7 @@ namespace HubbleSpace_Final.Controllers
                 return NotFound();
             }
             ViewData["ID_Product_Select"] = new SelectList(product, "ID_Product", "Product_Name");
-            ViewData["ID_Product"] = id;
+            ViewData["ID_Product"] = color_Product.ID_Product;
             return View(color_Product);
         }
 
@@ -230,7 +230,7 @@ namespace HubbleSpace_Final.Controllers
             var color_Product = await _context.Color_Product.FindAsync(id);
             _context.Color_Product.Remove(color_Product);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", new { @id = id });
+            return RedirectToAction("Index", new { @id = color_Product.ID_Product });
         }
 
         private bool Color_ProductExists(int id)

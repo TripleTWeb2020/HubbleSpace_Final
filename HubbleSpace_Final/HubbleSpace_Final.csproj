@@ -4,6 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>5c67c80a-e37f-40e8-a406-82c5cac2be6f</UserSecretsId>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Provider\**" />
+    <Content Remove="Provider\**" />
+    <EmbeddedResource Remove="Provider\**" />
+    <None Remove="Provider\**" />
+  </ItemGroup>
   
   <ItemGroup>
     <Compile Remove="Migrations\20210107135045_DbInit.cs" />
@@ -38,6 +44,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Provider\" />
   </ItemGroup>
 </Project>

@@ -32,6 +32,7 @@ namespace HubbleSpace_Final.Controllers
             {
                 ViewData["ID_ColorProduct"] = id;
                 Img_Products = Img_Products.Where(s => s.color_Product.ID_Color_Product == id);
+                ViewData["ID_Product"] = _context.Color_Product.Find(id).ID_Product;
             }
 
             if (!String.IsNullOrEmpty(searchString))

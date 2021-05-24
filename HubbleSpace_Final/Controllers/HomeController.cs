@@ -41,6 +41,7 @@ namespace HubbleSpace_Final.Controllers
             return PartialView(await _context.Color_Product.Include(p => p.product)
                                                     .Include(p => p.product.category)
                                                     .OrderBy(p => p.Date)
+                                                    .Distinct()
                                                     .ToListAsync());
         }
 
@@ -219,7 +220,7 @@ namespace HubbleSpace_Final.Controllers
             if (recommendProduct.Count() >= 4)
                 recommendProduct = recommendProduct.Take(4);
             Console.WriteLine(recommendProduct.Count());
-            return PartialView(await recommendProduct.ToListAsync());
+            return PartialView(await recommendProduct.Distinct().ToListAsync());
         }
 
         public IActionResult Contact()
