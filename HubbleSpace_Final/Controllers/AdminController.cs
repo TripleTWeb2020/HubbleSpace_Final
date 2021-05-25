@@ -31,7 +31,7 @@ namespace HubbleSpace_Final.Controllers
             return View();
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewData["User Account"] = _context.Users.Count();
             ViewData["Total Orders"] = _context.Order.Count();
@@ -144,7 +144,6 @@ namespace HubbleSpace_Final.Controllers
                                Product_Name = g.Key.Product_Name,
                                Sum = g.Sum(item => item.Quantity),
                            };
-            ViewData["query1stShoe"] = queryTopShoe.OrderByDescending(s=>s.Sum).FirstOrDefault();
             var queryShoeRank = queryTopShoe.OrderByDescending(s => s.Sum).ToList();
             ViewData["query1stShoeName"] = queryShoeRank.ElementAt(0).Product_Name;
             ViewData["query1stShoeQuan"] = queryShoeRank.ElementAt(0).Sum;
@@ -156,7 +155,11 @@ namespace HubbleSpace_Final.Controllers
             ViewData["query4thShoeQuan"] = queryShoeRank.ElementAt(3).Sum;
             ViewData["query5thShoeName"] = queryShoeRank.ElementAt(4).Product_Name;
             ViewData["query5thShoeQuan"] = queryShoeRank.ElementAt(4).Sum;
-            return View();
+
+            // Query for ToDoTask
+            var Task = from o in _context.Schedule.Include(o => o.User).OrderBy(o => o.Date_Created) select o;
+            return View(await Task.AsNoTracking().ToListAsync());
+            
             
             
 
