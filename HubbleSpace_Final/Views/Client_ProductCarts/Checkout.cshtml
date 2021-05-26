@@ -70,11 +70,3 @@
         </div>
     </div>
 </div>
-@if (ViewData["SuccessMsg"] != null)
-{
-    @section Scripts{
-        <script>
-            alert('@Html.Raw(ViewData["SuccessMsg"])');
-        </script>
-    }
-}
