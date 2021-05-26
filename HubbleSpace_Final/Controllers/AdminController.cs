@@ -1,8 +1,10 @@
 ﻿using HubbleSpace_Final.Entities;
 using HubbleSpace_Final.Models;
+using HubbleSpace_Final.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,12 +19,16 @@ namespace HubbleSpace_Final.Controllers
         private readonly MyDbContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IUserService _userService;
 
-        public AdminController(MyDbContext context, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
+        public AdminController(MyDbContext context, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserService userService)
         {
             _context = context;
             _roleManager = roleManager;
             _userManager = userManager;
+            _signInManager = signInManager;
+            _userService = userService;
         }
         [HttpGet]
         [AllowAnonymous]
@@ -31,7 +37,7 @@ namespace HubbleSpace_Final.Controllers
             return View();
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewData["User Account"] = _context.Users.Count();
             ViewData["Total Orders"] = _context.Order.Count();
@@ -121,14 +127,46 @@ namespace HubbleSpace_Final.Controllers
             ViewData["Quan Apr"] = queryQuanApr.Sum();
             ViewData["Quan May"] = queryQuanMay.Sum();
 
-            //User
+            //User toDo task
 
             var queryDate = DateTime.Today.Day.ToString();
             var queryMonth = DateTime.Today.Month.ToString();
             var queryYear = DateTime.Today.Year.ToString();
             var queryNow = queryDate + "/" + queryMonth + "/" + queryYear;
             ViewData["Today"] = queryNow;
-            return View();
+
+            // Query for top shoe
+            var queryTopShoe = from p in _context.Product
+                           join cp in _context.Color_Product on p.ID_Product.ToString() equals cp.ID_Product.ToString() into tb1
+
+                           from tbl1 in tb1
+                           join item in _context.OrderDetail on tbl1.ID_Color_Product.ToString() equals item.ID_Color_Product.ToString() into tb2
+
+                           from tbl2 in tb2
+                           //orderby tbl2.Quantity descending
+                           group tbl2 by new { p.Product_Name } into g
+                           select new
+                           {
+                               Product_Name = g.Key.Product_Name,
+                               Sum = g.Sum(item => item.Quantity),
+                           };
+            var queryShoeRank = queryTopShoe.OrderByDescending(s => s.Sum).ToList();
+            ViewData["query1stShoeName"] = queryShoeRank.ElementAt(0).Product_Name;
+            ViewData["query1stShoeQuan"] = queryShoeRank.ElementAt(0).Sum;
+            ViewData["query2ndShoeName"] = queryShoeRank.ElementAt(1).Product_Name;
+            ViewData["query2ndShoeQuan"] = queryShoeRank.ElementAt(1).Sum;
+            ViewData["query3rdShoeName"] = queryShoeRank.ElementAt(2).Product_Name;
+            ViewData["query3rdShoeQuan"] = queryShoeRank.ElementAt(2).Sum;
+            ViewData["query4thShoeName"] = queryShoeRank.ElementAt(3).Product_Name;
+            ViewData["query4thShoeQuan"] = queryShoeRank.ElementAt(3).Sum;
+            ViewData["query5thShoeName"] = queryShoeRank.ElementAt(4).Product_Name;
+            ViewData["query5thShoeQuan"] = queryShoeRank.ElementAt(4).Sum;
+
+            // Query for ToDoTask
+            var Task = from o in _context.Schedule.Include(o => o.User).OrderBy(o => o.Date_Created) select o;
+            return View(await Task.AsNoTracking().ToListAsync());
+           
+
         }
 
         public async Task<IActionResult> statistic(string time, string sortOrder, string searchString, int CountForTake = 1)
@@ -187,7 +225,33 @@ namespace HubbleSpace_Final.Controllers
             ViewData["CountForTake"] = CountForTake + 1;
             return View(await Orders.AsNoTracking().ToListAsync());
         }
-        
+
+        public IActionResult Create()
+        {
+            ViewData["id"] = new SelectList(_context.Users, "Id");
+            return View();
+        }
+
+        // POST: Brands/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ID_ToDo,Date_Created,Title,Description,status")] Schedule schedule)
+        {
+            var userId = _userService.GetUserId();
+            var user = await _userManager.FindByIdAsync(userId);
+            if (ModelState.IsValid)
+            {
+                schedule.User = user;
+                _context.Add(schedule);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            //ViewData["id"] = new SelectList(_context.Users, "Id", schedule.User.Id);
+            return View(schedule);
+        }
+
 
     }
 }

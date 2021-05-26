@@ -13,7 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-
+using HubbleSpace_Final.Helpers;
+using PusherServer;
 namespace HubbleSpace_Final.Controllers
 {
     public class Client_ProductCartsController : Controller
@@ -166,7 +167,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Checkout(CheckOutViewModel request)
+        public async Task<ActionResult> Checkout(CheckOutViewModel request)
         {
             var userId = _userService.GetUserId();
             var user = await _userManager.FindByIdAsync(userId);
@@ -238,11 +239,12 @@ namespace HubbleSpace_Final.Controllers
                 _context.Update(discount);
                 await _context.SaveChangesAsync();
             }
-
-
-
+            var data = new {
+                         message = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order,order.User.UserName)
+                     };
+            await ChannelHelper.Trigger(data, "notification", "new_notification");
             ClearCart();
-            ViewData["SuccessMsg"] = "Đặt đơn hàng thành công!";
+            TempData["SuccessMsg"] = "Order puschased successful";
             return RedirectToAction("HistoryOrder", "Client_Orders");
         }
 

@@ -1,6 +1,6 @@
-﻿@model IEnumerable<HubbleSpace_Final.Entities.Order>
-@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
 @inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager
+@model IEnumerable<HubbleSpace_Final.Entities.Schedule>
 
 
 @{
@@ -20,72 +20,60 @@
 	<div class="col-sm-6 col-lg-3">
 		<div class="overview-item overview-item--c1">
 			<div class="overview__inner">
-                <div class="overview-box clearfix">
-                    <div class="icon">
-                        <i class="zmdi zmdi-account-o"></i>
-                    </div>
-                    <div class="text">
-                        <h2>@ViewData["User Account"]</h2>
-                        <span>Total Users</span>
-                    </div>
-                    <div class="overview-chart">
-                        <canvas id="widgetChart1"></canvas>
-                    </div>
-                </div>
+				<div class="overview-box clearfix">
+					<div class="icon">
+						<i class="zmdi zmdi-account-o"></i>
+					</div>
+					<div class="text">
+						<h2>@ViewData["User Account"]</h2>
+						<span>Total Users</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-6 col-lg-3">
 		<div class="overview-item overview-item--c2">
 			<div class="overview__inner">
-                <div class="overview-box clearfix">
-                    <div class="icon">
-                        <i class="zmdi zmdi-shopping-cart"></i>
-                    </div>
-                    <div class="text">
-                        <h2>@ViewData["Merchandise Inventory"]</h2>
-                        <span>Merchandise Inventory</span>
-                    </div>
-                    <div class="overview-chart">
-                        <canvas id="widgetChart2"></canvas>
-                    </div>
-                </div>
+				<div class="overview-box clearfix">
+					<div class="icon">
+						<i class="zmdi zmdi-shopping-cart"></i>
+					</div>
+					<div class="text">
+						<h2>@ViewData["Merchandise Inventory"]</h2>
+						<span>Merchandise Inventory</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-6 col-lg-3">
 		<div class="overview-item overview-item--c3">
 			<div class="overview__inner">
-                <div class="overview-box clearfix">
-                    <div class="icon">
-                        <i class="zmdi zmdi-calendar-note"></i>
-                    </div>
-                    <div class="text">
-                        <h2>@ViewData["Total Orders"]</h2>
-                        <span>Total Orders</span>
-                    </div>
-                    <div class="overview-chart">
-                        <canvas id="widgetChart3"></canvas>
-                    </div>
-                </div>
+				<div class="overview-box clearfix">
+					<div class="icon">
+						<i class="zmdi zmdi-calendar-note"></i>
+					</div>
+					<div class="text">
+						<h2>@ViewData["Total Orders"]</h2>
+						<span>Total Orders</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-6 col-lg-3">
 		<div class="overview-item overview-item--c4">
 			<div class="overview__inner">
-                <div class="overview-box clearfix">
-                    <div class="icon">
-                        <i class="zmdi zmdi-money"></i>
-                    </div>
-                    <div class="text">
-                        <h2>@ViewData["Total Earnings"]</h2>
-                        <span>Total Earnings</span>
-                    </div>
-                    <div class="overview-chart">
-                        <canvas id="widgetChart4"></canvas>
-                    </div>
-                </div>
+				<div class="overview-box clearfix">
+					<div class="icon">
+						<i class="zmdi zmdi-money"></i>
+					</div>
+					<div class="text">
+						<h2>@ViewData["Total Earnings"]</h2>
+						<span>Total Earnings</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -94,12 +82,12 @@
 	<div class="col-lg-6">
 		<div class="au-card recent-report">
 			<div class="au-card-inner">
-				<h3 class="title-2">Revenue Report in 2021</h3>
+				<h3 class="title-2">Profit Report in 2021</h3>
 				<div class="chart-info">
 					<div class="chart-info__left">
 						<div class="chart-note">
 							<span class="dot dot--blue"></span>
-                            <span>Revenue</span>
+							<span>profit</span>
 						</div>
 					</div>
 					<div class="chart-info__right">
@@ -172,43 +160,35 @@
 		</div>
 	</div>
 	<div class="col-lg-6">
-		<h2 class="title-1 m-b-25">Top Shoes</h2>
+		<h2 class="title-1 m-b-25">Top Best-Seller Shoes</h2>
 		<div class="au-card au-card--bg-blue au-card-top-countries m-b-40">
 			<div class="au-card-inner">
 				<div class="table-responsive">
 					<table class="table table-top-countries">
 						<tbody>
 							<tr>
-								<td>United States</td>
-								<td class="text-right">$119,366.96</td>
+								<td>Shoe Name</td>
+								<td class="text-right">Total</td>
 							</tr>
 							<tr>
-								<td>Australia</td>
-								<td class="text-right">$70,261.65</td>
+								<td>@ViewData["query1stShoeName"]</td>
+								<td class="text-right">@ViewData["query1stShoeQuan"]</td>
 							</tr>
 							<tr>
-								<td>United Kingdom</td>
-								<td class="text-right">$46,399.22</td>
+								<td>@ViewData["query2ndShoeName"]</td>
+								<td class="text-right">@ViewData["query2ndShoeQuan"]</td>
 							</tr>
 							<tr>
-								<td>Turkey</td>
-								<td class="text-right">$35,364.90</td>
+								<td>@ViewData["query3rdShoeName"]</td>
+								<td class="text-right">@ViewData["query3rdShoeQuan"]</td>
 							</tr>
 							<tr>
-								<td>Germany</td>
-								<td class="text-right">$20,366.96</td>
+								<td>@ViewData["query4thShoeName"]</td>
+								<td class="text-right">@ViewData["query4thShoeQuan"]</td>
 							</tr>
 							<tr>
-								<td>France</td>
-								<td class="text-right">$10,366.96</td>
-							</tr>
-							<tr>
-								<td>Australia</td>
-								<td class="text-right">$5,366.96</td>
-							</tr>
-							<tr>
-								<td>Italy</td>
-								<td class="text-right">$1639.32</td>
+								<td>@ViewData["query5thShoeName"]</td>
+								<td class="text-right">@ViewData["query5thShoeQuan"]</td>
 							</tr>
 						</tbody>
 					</table>
@@ -225,9 +205,12 @@
 				<h3>
 					<i class="zmdi zmdi-account-calendar"></i>@ViewData["Today"]
 				</h3>
-				<button class="au-btn-plus">
-					<i class="zmdi zmdi-plus"></i>
-				</button>
+				<form asp-action="Create">
+					<button class="au-btn-plus" type="submit" asp-action="Create" asp-controller="Admin">
+						<i class="zmdi zmdi-plus"></i>
+					</button>
+				</form>
+				
 			</div>
 			@if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin")){
 			<div class="au-task js-list-load">
@@ -235,46 +218,46 @@
 					<p>Task for @(User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value )</p>
 				</div>
 				<div class="au-task-list js-scrollbar3">
-					<div class="au-task__item au-task__item--danger">
-						<div class="au-task__item-inner">
-							<h5 class="task">
-								<a href="#">Meeting about plan for Admin Template 2018</a>
-							</h5>
-							<span class="time">10:00 AM</span>
-						</div>
-					</div>
-					<div class="au-task__item au-task__item--warning">
-						<div class="au-task__item-inner">
-							<h5 class="task">
-								<a href="#">Create new task for Dashboard</a>
-							</h5>
-							<span class="time">11:00 AM</span>
-						</div>
-					</div>
-					<div class="au-task__item au-task__item--primary">
-						<div class="au-task__item-inner">
-							<h5 class="task">
-								<a href="#">Meeting about plan for Admin Template 2018</a>
-							</h5>
-							<span class="time">02:00 PM</span>
-						</div>
-					</div>
-					<div class="au-task__item au-task__item--danger js-load-item">
-						<div class="au-task__item-inner">
-							<h5 class="task">
-								<a href="#">Meeting about plan for Admin Template 2018</a>
-							</h5>
-							<span class="time">10:00 AM</span>
-						</div>
-					</div>
-					<div class="au-task__item au-task__item--warning js-load-item">
-						<div class="au-task__item-inner">
-							<h5 class="task">
-								<a href="#">Create new task for Dashboard</a>
-							</h5>
-							<span class="time">11:00 AM</span>
-						</div>
-					</div>
+					@foreach (var item in Model)
+					{
+						if (item.status == HubbleSpace_Final.Entities.Status.ToDo && item.Date_Created.Day == DateTime.Now.Day)
+						{
+							<div class="au-task__item au-task__item--danger">
+								<div class="au-task__item-inner">
+									<h5 class="task">
+										<a href="#">@Html.DisplayFor(modelItem => item.Description)</a>
+									</h5>
+									<span class="time">@Html.DisplayFor(modelItem => item.Date_Created)</span>
+								</div>
+							</div>
+						}
+						if (item.status == HubbleSpace_Final.Entities.Status.Done && item.Date_Created.Day == DateTime.Now.Day)
+						{
+							<div class="au-task__item au-task__item--primary">
+								<div class="au-task__item-inner">
+									<h5 class="task">
+										<a href="#">@Html.DisplayFor(modelItem => item.Description)</a>
+									</h5>
+									<span class="time">@Html.DisplayFor(modelItem => item.Date_Created)</span>
+								</div>
+							</div>
+						}
+						if (item.status == HubbleSpace_Final.Entities.Status.InProgress && item.Date_Created.Day == DateTime.Now.Day)
+						{
+							<div class="au-task__item au-task__item--warning">
+								<div class="au-task__item-inner">
+									<h5 class="task">
+										<a href="#">@Html.DisplayFor(modelItem => item.Description)</a>
+									</h5>
+									<span class="time">@Html.DisplayFor(modelItem => item.Date_Created)</span>
+								</div>
+							</div>
+						}
+					}
+
+
+
+
 				</div>
 				<div class="au-task__footer">
 					<button class="au-btn au-btn-load js-load-btn">load more</button>
@@ -465,14 +448,12 @@
 			</div>
 		</div>
 </div>
-<div class="row">
-	<div class="col-md-12">
-		<div class="copyright">
-			<p class="text-center">©2021 HubbleSpace</p>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="copyright">
+				<p class="text-center">©2021 HubbleSpace</p>
+			</div>
 		</div>
+		
 	</div>
-	var check = @ViewData["Men Item Sold"].ToString();
-	var check1 = @ViewData["Women Item Sold"].ToString();
-	var check2 = @ViewData["Profit Jan"].ToString();
-</div>
 
