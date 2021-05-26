@@ -1,8 +1,10 @@
 ﻿using HubbleSpace_Final.Entities;
 using HubbleSpace_Final.Models;
+using HubbleSpace_Final.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,12 +19,16 @@ namespace HubbleSpace_Final.Controllers
         private readonly MyDbContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IUserService _userService;
 
-        public AdminController(MyDbContext context, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
+        public AdminController(MyDbContext context, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserService userService)
         {
             _context = context;
             _roleManager = roleManager;
             _userManager = userManager;
+            _signInManager = signInManager;
+            _userService = userService;
         }
         [HttpGet]
         [AllowAnonymous]
@@ -159,9 +165,7 @@ namespace HubbleSpace_Final.Controllers
             // Query for ToDoTask
             var Task = from o in _context.Schedule.Include(o => o.User).OrderBy(o => o.Date_Created) select o;
             return View(await Task.AsNoTracking().ToListAsync());
-            
-            
-            
+           
 
         }
 
@@ -221,7 +225,33 @@ namespace HubbleSpace_Final.Controllers
             ViewData["CountForTake"] = CountForTake + 1;
             return View(await Orders.AsNoTracking().ToListAsync());
         }
-        
+
+        public IActionResult Create()
+        {
+            ViewData["id"] = new SelectList(_context.Users, "Id");
+            return View();
+        }
+
+        // POST: Brands/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ID_ToDo,Date_Created,Title,Description,status")] Schedule schedule)
+        {
+            var userId = _userService.GetUserId();
+            var user = await _userManager.FindByIdAsync(userId);
+            if (ModelState.IsValid)
+            {
+                schedule.User = user;
+                _context.Add(schedule);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            //ViewData["id"] = new SelectList(_context.Users, "Id", schedule.User.Id);
+            return View(schedule);
+        }
+
 
     }
 }
