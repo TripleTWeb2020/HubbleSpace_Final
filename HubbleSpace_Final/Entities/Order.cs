@@ -18,6 +18,10 @@ namespace HubbleSpace_Final.Entities
         [Required(ErrorMessage = "Không được để trống")]
         public double TotalMoney { get; set; }
 
+        [Display(Name = "Giảm giá")]
+        [Required(ErrorMessage = "Không được để trống")]
+        public double Discount { get; set; }
+
         [Display(Name = "Ngày bán")]
         [Required(ErrorMessage = "Không được để trống")]
         [DataType(DataType.DateTime, ErrorMessage = "Không hợp lệ")]
@@ -36,7 +40,7 @@ namespace HubbleSpace_Final.Entities
         [DataType(DataType.PhoneNumber, ErrorMessage = "Không hợp lệ")]
         public string SDT { get; set; }
 
-        [Display(Name = "Email")]
+        [Display(Name = "User")]
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
 

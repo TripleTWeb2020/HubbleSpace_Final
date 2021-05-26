@@ -21,6 +21,7 @@ namespace HubbleSpace_Final.Models
         public string Email { get; set; }
 
         [Display(Name = "Address")]
+        [Required(ErrorMessage = "Please enter your address")]
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Please enter your phone number")]

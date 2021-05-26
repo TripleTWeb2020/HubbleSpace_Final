@@ -45,7 +45,7 @@
                                                     var stt = 0;
                                                     @foreach (var cartitem in Model)
                                                     {
-                                                        if (cartitem.Discount == null)
+                                                        if (cartitem.Discount == 0)
                                                         {
                                                             var totalmoney = cartitem.Amount * cartitem.Price;
                                                             total += totalmoney;
@@ -63,9 +63,9 @@
                                                                 <td><button class="btn btn-success removecart" data-id="@stt"><i class="fa fa-trash-o"></i></button></td>
                                                                 <td><button class="btn btn-success updatecartitem" data-id="@stt"><i class="fa fa-refresh"></i> </button></td>
                                                             </tr>
-                                                            }
                                                         }
                                                     }
+                                                }
                                             }
                                         </tbody>
                                         <tfoot>
@@ -99,7 +99,7 @@
                                     <tbody>
                                         @foreach (var cartitem in Model)
                                         {
-                                            if (cartitem.Discount == null)
+                                            if (cartitem.Discount == 0)
                                             {
                                                 <tr>
                                                     <td>@(cartitem.Name) - @(cartitem.Size)</td>
@@ -107,28 +107,22 @@
                                                     <th>@(cartitem.Price.ToString("n0"))</th>
                                                 </tr>
                                             }
-                                        }
-                                        @{
-                                            @foreach (var cartitem in Model)
+                                            else
                                             {
-                                                if (cartitem.Discount != null)
-                                                {
-                                                    <tr id="discount">
-                                                        <td>Discount</td>
-                                                        <td>@(cartitem.Discount)</td>
-                                                        <th>- @(cartitem.Value_Discount.ToString("n0")) </th>
-                                                    </tr>
-                                                    total -= cartitem.Value_Discount;
-
-                                                }
-                                            }
-                                                <tr class="total">
-                                                    <td> Total </td>
-                                                    <td></td>
-                                                    <th>@((total).ToString("n0")) </th>
+                                                <tr id="discount">
+                                                    <td>Discount</td>
+                                                    <td>@(cartitem.Discount)</td>
+                                                    <th>- @(cartitem.Value_Discount.ToString("n0")) </th>
                                                 </tr>
+                                                total -= cartitem.Value_Discount;
+                                            }
+
                                         }
-                                        
+                                        <tr class="total">
+                                            <td> Total </td>
+                                            <td></td>
+                                            <th>@((total).ToString("n0")) </th>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -141,72 +135,88 @@
                             <form>
                                 <div class="input-group">
                                     <input id="codediscount" type="text" class="form-control"><span class="input-group-append">
-                                    <button class="btn btn-success setcode"><i class="fa fa-gift"></i></button>
-                                </span>
+                                        <button class="btn btn-success setcode"><i class="fa fa-gift"></i></button>
+                                    </span>
                                 </div>
                                 <!-- /input-group-->
                             </form>
                         </div>
                     </div>
-@section Scripts {
-                <script>
-          $(document).ready(function () {
-              $(".updatecartitem").click(function (event) {
-                  event.preventDefault();
-                  var id = $(this).attr("data-id");
-                  var Amount = $("#Amount-" + id).val();
-                  $.ajax({
-                      type: "POST",
-                      url:"@Url.RouteUrl("updatecart")",
-                      data: {
-                          id: id,
-                          Amount: Amount,
-                      },
-                      success: function (result) {
-                          window.location.href = "@Url.RouteUrl("cart")";
-                      }
-                  });
-              });
-              $(".removecart").click(function (event) {
-                  event.preventDefault();
-                  $.ajax({
-                      type: "POST",
-                      url:"@Url.RouteUrl("removecart")",
-                      data: {
-                          id: $(this).attr("data-id"),
-                      },
-                      success: function (result) {
-                          window.location.href = "@Url.RouteUrl("cart")";
-                      }
-                  });
-              });
-              $(".setcode").click(function(event) {
-                  event.preventDefault();
-                  $.ajax({
-                      type: "POST",
-                      url: "@Url.RouteUrl("discount")",
-                      data:{
-                          code: $("#codediscount").val()
-                      },
-                      success: function (result) {
-                          window.location.href = "@Url.RouteUrl("cart")";
+                    @section ajax {
+                                    <script>
+                            $(document).ready(function () {
+                                $(".updatecartitem").click(function (event) {
+                                    event.preventDefault();
+                                    var id = $(this).attr("data-id");
+                                    var Amount = $("#Amount-" + id).val();
+                                    $.ajax({
+                                        type: "POST",
+                                        url:"@Url.RouteUrl("updatecart")",
+                                        data: {
+                                            id: id,
+                                            Amount: Amount,
+                                        },
+                                        success: function (result) {
+                                            window.location.href = "@Url.RouteUrl("cart")";
+                                        }
+                                    });
+                                });
+                                $(".removecart").click(function (event) {
+                                    event.preventDefault();
+                                    $.ajax({
+                                        type: "POST",
+                                        url:"@Url.RouteUrl("removecart")",
+                                        data: {
+                                            id: $(this).attr("data-id"),
+                                        },
+                                        success: function (result) {
 
-                      }
-              });
-            });
-          });
-                </script>
+                                            window.location.href = "@Url.RouteUrl("cart")";
+                                        }
+                                    });
+                                });
+                                $(".setcode").click(function(event) {
+                                    event.preventDefault();
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "@Url.RouteUrl("discount")",
+                                        data:{
+                                            code: $("#codediscount").val()
+                                        },
+                                        success: function (result) {
+                                            if (result == null) {
+                                                window.location.href = "@Url.RouteUrl("cart")";
+                                            }
+                                            else {
+                                                alert(result);
+                                            }
+                                        }
+                                });
+                            });
+                            });
+                                    </script>
                     }
 
-                } 
+                }
                 else
                 {
-                    <p class="alert alert-danger">Giỏ hàng trống</p>
+                    <div class="col-12">
+                        <img style="width: inherit" src="~/Images/empty_cart.png" />
+                    </div>
                 }
+
+
                 <!-- /.col-md-3-->
-            </div>
             </div>
         </div>
     </div>
+</div>
 
-              
+@if (ViewData["Message"] != null)
+{
+    @section Scripts{
+        <script type="text/javascript">
+        alert('@Html.Raw(ViewData["Message"])')
+        </script>
+}
+}

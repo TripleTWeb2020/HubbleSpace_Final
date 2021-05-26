@@ -31,7 +31,12 @@
                 </form>
                 <div class="col-md-12 offset-12">
                     <!-- DATA TABLE -->
-                    <h2>Chi tiết đơn hàng</h2>
+                    <div class="float-left">
+                        <h2>Chi tiết đơn hàng</h2>
+                    </div>
+                    <div class="float-right">
+                        <a asp-action="HistoryOrder" class="btn btn-outline-primary">Back</a>
+                    </div>
                     <div class="table-responsive-data2">
                         <table class="table table-data2">
                             <thead>
@@ -44,7 +49,7 @@
                                         <a asp-controller="Client_Orders" asp-action="OrderDetail" asp-route-sortOrder="@ViewData["ColorName"]">@Html.DisplayNameFor(model => model.Color_Product.Color_Name)</a>
                                     </th>
 
-                                    <th class="col-2">
+                                    <th class="col-4">
                                         @Html.DisplayNameFor(model => model.Color_Product.Image)
                                     </th>
 
@@ -54,10 +59,6 @@
 
                                     <th class="col-1">
                                         <a asp-controller="Client_Orders" asp-action="OrderDetail" asp-route-sortOrder="@ViewData["Quantity"]">@Html.DisplayNameFor(model => model.Quantity)</a>
-                                    </th>
-
-                                    <th class="col-2">
-                                        @Html.DisplayNameFor(model => model.order)
                                     </th>
                                 </tr>
                             </thead>
@@ -73,7 +74,7 @@
                                             @Html.DisplayFor(modelItem => item.Color_Product.Color_Name)
                                         </td>
 
-                                        <td class="col-2">
+                                        <td class="col-4">
                                             <img class="img-fluid" src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Color_Product.Image)" />
                                         </td>
 
@@ -83,10 +84,6 @@
 
                                         <td class="col-1">
                                             @Html.DisplayFor(modelItem => item.Quantity)
-                                        </td>
-                                        <td class="col-2">
-                                            @Html.DisplayFor(modelItem => item.order.Address) -
-                                            @Html.DisplayFor(modelItem => item.order.SDT)
                                         </td>
                                     </tr>
                                     <tr class="spacer"></tr>

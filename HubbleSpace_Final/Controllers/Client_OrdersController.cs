@@ -78,107 +78,54 @@ namespace HubbleSpace_Final.Controllers
             ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";
             ViewData["Quantity"] = sortOrder == "Quantity" ? "quantity_desc" : "Quantity";
-
-
             ViewData["Search"] = searchString;
 
-            if (id == null)
-            {
-                var OrderDetails = from o in _context.OrderDetail.Include(o => o.Color_Product)
+            var orderDetails = from o in _context.OrderDetail.Include(o => o.Color_Product)
                                                                  .Include(o => o.order)
                                                                  .Include(o => o.Color_Product.product)
-                                   select o;
-                if (!String.IsNullOrEmpty(searchString))
-                {
-                    OrderDetails = OrderDetails.Where(a => a.Color_Product.product.Product_Name.Contains(searchString));
-                }
-
-                switch (sortOrder)
-                {
-                    case "name_desc":
-                        OrderDetails = OrderDetails.OrderByDescending(a => a.Color_Product.product.Product_Name);
-                        break;
-                    case "ColorName":
-                        OrderDetails = OrderDetails.OrderBy(a => a.Color_Product.Color_Name);
-                        break;
-                    case "colorname_desc":
-                        OrderDetails = OrderDetails.OrderByDescending(a => a.Color_Product.Color_Name);
-                        break;
-                    case "Quantity":
-                        OrderDetails = OrderDetails.OrderBy(a => a.Quantity);
-                        break;
-                    case "quantity_desc":
-                        OrderDetails = OrderDetails.OrderByDescending(a => a.Quantity);
-                        break;
-                    default:
-                        OrderDetails = OrderDetails.OrderBy(a => a.Color_Product.product.Product_Name);
-                        break;
-                }
-
-                int take = 5;
-                double total_product = OrderDetails.Count();
-
-                int total_take = (int)Math.Ceiling(total_product / take);
-
-                OrderDetails = OrderDetails.Skip((CountForTake - 1) * take).Take(take);
-                ViewData["total_take"] = total_take;
-                ViewData["CountForTake"] = CountForTake + 1;
-
-                return View(await OrderDetails.AsNoTracking().ToListAsync());
-            }
-            else
+                               select o;
+            if (id != null)
             {
-                var OrderDetails = from o in _context.OrderDetail.Include(o => o.Color_Product)
-                                                                 .Include(o => o.order)
-                                                                 .Include(o => o.Color_Product.product)
-                                                                 .Where(m => m.ID_Order == id)
-                                   select o;
-                if (OrderDetails == null)
-                {
-                    return NotFound();
-                }
-
-
-                if (!String.IsNullOrEmpty(searchString))
-                {
-                    OrderDetails = OrderDetails.Where(a => a.Color_Product.product.Product_Name.Contains(searchString));
-                }
-
-                switch (sortOrder)
-                {
-                    case "name_desc":
-                        OrderDetails = OrderDetails.OrderByDescending(a => a.Color_Product.product.Product_Name);
-                        break;
-                    case "ColorName":
-                        OrderDetails = OrderDetails.OrderBy(a => a.Color_Product.Color_Name);
-                        break;
-                    case "colorname_desc":
-                        OrderDetails = OrderDetails.OrderByDescending(a => a.Color_Product.Color_Name);
-                        break;
-                    case "Quantity":
-                        OrderDetails = OrderDetails.OrderBy(a => a.Quantity);
-                        break;
-                    case "quantity_desc":
-                        OrderDetails = OrderDetails.OrderByDescending(a => a.Quantity);
-                        break;
-                    default:
-                        OrderDetails = OrderDetails.OrderBy(a => a.Color_Product.product.Product_Name);
-                        break;
-                }
-
-                int take = 10;
-                double total_product = OrderDetails.Count();
-
-                int total_take = (int)Math.Ceiling(total_product / take);
-
-                OrderDetails = OrderDetails.Skip((CountForTake - 1) * take).Take(take);
-                ViewData["total_take"] = total_take;
-                ViewData["CountForTake"] = CountForTake + 1;
-
-                return View(await OrderDetails.AsNoTracking().ToListAsync());
-
+                orderDetails.Where(c => c.ID_Order == id);
+                
+            }
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                orderDetails = orderDetails.Where(a => a.Color_Product.product.Product_Name.Contains(searchString));
             }
 
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    orderDetails = orderDetails.OrderByDescending(a => a.Color_Product.product.Product_Name);
+                    break;
+                case "ColorName":
+                    orderDetails = orderDetails.OrderBy(a => a.Color_Product.Color_Name);
+                    break;
+                case "colorname_desc":
+                    orderDetails = orderDetails.OrderByDescending(a => a.Color_Product.Color_Name);
+                    break;
+                case "Quantity":
+                    orderDetails = orderDetails.OrderBy(a => a.Quantity);
+                    break;
+                case "quantity_desc":
+                    orderDetails = orderDetails.OrderByDescending(a => a.Quantity);
+                    break;
+                default:
+                    orderDetails = orderDetails.OrderBy(a => a.Color_Product.product.Product_Name);
+                    break;
+            }
+
+            int take = 5;
+            double total_product = orderDetails.Count();
+
+            int total_take = (int)Math.Ceiling(total_product / take);
+
+            orderDetails = orderDetails.Skip((CountForTake - 1) * take).Take(take);
+            ViewData["total_take"] = total_take;
+            ViewData["CountForTake"] = CountForTake + 1;
+
+            return View(await orderDetails.AsNoTracking().ToListAsync());
         }
 
     }

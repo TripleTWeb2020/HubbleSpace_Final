@@ -69,6 +69,7 @@ namespace HubbleSpace_Final.Controllers
         {
             return View(GetCartItems());
         }
+
        // [Route("/addcart/{productid:int}")]
         //[HttpPost]
         public IActionResult AddToCart( int id, double price, string name, string size)
@@ -88,13 +89,14 @@ namespace HubbleSpace_Final.Controllers
             else
             {
                 //  Thêm mới
-                cart.Add(new CartItemModel() { Amount = 1, Color_Product = color_Product, Name = name, Price = price, Size = size });
+                cart.Add(new CartItemModel() { Amount = 1, Color_Product = color_Product, Name = name, Price = price, Size = size, Discount = 0 });
             }
 
             // Lưu cart vào Session
             SaveCartSession(cart);
             return RedirectToAction(nameof(Cart));
         }
+
         /// xóa item trong cart
         [Route("/removecart", Name = "removecart")]
         public IActionResult RemoveCart(int id)
@@ -113,6 +115,7 @@ namespace HubbleSpace_Final.Controllers
             // Trả về mã thành công (không có nội dung gì - chỉ để Ajax gọi)
             return Ok();
         }
+
         /// Cập nhật
         [Route("/updatecart", Name = "updatecart")]
         [HttpPost]
@@ -134,22 +137,26 @@ namespace HubbleSpace_Final.Controllers
 
         /// Thêm discount
         [Route("/discount", Name = "discount")]
-        public IActionResult discount(string code)
+        public string discount(string code)
         {
+            var userId = _userService.GetUserId();
+
             // Tìm khuyến mãi
             var discount = _context.Discount.Where(p => p.Code_Discount == code).FirstOrDefault();
-            if (discount != null) {
+
+            //User dùng khuyến mãi?
+            var discountUsed = _context.DiscountUsed.Where(ds => ds.User.Id == userId).FirstOrDefault();
+
+            //User chưa dùng khuyến mãi và còn lượt
+            if (discount != null && discountUsed == null && discount.NumberofTurns > 0 && discount.Expire < DateTime.Now) {
                 var cart = GetCartItems();
-                var discountitem = cart.Find(p => p.Discount == code);
-                //if (discountitem == null)
-                {
-                    // Chưa tồn tại, thêm discount
-                    cart.Add(new CartItemModel() { Amount = 1, Discount = code, Value_Discount = discount.Value });
-                }
+                cart.Add(new CartItemModel() { Amount = 1, Discount = discount.ID_Discount, Value_Discount = discount.Value });
                 // Lưu cart vào Session
                 SaveCartSession(cart);
-            }            
-            return Ok();
+                return null;
+            }
+            return "Bạn đã sử dụng khuyến mãi này hoặc khuyến mãi đã quá hạn, hết lượt sử dụng!";
+
         }
 
         public IActionResult Checkout()
@@ -174,8 +181,18 @@ namespace HubbleSpace_Final.Controllers
                 Phone = request.CheckoutModel.Phone,
                 //OrderDetails = orderDetails
             };
+
+            //Đơn hàng có áp dụng Discount
+            var useDiscount = model.CartItems.Where(c => c.Discount > 0).FirstOrDefault();
+            double discountValue = 0;
+            if (useDiscount != null)
+            {
+                discountValue = useDiscount.Value_Discount;
+            }
+
             var order = new Order() { 
                 TotalMoney = model.CartItems.Sum(m=>m.Price) - model.CartItems.Sum(m=>m.Value_Discount),
+                Discount = discountValue,
                 Address = checkoutRequest.Address,
                 Receiver = checkoutRequest.FirstName +' '+ checkoutRequest.LastName,
                 SDT = checkoutRequest.Phone,
@@ -184,8 +201,8 @@ namespace HubbleSpace_Final.Controllers
             };
             _context.Add(order);
             await _context.SaveChangesAsync();
-            var order_success = _context.Order.ToList().LastOrDefault();
 
+            var order_success = _context.Order.ToList().LastOrDefault();
             foreach (var item in model.CartItems)
             {
                 if(item.Color_Product != null)
@@ -194,6 +211,7 @@ namespace HubbleSpace_Final.Controllers
                     {
                         ID_Color_Product = item.Color_Product.ID_Color_Product,
                         Size = item.Size,
+                        Price_Sale = item.Price,
                         Quantity = item.Amount,
                         ID_Order = order_success.ID_Order,
                     };
@@ -201,10 +219,33 @@ namespace HubbleSpace_Final.Controllers
                     await _context.SaveChangesAsync();
                 }
             }
+
+            //User sử dụng Discount
+            if(useDiscount != null)
+            {
+                //ghi lại
+                var discountUsed = new DiscountUsed()
+                {
+                    ID_Discount = useDiscount.Discount,
+                    User = user,
+                };
+                _context.Add(discountUsed);
+                await _context.SaveChangesAsync();
+
+                //Discount bị trừ 1 lượt sử dụng
+                var discount = _context.Discount.Where(d => d.ID_Discount == useDiscount.Discount).FirstOrDefault();
+                discount.NumberofTurns -= 1;
+                _context.Update(discount);
+                await _context.SaveChangesAsync();
+            }
+
+
+
             ClearCart();
-            TempData["SuccessMsg"] = "Order puschased successful";
+            ViewData["SuccessMsg"] = "Đặt đơn hàng thành công!";
             return RedirectToAction("HistoryOrder", "Client_Orders");
         }
+
         private CheckOutViewModel GetCheckoutViewModel()
         {
             var session = HttpContext.Session;

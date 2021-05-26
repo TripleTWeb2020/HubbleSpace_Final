@@ -33,7 +33,7 @@ namespace HubbleSpace_Final.Controllers
             return View();
         }
 
-        // GET: Accounts/Create
+        /*// GET: Accounts/Create
         public IActionResult Create()
         {
             return View();
@@ -53,7 +53,7 @@ namespace HubbleSpace_Final.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(account);
-        }
+        }*/
 
         //mới sửa
 

@@ -7,12 +7,11 @@
         @foreach (var item in Model)
         {
             <div class="gl-label">
-                <input name="size" type="radio" value="@item.SizeNumber" />
+                <input name="size" type="radio" value="@item.SizeNumber" required />
                 <span> @Html.DisplayFor(modelItem => item.SizeNumber)</span>
             </div>
-            
-        }
 
+        }
     }
 }
 

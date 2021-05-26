@@ -77,8 +77,9 @@ _________________________________________________________
                     success: function (response) {
                         $("#banner").html(response);
                         $(".owl-carousel").owlCarousel({
-                            autoPlay: 3000,
+                            autoplay: true,
                             navigation: true,
+                            loop: true,
                             items: 1,
                             autoHeight: true,
                         });

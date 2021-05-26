@@ -18,13 +18,13 @@ namespace HubbleSpace_Final.Entities
         [MaxLength(100, ErrorMessage = "Không hợp lệ")]
         public string Product_Name { get; set; }
 
-        [Display(Name = "Giá bán")]
+        [Display(Name = "Giá niêm yết")]
         [Required(ErrorMessage = "Không được để trống")]
-        [Range(0, 100000000, ErrorMessage ="Không hợp lệ")]
+        [Range(0, 10000000000, ErrorMessage ="Không hợp lệ")]
         public double Price_Product { get; set; }
 
-        [Range(0, 100000000, ErrorMessage = "Không hợp lệ")]
-        [Display(Name = "Giá khuyến mãi")]
+        [Range(0, 10000000000, ErrorMessage = "Không hợp lệ")]
+        [Display(Name = "Giá bán")]
         public double Price_Sale { get; set; }
 
         [Display(Name = "Thương hiệu")]

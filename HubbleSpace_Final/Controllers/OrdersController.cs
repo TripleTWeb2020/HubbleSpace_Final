@@ -23,7 +23,6 @@ namespace HubbleSpace_Final.Controllers
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Process"] = sortOrder == "Process" ? "process_desc" : "Process";
-
             ViewData["Search"] = searchString;
 
 

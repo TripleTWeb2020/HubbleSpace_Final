@@ -21,6 +21,10 @@ namespace HubbleSpace_Final.Entities
         [Display(Name = "Size")]
         public String Size { get; set; }
 
+        [Range(0, 10000000000, ErrorMessage = "Không hợp lệ")]
+        [Display(Name = "Giá bán")]
+        public double Price_Sale { get; set; }
+
         [Display(Name = "Số lượng")]
         [Required(ErrorMessage = "Không được để trống")]
         [Range(1, 10, ErrorMessage = "Không hợp lệ")]

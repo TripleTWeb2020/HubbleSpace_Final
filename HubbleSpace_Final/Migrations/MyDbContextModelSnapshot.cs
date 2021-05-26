@@ -19,40 +19,6 @@ namespace HubbleSpace_Final.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("HubbleSpace_Final.Entities.Account", b =>
-                {
-                    b.Property<int>("ID_Account")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Avatar")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Date_Create")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.HasKey("ID_Account");
-
-                    b.ToTable("Account");
-                });
-
             modelBuilder.Entity("HubbleSpace_Final.Entities.Banner", b =>
                 {
                     b.Property<int>("ID_Banner")
@@ -114,41 +80,6 @@ namespace HubbleSpace_Final.Migrations
                     b.HasKey("ID_Categorie");
 
                     b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("HubbleSpace_Final.Entities.Client", b =>
-                {
-                    b.Property<int>("ID_Client")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Client_Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("CreditCard")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DOB")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ID_Account")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID_Client");
-
-                    b.HasIndex("ID_Account");
-
-                    b.ToTable("Client");
                 });
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.Color_Product", b =>
@@ -213,54 +144,19 @@ namespace HubbleSpace_Final.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ID_Account")
-                        .HasColumnType("int");
-
                     b.Property<int>("ID_Discount")
                         .HasColumnType("int");
 
-                    b.HasKey("ID_DiscountUsed");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("ID_Account");
+                    b.HasKey("ID_DiscountUsed");
 
                     b.HasIndex("ID_Discount");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("DiscountUsed");
-                });
-
-            modelBuilder.Entity("HubbleSpace_Final.Entities.Employee", b =>
-                {
-                    b.Property<int>("ID_Employee")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DOB")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Employee_Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ID_Account")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Salary")
-                        .HasColumnType("float");
-
-                    b.HasKey("ID_Employee");
-
-                    b.HasIndex("ID_Account");
-
-                    b.ToTable("Employee");
                 });
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.Img_Product", b =>
@@ -291,15 +187,15 @@ namespace HubbleSpace_Final.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AccountID_Account")
-                        .HasColumnType("int");
-
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date_Create")
                         .HasColumnType("datetime2");
+
+                    b.Property<double>("Discount")
+                        .HasColumnType("float");
 
                     b.Property<string>("Process")
                         .IsRequired()
@@ -321,8 +217,6 @@ namespace HubbleSpace_Final.Migrations
 
                     b.HasKey("ID_Order");
 
-                    b.HasIndex("AccountID_Account");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Order");
@@ -340,6 +234,9 @@ namespace HubbleSpace_Final.Migrations
 
                     b.Property<int>("ID_Order")
                         .HasColumnType("int");
+
+                    b.Property<double>("Price_Sale")
+                        .HasColumnType("float");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -630,15 +527,6 @@ namespace HubbleSpace_Final.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("HubbleSpace_Final.Entities.Client", b =>
-                {
-                    b.HasOne("HubbleSpace_Final.Entities.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("ID_Account")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("HubbleSpace_Final.Entities.Color_Product", b =>
                 {
                     b.HasOne("HubbleSpace_Final.Entities.Product", "product")
@@ -650,26 +538,15 @@ namespace HubbleSpace_Final.Migrations
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.DiscountUsed", b =>
                 {
-                    b.HasOne("HubbleSpace_Final.Entities.Account", "Account")
-                        .WithMany("DiscountUseds")
-                        .HasForeignKey("ID_Account")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HubbleSpace_Final.Entities.Discount", "Discount")
                         .WithMany("DiscountUseds")
                         .HasForeignKey("ID_Discount")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("HubbleSpace_Final.Entities.Employee", b =>
-                {
-                    b.HasOne("HubbleSpace_Final.Entities.Account", "Account")
+                    b.HasOne("HubbleSpace_Final.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("ID_Account")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.Img_Product", b =>
@@ -683,10 +560,6 @@ namespace HubbleSpace_Final.Migrations
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.Order", b =>
                 {
-                    b.HasOne("HubbleSpace_Final.Entities.Account", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("AccountID_Account");
-
                     b.HasOne("HubbleSpace_Final.Models.ApplicationUser", "User")
                         .WithMany("ToDoes")
                         .HasForeignKey("UserId");
