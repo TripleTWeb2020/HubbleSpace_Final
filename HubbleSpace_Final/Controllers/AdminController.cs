@@ -132,8 +132,12 @@ namespace HubbleSpace_Final.Controllers
             var queryDate = DateTime.Today.Day.ToString();
             var queryMonth = DateTime.Today.Month.ToString();
             var queryYear = DateTime.Today.Year.ToString();
+            var queryHour = DateTime.Today.Hour.ToString();
+            var queryMinute = DateTime.Today.Minute.ToString();
             var queryNow = queryDate + "/" + queryMonth + "/" + queryYear;
+            var queryNow2 = DateTime.Today.ToString();
             ViewData["Today"] = queryNow;
+            ViewData["TodayNoti"] = queryNow2;
 
             // Query for top shoe
             var queryTopShoe = from p in _context.Product

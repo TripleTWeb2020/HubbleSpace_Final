@@ -239,10 +239,13 @@ namespace HubbleSpace_Final.Controllers
                 _context.Update(discount);
                 await _context.SaveChangesAsync();
             }
+            
             var data = new {
                          message = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order,order.User.UserName)
                      };
             await ChannelHelper.Trigger(data, "notification", "new_notification");
+            
+
             ClearCart();
             TempData["SuccessMsg"] = "Order puschased successful";
             return RedirectToAction("HistoryOrder", "Client_Orders");

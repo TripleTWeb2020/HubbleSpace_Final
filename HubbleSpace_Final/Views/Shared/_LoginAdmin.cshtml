@@ -1,82 +1,81 @@
 ﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
 
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+<script type="text/javascript">
+	Pusher.logToConsole = true;
+	var pusher = new Pusher('8d3e1104be3eacf91241', {
+		cluster: 'ap1'
+	});
 
+	var channel = pusher.subscribe('notification');
+	channel.bind('new_notification', function (data) {
+		console.log(data);
+		$("#feed").append(`
+			<div class="notifi__item">
+				<div class="bg-c1 img-cir img-40">
+					<i class="zmdi zmdi-email-open"></i>
+				</div>
+				<div class="content">
+					<p>${data.message}</p>
+					<span class="date">@ViewData["TodayNoti"]</span>
+				</div>
+			</div>
+				
+		  `);
+	});
+
+</script>
 @if (_signInManager.IsSignedIn(User))
 {
-    <div class="noti__item js-item-menu">
-                    <i class="zmdi zmdi-notifications"></i>
-                    <span class="quantity">3</span>
-                    <div class="notifi-dropdown js-dropdown">
-                      <div class="notifi__title">
-                        <p>You have 3 Notifications</p>
-                      </div>
-                      <div class="notifi__item">
-                        <div class="bg-c1 img-cir img-40">
-                          <i class="zmdi zmdi-email-open"></i>
-                        </div>
-                        <div class="content">
-                          <p>You got a email notification</p>
-                          <span class="date">April 12, 2018 06:50</span>
-                        </div>
-                      </div>
-                      <div class="notifi__item">
-                        <div class="bg-c2 img-cir img-40">
-                          <i class="zmdi zmdi-account-box"></i>
-                        </div>
-                        <div class="content">
-                          <p>Your account has been blocked</p>
-                          <span class="date">April 12, 2018 06:50</span>
-                        </div>
-                      </div>
-                      <div class="notifi__item">
-                        <div class="bg-c3 img-cir img-40">
-                          <i class="zmdi zmdi-file-text"></i>
-                        </div>
-                        <div class="content">
-                          <p>You got a new file</p>
-                          <span class="date">April 12, 2018 06:50</span>
-                        </div>
-                      </div>
-                      <div class="notifi__footer">
-                        <a href="Notification/Index">All notifications</a>
-                      </div>
-                    </div>
-    </div>
-    <div class="account-wrap">
-        <div class="account-item clearfix js-item-menu">
-            <div class="content">
-                <a class="js-acc-btn" asp-controller="Client_Accounts" asp-action="Profile">@(User.FindFirst("UserFirstName").Value+" "+User.FindFirst("UserLastName").Value)</a>
-            </div>
-            <div class="account-dropdown js-dropdown">
-                <div class="info clearfix">
+	<div class="noti__item js-item-menu">
+		<i class="zmdi zmdi-notifications"></i>
+		<span class="quantity"></span>
+		<div class="notifi-dropdown js-dropdown">
+			<div class="notifi__title">
+				<p>You have notification</p>
+			</div>
+			<div id="feed">
+			</div>
+			<div class="notifi__footer">
+				<a asp-action="Index" asp-controller="Notification">All notifications</a>
+			</div>
+		</div>
+	</div>
+	<div class="account-wrap">
+		<div class="account-item clearfix js-item-menu">
+			<div class="content">
+				<a class="js-acc-btn" asp-controller="Client_Accounts" asp-action="Profile">@(User.FindFirst("UserFirstName").Value+" "+User.FindFirst("UserLastName").Value)</a>
+			</div>
+			<div class="account-dropdown js-dropdown">
+				<div class="info clearfix">
 
-                    <div class="content">
-                        <h5 class="name">
-                            <a asp-controller="Client_Accounts" asp-action="Profile">@(User.FindFirst("UserFirstName").Value+" "+User.FindFirst("UserLastName").Value)</a>
-                        </h5>
-                        <span class="email">@User.FindFirst("UserEmail").Value</span>
-                    </div>
-                </div>
-                <div class="account-dropdown__body">
-                    <div class="account-dropdown__item">
-                        <a asp-action="Signout" asp-controller="Client_Accounts">
-                            <i class="zmdi zmdi-account"></i>Signout
-                        </a>
-                    </div>
-                    <div class="account-dropdown__item">
-                        <a asp-action="ChangePassword" asp-controller="Client_Accounts">
-                            <i class="zmdi zmdi-key"></i>Change Password
-                        </a>
-                    </div>
-                    <div class="account-dropdown__item">
-                        <a asp-action="Index" asp-controller="Home">
-                            <i class="zmdi zmdi-settings"></i>Your Website
-                        </a>
-                    </div>
+					<div class="content">
+						<h5 class="name">
+							<a asp-controller="Client_Accounts" asp-action="Profile">@(User.FindFirst("UserFirstName").Value+" "+User.FindFirst("UserLastName").Value)</a>
+						</h5>
+						<span class="email">@User.FindFirst("UserEmail").Value</span>
+					</div>
+				</div>
+				<div class="account-dropdown__body">
+					<div class="account-dropdown__item">
+						<a asp-action="Signout" asp-controller="Client_Accounts">
+							<i class="zmdi zmdi-account"></i>Signout
+						</a>
+					</div>
+					<div class="account-dropdown__item">
+						<a asp-action="ChangePassword" asp-controller="Client_Accounts">
+							<i class="zmdi zmdi-key"></i>Change Password
+						</a>
+					</div>
+					<div class="account-dropdown__item">
+						<a asp-action="Index" asp-controller="Home">
+							<i class="zmdi zmdi-settings"></i>Your Website
+						</a>
+					</div>
 
-                </div>
+				</div>
 
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 }
