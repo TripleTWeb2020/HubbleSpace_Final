@@ -73,22 +73,19 @@ namespace HubbleSpace_Final.Controllers
             return View(await Orders.AsNoTracking().ToListAsync());
         }
 
-        public async Task<IActionResult> OrderDetail(int? id, string sortOrder, string searchString, int CountForTake = 1)
+        public async Task<IActionResult> OrderDetail(int id, string sortOrder, string searchString, int CountForTake = 1)
         {
             ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";
             ViewData["Quantity"] = sortOrder == "Quantity" ? "quantity_desc" : "Quantity";
             ViewData["Search"] = searchString;
 
-            var orderDetails = from o in _context.OrderDetail.Include(o => o.Color_Product)
-                                                                 .Include(o => o.order)
-                                                                 .Include(o => o.Color_Product.product)
+            var orderDetails = from o in _context.OrderDetail.Where(c => c.ID_Order == id)
+                                                            .Include(o => o.Color_Product)
+                                                            .Include(o => o.order)
+                                                            .Include(o => o.Color_Product.product)
                                select o;
-            if (id != null)
-            {
-                orderDetails.Where(c => c.ID_Order == id);
                 
-            }
             if (!String.IsNullOrEmpty(searchString))
             {
                 orderDetails = orderDetails.Where(a => a.Color_Product.product.Product_Name.Contains(searchString));
