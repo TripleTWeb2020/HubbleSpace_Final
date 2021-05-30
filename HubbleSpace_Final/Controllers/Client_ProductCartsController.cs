@@ -14,7 +14,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using HubbleSpace_Final.Helpers;
-using PusherServer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
+using PayPal.Core;
+using PayPal.v1.Payments;
+using BraintreeHttp;
+
 namespace HubbleSpace_Final.Controllers
 {
     public class Client_ProductCartsController : Controller
@@ -27,18 +32,23 @@ namespace HubbleSpace_Final.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         // Key lưu chuỗi json của Cart
         public const string CARTKEY = "cart";
+        private readonly string _clientId;
+        private readonly string _secretKey;
+        public double TyGiaUSD = 23300;//store in Database
 
-        public Client_ProductCartsController(ILogger<HomeController> logger, MyDbContext context, IUserService userService, UserManager<ApplicationUser> userManager)
+        public Client_ProductCartsController(ILogger<HomeController> logger, MyDbContext context, IUserService userService, UserManager<ApplicationUser> userManager,IConfiguration config)
         {
             _logger = logger;
             _context = context;
             _userService = userService;
             _userManager = userManager;
+            _clientId = config["PaypalSettings:ClientId"];
+            _secretKey = config["PaypalSettings:SecretKey"];
 
         }
 
         // Lấy cart từ Session (danh sách CartItem)
-        List<CartItemModel> GetCartItems()
+        public List<CartItemModel> GetCartItems()
         {
             var session = HttpContext.Session;
             string jsoncart = session.GetString(CARTKEY);
@@ -46,9 +56,10 @@ namespace HubbleSpace_Final.Controllers
             {
                 return JsonConvert.DeserializeObject<List<CartItemModel>>(jsoncart);
             }
+            
             return new List<CartItemModel>();
         }
-
+ 
         // Xóa cart khỏi session
         void ClearCart()
         {
@@ -164,6 +175,121 @@ namespace HubbleSpace_Final.Controllers
         {
             
             return View(GetCheckoutViewModel());
+        }
+
+        public IActionResult PaymentMethod()
+        {
+
+            return View();
+        }
+
+        [Authorize]
+        public async System.Threading.Tasks.Task<IActionResult> PaypalCheckout()
+        {
+            var model = GetCheckoutViewModel();
+            var environment = new SandboxEnvironment(_clientId, _secretKey);
+            var client = new PayPalHttpClient(environment);
+            #region Create Paypal Order
+            var itemList = new ItemList()
+            {
+                Items = new List<Item>()
+            };
+            var total = Math.Round(model.CartItems.Sum(p => p.Price*p.Amount) - model.CartItems.Sum(m => m.Value_Discount));
+            foreach (var item in model.CartItems)
+            {
+                itemList.Items.Add(new Item()
+                {
+                    Name = item.Name,
+                    Currency = "USD",
+                    Price = Math.Round(item.Price*item.Amount / TyGiaUSD, 2).ToString(),
+                    Quantity = item.Amount.ToString(),
+                    Sku = "sku",
+                    Tax = "0"
+                });
+            }
+            #endregion
+            var paypalOrderId = DateTime.Now.Ticks;
+            var hostname = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            var payment = new Payment()
+            {
+                Intent = "sale",
+                Transactions = new List<Transaction>()
+                {
+                    new Transaction()
+                    {
+                        Amount = new Amount()
+                        {
+                            Total = total.ToString(),
+                            Currency = "USD",
+                            Details = new AmountDetails
+                            {
+                                Tax = "0",
+                                Shipping = "0",
+                                Subtotal = total.ToString()
+                            }
+                        },
+                        ItemList = itemList,
+                        Description = $"Invoice #{paypalOrderId}",
+                        InvoiceNumber = paypalOrderId.ToString()
+                    }
+                },
+                RedirectUrls = new RedirectUrls()
+                {
+                    CancelUrl = $"{hostname}/Client_ProductCarts/PaymentMethod",
+                    ReturnUrl = $"{hostname}/Client_ProductCarts/Checkout"
+                },
+                Payer = new Payer()
+                {
+                    PaymentMethod = "paypal"
+                }
+
+            };
+            PaymentCreateRequest request = new PaymentCreateRequest();
+            request.RequestBody(payment);
+
+            try
+            {
+				BraintreeHttp.HttpResponse response = await client.Execute(request);
+                var statusCode = response.StatusCode;
+                Payment result = response.Result<Payment>();
+
+                var links = result.Links.GetEnumerator();
+                string paypalRedirectUrl = null;
+                while (links.MoveNext())
+                {
+                    LinkDescriptionObject lnk = links.Current;
+                    if (lnk.Rel.ToLower().Trim().Equals("approval_url"))
+                    {
+                        //saving the payapalredirect URL to which user will be redirected for payment  
+                        paypalRedirectUrl = lnk.Href;
+                    }
+                }
+
+                return Redirect(paypalRedirectUrl);
+            }
+            catch (HttpException httpException)
+            {
+                var statusCode = httpException.StatusCode;
+                var debugId = httpException.Headers.GetValues("PayPal-Debug-Id").FirstOrDefault();
+
+                //Process when Checkout with Paypal fails
+                return Redirect("/Client_ProductCarts/PaymentMethod");
+            }
+
+        }
+
+        public IActionResult CheckoutFail()
+        {
+            //Tạo đơn hàng trong database với trạng thái thanh toán là "Chưa thanh toán"
+            //Xóa session
+            return View();
+        }
+
+        public IActionResult CheckoutSuccess()
+        {
+            //Tạo đơn hàng trong database với trạng thái thanh toán là "Paypal" và thành công
+            //Xóa session
+            return View();
         }
 
         [HttpPost]
