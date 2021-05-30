@@ -191,8 +191,16 @@ namespace HubbleSpace_Final.Controllers
                 discountValue = useDiscount.Value_Discount;
             }
 
+            //Tổng tiền đơn hàng
+            double totalMoney = 0;
+            foreach (var item in model.CartItems.Where(c => c.Discount == 0))
+            {
+                totalMoney += (item.Amount * item.Price);
+            }
+            totalMoney -= model.CartItems.Sum(m => m.Value_Discount);
+
             var order = new Order() { 
-                TotalMoney = model.CartItems.Sum(m=>m.Price) - model.CartItems.Sum(m=>m.Value_Discount),
+                TotalMoney = totalMoney,
                 Discount = discountValue,
                 Address = checkoutRequest.Address,
                 Receiver = checkoutRequest.FirstName +' '+ checkoutRequest.LastName,
