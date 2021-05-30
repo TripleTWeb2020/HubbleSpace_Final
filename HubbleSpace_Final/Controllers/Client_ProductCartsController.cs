@@ -187,7 +187,7 @@ namespace HubbleSpace_Final.Controllers
         public async System.Threading.Tasks.Task<IActionResult> PaypalCheckout()
         {
             var model = GetCheckoutViewModel();
-            var environment = new SandboxEnvironment(_clientId, _secretKey);
+            var environment = new SandboxEnvironment("AbKTW-djsNwmU-gxRXpVhioK2j7SYrm3-nZ6whkZXoyrX4GNZj21D2lFGQT7gFxpGcubD1_-Ai1-os4u", "EEEK8kgLJOETCh7Ec7xx4NN2FsXI9UHZGiSofokEuKAgHJywvRbwqv8c3tPq-LdayJVPF3Jc-6BXxNqm");
             var client = new PayPalHttpClient(environment);
             #region Create Paypal Order
             var itemList = new ItemList()
@@ -325,7 +325,7 @@ namespace HubbleSpace_Final.Controllers
             }
             totalMoney -= model.CartItems.Sum(m => m.Value_Discount);
 
-            var order = new Order() { 
+            var order = new Entities.Order() { 
                 TotalMoney = totalMoney,
                 Discount = discountValue,
                 Address = checkoutRequest.Address,
@@ -378,8 +378,16 @@ namespace HubbleSpace_Final.Controllers
                          message = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order,order.User.UserName)
                      };
             await ChannelHelper.Trigger(data, "notification", "new_notification");
-            
 
+            var message = new NotificationPusher()
+            {
+                User = user,
+                Date_Created = DateTime.Now,
+                Content = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, order.User.UserName),
+                ReadStatus = ReadStatus.Unread
+            };
+            _context.Add(message);
+            await _context.SaveChangesAsync();
             ClearCart();
             TempData["SuccessMsg"] = "Order puschased successful";
             return RedirectToAction("HistoryOrder", "Client_Orders");

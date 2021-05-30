@@ -18,6 +18,7 @@ namespace HubbleSpace_Final.Entities
         public DbSet<OrderDetail> OrderDetail { get; set; }
         public DbSet<Size> Size { get; set; }
         public DbSet<Schedule> Schedule { get; set; }
+        public DbSet<NotificationPusher> Notifications{ get; set; }
 
 
 

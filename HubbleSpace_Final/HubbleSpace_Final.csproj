@@ -27,6 +27,8 @@
     <Compile Remove="Migrations\20210525145317_db.init.Designer.cs" />
     <Compile Remove="Migrations\20210525151015_db.init.cs" />
     <Compile Remove="Migrations\20210525151015_db.init.Designer.cs" />
+    <Compile Remove="Migrations\20210530151204_DbInit.cs" />
+    <Compile Remove="Migrations\20210530151204_DbInit.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />

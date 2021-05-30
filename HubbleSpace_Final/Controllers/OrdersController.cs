@@ -6,16 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HubbleSpace_Final.Entities;
+using HubbleSpace_Final.Helpers;
+using HubbleSpace_Final.Services;
+using Microsoft.AspNetCore.Identity;
+using HubbleSpace_Final.Models;
 
 namespace HubbleSpace_Final.Controllers
 {
     public class OrdersController : Controller
     {
         private readonly MyDbContext _context;
+        private readonly IUserService _userService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public OrdersController(MyDbContext context)
+        public OrdersController(MyDbContext context,IUserService userService, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userService = userService;
+            _userManager = userManager;
         }
 
         // GET: Orders
@@ -131,6 +139,8 @@ namespace HubbleSpace_Final.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID_Order,TotalMoney,Date_Create,Address,Receiver,SDT,ID_Account,Process")] Order order)
         {
+            var userId = _userService.GetUserId();
+            var user = await _userManager.FindByIdAsync(userId);
             if (id != order.ID_Order)
             {
                 return NotFound();
@@ -142,6 +152,22 @@ namespace HubbleSpace_Final.Controllers
                 {
                     _context.Update(order);
                     await _context.SaveChangesAsync();
+                    var data = new
+                    {
+                        message = System.String.Format("Your order with ID of #{0} is modified by {1}", order.ID_Order,user)
+                    };
+                    await ChannelHelper.Trigger(data, "Clientnotification", "new_Clientnotification");
+
+                    var message = new NotificationPusher()
+                    {
+                        User = user,
+                        Date_Created = DateTime.Now,
+                        Content = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, user),
+                        ReadStatus = ReadStatus.Unread
+                    };
+                    _context.Add(message);
+                    await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {

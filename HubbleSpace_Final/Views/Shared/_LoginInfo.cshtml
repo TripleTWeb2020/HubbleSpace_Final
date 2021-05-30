@@ -4,50 +4,53 @@
 
 @if (_signInManager.IsSignedIn(User))
 {
-    <div class="products-sort-by mt-2 mt-lg-0">
-        <a data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">
-            <strong>
-                Hello @(User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value )
-            </strong>
-            <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu megamenu">
-            <li>
-                <div class="row">
-                    <div class="col-md-12 col-lg-12">
-                        <ul class="list-unstyled mb-3">
-                            <li class="nav-item">
-                                <a class="dropdown-item nav-link-custom" asp-action="Signout" asp-controller="Client_Accounts">Logout</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="dropdown-item nav-link-custom" asp-action="ChangePassword" asp-controller="Client_Accounts">Change password</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="dropdown-item nav-link-custom" asp-action="Profile" asp-controller="Client_Accounts">Your Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="dropdown-item nav-link-custom" asp-action="HistoryOrder" asp-controller="Client_Orders">Order's History</a>
-                            </li>
-                            @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                            {
-                                <li class="nav-item">
-                                    <a class="dropdown-item nav-link-custom" asp-action="Index" asp-controller="Admin">
-                                        Admin DashBoard
-                                    </a>
-                                </li>
-             
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
+	<div class="products-sort-by mt-2 mt-lg-0">
+		<a data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">
+			<strong>
+				Hello @(User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value )
+			</strong>
+			<b class="caret"></b>
+		</a>
+		<ul class="dropdown-menu megamenu">
+			<li>
+				<div class="row">
+					<div class="col-md-12 col-lg-12">
+						<ul class="list-unstyled mb-3">
+							<li class="nav-item">
+								<a class="dropdown-item nav-link-custom" asp-action="Signout" asp-controller="Client_Accounts">Logout</a>
+							</li>
+							<li class="nav-item">
+								<a class="dropdown-item nav-link-custom" asp-action="ChangePassword" asp-controller="Client_Accounts">Change password</a>
+							</li>
+							<li class="nav-item">
+								<a class="dropdown-item nav-link-custom" asp-action="Profile" asp-controller="Client_Accounts">Your Profile</a>
+							</li>
+							<li class="nav-item">
+								<a class="dropdown-item nav-link-custom" asp-action="HistoryOrder" asp-controller="Client_Orders">Order's History</a>
+							</li>
+							<li class="nav-item">
+								<a class="dropdown-item nav-link-custom" asp-action="ClientNotification" asp-controller="Notification">Your Notification</a>
+							</li>
+							@if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+							{
+								<li class="nav-item">
+									<a class="dropdown-item nav-link-custom" asp-action="Index" asp-controller="Admin">
+										Admin DashBoard
+									</a>
+								</li>
+
+							}
+						</ul>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
 }
 else
 {
-    <li class="nav-item">
-    <li class="list-inline-item"><a href="~/../Signin">Sign in</a></li>
-    <li class="list-inline-item"><a href="~/../Signup">Sign up</a></li>
-    </li>
+	<li class="nav-item">
+	<li class="list-inline-item"><a href="~/../Signin">Sign in</a></li>
+	<li class="list-inline-item"><a href="~/../Signup">Sign up</a></li>
+	</li>
 }
