@@ -13,8 +13,6 @@ namespace HubbleSpace_Final.Entities
     [Table("DiscountUsed")]
     public class DiscountUsed
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-
         [Key]
         public int ID_DiscountUsed { get; set; }
 

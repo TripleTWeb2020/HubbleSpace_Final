@@ -115,7 +115,7 @@ namespace HubbleSpace_Final.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Order.FindAsync(id);
+            var order = await _context.Order.Include(o => o.User).Where(o => o.ID_Order == id).FirstOrDefaultAsync();
             if (order == null)
             {
                 return NotFound();
@@ -129,7 +129,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID_Order,TotalMoney,Date_Create,Address,Receiver,SDT,ID_Account,Process")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("ID_Order,TotalMoney,Date_Create,Address,Receiver,SDT,Process")] Order order)
         {
             if (id != order.ID_Order)
             {

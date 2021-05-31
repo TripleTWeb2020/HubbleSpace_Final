@@ -14,13 +14,14 @@
         <div class="card-body card-block">
             <form asp-action="Edit" method="post" class="form-horizontal">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID_Order" />
 
                 <div class="row form-group">
                     <div class="col col-md-3">
                         <label asp-for="TotalMoney" class="control-label "></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input asp-for="TotalMoney" class="form-control" />
+                        <input asp-for="TotalMoney" class="form-control" readonly />
                         <span asp-validation-for="TotalMoney" class="text-danger"></span>
                     </div>
                 </div>
@@ -57,10 +58,11 @@
 
                 <div class="row form-group">
                     <div class="col col-md-3">
-                        <label asp-for="User" class="control-label "></label>
+                        <label asp-for="Date_Create" class="control-label "></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <select asp-for="User" class="form-control" asp-items="ViewBag.ID_Account"></select>
+                        <input asp-for="Date_Create" class="form-control" readonly />
+                        <span asp-validation-for="Date_Create" class="text-danger"></span>
                     </div>
                 </div>
 
