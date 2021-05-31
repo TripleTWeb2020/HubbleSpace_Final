@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Entities
 {
+    public enum PaymentStatus { COD,Paypal}
     [Table("Order")]
     public class Order
     {
@@ -47,6 +48,9 @@ namespace HubbleSpace_Final.Entities
         [Display(Name = "Tình trạng")]
         [Required(ErrorMessage = "Không được để trống")]
         public string Process { get; set; }
+
+        [Display(Name = "Phương thức thanh toán")]
+        public PaymentStatus PaymentStatus { get; set; }
 
 
         public ICollection<OrderDetail> OrderDetails { get; set; }

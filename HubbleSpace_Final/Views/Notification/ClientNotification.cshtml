@@ -2,8 +2,8 @@
 @inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager
 @model IEnumerable<HubbleSpace_Final.Entities.NotificationPusher>
 @{
-	ViewData["Title"] = "Admin Page";
-	Layout = "_AdminLayout";
+	ViewData["Title"] = "Notification";
+	Layout = "_FrontendLayout";
 }
 
 <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
@@ -13,13 +13,13 @@
 		cluster: 'ap1'
 	});
 
-	var channel = pusher.subscribe('notification');
-	channel.bind('new_notification', function (data) {
+	var channel = pusher.subscribe('Clientnotification');
+	channel.bind('new_Clientnotification', function (data) {
 		console.log(data);
 		$("#feeds").append(`
 			  <div class="ufee-alert alert with-close alert-success alert-dismissible fade show">
 				  <span class="badge badge-pill badge-success">
-					 New
+					 Success
 				  </span>
 					 ${data.message}
 			  </div>
@@ -38,15 +38,15 @@
 </style>
 <div class="row">
 	<div class="col">
-		<div class="container" style="padding: 50px;">
+		<div class="container" style="padding: 40px;">
 			<h4 class="text-center">Feeds</h4>
 			<div id="feeds">
 			</div>
 			@foreach (var item in Model)
 			{
-				<div class="sufee-alert alert with-close alert-dark alert-dismissible fade show">
-					<span class="badge badge-pill badge-dark">
-						Old Message
+				<div class="ufee-alert alert with-close alert-success alert-dismissible fade show">
+					<span class="badge badge-pill badge-success">
+						Success
 					</span>
 					@Html.DisplayFor(modelItem => item.Content)
 				</div>
@@ -54,3 +54,5 @@
 		</div>
 	</div>
 </div>
+
+

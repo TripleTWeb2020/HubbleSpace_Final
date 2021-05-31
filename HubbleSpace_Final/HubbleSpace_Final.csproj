@@ -27,6 +27,8 @@
     <Compile Remove="Migrations\20210525145317_db.init.Designer.cs" />
     <Compile Remove="Migrations\20210525151015_db.init.cs" />
     <Compile Remove="Migrations\20210525151015_db.init.Designer.cs" />
+    <Compile Remove="Migrations\20210530151204_DbInit.cs" />
+    <Compile Remove="Migrations\20210530151204_DbInit.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
@@ -51,6 +53,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.1" />
 
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+
+    <PackageReference Include="PayPal" Version="2.0.0-rc2" />
 
     <PackageReference Include="PusherServer" Version="4.6.1" />
   </ItemGroup>

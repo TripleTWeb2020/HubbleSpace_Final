@@ -4,14 +4,16 @@ using HubbleSpace_Final.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HubbleSpace_Final.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210530114118_DbInit2")]
+    partial class DbInit2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,33 +180,6 @@ namespace HubbleSpace_Final.Migrations
                     b.HasIndex("ID_Color_Product");
 
                     b.ToTable("Img_Product");
-                });
-
-            modelBuilder.Entity("HubbleSpace_Final.Entities.NotificationPusher", b =>
-                {
-                    b.Property<int>("ID_Notifcation")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Date_Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ReadStatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ID_Notifcation");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("NotificationsPusher");
                 });
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.Order", b =>
@@ -617,13 +592,6 @@ namespace HubbleSpace_Final.Migrations
                         .HasForeignKey("ID_Color_Product")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("HubbleSpace_Final.Entities.NotificationPusher", b =>
-                {
-                    b.HasOne("HubbleSpace_Final.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("HubbleSpace_Final.Entities.Order", b =>
