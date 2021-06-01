@@ -31,12 +31,12 @@ namespace HubbleSpace_Final.Controllers
 		}
 		public async Task<IActionResult> Index()
 		{
-			var Task = from o in _context.Notifications.Include(o => o.User).OrderBy(o => o.Date_Created) select o;
+			var Task = from o in _context.Notifications.Include(o => o.User).OrderByDescending(o => o.Date_Created) select o;
 			return View(await Task.AsNoTracking().ToListAsync());
 		}
 		public async Task<IActionResult> ClientNotification()
 		{
-			var Task = from o in _context.Notifications.Include(o => o.User).OrderBy(o => o.Date_Created) select o;
+			var Task = from o in _context.Notifications.Include(o => o.User).OrderByDescending(o => o.Date_Created) select o;
 			return View(await Task.AsNoTracking().ToListAsync());
 		}
 	}

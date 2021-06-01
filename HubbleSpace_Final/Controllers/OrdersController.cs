@@ -10,9 +10,11 @@ using HubbleSpace_Final.Helpers;
 using HubbleSpace_Final.Services;
 using Microsoft.AspNetCore.Identity;
 using HubbleSpace_Final.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HubbleSpace_Final.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class OrdersController : Controller
     {
         private readonly MyDbContext _context;
@@ -139,8 +141,7 @@ namespace HubbleSpace_Final.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID_Order,TotalMoney,Date_Create,Address,Receiver,SDT,Process")] Order order)
         {
-            var userId = _userService.GetUserId();
-            var user = await _userManager.FindByIdAsync(userId);
+            
             if (id != order.ID_Order)
             {
                 return NotFound();
@@ -150,19 +151,25 @@ namespace HubbleSpace_Final.Controllers
             {
                 try
                 {
+
                     _context.Update(order);
                     await _context.SaveChangesAsync();
+                    var userId = _userService.GetUserId();
+                    var user = await _userManager.FindByIdAsync(userId);
+
+                    var orrder = await _context.Order.Include(o => o.User).Where(o => o.ID_Order == id).Select(o => o.User).FirstOrDefaultAsync();
+                    
                     var data = new
                     {
-                        message = System.String.Format("Your order with ID of #{0} is modified by {1}", order.ID_Order,user)
+                        message = System.String.Format("ID of #{0}, Your order status is changed by {1} to {2} ", order.ID_Order, user,order.Process)
                     };
                     await ChannelHelper.Trigger(data, "Clientnotification", "new_Clientnotification");
 
                     var message = new NotificationPusher()
                     {
-                        User = user,
+                        User = orrder,
                         Date_Created = DateTime.Now,
-                        Content = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, user),
+                        Content = System.String.Format("ID of #{0}, Your order status is changed by {1} to {2} ", order.ID_Order, user, order.Process),
                         ReadStatus = ReadStatus.Unread
                     };
                     _context.Add(message);
