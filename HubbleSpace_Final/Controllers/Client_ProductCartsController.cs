@@ -237,7 +237,7 @@ namespace HubbleSpace_Final.Controllers
                 RedirectUrls = new RedirectUrls()
                 {
                     CancelUrl = $"{hostname}/Client_ProductCarts/PaymentMethod",
-                    ReturnUrl = $"{hostname}/Client_ProductCarts/CheckoutWithPaypal"
+                    ReturnUrl = $"{hostname}/Client_ProductCarts/CheckoutP"
                 },
                 Payer = new Payer()
                 {
@@ -280,7 +280,7 @@ namespace HubbleSpace_Final.Controllers
 
         }
         [HttpPost]
-        public async Task<ActionResult> CheckoutWithPaypal(CheckOutViewModel request)
+        public async Task<ActionResult> CheckoutCOD(CheckOutViewModel request)
         {
             var userId = _userService.GetUserId();
             var user = await _userManager.FindByIdAsync(userId);
@@ -321,7 +321,7 @@ namespace HubbleSpace_Final.Controllers
                 SDT = checkoutRequest.Phone,
                 User = user,
                 Process = "Mới đặt",
-                PaymentStatus = PaymentStatus.Paypal
+                PaymentStatus = PaymentStatus.COD
             };
             _context.Add(order);
             await _context.SaveChangesAsync();
@@ -425,7 +425,7 @@ namespace HubbleSpace_Final.Controllers
                 SDT = checkoutRequest.Phone,
                 User = user,
                 Process = "Mới đặt",
-                PaymentStatus = PaymentStatus.COD
+                PaymentStatus = PaymentStatus.Paypal
             };
             _context.Add(order);
             await _context.SaveChangesAsync();

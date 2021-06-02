@@ -1,4 +1,6 @@
-﻿
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager
+
 @{
 	ViewData["Title"] = "Payment Page";
 	Layout = "_FrontendLayout";
@@ -19,36 +21,38 @@
 				</div>
 
 			</div>
-			<div id="checkout" class="col-lg-9">
-				<div class="box">
-					<h1>Checkout - Payment method</h1>
-					<div class="content py-3">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="box payment-method">
-									<h4>Paypal</h4>
-									<p>We like it all.</p>
-									<form asp-action="PaypalCheckout">
-										<div class="box-footer text-center">
-											<button class="btn btn-primary">Paypal Checkout</button>
-											<a asp-action="PaypalCheckout">
-											</a>
-										</div>
-									</form>
+			@if (_signInManager.IsSignedIn(User))
+			{
+				<div id="checkout" class="col-lg-9">
+					<div class="box">
+						<h1>Checkout - Payment method</h1>
+						<div class="content py-3">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="box payment-method">
+										<h4>Paypal</h4>
+										<p>We like it all.</p>
+										<form asp-action="PaypalCheckout">
+											<div class="box-footer text-center">
+												<button class="btn btn-primary">Paypal Checkout</button>
+												<a asp-action="PaypalCheckout">
+												</a>
+											</div>
+										</form>
+									</div>
 								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="box payment-method">
-									<h4>Cash on delivery</h4>
-									<p>You pay when you get it.</p>
-									<form asp-action="Checkout" method="get">
-										<div class="box-footer text-center">
-											<button class="btn btn-primary">COD method</button>
-											<a asp-action="Checkout">
-											</a>
-										</div>
-									</form>
-								</div>
+								<div class="col-md-6">
+									<div class="box payment-method">
+										<h4>Cash on delivery</h4>
+										<p>You pay when you get it.</p>
+										<form asp-action="Checkout" method="get">
+											<div class="box-footer text-center">
+												<button class="btn btn-primary">COD method</button>
+												<a asp-action="Checkout">
+												</a>
+											</div>
+										</form>
+									</div>
 								</div>
 							</div>
 							<!-- /.row-->
@@ -57,9 +61,20 @@
 						<div class="box-footer d-flex justify-content-between">
 							<a asp-controller="Client_ProductCarts" asp-action="Cart" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>Back to your cart info</a>
 						</div>
-					<!-- /.box-->
+						<!-- /.box-->
+					</div>
 				</div>
-			</div>
+			}
+			else
+			{
+				<div class="alert alert-success" role="alert">
+					<p>
+						You have to sign in before
+					</p>
+					<a asp-controller="Client_Accounts" asp-action="Signin" class="btn btn-outline-secondary">Go to login</a>
+
+				</div>
+			}
 		</div>
 	</div>
 </div>

@@ -139,7 +139,7 @@ namespace HubbleSpace_Final.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID_Order,TotalMoney,Date_Create,Address,Receiver,SDT,Process")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("ID_Order,TotalMoney,Date_Create,Address,Receiver,SDT,Process,PaymentStatus")] Order order)
         {
             
             if (id != order.ID_Order)
