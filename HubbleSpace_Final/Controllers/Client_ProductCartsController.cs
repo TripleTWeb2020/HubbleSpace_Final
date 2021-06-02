@@ -237,7 +237,7 @@ namespace HubbleSpace_Final.Controllers
                 RedirectUrls = new RedirectUrls()
                 {
                     CancelUrl = $"{hostname}/Client_ProductCarts/PaymentMethod",
-                    ReturnUrl = $"{hostname}/Client_ProductCarts/CheckoutP"
+                    ReturnUrl = $"{hostname}/Client_ProductCarts/Checkout"
                 },
                 Payer = new Payer()
                 {
