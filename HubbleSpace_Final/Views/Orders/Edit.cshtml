@@ -12,82 +12,92 @@
             Cập nhật thông tin đơn hàng
         </div>
         <div class="card-body card-block">
-            <form asp-action="Edit" method="post" class="form-horizontal">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="ID_Order" />
+			<form asp-action="Edit" method="post" class="form-horizontal">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<input type="hidden" asp-for="ID_Order" />
 
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label asp-for="TotalMoney" class="control-label "></label>
-                    </div>
-                    <div class="col-12 col-md-9">
-                        <input asp-for="TotalMoney" class="form-control" readonly />
-                        <span asp-validation-for="TotalMoney" class="text-danger"></span>
-                    </div>
-                </div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label asp-for="TotalMoney" class="control-label "></label>
+					</div>
+					<div class="col-12 col-md-9">
+						<input asp-for="TotalMoney" class="form-control" readonly />
+						<span asp-validation-for="TotalMoney" class="text-danger"></span>
+					</div>
+				</div>
 
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label asp-for="Address" class="control-label "></label>
-                    </div>
-                    <div class="col-12 col-md-9">
-                        <input asp-for="Address" class="form-control" />
-                        <span asp-validation-for="Address" class="text-danger"></span>
-                    </div>
-                </div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label asp-for="Address" class="control-label"></label>
+					</div>
+					<div class="col-12 col-md-9">
+						<input asp-for="Address" class="form-control" readonly />
+						<span asp-validation-for="Address" class="text-danger"></span>
+					</div>
+				</div>
 
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label asp-for="Receiver" class="control-label "></label>
-                    </div>
-                    <div class="col-12 col-md-9">
-                        <input asp-for="Receiver" class="form-control" />
-                        <span asp-validation-for="Receiver" class="text-danger"></span>
-                    </div>
-                </div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label asp-for="Receiver" class="control-label"></label>
+					</div>
+					<div class="col-12 col-md-9">
+						<input asp-for="Receiver" class="form-control" readonly />
+						<span asp-validation-for="Receiver" class="text-danger"></span>
+					</div>
+				</div>
 
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label asp-for="SDT" class="control-label "></label>
-                    </div>
-                    <div class="col-12 col-md-9">
-                        <input asp-for="SDT" class="form-control" />
-                        <span asp-validation-for="SDT" class="text-danger"></span>
-                    </div>
-                </div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label asp-for="SDT" class="control-label "></label>
+					</div>
+					<div class="col-12 col-md-9">
+						<input asp-for="SDT" class="form-control" readonly />
+						<span asp-validation-for="SDT" class="text-danger"></span>
+					</div>
+				</div>
 
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label asp-for="Date_Create" class="control-label "></label>
-                    </div>
-                    <div class="col-12 col-md-9">
-                        <input asp-for="Date_Create" class="form-control" readonly />
-                        <span asp-validation-for="Date_Create" class="text-danger"></span>
-                    </div>
-                </div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label asp-for="PaymentStatus" class="control-label "></label>
+					</div>
+					<div class="col-12 col-md-9">
+						<input asp-for="PaymentStatus" class="form-control" readonly />
+						<span asp-validation-for="PaymentStatus" class="text-danger"></span>
+					</div>
+				</div>
 
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label asp-for="Process" class="control-label "></label>
-                    </div>
-                    <div class="col-12 col-md-9">
-                        <select asp-for="Process" class="form-control">
-                            <option value="Mới đặt">Mới đặt</option>
-                            <option value="Đang đóng gói">Đang đóng gói</option>
-                            <option value="Đang vận chuyển">Đang vận chuyển</option>
-                            <option value="Đã giao">Đã giao</option>
-                            <option value="Hủy">Hủy</option>
-                        </select>
-                        <span asp-validation-for="Process" class="text-danger"></span>
-                    </div>
-                </div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label asp-for="Date_Create" class="control-label "></label>
+					</div>
+					<div class="col-12 col-md-9">
+						<input asp-for="Date_Create" class="form-control" readonly />
+						<span asp-validation-for="Date_Create" class="text-danger"></span>
+					</div>
+				</div>
 
-                <div class="form-group card-footer">
-                    <input type="submit" value="Edit" class="btn btn-primary col-2" />
-                    <input type="reset" value="Reset" class="btn btn-danger col-2" />
-                    <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
-                </div>
-            </form>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label asp-for="Process" class="control-label "></label>
+					</div>
+					<div class="col-12 col-md-9">
+						<select asp-for="Process" class="form-control">
+							<option value="Mới đặt">Mới đặt</option>
+							<option value="Đang đóng gói">Đang đóng gói</option>
+							<option value="Đang vận chuyển">Đang vận chuyển</option>
+							<option value="Đã giao">Đã giao</option>
+							<option value="Hủy">Hủy</option>
+						</select>
+						<span asp-validation-for="Process" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="form-group card-footer">
+					<input type="submit" value="Save" class="btn btn-primary col-2" />
+					<input type="reset" value="Reset" class="btn btn-danger col-2" />
+					<a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+				</div>
+			</form>
         </div>
     </div>
 </div>

@@ -44,12 +44,16 @@
 			</div>
 			@foreach (var item in Model)
 			{
-				<div class="sufee-alert alert with-close alert-dark alert-dismissible fade show">
-					<span class="badge badge-pill badge-dark">
-						Old Message
-					</span>
-					@Html.DisplayFor(modelItem => item.Content)
-				</div>
+				if (_signInManager.IsSignedIn(User) && _userManager.GetUserId(User) == item.User.Id)
+				{
+					<div class="ufee-alert alert with-close alert-success alert-dismissible fade show">
+						<span class="badge badge-pill badge-dark">
+							Old Message
+						</span>
+						@Html.DisplayFor(modelItem => item.Content)
+					</div>
+				}
+
 			}
 		</div>
 	</div>

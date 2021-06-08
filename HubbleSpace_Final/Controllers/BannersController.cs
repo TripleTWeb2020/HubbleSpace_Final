@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HubbleSpace_Final.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HubbleSpace_Final.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class BannersController : Controller
     {
         private readonly MyDbContext _context;
