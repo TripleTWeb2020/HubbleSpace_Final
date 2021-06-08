@@ -34,7 +34,6 @@ center {
     padding: 0 5px;
     white-space: nowrap;
 }
-}
 
 #details {
     margin: 10px 0;
@@ -123,4 +122,28 @@ h3 a:hover{
 #map iframe {
     width: -webkit-fill-available;
     height: -webkit-fill-available;
+}
+#content{
+    min-height: 900px;
+}
+
+.table-responsive-data2 {
+    overflow-x: auto;
+}
+
+@media (max-width: 1200px) {
+    .table-data2 .row {
+        display: contents;
+    }
+}
+
+@media (min-width: 1200px) {
+    .table-responsive-data2 {
+        overflow: visible;
+    }
+}
+
+.table-data2 {
+    border-collapse: collapse;
+    overflow: visible;
 }

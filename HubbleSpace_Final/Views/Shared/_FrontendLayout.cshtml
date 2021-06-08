@@ -48,8 +48,6 @@
             </div>
             <!-- *** TOP BAR END ***-->
         </div>
-
-
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <a href="~/../Home" class="navbar-brand home"><img src="~/Images/Untitled.png" alt="HS logo" class="d-none d-md-inline-block" style="width: 255px"><img src="~/Images/Untitled.png" alt="HS logo" class="d-inline-block d-md-none" style="width: 255px"><span class="sr-only">Hubble Space</span></a>
@@ -62,60 +60,10 @@
                     </ul>
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a asp-controller="Home" asp-action="Index" class="nav-link active">Home</a></li>
-                        <li class="nav-item dropdown menu-sidebar">
-                            <a asp-action="Categories" asp-route-Object="Men" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Men<b class="caret"></b></a>
-                            <ul class="dropdown-menu megamenu">
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-6 col-lg-4">
-                                            <ul class="list-unstyled mb-3">
-                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Originals" class="nav-link-custom">Originals</a></li>
-                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Running" class="nav-link-custom">Running</a></li>
-                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Training" class="nav-link-custom">Training</a></li>
-                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Football" class="nav-link-custom">Football</a></li>
-                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Basketball" class="nav-link-custom">Basketball</a></li>
-                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Tennis" class="nav-link-custom">Tennis</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a asp-action="Categories" asp-route-Object="Women" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Women<b class="caret"></b></a>
-                            <ul class="dropdown-menu megamenu">
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-6 col-lg-4">
-                                            <ul class="list-unstyled mb-3">
-                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Originals" class="nav-link-custom">Originals</a></li>
-                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Running" class="nav-link-custom">Running</a></li>
-                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Training" class="nav-link-custom">Training</a></li>
-                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Tennis" class="nav-link-custom">Tennis</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a asp-action="Categories" asp-route-Object="Kids" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Kids<b class="caret"></b></a>
-                            <ul class="dropdown-menu megamenu">
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-6 col-lg-4">
-                                            <ul class="list-unstyled mb-3">
-                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Originals" class="nav-link-custom">Originals</a></li>
-                                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Running" class="nav-link-custom">Running</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
+                        <partial name="_CategoriesOfMenHeader" />
+                        <partial name="_CategoriesOfWomenHeader" />
+                        <partial name="_CategoriesOfKidsHeader" />
                     </ul>
-
                     <div class="navbar-buttons d-flex justify-content-end">
                         <!-- /.nav-collapse-->
                         <div id="search-not-mobile" class="navbar-collapse collapse"></div><a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-block"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></a>

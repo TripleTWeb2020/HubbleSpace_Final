@@ -151,20 +151,20 @@ namespace HubbleSpace_Final.Controllers
                            group tbl2 by new { p.Product_Name } into g
                            select new
                            {
-                               Product_Name = g.Key.Product_Name,
-                               Sum = g.Sum(item => item.Quantity),
+                               product_Name = g.Key.Product_Name,
+                               sum = g.Sum(item => item.Quantity),
                            };
-            var queryShoeRank = queryTopShoe.OrderByDescending(s => s.Sum).ToList();
-            ViewData["query1stShoeName"] = queryShoeRank.ElementAt(0).Product_Name;
-            ViewData["query1stShoeQuan"] = queryShoeRank.ElementAt(0).Sum;
-            ViewData["query2ndShoeName"] = queryShoeRank.ElementAt(1).Product_Name;
-            ViewData["query2ndShoeQuan"] = queryShoeRank.ElementAt(1).Sum;
-            ViewData["query3rdShoeName"] = queryShoeRank.ElementAt(2).Product_Name;
-            ViewData["query3rdShoeQuan"] = queryShoeRank.ElementAt(2).Sum;
-            ViewData["query4thShoeName"] = queryShoeRank.ElementAt(3).Product_Name;
-            ViewData["query4thShoeQuan"] = queryShoeRank.ElementAt(3).Sum;
-            ViewData["query5thShoeName"] = queryShoeRank.ElementAt(4).Product_Name;
-            ViewData["query5thShoeQuan"] = queryShoeRank.ElementAt(4).Sum;
+            var queryShoeRank = queryTopShoe.OrderByDescending(s => s.sum).ToList();
+            ViewData["query1stShoeName"] = queryShoeRank.ElementAt(0).product_Name;
+            ViewData["query1stShoeQuan"] = queryShoeRank.ElementAt(0).sum;
+            ViewData["query2ndShoeName"] = queryShoeRank.ElementAt(1).product_Name;
+            ViewData["query2ndShoeQuan"] = queryShoeRank.ElementAt(1).sum;
+            ViewData["query3rdShoeName"] = queryShoeRank.ElementAt(2).product_Name;
+            ViewData["query3rdShoeQuan"] = queryShoeRank.ElementAt(2).sum;
+            ViewData["query4thShoeName"] = queryShoeRank.ElementAt(3).product_Name;
+            ViewData["query4thShoeQuan"] = queryShoeRank.ElementAt(3).sum;
+            ViewData["query5thShoeName"] = queryShoeRank.ElementAt(4).product_Name;
+            ViewData["query5thShoeQuan"] = queryShoeRank.ElementAt(4).sum;
 
             // Query for ToDoTask
             var Task = from o in _context.Schedule.Include(o => o.User).OrderBy(o => o.Date_Created) select o;
@@ -173,7 +173,7 @@ namespace HubbleSpace_Final.Controllers
 
         }
 
-        public async Task<IActionResult> statistic(string time, string sortOrder, string searchString, int CountForTake = 1)
+        public async Task<IActionResult> Statistic(string time, string sortOrder, string searchString, int CountForTake = 1)
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Process"] = sortOrder == "Process" ? "process_desc" : "Process";

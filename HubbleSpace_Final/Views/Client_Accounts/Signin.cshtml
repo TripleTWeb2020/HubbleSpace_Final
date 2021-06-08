@@ -4,6 +4,7 @@
     ViewData["Title"] = "Sign in";
     Layout = "_FrontendLayout";
 }
+
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
@@ -15,7 +16,7 @@
                 </ol>
             </nav>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="box">
                 <h1>Sign in</h1>
                 <hr>
@@ -37,33 +38,14 @@
                         </label>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-user-md"></i> Sign in</button>
+                        <p><button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i> Sign in</button></p>
                         <p><a asp-action="ForgotPassword" asp-controller="Client_Accounts">Forgot password?</a></p>
                         <p>Click <a asp-action="SignUp" asp-controller="Client_Accounts">here</a> to Sign Up</p>
                     </div>
                 </form>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class = "box">
-                <div class = "text-center">
-                    <h1>Login with your social account </h1>
-                    <div style="display:flex;align-items:center;justify-content:center">
-					<form asp-action="GoogleLogin">
-						<div class="social-login-content">
-							<div class="social-button">
-								<button type="submit" class="btn btn-primary" asp-action="GoogleLogin" asp-controller="Client_Accounts"><i class="fa fa-google-plus"></i>Sign in with Google</button>
-							</div>
-						</div>
-					</form>
-                    <form asp-action="FacebookLogin">
-						<div class="social-login-content">
-							<div class="social-button">
-								<button type="submit" class="btn au-btn--blue" asp-action="FacebookLogin" asp-controller="Client_Accounts"><i class="fa fa-facebook"></i>Sign in with Facebook</button>
-							</div>
-						</div>
-					</form>
-                    </div>
+                <div class="social-login-content center">
+                    <a class="btn btn-outline-danger" style="margin-bottom: 15px" asp-action="GoogleLogin" asp-controller="Client_Accounts"><i class="fa fa-google-plus"></i>Sign in with Google</a>
+                    <a class="btn btn-outline-info" style="margin-bottom: 15px" asp-action="FacebookLogin" asp-controller="Client_Accounts"><i class="fa fa-facebook"></i>Sign in with Facebook</a>
                 </div>
             </div>
         </div>

@@ -338,6 +338,7 @@ namespace HubbleSpace_Final.Controllers
             await _context.SaveChangesAsync();
 
             var order_success = _context.Order.ToList().LastOrDefault();
+
             foreach (var item in model.CartItems)
             {
                 if(item.Color_Product != null)
@@ -351,6 +352,13 @@ namespace HubbleSpace_Final.Controllers
                         ID_Order = order_success.ID_Order,
                     };
                     _context.Add(orderdetail);
+                    await _context.SaveChangesAsync();
+
+
+                    Size size = _context.Size.Where(s => s.ID_Color_Product == item.Color_Product.ID_Color_Product 
+                                                        && s.SizeNumber.Trim().ToLower() == item.Size.Trim().ToLower()).FirstOrDefault();
+                    size.Quantity -= 1;
+                    _context.Update(size);
                     await _context.SaveChangesAsync();
                 }
             }

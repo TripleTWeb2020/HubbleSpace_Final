@@ -32,7 +32,6 @@ namespace HubbleSpace_Final.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Process"] = sortOrder == "Process" ? "process_desc" : "Process";
-
             ViewData["Search"] = searchString;
 
 
@@ -42,7 +41,7 @@ namespace HubbleSpace_Final.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                Orders = Orders.Where(o => o.SDT.Contains(searchString));
+                Orders = Orders.Where(o => o.Date_Create.Date.ToString() == searchString);
             }
 
             switch (sortOrder)

@@ -1,0 +1,23 @@
+﻿@inject HubbleSpace_Final.Entities.MyDbContext context
+
+<li class="nav-item dropdown menu-sidebar">
+    <a asp-action="Categories" asp-route-Object="Women" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Women<b class="caret"></b></a>
+    <ul class="dropdown-menu megamenu">
+        <li>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <ul class="list-unstyled mb-3">
+                        @{
+                            var itemObjects = context.Category.Where(c => c.Object == "Women").Distinct();
+                            foreach (var i in itemObjects)
+                            {
+                                <li class="nav-item"><a asp-controller="Home" asp-action="Categories" asp-route-Object="@i.Object" asp-route-CategoriesName="@i.Category_Name" class="nav-link-custom">@i.Category_Name</a></li>
+                            }
+
+                        }
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </ul>
+</li>

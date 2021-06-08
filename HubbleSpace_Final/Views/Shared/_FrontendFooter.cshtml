@@ -26,30 +26,15 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-6">
                         <h5>Men</h5>
-                        <ul class="list-unstyled">
-                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Originals">Originals</a></li>
-                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Running">Running</a></li>
-                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Training">Training</a></li>
-                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Football">Football</a></li>
-                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Basketball">Basketball</a></li>
-                            <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Tennis" >Tennis</a></li>
-                        </ul>
+                        <partial name="_CategoriesOfMenFooter" />
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <h5>Women</h5>
-                        <ul class="list-unstyled">
-                            <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Originals">Originals</a></li>
-                            <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Running">Running</a></li>
-                            <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Training">Training</a></li>
-                            <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Tennis">Tennis</a></li>
-                        </ul>
+                        <partial name="_CategoriesOfWomenFooter" />
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <h5>Kids</h5>
-                        <ul class="list-unstyled">
-                            <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Originals">Originals</a></li>
-                            <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Running">Running</a></li>
-                        </ul>
+                        <partial name="_CategoriesOfKidsFooter" />
                     </div>
                 </div>
             </div>

@@ -14665,3 +14665,13 @@ section {
     padding-left: 30px;
 }
 
+/*Custom*/
+.table-data2 {
+    overflow-x: auto;
+}
+
+@media (max-width: 1200px) {
+    .table-data2 .row {
+        display: contents;
+    }
+}
