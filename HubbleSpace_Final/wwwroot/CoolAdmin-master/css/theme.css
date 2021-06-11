@@ -14675,3 +14675,7 @@ section {
         display: contents;
     }
 }
+.pagination {
+    place-content: center;
+    margin-top: 10px;
+}

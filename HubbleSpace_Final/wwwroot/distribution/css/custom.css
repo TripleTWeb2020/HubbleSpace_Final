@@ -150,3 +150,7 @@ h3 a:hover{
     border-collapse: collapse;
     overflow: visible;
 }
+.pagination {
+    place-content: center;
+    margin-top: 10px;
+}

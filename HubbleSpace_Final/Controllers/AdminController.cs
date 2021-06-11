@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using PagedList.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -204,8 +205,7 @@ namespace HubbleSpace_Final.Controllers
             var lists = from o in _context.Notifications
                         where o.User.Id == _userService.GetUserId()
                         select o;
-            var listts = lists.OrderByDescending(o => o.Date_Created).ToList();
-            var listtss = lists.OrderByDescending(o => o.Date_Created).Select(o => o.Date_Created).ToList();
+            var listts = lists.OrderByDescending(o => o.Date_Created).Take(5);
             ViewData["Noti"] = listts.ToList();
 
             foreach (NotificationPusher notif in listt)
@@ -221,7 +221,7 @@ namespace HubbleSpace_Final.Controllers
 
         }
 
-        public async Task<IActionResult> Statistic(string time, string sortOrder, string searchString, int CountForTake = 1)
+        public async Task<IActionResult> Statistic(string time, string sortOrder, string searchString, int page = 1)
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Process"] = sortOrder == "Process" ? "process_desc" : "Process";
@@ -267,15 +267,9 @@ namespace HubbleSpace_Final.Controllers
             //Lấy doanh thu
             ViewData["totalMoney"] = Orders.Sum(o => o.TotalMoney);
 
-            int take = 10;
-            double total_product = Orders.Count();
+            PagedList<Order> model = new PagedList<Order>(Orders, page, 10);
 
-            int total_take = (int)Math.Ceiling(total_product / take);
-
-            Orders = Orders.Skip((CountForTake - 1) * take).Take(take);
-            ViewData["total_take"] = total_take;
-            ViewData["CountForTake"] = CountForTake + 1;
-            return View(await Orders.AsNoTracking().ToListAsync());
+            return View(model);
         }
 
         public IActionResult Create()
