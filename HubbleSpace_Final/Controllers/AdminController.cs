@@ -204,20 +204,9 @@ namespace HubbleSpace_Final.Controllers
             var lists = from o in _context.Notifications
                         where o.User.Id == _userService.GetUserId()
                         select o;
-            var listts = lists.OrderByDescending(o => o.Date_Created).Select(o => o.Content).ToList();
+            var listts = lists.OrderByDescending(o => o.Date_Created).ToList();
             var listtss = lists.OrderByDescending(o => o.Date_Created).Select(o => o.Date_Created).ToList();
-            ViewData["Noti1st"] = listts.ElementAt(0);
-            ViewData["Noti2nd"] = listts.ElementAt(1);
-            ViewData["Noti3rd"] = listts.ElementAt(2);
-            ViewData["Noti4th"] = listts.ElementAt(3);
-            ViewData["Noti5th"] = listts.ElementAt(4);
-
-            ViewData["NotiD1st"] = listtss.ElementAt(0);
-            ViewData["NotiD2nd"] = listtss.ElementAt(1);
-            ViewData["NotiD3rd"] = listtss.ElementAt(2);
-            ViewData["NotiD4th"] = listtss.ElementAt(3);
-            ViewData["NotiD5th"] = listtss.ElementAt(4);
-
+            ViewData["Noti"] = listts.ToList();
 
             foreach (NotificationPusher notif in listt)
             {
