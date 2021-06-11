@@ -1,112 +1,112 @@
-﻿@model IEnumerable<ApplicationUser>
+﻿@model PagedList.Core.IPagedList<ApplicationUser>
 
-@{
-    ViewData["Title"] = "Manage User";
-    Layout = "_AdminLayout";
-}
-<div class="row">
-    <div class="col-md-12">
-        <h3 class="title-5 m-b-35">Quản lý người dùng</h3>
-        <div class="table-data__tool">
-            <div class="table-data__tool-left">
-                <form asp-action="Index" method="get">
-                    <div class="rs-select2--light rs-select2--sm">
-                        <input type="text" class="form-control" placeholder="Search for" name="SearchString" value="@ViewData["Search"]" />
-                    </div>
+    @{
+        ViewData["Title"] = "Manage User";
+        Layout = "_AdminLayout";
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="title-5 m-b-35">Quản lý người dùng</h3>
+            <div class="table-data__tool">
+                <div class="table-data__tool-left">
+                    <form asp-action="Index" method="get">
+                        <div class="rs-select2--light rs-select2--sm">
+                            <input type="text" class="form-control" placeholder="Search for" name="SearchString" value="@ViewData["Search"]" />
+                        </div>
 
-                    <button class="au-btn-filter" type="submit">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </form>
+                        <button class="au-btn-filter" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="table-data__tool-right">
+                    <a class="au-btn au-btn-icon au-btn--green au-btn--small" asp-action="Signup" asp-controller="Client_Accounts">
+                        Add item
+                    </a>
+                </div>
             </div>
 
-            <div class="table-data__tool-right">
-                <a class="au-btn au-btn-icon au-btn--green au-btn--small" asp-action="Signup" asp-controller="Client_Accounts">
-                    Add item
-                </a>
-            </div>
-        </div>
-
-        <!-- DATA TABLE -->
-        <div class="table-responsive table-responsive-data2">
-            <table class="table table-data2">
-                <thead>
-                    <tr>
-                        <th>
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.UserName)</a>
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Email)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.PhoneNumber)
-                        </th>
-                        <th>
-                            FullName
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.CreditCard)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Address)
-                        </th>
-                        <th>
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Level"]">
-                                Role
-                            </a>
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @foreach (var user in Model)
-                    {
-                        <tr class="tr-shadow ">
-                            <td>
-                                <a>@user.UserName</a>
-                            </td>
-                            <td>
-                                <a>@user.Email</a>
-                            </td>
-                            <td>
-                                <a>@user.PhoneNumber</a>
-                            </td>
-                            <td>
-                                <a>@user.FirstName  @user.LastName</a>
-                            </td>
-                            <td>
-                                <a>@user.CreditCard</a>
-                            </td>
-                            <td>
-                                <a>@user.Address</a>
-                            </td>
-
-                            <td>
-                                @if (user.level == 0)
-                                {<a>Member</a>}
-                                else
-                                {<a>Admin</a>}
-                            </td>
-                            <td>
-                                <div class="table-data-feature">
-                                    <a class="item" asp-action="Edit" asp-route-id="@user.Id" data-toggle="tooltip" data-placement="top" title="Edit">
-                                        <i class="zmdi zmdi-edit"></i>
-                                    </a>
-                                    <a class="item" asp-action="Delete" asp-route-id="@user.Id" data-toggle="tooltip" data-placement="top" title="Delete">
-                                        <i class="zmdi zmdi-delete"></i>
-                                    </a>
-                                    <a class="item" asp-action="Details" asp-route-id="@user.Id" data-toggle="tooltip" data-placement="top" title="More">
-                                        <i class="zmdi zmdi-more"></i>
-                                    </a>
-                                </div>
-                            </td>
+            <!-- DATA TABLE -->
+            <div class="table-responsive table-responsive-data2">
+                <table class="table table-data2">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.First().UserName)</a>
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.First().Email)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.First().PhoneNumber)
+                            </th>
+                            <th>
+                                FullName
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.First().CreditCard)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.First().Address)
+                            </th>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewData["Level"]">
+                                    Role
+                                </a>
+                            </th>
+                            <th></th>
                         </tr>
-                        <tr class="spacer"></tr>
-                    }
-                </tbody>
-            </table>
-            <partial name="_LayoutPage">
-        </div>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var user in Model)
+                        {
+                            <tr class="tr-shadow ">
+                                <td>
+                                    <a>@user.UserName</a>
+                                </td>
+                                <td>
+                                    <a>@user.Email</a>
+                                </td>
+                                <td>
+                                    <a>@user.PhoneNumber</a>
+                                </td>
+                                <td>
+                                    <a>@user.FirstName  @user.LastName</a>
+                                </td>
+                                <td>
+                                    <a>@user.CreditCard</a>
+                                </td>
+                                <td>
+                                    <a>@user.Address</a>
+                                </td>
+
+                                <td>
+                                    @if (user.level == 0)
+                                    {<a>Member</a>}
+                                    else
+                                    {<a>Admin</a>}
+                                </td>
+                                <td>
+                                    <div class="table-data-feature">
+                                        <a class="item" asp-action="Edit" asp-route-id="@user.Id" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </a>
+                                        <a class="item" asp-action="Delete" asp-route-id="@user.Id" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </a>
+                                        <a class="item" asp-action="Details" asp-route-id="@user.Id" data-toggle="tooltip" data-placement="top" title="More">
+                                            <i class="zmdi zmdi-more"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="spacer"></tr>
+                        }
+                    </tbody>
+                </table>
+                <pager class="pager-container" list="@Model" asp-action="Index" asp-controller="Accounts" />
+            </div>
         </div>
     </div>

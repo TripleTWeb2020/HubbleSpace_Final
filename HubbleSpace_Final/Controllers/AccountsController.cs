@@ -9,6 +9,8 @@ using HubbleSpace_Final.Entities;
 using Microsoft.AspNetCore.Identity;
 using HubbleSpace_Final.Models;
 using Microsoft.AspNetCore.Authorization;
+using PagedList;
+using PagedList.Core;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -408,7 +410,7 @@ namespace HubbleSpace_Final.Controllers
 
 
         // Viết lại
-        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["Name"] = sortOrder == "Username" ? "UserName_desc" : "UserName";
             ViewData["Level"] = sortOrder == "Level" ? "Level_desc" : "Level";
@@ -442,16 +444,9 @@ namespace HubbleSpace_Final.Controllers
                     break;
             }
 
-            int take = 10;
-            double total_product = accounts.Count();
+            PagedList<ApplicationUser> model = new PagedList<ApplicationUser>(accounts, page, 10);
 
-            int total_take = (int)Math.Ceiling(total_product / take);
-
-            accounts = accounts.Skip((CountForTake - 1) * take).Take(take);
-            ViewData["total_take"] = total_take;
-            ViewData["CountForTake"] = CountForTake + 1;
-
-            return View(await accounts.AsNoTracking().ToListAsync());
+            return View(model);
         }
 
         // GET: Accounts/Details/5

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HubbleSpace_Final.Entities.Color_Product>
+﻿@model PagedList.Core.IPagedList<HubbleSpace_Final.Entities.Color_Product>
 
 @{
     ViewData["Title"] = "Color_Product - Manage";
@@ -13,7 +13,7 @@
             <div class="table-data__tool-left">
                 <form asp-action="Index" method="get">
                     <div class="rs-select2--light rs-select2--sm">
-                        <input type="text" class="form-control" placeholder="Search for"  name="SearchString" value="@ViewData["Search"]" />
+                        <input type="text" class="form-control" placeholder="Search for" name="SearchString" value="@ViewData["Search"]" />
                     </div>
                     <button class="au-btn-filter" type="submit">
                         <i class="fa fa-search"></i>
@@ -36,19 +36,19 @@
                     <tr class="row">
 
                         <th class="col-3">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.product.Product_Name)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.First().product.Product_Name)</a>
                         </th>
 
                         <th class="col-3">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["ColorName"]">@Html.DisplayNameFor(model => model.Color_Name)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["ColorName"]">@Html.DisplayNameFor(model => model.First().Color_Name)</a>
                         </th>
 
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.Image)
+                            @Html.DisplayNameFor(model => model.First().Image)
                         </th>
 
                         <th class="col-2">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Date"]">@Html.DisplayNameFor(model => model.Date)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Date"]">@Html.DisplayNameFor(model => model.First().Date)</a>
                         </th>
 
                         <th class="col-2"></th>
@@ -94,7 +94,7 @@
                     }
                 </tbody>
             </table>
-            <partial name="_LayoutPage" />
+            <pager class="pager-container" list="@Model" asp-action="Index" asp-controller="Color_Product" />
         </div>
         <!-- END DATA TABLE -->
     </div>
