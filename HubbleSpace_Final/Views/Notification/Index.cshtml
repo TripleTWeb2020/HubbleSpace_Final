@@ -3,7 +3,7 @@
 @model IEnumerable<HubbleSpace_Final.Entities.NotificationPusher>
 @{
 	ViewData["Title"] = "Admin Page";
-	Layout = "_AdminLayout";
+	Layout = "_AdminDashLayout";
 }
 
 <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
@@ -19,7 +19,7 @@
 		$("#feeds").append(`
 			  <div class="ufee-alert alert with-close alert-success alert-dismissible fade show">
 				  <span class="badge badge-pill badge-success">
-					 New
+					 New message
 				  </span>
 					 ${data.message}
 			  </div>

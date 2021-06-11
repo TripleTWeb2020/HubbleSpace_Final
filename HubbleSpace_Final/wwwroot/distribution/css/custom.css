@@ -93,6 +93,9 @@ center {
 p{ 
     margin-bottom: 1rem !important;
 }
+b{
+    color: red
+}
 
 h3 a:hover{
     text-decoration: none !important;

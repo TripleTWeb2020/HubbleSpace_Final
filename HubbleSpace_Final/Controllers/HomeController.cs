@@ -33,6 +33,20 @@ namespace HubbleSpace_Final.Controllers
         {
             //string? userId = _userService.GetUserId();
             //var isLoggedIn = _userService.IsAuthenticated();
+            // Query for notification
+            var notification = from o in _context.Notifications.Include(o => o.User)
+                               where o.ReadStatus == ReadStatus.Unread && o.User.Id == _userService.GetUserId()
+                               select o.ID_Notifcation;
+            int ress = await notification.CountAsync();
+            if (ress != 0)
+            {
+                ViewData["Notifications"] = ress;
+            }
+            else
+            {
+                ViewData["Notifications"] = 0;
+            }
+
             return View(await _context.Banner.ToListAsync());
         }
 

@@ -98,9 +98,23 @@ namespace HubbleSpace_Final.Controllers
             ViewData["Profit Apr"] = queryProfitApr.Sum();
             ViewData["Profit May"] = queryProfitMay.Sum();
 
+            // Query for notification
+            var noti = from o in _context.Notifications.Include(o => o.User)
+                       where o.ReadStatus == ReadStatus.Unread && o.User.Id == _userService.GetUserId()
+                       select o.ID_Notifcation;
+            int res = await noti.CountAsync();
+			if(res != 0)
+			{
+                ViewData["Notifications"] = res;
+			}
+			else
+			{
+                ViewData["Notifications"] = 0;
+			}
+
 
             //Quantity
-            
+
             var queryQuanJan = from od in _context.OrderDetail
                                  join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
                                  where profit.Date_Create.Month == 01 select od.Quantity;
@@ -168,6 +182,51 @@ namespace HubbleSpace_Final.Controllers
 
             // Query for ToDoTask
             var Task = from o in _context.Schedule.Include(o => o.User).OrderBy(o => o.Date_Created) select o;
+
+            // Query for notification
+            var notification = from o in _context.Notifications.Include(o => o.User)
+                       where o.ReadStatus == ReadStatus.Unread && o.User.Id == _userService.GetUserId()
+                       select o.ID_Notifcation;
+            int ress = await notification.CountAsync();
+            if (ress != 0)
+            {
+                ViewData["Notifications"] = ress;
+            }
+            else
+            {
+                ViewData["Notifications"] = 0;
+            }
+            var list = from o in _context.Notifications
+                       where o.ReadStatus == ReadStatus.Unread && o.User.Id == _userService.GetUserId()
+                       select o;
+            var listt = list.ToList();
+
+            var lists = from o in _context.Notifications
+                        where o.User.Id == _userService.GetUserId()
+                        select o;
+            var listts = lists.OrderByDescending(o => o.Date_Created).Select(o => o.Content).ToList();
+            var listtss = lists.OrderByDescending(o => o.Date_Created).Select(o => o.Date_Created).ToList();
+            ViewData["Noti1st"] = listts.ElementAt(0);
+            ViewData["Noti2nd"] = listts.ElementAt(1);
+            ViewData["Noti3rd"] = listts.ElementAt(2);
+            ViewData["Noti4th"] = listts.ElementAt(3);
+            ViewData["Noti5th"] = listts.ElementAt(4);
+
+            ViewData["NotiD1st"] = listtss.ElementAt(0);
+            ViewData["NotiD2nd"] = listtss.ElementAt(1);
+            ViewData["NotiD3rd"] = listtss.ElementAt(2);
+            ViewData["NotiD4th"] = listtss.ElementAt(3);
+            ViewData["NotiD5th"] = listtss.ElementAt(4);
+
+
+            foreach (NotificationPusher notif in listt)
+            {
+                notif.ReadStatus = ReadStatus.Read;
+                _context.Update(notif);
+                await _context.SaveChangesAsync();
+            }
+
+
             return View(await Task.AsNoTracking().ToListAsync());
            
 

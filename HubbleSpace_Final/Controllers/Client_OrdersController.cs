@@ -16,12 +16,14 @@ namespace HubbleSpace_Final.Controllers
         private readonly MyDbContext _context;
         private readonly IUserService _userService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public Client_OrdersController( MyDbContext context, IUserService userService, UserManager<ApplicationUser> userManager)
+        public Client_OrdersController( MyDbContext context, IUserService userService, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userService = userService;
             _userManager = userManager;
+            _roleManager = roleManager;
 
         }
 
