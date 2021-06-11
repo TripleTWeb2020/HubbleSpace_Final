@@ -35,25 +35,73 @@
 			<span class="quantity">@ViewData["Notifications"]</span>
 		}
 
-		<div class="notifi-dropdown js-dropdown">
-			<div class="notifi__title">
-				@if ((int)ViewData["Notifications"] != 0)
-				{
-					<p>You have @ViewData["Notifications"] new notifications</p>
-				}
-				@if ((int)ViewData["Notifications"] == 0)
-				{
-					<p>You have @ViewData["Notifications"] notification</p>
-				}
+	<div class="notifi-dropdown js-dropdown">
+		<div class="notifi__title">
+			@if ((int)ViewData["Notifications"] != 0)
+			{
+				<p>You have @ViewData["Notifications"] new notifications</p>
+			}
+			@if ((int)ViewData["Notifications"] == 0)
+			{
+				<p>You have @ViewData["Notifications"] notification</p>
+			}
 
+		</div>
+		<div id="feed">
+		</div>
+		<div class="notifi__item">
+			<div class="bg-c3 img-cir img-40">
+				<i class="zmdi zmdi-file-text"></i>
 			</div>
-			<div id="feed">
-			</div>
-
-			<div class="notifi__footer">
-				<a asp-action="Index" asp-controller="Notification">All notifications</a>
+			<div class="content">
+				<p>@ViewData["Noti1st"]</p>
+				<span class="date">@ViewData["NotiD1st"]</span>
 			</div>
 		</div>
+		<div class="notifi__item">
+			<div class="bg-c3 img-cir img-40">
+				<i class="zmdi zmdi-file-text"></i>
+			</div>
+			<div class="content">
+				<div class="content">
+					<p>@ViewData["Noti2nd"]</p>
+					<span class="date">>@ViewData["NotiD2nd"]</span>
+				</div>
+			</div>
+		</div>
+		<div class="notifi__item">
+			<div class="bg-c3 img-cir img-40">
+				<i class="zmdi zmdi-file-text"></i>
+			</div>
+			<div class="content">
+				<p>@ViewData["Noti3rd"]</p>
+				<span class="date">@ViewData["NotiD3rd"]</span>
+			</div>
+		</div>
+		<div class="notifi__item">
+			<div class="bg-c3 img-cir img-40">
+				<i class="zmdi zmdi-file-text"></i>
+			</div>
+			<div class="content">
+				<p>@ViewData["Noti4th"]</p>
+				<span class="date">@ViewData["NotiD4th"]</span>
+			</div>
+		</div>
+		<div class="notifi__item">
+			<div class="bg-c3 img-cir img-40">
+				<i class="zmdi zmdi-file-text"></i>
+			</div>
+			<div class="content">
+				<div class="content">
+					<p>@ViewData["Noti5th"]</p>
+					<span class="date">@ViewData["NotiD5th"]</span>
+				</div>
+			</div>
+		</div>
+		<div class="notifi__footer">
+			<a asp-action="Index" asp-controller="Notification">All notifications</a>
+		</div>
+	</div>
 	</div>
 	<div class="account-wrap">
 		<div class="account-item clearfix js-item-menu">
