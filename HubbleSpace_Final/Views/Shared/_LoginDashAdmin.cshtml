@@ -21,13 +21,40 @@
 					<span class="date">@ViewData["TodayNoti"]</span>
 				</div>
 			</div>
-				
+
 		  `);
 	});
 
 </script>
 @if (_signInManager.IsSignedIn(User))
 {
+	<div class="noti__item js-item-menu">
+		<i class="zmdi zmdi-notifications"></i>
+		@if ((int)ViewData["Notifications"] != 0)
+		{
+			<span class="quantity">@ViewData["Notifications"]</span>
+		}
+
+		<div class="notifi-dropdown js-dropdown">
+			<div class="notifi__title">
+				@if ((int)ViewData["Notifications"] != 0)
+				{
+					<p>You have @ViewData["Notifications"] new notifications</p>
+				}
+				@if ((int)ViewData["Notifications"] == 0)
+				{
+					<p>You have @ViewData["Notifications"] notification</p>
+				}
+
+			</div>
+			<div id="feed">
+			</div>
+
+			<div class="notifi__footer">
+				<a asp-action="Index" asp-controller="Notification">All notifications</a>
+			</div>
+		</div>
+	</div>
 	<div class="account-wrap">
 		<div class="account-item clearfix js-item-menu">
 			<div class="content">
@@ -66,3 +93,4 @@
 		</div>
 	</div>
 }
+

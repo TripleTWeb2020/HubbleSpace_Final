@@ -29,6 +29,7 @@ namespace HubbleSpace_Final.Entities
 		[Required(ErrorMessage = "Không được để trống")]
 		public ReadStatus ReadStatus { get; set; }
 
+
 		public NotificationPusher()
 		{
 		}

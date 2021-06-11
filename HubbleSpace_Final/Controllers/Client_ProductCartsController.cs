@@ -10,7 +10,6 @@ using HubbleSpace_Final.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using HubbleSpace_Final.Helpers;
@@ -24,8 +23,6 @@ namespace HubbleSpace_Final.Controllers
 {
     public class Client_ProductCartsController : Controller
     {
-    
-
         private readonly ILogger<HomeController> _logger;
         private readonly MyDbContext _context;
         private readonly IUserService _userService;
@@ -284,6 +281,7 @@ namespace HubbleSpace_Final.Controllers
         {
             var userId = _userService.GetUserId();
             var user = await _userManager.FindByIdAsync(userId);
+            
 
             var model = GetCheckoutViewModel();
             var checkoutRequest = new CheckoutRequest()
@@ -368,6 +366,8 @@ namespace HubbleSpace_Final.Controllers
                 message = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, order.User.UserName)
             };
             await ChannelHelper.Trigger(data, "notification", "new_notification");
+        
+
 
             var message = new NotificationPusher()
             {
@@ -479,10 +479,11 @@ namespace HubbleSpace_Final.Controllers
                          message = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order,order.User.UserName)
                      };
             await ChannelHelper.Trigger(data, "notification", "new_notification");
+            var userr = await _userManager.FindByIdAsync("21114623-8ec9-4f38-92ca-89af9a82e22c");
 
             var message = new NotificationPusher()
             {
-                User = user,
+                User = userr,
                 Date_Created = DateTime.Now,
                 Content = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, order.User.UserName),
                 ReadStatus = ReadStatus.Unread

@@ -98,9 +98,23 @@ namespace HubbleSpace_Final.Controllers
             ViewData["Profit Apr"] = queryProfitApr.Sum();
             ViewData["Profit May"] = queryProfitMay.Sum();
 
+            // Query for notification
+            var noti = from o in _context.Notifications.Include(o => o.User)
+                       where o.ReadStatus == ReadStatus.Unread && o.User.Id == _userService.GetUserId()
+                       select o.ID_Notifcation;
+            int res = await noti.CountAsync();
+			if(res != 0)
+			{
+                ViewData["Notifications"] = res;
+			}
+			else
+			{
+                ViewData["Notifications"] = 0;
+			}
+
 
             //Quantity
-            
+
             var queryQuanJan = from od in _context.OrderDetail
                                  join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
                                  where profit.Date_Create.Month == 01 select od.Quantity;
@@ -168,6 +182,8 @@ namespace HubbleSpace_Final.Controllers
 
             // Query for ToDoTask
             var Task = from o in _context.Schedule.Include(o => o.User).OrderBy(o => o.Date_Created) select o;
+
+            
             return View(await Task.AsNoTracking().ToListAsync());
            
 
