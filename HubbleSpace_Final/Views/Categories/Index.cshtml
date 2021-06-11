@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HubbleSpace_Final.Entities.Category>
+﻿@model PagedList.Core.IPagedList<HubbleSpace_Final.Entities.Category>
 
 @{
     ViewData["Title"] = "Category - Manage";
@@ -34,10 +34,10 @@
                 <thead>
                     <tr>
                         <th>
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.Category_Name)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.First().Category_Name)</a>
                         </th>
                         <th>
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Object"]">@Html.DisplayNameFor(model => model.Object)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Object"]">@Html.DisplayNameFor(model => model.First().Object)</a>
                         </th>
                         <th></th>
                     </tr>
@@ -70,7 +70,7 @@
                     }
                 </tbody>
             </table>
-            <partial name="_LayoutPage" />
+            <pager class="pager-container" list="@Model" asp-action="Index" asp-controller="Color_Product" />
         </div>
         <!-- END DATA TABLE -->
     </div>

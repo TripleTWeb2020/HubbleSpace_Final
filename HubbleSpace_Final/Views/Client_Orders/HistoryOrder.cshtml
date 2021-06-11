@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HubbleSpace_Final.Entities.Order>
+﻿@model PagedList.Core.IPagedList<HubbleSpace_Final.Entities.Order>
 
 @{
     ViewData["Title"] = "History Order";
@@ -37,22 +37,22 @@
                             <thead>
                                 <tr class="row">
                                     <th class="col-2">
-                                        @Html.DisplayNameFor(model => model.TotalMoney)
+                                        @Html.DisplayNameFor(model => model.First().TotalMoney)
                                     </th>
                                     <th class="col-1">
-                                        @Html.DisplayNameFor(model => model.Discount)
+                                        @Html.DisplayNameFor(model => model.First().Discount)
                                     </th>
                                     <th class="col-2">
-                                        <a asp-controller="Client_Orders" asp-action="HistoryOrder" asp-route-sortOrder="@ViewData["Date"]">@Html.DisplayNameFor(model => model.Date_Create)</a>
+                                        <a asp-controller="Client_Orders" asp-action="HistoryOrder" asp-route-sortOrder="@ViewData["Date"]">@Html.DisplayNameFor(model => model.First().Date_Create)</a>
                                     </th>
                                     <th class="col-2">
-                                        @Html.DisplayNameFor(model => model.Address)
+                                        @Html.DisplayNameFor(model => model.First().Address)
                                     </th>
                                     <th class="col-2">
-                                        @Html.DisplayNameFor(model => model.SDT)
+                                        @Html.DisplayNameFor(model => model.First().SDT)
                                     </th>
                                     <th class="col-1">
-                                        <a asp-controller="Client_Orders" asp-action="HistoryOrder" asp-route-sortOrder="@ViewData["Process"]">@Html.DisplayNameFor(model => model.Process)</a>
+                                        <a asp-controller="Client_Orders" asp-action="HistoryOrder" asp-route-sortOrder="@ViewData["Process"]">@Html.DisplayNameFor(model => model.First().Process)</a>
                                     </th>
                                     <th class="col-2"></th>
                                 </tr>
@@ -60,66 +60,36 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                <tr class="tr-shadow row">
-                                    <td class="col-2">
-                                        @item.TotalMoney.ToString("n0")
-                                    </td>
-                                    <td class="col-1">
-                                        @item.Discount.ToString("n0")
-                                    </td>
-                                    <td class="col-2">
-                                        @Html.DisplayFor(modelItem => item.Date_Create)
-                                    </td>
-                                    <td class="col-2">
-                                        @Html.DisplayFor(modelItem => item.Address)
-                                    </td>
-                                    <td class="col-2">
-                                        @Html.DisplayFor(modelItem => item.SDT)
-                                    </td>
-                                    <td class="col-1">
-                                        @Html.DisplayFor(modelItem => item.Process)
-                                    </td>
-                                    <td class="col-2">
-                                        <p class="buttons">
-                                            <a asp-action="OrderDetail" asp-route-id="@item.ID_Order" class="btn btn-outline-primary">View detail</a>
-                                        </p>
-                                    </td>
-                                </tr>
+                                    <tr class="tr-shadow row">
+                                        <td class="col-2">
+                                            @item.TotalMoney.ToString("n0")
+                                        </td>
+                                        <td class="col-1">
+                                            @item.Discount.ToString("n0")
+                                        </td>
+                                        <td class="col-2">
+                                            @Html.DisplayFor(modelItem => item.Date_Create)
+                                        </td>
+                                        <td class="col-2">
+                                            @Html.DisplayFor(modelItem => item.Address)
+                                        </td>
+                                        <td class="col-2">
+                                            @Html.DisplayFor(modelItem => item.SDT)
+                                        </td>
+                                        <td class="col-1">
+                                            @Html.DisplayFor(modelItem => item.Process)
+                                        </td>
+                                        <td class="col-2">
+                                            <p class="buttons">
+                                                <a asp-action="OrderDetail" asp-route-id="@item.ID_Order" class="btn btn-outline-primary">View detail</a>
+                                            </p>
+                                        </td>
+                                    </tr>
                                     <tr class="spacer"></tr>
                                 }
                             </tbody>
                         </table>
-                        <div class="pages" style="margin: 20px">
-                            <nav aria-label="Page navigation example" class="d-flex justify-content-center">
-                                <ul class="pagination">
-                                    @{
-                                        int count = 1;
-                                        if ((int)ViewData["CountForTake"] - 1 != 1)
-                                        {
-                                            <li class="page-item"><a asp-action="Index" asp-route-CountForTake="@ViewData["CountForTake"]-2" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
-                                        }
-                                        while (count <= (int)ViewData["total_take"])
-                                        {
-                                            if (count == (int)ViewData["CountForTake"] - 1)
-                                            {
-                                                <li class="page-item active"><a class="page-link"><text>@count</text></a></li>
-                                                count++;
-                                            }
-                                            else
-                                            {
-                                                <li class="page-item"><a asp-controller="Client_Orders" asp-action="HistoryOrder" asp-route-CountForTake="@count" class="page-link"><text>@count</text></a></li>
-                                                count++;
-                                            }
-                                        }
-
-                                        if ((int)ViewData["CountForTake"] - 1 < (int)ViewData["total_take"])
-                                        {
-                                            <li class="page-item"><a asp-controller="Client_Orders" asp-action="HistoryOrder" asp-route-CountForTake="@ViewData["CountForTake"]" aria-label="Next" class="page-link"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
-                                        }
-                                    }
-                                </ul>
-                            </nav>
-                        </div>
+                        <pager class="pager-container" list="@Model" asp-action="HistoryOrder" asp-controller="Client_Orders" />
                     </div>
                     <!-- END DATA TABLE -->
                 </div>

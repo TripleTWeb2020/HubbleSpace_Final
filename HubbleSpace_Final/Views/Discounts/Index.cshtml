@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HubbleSpace_Final.Entities.Discount>
+﻿@model PagedList.Core.IPagedList<HubbleSpace_Final.Entities.Discount>
 
 @{
     ViewData["Title"] = "Discount - Manage";
@@ -32,16 +32,16 @@
                 <thead>
                     <tr class="row">
                         <th class="col-3">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.Code_Discount)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.First().Code_Discount)</a>
                         </th>
                         <th class="col-3">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Date"]">@Html.DisplayNameFor(model => model.Expire)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Date"]">@Html.DisplayNameFor(model => model.First().Expire)</a>
                         </th>
                         <th class="col-2">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Value"]">@Html.DisplayNameFor(model => model.Value)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Value"]">@Html.DisplayNameFor(model => model.First().Value)</a>
                         </th>
                         <th class="col-2">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Turn"]">@Html.DisplayNameFor(model => model.NumberofTurns)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Turn"]">@Html.DisplayNameFor(model => model.First().NumberofTurns)</a>
                         </th>
                         <th class="col-2"></th>
                     </tr>
@@ -80,7 +80,7 @@
                     }
                 </tbody>
             </table>
-            <partial name="_LayoutPage" />
+            <pager class="pager-container" list="@Model" asp-action="Index" asp-controller="Discounts" />
         </div>
         <!-- END DATA TABLE -->
     </div>

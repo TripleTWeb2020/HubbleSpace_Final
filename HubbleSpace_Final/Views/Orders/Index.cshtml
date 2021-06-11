@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HubbleSpace_Final.Entities.Order>
+﻿@model PagedList.Core.IPagedList<HubbleSpace_Final.Entities.Order>
 
 @{
     ViewData["Title"] = "Order - Manage";
@@ -33,25 +33,25 @@
                 <thead>
                     <tr class="row">
                         <th class="col-1">
-                            @Html.DisplayNameFor(model => model.TotalMoney)
+                            @Html.DisplayNameFor(model => model.First().TotalMoney)
                         </th>
                         <th class="col-1">
-                            @Html.DisplayNameFor(model => model.Discount)
+                            @Html.DisplayNameFor(model => model.First().Discount)
                         </th>
                         <th class="col-2">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Date"]">@Html.DisplayNameFor(model => model.Date_Create)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Date"]">@Html.DisplayNameFor(model => model.First().Date_Create)</a>
                         </th>
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.Address)
+                            @Html.DisplayNameFor(model => model.First().Address)
                         </th>
                         <th class="col-1">
-                            @Html.DisplayNameFor(model => model.SDT)
+                            @Html.DisplayNameFor(model => model.First().SDT)
                         </th>
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.User)
+                            @Html.DisplayNameFor(model => model.First().User)
                         </th>
                         <th class="col-1">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Process"]">@Html.DisplayNameFor(model => model.Process)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Process"]">@Html.DisplayNameFor(model => model.First().Process)</a>
                         </th>
                         <th class="col-2"></th>
                     </tr>
@@ -59,47 +59,47 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr class="tr-shadow row">
-                        <td class="col-1">
-                            @item.TotalMoney.ToString("n0")
-                        </td>
-                        <td class="col-1">
-                            @item.Discount.ToString("n0")
-                        </td>
-                        <td class="col-2">
-                            @Html.DisplayFor(modelItem => item.Date_Create)
-                        </td>
-                        <td class="col-2">
-                            @Html.DisplayFor(modelItem => item.Address)
-                        </td>
-                        <td class="col-1">
-                            @Html.DisplayFor(modelItem => item.SDT)
-                        </td>
-                        <td class="col-2">
-                            @Html.DisplayFor(modelItem => item.User.UserName)
-                        </td>
-                        <td class="col-1">
-                            @Html.DisplayFor(modelItem => item.Process)
-                        </td>
-                        <td class="col-2">
-                            <div class="table-data-feature">
-                                <a class="item" asp-action="Edit" asp-route-id="@item.ID_Order" data-toggle="tooltip" data-placement="top" title="Edit">
-                                    <i class="zmdi zmdi-edit"></i>
-                                </a>
-                                <a class="item" asp-action="Delete" asp-route-id="@item.ID_Order" data-toggle="tooltip" data-placement="top" title="Delete">
-                                    <i class="zmdi zmdi-delete"></i>
-                                </a>
-                                <a class="item" asp-action="Details" asp-route-id="@item.ID_Order " data-toggle="tooltip" data-placement="top" title="More">
-                                    <i class="zmdi zmdi-more"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                        <tr class="tr-shadow row">
+                            <td class="col-1">
+                                @item.TotalMoney.ToString("n0")
+                            </td>
+                            <td class="col-1">
+                                @item.Discount.ToString("n0")
+                            </td>
+                            <td class="col-2">
+                                @Html.DisplayFor(modelItem => item.Date_Create)
+                            </td>
+                            <td class="col-2">
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            <td class="col-1">
+                                @Html.DisplayFor(modelItem => item.SDT)
+                            </td>
+                            <td class="col-2">
+                                @Html.DisplayFor(modelItem => item.User.UserName)
+                            </td>
+                            <td class="col-1">
+                                @Html.DisplayFor(modelItem => item.Process)
+                            </td>
+                            <td class="col-2">
+                                <div class="table-data-feature">
+                                    <a class="item" asp-action="Edit" asp-route-id="@item.ID_Order" data-toggle="tooltip" data-placement="top" title="Edit">
+                                        <i class="zmdi zmdi-edit"></i>
+                                    </a>
+                                    <a class="item" asp-action="Delete" asp-route-id="@item.ID_Order" data-toggle="tooltip" data-placement="top" title="Delete">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </a>
+                                    <a class="item" asp-action="Details" asp-route-id="@item.ID_Order " data-toggle="tooltip" data-placement="top" title="More">
+                                        <i class="zmdi zmdi-more"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
                         <tr class="spacer"></tr>
                     }
                 </tbody>
             </table>
-            <partial name="_LayoutPage" />
+            <pager class="pager-container" list="@Model" asp-action="Index" asp-controller="Orders" />
         </div>
         <!-- END DATA TABLE -->
     </div>

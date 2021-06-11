@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HubbleSpace_Final.Entities.Product>
+﻿@model PagedList.Core.IPagedList<HubbleSpace_Final.Entities.Product>
 
 @{
     ViewData["Title"] = "Product - Manage";
@@ -32,19 +32,19 @@
                 <thead>
                     <tr class="row">
                         <th class="col-2">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.Product_Name)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.First().Product_Name)</a>
                         </th>
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.Price_Product)
+                            @Html.DisplayNameFor(model => model.First().Price_Product)
                         </th>
                         <th class="col-2">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Price"]">@Html.DisplayNameFor(model => model.Price_Sale)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Price"]">@Html.DisplayNameFor(model => model.First().Price_Sale)</a>
                         </th>
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.Brand.Brand_Name)
+                            @Html.DisplayNameFor(model => model.First().Brand.Brand_Name)
                         </th>
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.category.Category_Name)
+                            @Html.DisplayNameFor(model => model.First().category.Category_Name)
                         </th>
                         <th class="col-2"></th>
                     </tr>
@@ -87,7 +87,7 @@
                     }
                 </tbody>
             </table>
-            <partial name="_LayoutPage" />
+            <pager class="pager-container" list="@Model" asp-action="Index" asp-controller="Products" />
         </div>
         <!-- END DATA TABLE -->
     </div>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HubbleSpace_Final.Entities;
+using PagedList.Core;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -19,7 +20,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Brands
-        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["Search"] = searchString;
@@ -42,15 +43,9 @@ namespace HubbleSpace_Final.Controllers
                     break;
             }
 
-            int take = 10;
-            double total_product = Brands.Count();
+            PagedList<Brand> model = new PagedList<Brand>(Brands, page, 10);
 
-            int total_take = (int)Math.Ceiling(total_product / take);
-
-            Brands = Brands.Skip((CountForTake - 1) * take).Take(take);
-            ViewData["total_take"] = total_take;
-            ViewData["CountForTake"] = CountForTake + 1;
-            return View(await Brands.AsNoTracking().ToListAsync());
+            return View(model);
         }
 
 

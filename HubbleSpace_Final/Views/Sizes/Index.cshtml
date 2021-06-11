@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HubbleSpace_Final.Entities.Size>
+﻿@model PagedList.Core.IPagedList<HubbleSpace_Final.Entities.Size>
 
 @{
     ViewData["Title"] = "Size - Manage";
@@ -35,23 +35,23 @@
                 <thead>
                     <tr class="row">
                         <th class="col-3">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.color_Product.product.Product_Name)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.First().color_Product.product.Product_Name)</a>
                         </th>
 
                         <th class="col-3">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["ColorName"]">@Html.DisplayNameFor(model => model.color_Product.Color_Name)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["ColorName"]">@Html.DisplayNameFor(model => model.First().color_Product.Color_Name)</a>
                         </th>
 
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.color_Product.Image)
+                            @Html.DisplayNameFor(model => model.First().color_Product.Image)
                         </th>
 
                         <th class="col-1">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Size"]">@Html.DisplayNameFor(model => model.SizeNumber)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Size"]">@Html.DisplayNameFor(model => model.First().SizeNumber)</a>
                         </th>
 
                         <th class="col-1">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Quantity"]">@Html.DisplayNameFor(model => model.Quantity)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Quantity"]">@Html.DisplayNameFor(model => model.First().Quantity)</a>
                         </th>
 
                         <th class="col-2"></th>
@@ -94,7 +94,7 @@
                     }
                 </tbody>
             </table>
-            <partial name="_LayoutPage" />
+            <pager class="pager-container" list="@Model" asp-action="Index" asp-controller="Sizes" />
         </div>
         <!-- END DATA TABLE -->
     </div>

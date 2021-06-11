@@ -11,6 +11,7 @@ using HubbleSpace_Final.Services;
 using Microsoft.AspNetCore.Identity;
 using HubbleSpace_Final.Models;
 using Microsoft.AspNetCore.Authorization;
+using PagedList.Core;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -29,7 +30,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Orders
-        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Process"] = sortOrder == "Process" ? "process_desc" : "Process";
@@ -61,16 +62,9 @@ namespace HubbleSpace_Final.Controllers
                     break;
             }
 
-            int take = 10;
-            double total_product = Orders.Count();
+            PagedList<Order> model = new PagedList<Order>(Orders, page, 10);
 
-            int total_take = (int)Math.Ceiling(total_product / take);
-
-            Orders = Orders.Skip((CountForTake - 1) * take).Take(take);
-            ViewData["total_take"] = total_take;
-            ViewData["CountForTake"] = CountForTake + 1;
-
-            return View(await Orders.AsNoTracking().ToListAsync());
+            return View(model);
         }
 
 

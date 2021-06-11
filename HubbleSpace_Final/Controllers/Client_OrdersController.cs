@@ -8,6 +8,7 @@ using HubbleSpace_Final.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PagedList.Core;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -28,7 +29,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         [Route("/HistoryOrder", Name = "HistoryOrder")]
-        public async Task<IActionResult> HistoryOrder(string sortOrder, string searchString, int CountForTake = 1)
+        public async Task<IActionResult> HistoryOrder(string sortOrder, string searchString, int page = 1)
         {
             var userId = _userService.GetUserId();
             var user = await _userManager.FindByIdAsync(userId);
@@ -62,19 +63,12 @@ namespace HubbleSpace_Final.Controllers
                     break;
             }
 
-            int take = 5;
-            double total_product = Orders.Count();
+            PagedList<Order> model = new PagedList<Order>(Orders, page, 10);
 
-            int total_take = (int)Math.Ceiling(total_product / take);
-
-            Orders = Orders.Skip((CountForTake - 1) * take).Take(take);
-            ViewData["total_take"] = total_take;
-            ViewData["CountForTake"] = CountForTake + 1;
-
-            return View(await Orders.AsNoTracking().ToListAsync());
+            return View(model);
         }
 
-        public async Task<IActionResult> OrderDetail(int id, string sortOrder, string searchString, int CountForTake = 1)
+        public async Task<IActionResult> OrderDetail(int id, string sortOrder, string searchString, int page = 1)
         {
             ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";
@@ -114,16 +108,9 @@ namespace HubbleSpace_Final.Controllers
                     break;
             }
 
-            int take = 5;
-            double total_product = orderDetails.Count();
+            PagedList<OrderDetail> model = new PagedList<OrderDetail>(orderDetails, page, 10);
 
-            int total_take = (int)Math.Ceiling(total_product / take);
-
-            orderDetails = orderDetails.Skip((CountForTake - 1) * take).Take(take);
-            ViewData["total_take"] = total_take;
-            ViewData["CountForTake"] = CountForTake + 1;
-
-            return View(await orderDetails.AsNoTracking().ToListAsync());
+            return View(model);
         }
 
     }

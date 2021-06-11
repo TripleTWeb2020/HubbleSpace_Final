@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HubbleSpace_Final.Entities.OrderDetail>
+﻿@model PagedList.Core.IPagedList<HubbleSpace_Final.Entities.OrderDetail>
 
 @{
     ViewData["Title"] = "OrderDetail - Manage";
@@ -35,27 +35,27 @@
                 <thead>
                     <tr class="row">
                         <th class="col-2">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.Color_Product.product.Product_Name)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.First().Color_Product.product.Product_Name)</a>
                         </th>
 
                         <th class="col-2">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["ColorName"]">@Html.DisplayNameFor(model => model.Color_Product.Color_Name)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["ColorName"]">@Html.DisplayNameFor(model => model.First().Color_Product.Color_Name)</a>
                         </th>
 
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.Color_Product.Image)
+                            @Html.DisplayNameFor(model => model.First().Color_Product.Image)
                         </th>
 
                         <th class="col-1">
-                            @Html.DisplayNameFor(model => model.Size)
+                            @Html.DisplayNameFor(model => model.First().Size)
                         </th>
 
                         <th class="col-1">
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Quantity"]">@Html.DisplayNameFor(model => model.Quantity)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["Quantity"]">@Html.DisplayNameFor(model => model.First().Quantity)</a>
                         </th>
 
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.order)
+                            @Html.DisplayNameFor(model => model.First().order)
                         </th>
 
                         <th class="col-2"></th>
@@ -106,7 +106,7 @@
                     }
                 </tbody>
             </table>
-            <partial name="_LayoutPage" />
+            <pager class="pager-container" list="@Model" asp-action="Index" asp-controller="OrderDetails" />
         </div>
         <!-- END DATA TABLE -->
     </div>

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HubbleSpace_Final.Entities;
 using Microsoft.AspNetCore.Authorization;
+using PagedList.Core;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -21,7 +22,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Discounts
-        public async Task<IActionResult> Index(string sortOrder, string searchString, int CountForTake = 1)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Name"] = sortOrder == "Name" ? "name_desc" : "Name";
@@ -69,16 +70,9 @@ namespace HubbleSpace_Final.Controllers
                     break;
             }
 
-            int take = 10;
-            double total_product = Discounts.Count();
+            PagedList<Discount> model = new PagedList<Discount>(Discounts, page, 10);
 
-            int total_take = (int)Math.Ceiling(total_product / take);
-
-            Discounts = Discounts.Skip((CountForTake - 1) * take).Take(take);
-            ViewData["total_take"] = total_take;
-            ViewData["CountForTake"] = CountForTake + 1;
-
-            return View(await Discounts.AsNoTracking().ToListAsync());
+            return View(model);
         }
 
         // GET: Discounts/Details/5

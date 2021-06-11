@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HubbleSpace_Final.Entities.Img_Product>
+﻿@model PagedList.Core.IPagedList<HubbleSpace_Final.Entities.Img_Product>
 
 @{
     ViewData["Title"] = "Img_Product - Manage";
@@ -35,13 +35,13 @@
                 <thead>
                     <tr class="row">
                         <th class="col-3">
-                            <a asp-action="Index" asp-route-id="@ViewBag.ID_ColorProduct" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.color_Product.product.Product_Name)</a>
+                            <a asp-action="Index" asp-route-id="@ViewBag.ID_ColorProduct" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.First().color_Product.product.Product_Name)</a>
                         </th>
                         <th class="col-3">
-                            <a asp-action="Index" asp-route-id="@ViewBag.ID_ColorProduct" asp-route-sortOrder="@ViewData["ColorName"]">@Html.DisplayNameFor(model => model.color_Product.Color_Name)</a>
+                            <a asp-action="Index" asp-route-id="@ViewBag.ID_ColorProduct" asp-route-sortOrder="@ViewData["ColorName"]">@Html.DisplayNameFor(model => model.First().color_Product.Color_Name)</a>
                         </th>
                         <th class="col-3">
-                            @Html.DisplayNameFor(model => model.Photo)
+                            @Html.DisplayNameFor(model => model.First().Photo)
                         </th>
                         <th class="col-3"></th>
                     </tr>
@@ -80,7 +80,7 @@
                     }
                 </tbody>
             </table>
-            <partial name="_LayoutPage" />
+            <pager class="pager-container" list="@Model" asp-action="Index" asp-controller="Img_Product" />
         </div>
         <!-- END DATA TABLE -->
     </div>
