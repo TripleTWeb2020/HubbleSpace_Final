@@ -258,18 +258,20 @@
     var proMar = ctx.getAttribute("data-proMar")
     var proApr = ctx.getAttribute("data-proApr")
     var proMay = ctx.getAttribute("data-proMay")
+    var proJune = ctx.getAttribute("data-proJune")
     var proJanField = parseInt(proJan)
     var proFebField = parseInt(proFeb)
     var proMarField = parseInt(proMar)
     var proAprField = parseInt(proApr)
     var proMayField = parseInt(proMay)
-    var data1 = [proJanField, proFebField, proMarField, proAprField, proMayField]
+    var proJuneField = parseInt(proJune)
+    var data1 = [proJanField, proFebField, proMarField, proAprField, proMayField, proJuneField]
     if (ctx) {
       ctx.height = 250;
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['January', 'February', 'March', 'April', 'May'],
+          labels: ['January', 'February', 'March', 'April', 'May','June'],
           datasets: [
             {
               label: 'My First dataset',
@@ -339,18 +341,20 @@
     var quanMar = ctx.getAttribute("data-quanMar")
     var quanApr = ctx.getAttribute("data-quanApr")
     var quanMay = ctx.getAttribute("data-quanMay")
+    var quanJune = ctx.getAttribute("data-quanJune")
     var quanJanField = parseInt(quanJan)
     var quanFebField = parseInt(quanFeb)
     var quanMarField = parseInt(quanMar)
     var quanAprField = parseInt(quanApr)
     var quanMayField = parseInt(quanMay)
-    var data1 = [quanJanField, quanFebField, quanMarField, quanAprField, quanMayField]
+    var quanJuneField = parseInt(quanJune)
+      var data1 = [quanJanField, quanFebField, quanMarField, quanAprField, quanMayField, quanJuneField]
     if (ctx) {
       ctx.height = 250;
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['January', 'February', 'March', 'April', 'May'],
+          labels: ['January', 'February', 'March', 'April', 'May','June'],
           datasets: [
             {
               label: 'My First dataset',
