@@ -39,8 +39,8 @@ namespace HubbleSpace_Final
                     .AddGoogle(options =>
                     {
                         IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
-                        options.ClientId = Configuration["App:GoogleClientId"];
-                        options.ClientSecret = Configuration["App:GoogleClientSecret"];
+                        options.ClientId = "97229891671-sqgug92g9ld9g3d6hg7njtc1pvs852m2.apps.googleusercontent.com";
+                        options.ClientSecret = "u_ENyz7ETZKJPlGcSPWtYYlA";
                         options.SignInScheme = IdentityConstants.ExternalScheme;
                     })
                     .AddFacebook(options => {
