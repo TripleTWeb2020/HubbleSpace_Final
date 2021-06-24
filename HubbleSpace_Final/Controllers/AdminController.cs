@@ -93,11 +93,16 @@ namespace HubbleSpace_Final.Controllers
             var queryProfitMay = from od in _context.Order
                                where od.Date_Create.Month == 05
                                select od.TotalMoney;
+            var queryProfitJune = from od in _context.Order
+                                  where od.Date_Create.Month == 06
+                                  select od.TotalMoney;
+
             ViewData["Profit Jan"] = queryProfitJan.Sum();
             ViewData["Profit Feb"] = queryProfitFeb.Sum();
             ViewData["Profit Mar"] = queryProfitMarch.Sum();
             ViewData["Profit Apr"] = queryProfitApr.Sum();
             ViewData["Profit May"] = queryProfitMay.Sum();
+            ViewData["Profit June"] = queryProfitJune.Sum();
 
             // Query for notification
             var noti = from o in _context.Notifications.Include(o => o.User)
@@ -135,13 +140,18 @@ namespace HubbleSpace_Final.Controllers
                                  join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
                                  where profit.Date_Create.Month == 05
                                  select od.Quantity;
+            var queryQuanJune = from od in _context.OrderDetail
+                               join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
+                               where profit.Date_Create.Month == 06
+                               select od.Quantity;
+
 
             ViewData["Quan Jan"] = queryQuanJan.Sum();
             ViewData["Quan Feb"] = queryQuanFeb.Sum();
             ViewData["Quan Mar"] = queryQuanMarch.Sum();
             ViewData["Quan Apr"] = queryQuanApr.Sum();
             ViewData["Quan May"] = queryQuanMay.Sum();
-
+            ViewData["Quan June"] = queryQuanJune.Sum();
             //User toDo task
 
             var queryDate = DateTime.Today.Day.ToString();
