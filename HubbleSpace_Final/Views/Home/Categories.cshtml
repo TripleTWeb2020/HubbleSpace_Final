@@ -22,46 +22,13 @@
 
                 <!--*** MENUS AND FILTERS ***-->
                 <div class="col-lg-3">
+                    <partial name="_MenuCategories" />
                     <div class="card sidebar-menu mb-4">
                         <div class="card-header">
-                            <h3 class="h4 card-title">Categories</h3>
-                        </div>
-                        <div class="card-body">
-                            <ul class="nav nav-pills flex-column category-menu">
-                                <li>
-                                    <a asp-action="Categories" asp-route-Object="Men" class="nav-link">Men</a>
-                                    <ul class="list-unstyled">
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Originals" class="nav-link-custom">Originals</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Running" class="nav-link-custom">Running</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Training" class="nav-link-custom">Training</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Football" class="nav-link-custom">Football</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Basketball" class="nav-link-custom">Basketball</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Men" asp-route-CategoriesName="Tennis" class="nav-link-custom">Tennis</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a asp-action="Categories" asp-route-Object="Women" class="nav-link">Women</a>
-                                    <ul class="list-unstyled">
-                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Originals" class="nav-link-custom">Originals</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Running" class="nav-link-custom">Running</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Training" class="nav-link-custom">Training</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Women" asp-route-CategoriesName="Tennis" class="nav-link-custom">Tennis</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a asp-action="Categories" asp-route-Object="Kids" class="nav-link">Kids</a>
-                                    <ul class="list-unstyled">
-                                        <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Originals" class="nav-link-custom">Originals</a></li>
-                                        <li><a asp-action="Categories" asp-route-Object="Kids" asp-route-CategoriesName="Running" class="nav-link-custom">Running</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card sidebar-menu mb-4">
-                        <div class="card-header">
-                            <h3 class="h4 card-title">Filter <a asp-action="Categories" asp-route-Object="@ViewBag.Object" asp-route-CategoriesName="@ViewBag.CategoriesName"
-                                                            asp-route-searchString="@ViewBag.Search" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
+                            <h3 class="h4 card-title">
+                                Filter <a asp-action="Categories" asp-route-Object="@ViewBag.Object" asp-route-CategoriesName="@ViewBag.CategoriesName"
+                                          asp-route-searchString="@ViewBag.Search" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a>
+                            </h3>
                         </div>
                         <div class="card-body">
                             <form asp-action="Categories" method="get">
@@ -91,7 +58,7 @@
                                     </div>
                                     <div class="zmdi-radio">
                                         <label>
-                                            <input name="brand" type="radio"  value="Reebok"> Reebok
+                                            <input name="brand" type="radio" value="Reebok"> Reebok
                                         </label>
                                     </div>
                                 </div>

@@ -2,7 +2,7 @@
 
 <ul class="list-unstyled">
     @{
-        var itemObjects = context.Category.Where(c => c.Object == "Men").Distinct();
+        var itemObjects = context.Category.Where(c => c.Object == "Men").Distinct().OrderBy(c => c.Category_Name);
         foreach (var i in itemObjects)
         {
             <li><a asp-action="Categories" asp-route-Object="@i.Object" asp-route-CategoriesName="@i.Category_Name">@i.Category_Name</a></li>

@@ -1,0 +1,47 @@
+﻿@inject HubbleSpace_Final.Entities.MyDbContext context
+
+<div class="card sidebar-menu mb-4">
+    <div class="card-header">
+        <h3 class="h4 card-title">Categories</h3>
+    </div>
+    <div class="card-body">
+        <ul class="nav nav-pills flex-column category-menu">
+            <li>
+                <a asp-action="Categories" asp-route-Object="Men" class="nav-link">Men</a>
+                <ul class="list-unstyled">
+                    @{
+                        var itemObjects = context.Category.Where(c => c.Object == "Men").Distinct().OrderBy(c => c.Category_Name);
+                        foreach (var i in itemObjects)
+                        {
+                            <li><a asp-action="Categories" asp-route-Object="@i.Object" asp-route-CategoriesName="@i.Category_Name" class="nav-link-custom">@i.Category_Name</a></li>
+                        }
+                    }
+                </ul>
+            </li>
+            <li>
+                <a asp-action="Categories" asp-route-Object="Women" class="nav-link">Women</a>
+                <ul class="list-unstyled">
+                    @{
+                        itemObjects = context.Category.Where(c => c.Object == "Women").Distinct().OrderBy(c => c.Category_Name);
+                        foreach (var i in itemObjects)
+                        {
+                            <li><a asp-action="Categories" asp-route-Object="@i.Object" asp-route-CategoriesName="@i.Category_Name" class="nav-link-custom">@i.Category_Name</a></li>
+                        }
+                    }
+                </ul>
+            </li>
+            <li>
+                <a asp-action="Categories" asp-route-Object="Kids" class="nav-link">Kids</a>
+                <ul class="list-unstyled">
+                    @{
+                        itemObjects = context.Category.Where(c => c.Object == "Kids").Distinct().OrderBy(c => c.Category_Name);
+                        foreach (var i in itemObjects)
+                        {
+                            <li><a asp-action="Categories" asp-route-Object="@i.Object" asp-route-CategoriesName="@i.Category_Name" class="nav-link-custom">@i.Category_Name</a></li>
+                        }
+                    }
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
