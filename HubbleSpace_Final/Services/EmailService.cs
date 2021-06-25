@@ -54,12 +54,12 @@ namespace HubbleSpace_Final.Services
             NetworkCredential networkCredential = new NetworkCredential(_smtpConfig.UserName, _smtpConfig.Password);
             SmtpClient smtpClient = new SmtpClient
             {
-                Host = _smtpConfig.Host,
-                Port = _smtpConfig.Port,
-                EnableSsl = _smtpConfig.EnableSSL,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = _smtpConfig.UseDefaultCredentials,
-                Credentials = new System.Net.NetworkCredential("4401104201@student.hcmup.edu.vn", "Tu22052000"),
+                Credentials = new System.Net.NetworkCredential("tripletweb@gmail.com","Pntt2202"),
+                Port = _smtpConfig.Port,
+                Host = _smtpConfig.Host,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                EnableSsl = _smtpConfig.EnableSSL,
                 TargetName = "STARTTLS/smtp.office365.com"
             };
             mail.BodyEncoding = Encoding.Default;
