@@ -57,6 +57,7 @@ namespace HubbleSpace_Final.Services
                 Host = _smtpConfig.Host,
                 Port = _smtpConfig.Port,
                 EnableSsl = _smtpConfig.EnableSSL,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = _smtpConfig.UseDefaultCredentials,
                 Credentials = networkCredential
             };
