@@ -59,7 +59,8 @@ namespace HubbleSpace_Final.Services
                 EnableSsl = _smtpConfig.EnableSSL,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = _smtpConfig.UseDefaultCredentials,
-                Credentials = networkCredential
+                Credentials = new System.Net.NetworkCredential("4401104201@student.hcmup.edu.vn", "Tu22052000"),
+                TargetName = "STARTTLS/smtp.office365.com"
             };
             mail.BodyEncoding = Encoding.Default;
             await smtpClient.SendMailAsync(mail);
