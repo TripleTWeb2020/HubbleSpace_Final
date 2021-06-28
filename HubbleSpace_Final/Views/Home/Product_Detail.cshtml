@@ -6,12 +6,6 @@
     var hostName = $"{Context.Request.Scheme}://{Context.Request.Host}";
 
 }
-@section SocialSeo{
-    <meta property="og:title" content="@Model.FirstOrDefault().color_Product.product.Product_Name" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="@hostName@Context.Request.Path" />
-    <!--meta property="og:image" content="hostName/Hinh/HangHoa/Model.Hinh" /-->
-}
 <!-- Load Facebook SDK for JavaScript -->
 <div id="fb-root"></div>
 <script>

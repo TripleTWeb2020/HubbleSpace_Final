@@ -7,7 +7,7 @@
 	var pusher = new Pusher('8d3e1104be3eacf91241', {
 		cluster: 'ap1'
 	});
-
+	var noti=[]
 	var channel = pusher.subscribe('notification');
 	channel.bind('new_notification', function (data) {
 		console.log(data);
@@ -23,6 +23,14 @@
 			</div>
 
 		  `);
+		noti.push(data.message);
+		$("#notif").append(`
+			<span class="quantity">${noti.length}</span>
+			`);
+		$("#noNotif").append(`
+			<p>You have ${noti.length} new notifications</p>
+			`);
+
 	});
 
 </script>
@@ -30,22 +38,9 @@
 {
 	<div class="noti__item js-item-menu">
 		<i class="zmdi zmdi-notifications"></i>
-		@if ((int)ViewData["Notifications"] != 0)
-		{
-			<span class="quantity">@ViewData["Notifications"]</span>
-		}
-
+		<div id="notif"></div>
     <div class="notifi-dropdown js-dropdown">
-        <div class="notifi__title">
-            @if ((int)ViewData["Notifications"] != 0)
-            {
-                <p>You have @ViewData["Notifications"] new notifications</p>
-            }
-            @if ((int)ViewData["Notifications"] == 0)
-            {
-                <p>You have @ViewData["Notifications"] notification</p>
-            }
-
+        <div id="noNotif" class="notifi__title" >
         </div>
         <div id="feed">
         </div>
