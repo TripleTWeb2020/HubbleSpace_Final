@@ -25,6 +25,15 @@
                         <span asp-validation-for="Product_Name" class="text-danger"></span>
                     </div>
                 </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Description" class="control-label "></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
 
                 <div class="row form-group">
                     <div class="col col-md-3">
@@ -41,7 +50,7 @@
                         <label asp-for="Price_Sale" class="control-label"></label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input asp-for="Price_Sale" class="form-control"/>
+                        <input asp-for="Price_Sale" class="form-control" />
                         <span asp-validation-for="Price_Sale" class="text-danger"></span>
                     </div>
                 </div>

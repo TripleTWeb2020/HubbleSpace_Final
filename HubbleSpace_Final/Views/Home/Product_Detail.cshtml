@@ -5,15 +5,17 @@
     Layout = "_FrontendLayout";
 
 }
+
 <!-- Load Facebook SDK for JavaScript -->
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
-var js, fjs = d.getElementsByTagName(s)[0];
-if (d.getElementById(id)) return;
-js = d.createElement(s); js.id = id;
-js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+<script>
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 <div id="all">
     <div id="content">
         <div class="container">
@@ -84,6 +86,7 @@ fjs.parentNode.insertBefore(js, fjs);
                             {
                                 <h2>@Html.DisplayFor(modelItem => product.color_Product.product.Product_Name)</h2>
                                 <h4><i>@Html.DisplayFor(modelItem => product.color_Product.Color_Name)</i></h4>
+                                <i>@Html.DisplayFor(modelItem => product.color_Product.product.Description)</i>
                                 <p class="price">
                                     <del>
                                         @if (product.color_Product.product.Price_Sale < product.color_Product.product.Price_Product)
@@ -108,7 +111,7 @@ fjs.parentNode.insertBefore(js, fjs);
                                 <!-- /.Share in social-->
                                 <div id="details" class="center">
                                     <h4>Show it to your friends</h4>
-                                    <div class="social" data-href="https://localhost:44336/Home/Product_Detail/10" data-layout="button_count" data-size="small">
+                                    <div class="social" data-href="/Product_Detail/10" data-layout="button_count" data-size="small">
                                         <p style="text-align: center"><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flocalhost%3A44336%2FHome%2FProduct_Detail%2F10&amp;src=sdkpreparse" class="external facebook"><i class="fa fa-facebook"></i></a><a href="#" class="external gplus"><i class="fa fa-google-plus"></i></a><a href="#" class="external twitter"><i class="fa fa-twitter"></i></a><a href="#" class="email"><i class="fa fa-envelope"></i></a></p>
                                     </div>
                                 </div>

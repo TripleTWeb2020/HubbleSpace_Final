@@ -32,6 +32,10 @@ namespace HubbleSpace_Final.Entities
         [ForeignKey("ID_Brand")]
         public Brand Brand { get; set; }
 
+
+        [Display(Name = "Mô tả")]
+        public string Description { get; set; }
+
         [Display(Name = "Danh mục")]
         public int ID_Categorie { get; set; }
         [ForeignKey("ID_Categorie")]
