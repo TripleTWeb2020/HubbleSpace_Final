@@ -37,6 +37,9 @@ namespace HubbleSpace_Final.Entities
         [ForeignKey("ID_Categorie")]
         public Category category { get; set; }
 
+        [Display(Name ="Mô tả")]
+        public string Description { get; set; }
+
         public ICollection<Color_Product> Color_Products { get; set; }
         public Product()
         {

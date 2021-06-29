@@ -84,6 +84,7 @@ fjs.parentNode.insertBefore(js, fjs);
                             {
                                 <h2>@Html.DisplayFor(modelItem => product.color_Product.product.Product_Name)</h2>
                                 <h4><i>@Html.DisplayFor(modelItem => product.color_Product.Color_Name)</i></h4>
+                                <i>@Html.DisplayFor(modelItem => product.color_Product.product.Description)</i>
                                 <p class="price">
                                     <del>
                                         @if (product.color_Product.product.Price_Sale < product.color_Product.product.Price_Product)
