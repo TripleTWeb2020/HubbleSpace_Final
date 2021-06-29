@@ -218,12 +218,12 @@ namespace HubbleSpace_Final.Controllers
             var listts = lists.OrderByDescending(o => o.Date_Created).Take(5);
             ViewData["Noti"] = listts.ToList();
 
-            foreach (NotificationPusher notif in listt)
+            /*foreach (NotificationPusher notif in listt)
             {
                 notif.ReadStatus = ReadStatus.Read;
                 _context.Update(notif);
                 await _context.SaveChangesAsync();
-            }
+            }*/
 
 
             return View(await Task.AsNoTracking().ToListAsync());
