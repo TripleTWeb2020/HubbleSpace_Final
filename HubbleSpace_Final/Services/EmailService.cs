@@ -60,7 +60,6 @@ namespace HubbleSpace_Final.Services
                 Host = _smtpConfig.Host,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 EnableSsl = _smtpConfig.EnableSSL,
-                TargetName = "STARTTLS/smtp.office365.com"
             };
             mail.BodyEncoding = Encoding.Default;
             await smtpClient.SendMailAsync(mail);
