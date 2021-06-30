@@ -37,6 +37,11 @@ namespace HubbleSpace_Final.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (_userManager.FindByEmailAsync(userModel.Email) != null)
+                {
+                    ModelState.AddModelError("", "Email already exists!");
+                    return View(userModel);
+                }
                 var result = await _accountRepository.CreateUserAsync(userModel);
                 if (!result.Succeeded)
                 {
