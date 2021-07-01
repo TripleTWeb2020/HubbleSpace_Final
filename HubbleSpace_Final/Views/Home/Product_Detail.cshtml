@@ -8,6 +8,7 @@
 
 @section SocialSeo{
     <meta property="og:title" content="@Model.FirstOrDefault().color_Product.product.Product_Name" />
+    <meta property="og:description" content="@Model.FirstOrDefault().color_Product.product.Description" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="@hostName@Context.Request.Path" />
     <meta property="og:image" content="@hostName/Images/Product_Color_Image/@Model.FirstOrDefault().color_Product.product.Product_Name/@Model.FirstOrDefault().Photo" />

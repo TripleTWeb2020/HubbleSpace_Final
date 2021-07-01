@@ -265,7 +265,7 @@ namespace HubbleSpace_Final.Controllers
         [AllowAnonymous, HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordModel model)
         {
-            if (ModelState.IsValid)
+             if (ModelState.IsValid)
             {
                 var user = await _accountRepository.GetUserByEmailAsync(model.Email);
                 if (user !=null)

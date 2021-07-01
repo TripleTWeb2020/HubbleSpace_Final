@@ -201,7 +201,7 @@ namespace HubbleSpace_Final.Controllers
             return View(await color_Products.AsNoTracking().ToListAsync());
 
         }
-        
+       
         public async Task<IActionResult> Product_Detail(int id)
         {
             return View(await _context.Img_Product.Include(p => p.color_Product.product)
