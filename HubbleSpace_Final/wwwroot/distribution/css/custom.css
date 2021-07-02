@@ -186,11 +186,11 @@ div.dropdown-item a.nav-link-custom {
 div.dropdown-item:hover {
     background: #555;
 }
-div.dropdown-item a.nav-link-custom:hover {
+div.dropdown-item:hover a.nav-link-custom {
     color: white !important;
     text-decoration-color: white !important;
 }
 
-div.dropdown-item a.nav-link-custom:hover i {
+div.dropdown-item:hover a.nav-link-custom i {
     color: white;
 }

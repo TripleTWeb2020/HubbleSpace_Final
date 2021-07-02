@@ -36,14 +36,17 @@
                         <table class="table table-data2">
                             <thead>
                                 <tr class="row">
-                                    <th class="col-2">
+                                    <th class="col-1">
                                         @Html.DisplayNameFor(model => model.First().TotalMoney)
                                     </th>
                                     <th class="col-1">
                                         @Html.DisplayNameFor(model => model.First().Discount)
                                     </th>
-                                    <th class="col-2">
+                                    <th class="col-1">
                                         <a asp-controller="Client_Orders" asp-action="HistoryOrder" asp-route-sortOrder="@ViewData["Date"]">@Html.DisplayNameFor(model => model.First().Date_Create)</a>
+                                    </th>
+                                    <th class="col-2">
+                                        @Html.DisplayNameFor(model => model.First().PaymentStatus)
                                     </th>
                                     <th class="col-2">
                                         @Html.DisplayNameFor(model => model.First().Address)
@@ -60,31 +63,34 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr class="tr-shadow row">
-                                        <td class="col-2">
-                                            @item.TotalMoney.ToString("n0")
-                                        </td>
-                                        <td class="col-1">
-                                            @item.Discount.ToString("n0")
-                                        </td>
-                                        <td class="col-2">
-                                            @Html.DisplayFor(modelItem => item.Date_Create)
-                                        </td>
-                                        <td class="col-2">
-                                            @Html.DisplayFor(modelItem => item.Address)
-                                        </td>
-                                        <td class="col-2">
-                                            @Html.DisplayFor(modelItem => item.SDT)
-                                        </td>
-                                        <td class="col-1">
-                                            @Html.DisplayFor(modelItem => item.Process)
-                                        </td>
-                                        <td class="col-2">
-                                            <p class="buttons">
-                                                <a asp-action="OrderDetail" asp-route-id="@item.ID_Order" class="btn btn-outline-primary">View detail</a>
-                                            </p>
-                                        </td>
-                                    </tr>
+                                <tr class="tr-shadow row">
+                                    <td class="col-1">
+                                        @item.TotalMoney.ToString("n0")
+                                    </td>
+                                    <td class="col-1">
+                                        @item.Discount.ToString("n0")
+                                    </td>
+                                    <td class="col-1">
+                                        @item.Date_Create.ToShortDateString()
+                                    </td>
+                                    <td class="col-2">
+                                        @item.PaymentStatus
+                                    </td>
+                                    <td class="col-2">
+                                        @Html.DisplayFor(modelItem => item.Address)
+                                    </td>
+                                    <td class="col-2">
+                                        @Html.DisplayFor(modelItem => item.SDT)
+                                    </td>
+                                    <td class="col-1">
+                                        @Html.DisplayFor(modelItem => item.Process)
+                                    </td>
+                                    <td class="col-2">
+                                        <p class="buttons">
+                                            <a asp-action="OrderDetail" asp-route-id="@item.ID_Order" class="btn btn-outline-primary">View detail</a>
+                                        </p>
+                                    </td>
+                                </tr>
                                     <tr class="spacer"></tr>
                                 }
                             </tbody>

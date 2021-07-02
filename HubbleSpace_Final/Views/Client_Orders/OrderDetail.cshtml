@@ -17,8 +17,6 @@
                 </ol>
             </nav>
         </div>
-
-
         <div class="col-lg-12">
             <div class="box">
                 <form method="get" class="ml-auto" style="margin-bottom:20px" asp-controller="Client_Orders" asp-action="OrderDetail">
@@ -29,72 +27,80 @@
                         </div>
                     </div>
                 </form>
-                <div class="col-md-12 offset-12">
+                <div class="row col-md-12 offset-12">
                     <!-- DATA TABLE -->
-                    <div class="float-left">
+                    <div class="col-10">
                         <h2>Chi tiết đơn hàng</h2>
                     </div>
-                    <div class="float-right">
+                    <div class="col-1"></div>
+                    <div class="col-1">
                         <a asp-action="HistoryOrder" class="btn btn-outline-primary">Back</a>
                     </div>
-                    <div class="table-responsive-data2">
-                        <table class="table table-data2">
-                            <thead>
-                                <tr class="row">
-                                    <th class="col-2">
-                                        <a asp-controller="Client_Orders" asp-action="OrderDetail" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.First().Color_Product.product.Product_Name)</a>
-                                    </th>
+                </div>
+                <div class="table-responsive-data2">
+                    <table class="table table-data2">
+                        <thead>
+                            <tr class="row">
+                                <th class="col-2">
+                                    <a asp-controller="Client_Orders" asp-action="OrderDetail" asp-route-sortOrder="@ViewData["Name"]">@Html.DisplayNameFor(model => model.First().Color_Product.product.Product_Name)</a>
+                                </th>
 
-                                    <th class="col-4">
-                                        <a asp-controller="Client_Orders" asp-action="OrderDetail" asp-route-sortOrder="@ViewData["ColorName"]">@Html.DisplayNameFor(model => model.First().Color_Product.Color_Name)</a>
-                                    </th>
+                                <th class="col-3">
+                                    <a asp-controller="Client_Orders" asp-action="OrderDetail" asp-route-sortOrder="@ViewData["ColorName"]">@Html.DisplayNameFor(model => model.First().Color_Product.Color_Name)</a>
+                                </th>
 
-                                    <th class="col-4">
-                                        @Html.DisplayNameFor(model => model.First().Color_Product.Image)
-                                    </th>
+                                <th class="col-3">
+                                    @Html.DisplayNameFor(model => model.First().Color_Product.Image)
+                                </th>
+                                <th class="col-2">
+                                    @Html.DisplayNameFor(model => model.First().Price_Sale)
+                                </th>
 
-                                    <th class="col-1">
-                                        @Html.DisplayNameFor(model => model.First().Size)
-                                    </th>
+                                <th class="col-1">
+                                    @Html.DisplayNameFor(model => model.First().Size)
+                                </th>
 
-                                    <th class="col-1">
-                                        <a asp-controller="Client_Orders" asp-action="OrderDetail" asp-route-sortOrder="@ViewData["Quantity"]">@Html.DisplayNameFor(model => model.First().Quantity)</a>
-                                    </th>
+                                <th class="col-1">
+                                    <a asp-controller="Client_Orders" asp-action="OrderDetail" asp-route-sortOrder="@ViewData["Quantity"]">@Html.DisplayNameFor(model => model.First().Quantity)</a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr class="tr-shadow row">
+                                    <td class="col-2">
+                                        @Html.DisplayFor(modelItem => item.Color_Product.product.Product_Name)
+                                    </td>
+
+                                    <td class="col-3">
+                                        @Html.DisplayFor(modelItem => item.Color_Product.Color_Name)
+                                    </td>
+
+                                    <td class="col-3">
+                                        <img class="img-fluid" src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Color_Product.Image)" />
+                                    </td>
+                                    <td class="col-2">
+                                        @item.Price_Sale.ToString("n0")
+                                    </td>
+
+                                    <td class="col-1">
+                                        @Html.DisplayFor(modelItem => item.Size)
+                                    </td>
+
+                                    <td class="col-1">
+                                        @Html.DisplayFor(modelItem => item.Quantity)
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr class="tr-shadow row">
-                                        <td class="col-2">
-                                            @Html.DisplayFor(modelItem => item.Color_Product.product.Product_Name)
-                                        </td>
-
-                                        <td class="col-4">
-                                            @Html.DisplayFor(modelItem => item.Color_Product.Color_Name)
-                                        </td>
-
-                                        <td class="col-4">
-                                            <img class="img-fluid" src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Color_Product.Image)" />
-                                        </td>
-
-                                        <td class="col-1">
-                                            @Html.DisplayFor(modelItem => item.Size)
-                                        </td>
-
-                                        <td class="col-1">
-                                            @Html.DisplayFor(modelItem => item.Quantity)
-                                        </td>
-                                    </tr>
-                                    <tr class="spacer"></tr>
-                                }
-                            </tbody>
-                        </table>
-                        <pager class="pager-container" list="@Model" asp-action="OrderDetail" asp-controller="Client_Orders" />
-                    </div>
-                    <!-- END DATA TABLE -->
+                                <tr class="spacer"></tr>
+                            }
+                        </tbody>
+                    </table>
+                    <pager class="pager-container" list="@Model" asp-action="OrderDetail" asp-controller="Client_Orders" />
                 </div>
             </div>
+            <!-- END DATA TABLE -->
         </div>
+    </div>
     </div>
 </div>
