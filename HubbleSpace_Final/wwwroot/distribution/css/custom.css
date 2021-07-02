@@ -70,7 +70,6 @@ center {
 
 .nav-link-custom {
     font-weight: 800;
-    color: #999 !important;
     display: block;
     padding: 0.3rem 1rem;
 }
@@ -108,8 +107,8 @@ h3 a:hover{
 }
 
 .nav-link-custom:hover {
-    text-decoration: none !important;
-    color: #4fbfa8 !important;
+    text-decoration: none;
+    color: #4fbfa8;
 }
 
 .owl-dots{
@@ -154,9 +153,21 @@ h3 a:hover{
     place-content: center;
     margin-top: 10px;
 }
-.dropdown-menu {
+div.dropdown-menu {
     margin: 9px;
     padding: 0;
+}
+ul.dropdown-menu.megamenu {
+    margin: 0;
+    padding: 0;
+}
+ul.dropdown-menu.megamenu a {
+    margin: 0;
+    padding: 10px 20px;
+}
+ul.dropdown-menu.megamenu a:hover {
+    color: white;
+    background: #555;
 }
 .dropdown-item {
     border-bottom: #dee2e6 solid 1px;
@@ -166,4 +177,20 @@ h3 a:hover{
 a.nav-link-custom i.fa {
     margin-right: 20px;
     font-size: large;
+    color: #555
+}
+div.dropdown-item a.nav-link-custom {
+    color: #4fbfa8 !important;
+}
+
+div.dropdown-item:hover {
+    background: #555;
+}
+div.dropdown-item a.nav-link-custom:hover {
+    color: white !important;
+    text-decoration-color: white !important;
+}
+
+div.dropdown-item a.nav-link-custom:hover i {
+    color: white;
 }
