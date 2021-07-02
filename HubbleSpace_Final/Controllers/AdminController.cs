@@ -96,6 +96,9 @@ namespace HubbleSpace_Final.Controllers
             var queryProfitJune = from od in _context.Order
                                   where od.Date_Create.Month == 06
                                   select od.TotalMoney;
+            var queryProfitJul = from od in _context.Order
+                                  where od.Date_Create.Month == 07
+                                  select od.TotalMoney;
 
             ViewData["Profit Jan"] = queryProfitJan.Sum();
             ViewData["Profit Feb"] = queryProfitFeb.Sum();
@@ -103,6 +106,7 @@ namespace HubbleSpace_Final.Controllers
             ViewData["Profit Apr"] = queryProfitApr.Sum();
             ViewData["Profit May"] = queryProfitMay.Sum();
             ViewData["Profit June"] = queryProfitJune.Sum();
+            ViewData["Profit July"] = queryProfitJul.Sum();
 
             // Query for notification
             var noti = from o in _context.Notifications.Include(o => o.User)
@@ -144,6 +148,10 @@ namespace HubbleSpace_Final.Controllers
                                join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
                                where profit.Date_Create.Month == 06
                                select od.Quantity;
+            var queryQuanJul = from od in _context.OrderDetail
+                                join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
+                                where profit.Date_Create.Month == 07
+                                select od.Quantity;
 
 
             ViewData["Quan Jan"] = queryQuanJan.Sum();
@@ -152,7 +160,7 @@ namespace HubbleSpace_Final.Controllers
             ViewData["Quan Apr"] = queryQuanApr.Sum();
             ViewData["Quan May"] = queryQuanMay.Sum();
             ViewData["Quan June"] = queryQuanJune.Sum();
-            //User toDo task
+            ViewData["Quan July"] = queryQuanJul.Sum();
 
             var queryDate = DateTime.Today.Day.ToString();
             var queryMonth = DateTime.Today.Month.ToString();
@@ -190,6 +198,8 @@ namespace HubbleSpace_Final.Controllers
             ViewData["query4thShoeQuan"] = queryShoeRank.ElementAt(3).sum;
             ViewData["query5thShoeName"] = queryShoeRank.ElementAt(4).product_Name;
             ViewData["query5thShoeQuan"] = queryShoeRank.ElementAt(4).sum;
+            ViewData["query6thShoeName"] = queryShoeRank.ElementAt(5).product_Name;
+            ViewData["query6thShoeQuan"] = queryShoeRank.ElementAt(5).sum;
 
             // Query for ToDoTask
             var Task = from o in _context.Schedule.Include(o => o.User).OrderBy(o => o.Date_Created) select o;
@@ -217,14 +227,6 @@ namespace HubbleSpace_Final.Controllers
                         select o;
             var listts = lists.OrderByDescending(o => o.Date_Created).Take(5);
             ViewData["Noti"] = listts.ToList();
-
-            foreach (NotificationPusher notif in listt)
-            {
-                notif.ReadStatus = ReadStatus.Read;
-                _context.Update(notif);
-                await _context.SaveChangesAsync();
-            }
-
 
             return View(await Task.AsNoTracking().ToListAsync());
            

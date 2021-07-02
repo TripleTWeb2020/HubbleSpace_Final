@@ -45,9 +45,6 @@
                                 FullName
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.First().CreditCard)
-                            </th>
-                            <th>
                                 @Html.DisplayNameFor(model => model.First().Address)
                             </th>
                             <th>
@@ -62,7 +59,7 @@
 
                         @foreach (var user in Model)
                         {
-                            <tr class="tr-shadow ">
+                            <tr class="tr-shadow">
                                 <td>
                                     <a>@user.UserName</a>
                                 </td>
@@ -74,9 +71,6 @@
                                 </td>
                                 <td>
                                     <a>@user.FirstName  @user.LastName</a>
-                                </td>
-                                <td>
-                                    <a>@user.CreditCard</a>
                                 </td>
                                 <td>
                                     <a>@user.Address</a>

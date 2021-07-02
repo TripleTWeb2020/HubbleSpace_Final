@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -113,13 +111,19 @@ namespace HubbleSpace_Final.Controllers
 
             var cart = GetCartItems();
             var cartitem = cart.Skip(id - 1).Take(1).FirstOrDefault();
+            var cartDiscount = cart.Skip(id).Take(1).FirstOrDefault();
             if (cartitem != null)
             {
                 // Đã tồn tại, xóa đi
                 cart.Remove(cartitem);
+                var cartitem1 = cart.Skip(id - 1).Take(1).FirstOrDefault();
+                SaveCartSession(cart);
+                if (cart.Count != 0)
+                {
+                    cart.Remove(cartDiscount);
+                }
             }
-
-            SaveCartSession(cart);
+            
             SaveCartSession(cart);
             // Trả về mã thành công (không có nội dung gì - chỉ để Ajax gọi)
             return Ok();
@@ -157,7 +161,7 @@ namespace HubbleSpace_Final.Controllers
             var discountUsed = _context.DiscountUsed.Where(ds => ds.User.Id == userId).FirstOrDefault();
 
             //User chưa dùng khuyến mãi và còn lượt
-            if (discount != null && discountUsed == null && discount.NumberofTurns > 0 && discount.Expire < DateTime.Now) {
+            if (discount != null && discountUsed == null && discount.NumberofTurns > 0 && discount.Expire > DateTime.Now) {
                 var cart = GetCartItems();
                 cart.Add(new CartItemModel() { Amount = 1, Discount = discount.ID_Discount, Value_Discount = discount.Value });
                 // Lưu cart vào Session

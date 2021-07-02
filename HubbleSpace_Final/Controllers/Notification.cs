@@ -69,6 +69,12 @@ namespace HubbleSpace_Final.Controllers
 		public async Task<IActionResult> ClientNotification()
 		{
 			var Task = from o in _context.Notifications.Include(o => o.User).OrderByDescending(o => o.Date_Created) select o;
+            foreach (NotificationPusher notif in Task)
+            {
+                notif.ReadStatus = ReadStatus.Read;
+                _context.Update(notif);
+                await _context.SaveChangesAsync();
+            }
             return View(await Task.AsNoTracking().ToListAsync());
 		}
 	}

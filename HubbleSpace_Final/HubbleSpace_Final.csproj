@@ -30,6 +30,18 @@
     <Compile Remove="Migrations\20210530151204_DbInit.cs" />
     <Compile Remove="Migrations\20210530151204_DbInit.Designer.cs" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Content Remove="wwwroot\EmailTemplate\EmailConfirm.html" />
+    <Content Remove="wwwroot\EmailTemplate\ForgotPassword.html" />
+    <Content Remove="wwwroot\EmailTemplate\TestEmail.html" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="wwwroot\EmailTemplate\EmailConfirm.html" />
+    <None Include="wwwroot\EmailTemplate\ForgotPassword.html" />
+    <None Include="wwwroot\EmailTemplate\TestEmail.html" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.1.2" />
