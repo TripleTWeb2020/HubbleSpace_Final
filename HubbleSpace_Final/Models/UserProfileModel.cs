@@ -41,7 +41,7 @@ namespace HubbleSpace_Final.Models
         public string CreditCard { get; set; }
 
         [Display(Name = "Your Date of Birth")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         
         public DateTime? DOB { get; set; }
 

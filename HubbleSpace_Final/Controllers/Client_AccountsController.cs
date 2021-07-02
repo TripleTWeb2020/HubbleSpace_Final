@@ -153,10 +153,11 @@ namespace HubbleSpace_Final.Controllers
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    Email = info.Principal.FindFirst(ClaimTypes.Email).Value,
-                    UserName = info.Principal.FindFirst(ClaimTypes.Email).Value,
+                    //Email = info.Principal.FindFirst(ClaimTypes.Email).Value,
+                    //UserName = info.Principal.FindFirst(ClaimTypes.Email).Value,
                     FirstName = info.Principal.FindFirst(ClaimTypes.GivenName).Value ?? info.Principal.FindFirstValue(ClaimTypes.Name),
                     LastName = info.Principal.FindFirst(ClaimTypes.Surname).Value,
+                    PhoneNumber = info.Principal.FindFirst(ClaimTypes.MobilePhone).Value,
                     EmailConfirmed = true
                 };
  
