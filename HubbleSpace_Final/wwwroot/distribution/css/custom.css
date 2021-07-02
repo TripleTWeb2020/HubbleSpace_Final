@@ -154,3 +154,16 @@ h3 a:hover{
     place-content: center;
     margin-top: 10px;
 }
+.dropdown-menu {
+    margin: 9px;
+    padding: 0;
+}
+.dropdown-item {
+    border-bottom: #dee2e6 solid 1px;
+    padding: 7px 10px;
+    padding-left: 0;
+}
+a.nav-link-custom i.fa {
+    margin-right: 20px;
+    font-size: large;
+}
