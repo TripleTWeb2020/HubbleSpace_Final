@@ -22,7 +22,7 @@ namespace HubbleSpace_Final.Controllers
 
 
         // GET: Color_Product
-        public async Task<IActionResult> Index(string sortOrder, string searchString, int id, int page = 1)
+        public ActionResult Index(string sortOrder, string searchString, int id, int page = 1)
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Name"] = sortOrder == "Name" ? "name_desc" : "Name";

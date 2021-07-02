@@ -231,7 +231,7 @@ namespace HubbleSpace_Final.Controllers
 
         }
 
-        public async Task<IActionResult> Statistic(string time, string sortOrder, string searchString, int page = 1)
+        public ActionResult Statistic(string time, string sortOrder, string searchString, int page = 1)
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Process"] = sortOrder == "Process" ? "process_desc" : "Process";

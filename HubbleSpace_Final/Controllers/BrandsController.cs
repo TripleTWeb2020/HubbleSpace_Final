@@ -20,7 +20,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Brands
-        public async Task<IActionResult> Index(string sortOrder, string searchString, int page = 1)
+        public ActionResult Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["Search"] = searchString;

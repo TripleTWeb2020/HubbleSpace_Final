@@ -42,24 +42,26 @@
 						<span class="email">@User.FindFirst("UserEmail").Value</span>
 					</div>
 				</div>
-				<div class="account-dropdown__body">
-					<div class="account-dropdown__item">
-						<a asp-action="Signout" asp-controller="Client_Accounts">
-							<i class="zmdi zmdi-account"></i>Signout
-						</a>
-					</div>
-					<div class="account-dropdown__item">
-						<a asp-action="ChangePassword" asp-controller="Client_Accounts">
-							<i class="zmdi zmdi-key"></i>Change Password
-						</a>
-					</div>
-					<div class="account-dropdown__item">
-						<a asp-action="Index" asp-controller="Home">
-							<i class="zmdi zmdi-settings"></i>Your Website
-						</a>
-					</div>
+                <div class="account-dropdown__body">
 
-				</div>
+                    <div class="account-dropdown__item">
+                        <a asp-action="ChangePassword" asp-controller="Client_Accounts">
+                            <i class="zmdi zmdi-key"></i>Change Password
+                        </a>
+                    </div>
+                    <div class="account-dropdown__item">
+                        <a asp-action="Index" asp-controller="Home">
+                            <i class="zmdi zmdi-settings"></i>Your Website
+                        </a>
+                    </div>
+
+                    <div class="account-dropdown__item">
+                        <a asp-action="Signout" asp-controller="Client_Accounts">
+                            <i class="zmdi zmdi-power"></i>Sign out
+                        </a>
+                    </div>
+
+                </div>
 
 			</div>
 		</div>

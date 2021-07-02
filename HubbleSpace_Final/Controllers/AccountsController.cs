@@ -410,7 +410,7 @@ namespace HubbleSpace_Final.Controllers
 
 
         // Viết lại
-        public async Task<IActionResult> Index(string sortOrder, string searchString, int page = 1)
+        public ActionResult Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["Name"] = sortOrder == "Username" ? "UserName_desc" : "UserName";
             ViewData["Level"] = sortOrder == "Level" ? "Level_desc" : "Level";
@@ -450,7 +450,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Accounts/Details/5
-        public async Task<IActionResult> Details(string? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -468,7 +468,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Accounts/Delete/5
-        public async Task<IActionResult> Delete(string? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -507,7 +507,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Accounts/Edit/5
-        public async Task<IActionResult> Edit(string? id)
+        public async Task<IActionResult> Edit(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
 

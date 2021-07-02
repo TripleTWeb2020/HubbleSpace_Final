@@ -11,6 +11,7 @@ using HubbleSpace_Final.Entities;
 using HubbleSpace_Final.Services;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using PagedList.Core;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -93,11 +94,12 @@ namespace HubbleSpace_Final.Controllers
             return View();
         }
         
-        public async Task<IActionResult> Categories(string sortOrder, string Object, string CategoriesName, string brand, string price, string searchString, int CountForTake = 1)
+        public ActionResult Categories(string sortOrder, string Object, string CategoriesName, string brand, string price, string searchString, int page = 1)
         {
             ViewData["Search"] = searchString;
             ViewData["CategoriesName"] = CategoriesName;
             ViewData["Object"] = Object;
+            ViewData["sortOrder"] = sortOrder;
 
             var color_Products = from p in _context.Color_Product.Include(p => p.product).Include(p => p.product.category)
                                  select p;
@@ -185,20 +187,14 @@ namespace HubbleSpace_Final.Controllers
                     break;
             }
 
-            int take = 6;
-            double total_product = color_Products.Count();
-
-            int total_take = (int)Math.Ceiling(total_product / take);
-
-            color_Products = color_Products.Take(CountForTake * take);
-            ViewData["total_take"] = total_take ;
-            ViewData["CountForTake"] = CountForTake + 1;
-            ViewData["total_product"] = total_product;
+            
             ViewData["products_taked"] = color_Products.Count();
             ViewData["Object"] = Object;
             ViewData["CategoriesName"] = CategoriesName;
 
-            return View(await color_Products.AsNoTracking().ToListAsync());
+            PagedList<Color_Product> model = new PagedList<Color_Product>(color_Products, page, 6);
+
+            return View(model);
 
         }
        

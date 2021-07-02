@@ -68,7 +68,7 @@ namespace HubbleSpace_Final.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> OrderDetail(int id, string sortOrder, string searchString, int page = 1)
+        public ActionResult OrderDetail(int id, string sortOrder, string searchString, int page = 1)
         {
             ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";

@@ -37,7 +37,7 @@ namespace HubbleSpace_Final.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_userManager.FindByEmailAsync(userModel.Email) != null)
+                if (_userManager.FindByEmailAsync(userModel.Email).IsCompletedSuccessfully != true)
                 {
                     ModelState.AddModelError("", "Email already exists!");
                     return View(userModel);
@@ -185,7 +185,7 @@ namespace HubbleSpace_Final.Controllers
             return View();
         }
         [Route("change-password")]
-        public async Task<IActionResult> ChangePassword()
+        public ActionResult ChangePassword()
         {
             //await _accountRepository.SignOutAsync();
             return View();

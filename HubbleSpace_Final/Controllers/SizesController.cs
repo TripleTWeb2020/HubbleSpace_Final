@@ -20,7 +20,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Sizes
-        public async Task<IActionResult> Index(string sortOrder, string searchString, int? id, int page = 1)
+        public ActionResult Index(string sortOrder, string searchString, int? id, int page = 1)
         {
             ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";
