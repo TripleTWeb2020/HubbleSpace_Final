@@ -259,19 +259,21 @@
     var proApr = ctx.getAttribute("data-proApr")
     var proMay = ctx.getAttribute("data-proMay")
     var proJune = ctx.getAttribute("data-proJune")
+    var proJuly = ctx.getAttribute("data-proJuly")
     var proJanField = parseInt(proJan)
     var proFebField = parseInt(proFeb)
     var proMarField = parseInt(proMar)
     var proAprField = parseInt(proApr)
     var proMayField = parseInt(proMay)
     var proJuneField = parseInt(proJune)
-    var data1 = [proJanField, proFebField, proMarField, proAprField, proMayField, proJuneField]
+    var proJulyField = parseInt(proJuly)
+    var data1 = [proJanField, proFebField, proMarField, proAprField, proMayField, proJuneField, proJulyField]
     if (ctx) {
       ctx.height = 250;
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['January', 'February', 'March', 'April', 'May','June'],
+          labels: ['January', 'February', 'March', 'April', 'May','June','July'],
           datasets: [
             {
               label: 'My First dataset',
@@ -342,19 +344,21 @@
     var quanApr = ctx.getAttribute("data-quanApr")
     var quanMay = ctx.getAttribute("data-quanMay")
     var quanJune = ctx.getAttribute("data-quanJune")
+    var quanJuly = ctx.getAttribute("data-quanJuly")
     var quanJanField = parseInt(quanJan)
     var quanFebField = parseInt(quanFeb)
     var quanMarField = parseInt(quanMar)
     var quanAprField = parseInt(quanApr)
     var quanMayField = parseInt(quanMay)
     var quanJuneField = parseInt(quanJune)
-      var data1 = [quanJanField, quanFebField, quanMarField, quanAprField, quanMayField, quanJuneField]
+    var quanJulyField = parseInt(quanJuly)
+      var data1 = [quanJanField, quanFebField, quanMarField, quanAprField, quanMayField, quanJuneField, quanJulyField]
     if (ctx) {
       ctx.height = 250;
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['January', 'February', 'March', 'April', 'May','June'],
+          labels: ['January', 'February', 'March', 'April', 'May','June','July'],
           datasets: [
             {
               label: 'My First dataset',

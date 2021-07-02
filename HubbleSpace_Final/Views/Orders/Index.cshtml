@@ -48,7 +48,7 @@
                             @Html.DisplayNameFor(model => model.First().SDT)
                         </th>
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.First().User)
+                            @Html.DisplayNameFor(model => model.First().PaymentStatus)
                         </th>
                         <th class="col-1">
                             <a asp-action="Index" asp-route-sortOrder="@ViewData["Process"]">@Html.DisplayNameFor(model => model.First().Process)</a>
@@ -76,7 +76,7 @@
                                 @Html.DisplayFor(modelItem => item.SDT)
                             </td>
                             <td class="col-2">
-                                @Html.DisplayFor(modelItem => item.User.UserName)
+                                @Html.DisplayFor(modelItem => item.PaymentStatus)
                             </td>
                             <td class="col-1">
                                 @Html.DisplayFor(modelItem => item.Process)

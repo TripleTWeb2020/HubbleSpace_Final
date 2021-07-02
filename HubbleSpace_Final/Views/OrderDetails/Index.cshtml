@@ -55,7 +55,7 @@
                         </th>
 
                         <th class="col-2">
-                            @Html.DisplayNameFor(model => model.First().order)
+                            @Html.DisplayNameFor(model => model.First().Price_Sale)
                         </th>
 
                         <th class="col-2"></th>
@@ -85,8 +85,7 @@
                                 @Html.DisplayFor(modelItem => item.Quantity)
                             </td>
                             <td class="col-2">
-                                @Html.DisplayFor(modelItem => item.order.Address) -
-                                @Html.DisplayFor(modelItem => item.order.SDT)
+                                @item.Price_Sale.ToString("n0")
                             </td>
                             <td class="col-2">
                                 <div class="table-data-feature">
