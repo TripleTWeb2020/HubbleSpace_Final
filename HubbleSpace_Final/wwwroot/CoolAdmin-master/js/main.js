@@ -352,7 +352,7 @@
     var quanMayField = parseInt(quanMay)
     var quanJuneField = parseInt(quanJune)
     var quanJulyField = parseInt(quanJuly)
-      var data1 = [quanJanField, quanFebField, quanMarField, quanAprField, quanMayField, quanJuneField, quanJulyField]
+    var data1 = [quanJanField, quanFebField, quanMarField, quanAprField, quanMayField, quanJuneField, quanJulyField]
     if (ctx) {
       ctx.height = 250;
       var myChart = new Chart(ctx, {
