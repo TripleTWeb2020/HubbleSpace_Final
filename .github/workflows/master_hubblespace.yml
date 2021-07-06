@@ -53,5 +53,5 @@ jobs:
       with:
         app-name: 'hubblespace'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_6787063e62204d0db4a182fe6d6a2b5e }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_5be843d58b2140fdb2471d20974a62b8 }}
         package: .
