@@ -242,5 +242,20 @@ namespace HubbleSpace_Final.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [Route("/robots.txt")]
+        public ContentResult RobotsTxt()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("User-agent: *")
+                .AppendLine("Disallow:")
+                .Append("sitemap: ")
+                .Append(this.Request.Scheme)
+                .Append("://")
+                .Append(this.Request.Host)
+                .AppendLine("/sitemap.xml");
+
+            return this.Content(sb.ToString(), "text/plain", Encoding.UTF8);
+        }
     }
 }

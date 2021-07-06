@@ -150,8 +150,8 @@ namespace HubbleSpace_Final.Controllers
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    //Email = info.Principal.FindFirst(ClaimTypes.Email).Value,
-                    //UserName = info.Principal.FindFirst(ClaimTypes.Email).Value,
+                    Email = info.Principal.FindFirst(ClaimTypes.Email).Value,
+                    UserName = info.Principal.FindFirst(ClaimTypes.Email).Value,
                     FirstName = info.Principal.FindFirst(ClaimTypes.GivenName).Value ?? info.Principal.FindFirstValue(ClaimTypes.Name),
                     LastName = info.Principal.FindFirst(ClaimTypes.Surname).Value,
                     PhoneNumber = info.Principal.FindFirst(ClaimTypes.MobilePhone).Value,
@@ -218,7 +218,7 @@ namespace HubbleSpace_Final.Controllers
 
             if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(token))
             {
-                token = token.Replace(' ', '+');
+                //token = token.Replace(' ', '+');
                 var result = await _accountRepository.ConfirmEmailAsync(uid, token);
                 if (result.Succeeded)
                 {
@@ -291,7 +291,7 @@ namespace HubbleSpace_Final.Controllers
         {
             if (ModelState.IsValid)
             {
-                model.Token = model.Token.Replace(' ', '+');
+                //model.Token = model.Token.Replace(' ', '+');
                 var result = await _accountRepository.ResetPasswordAsync(model);
                 if (result.Succeeded)
                 {
