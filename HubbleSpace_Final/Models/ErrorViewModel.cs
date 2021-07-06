@@ -1,5 +1,3 @@
-using System;
-
 namespace HubbleSpace_Final.Models
 {
     public class ErrorViewModel

@@ -1,34 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using HubbleSpace_Final.Entities;
+﻿using HubbleSpace_Final.Entities;
 using HubbleSpace_Final.Models;
 using HubbleSpace_Final.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Controllers
 {
     public class Client_AccountsController : Controller
-       
+
     {
         private readonly IAccountRepository _accountRepository;
         private readonly MyDbContext _context;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        public Client_AccountsController(IAccountRepository accountRepository,MyDbContext context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public Client_AccountsController(IAccountRepository accountRepository, MyDbContext context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
             _accountRepository = accountRepository;
             _context = context;
             _signInManager = signInManager;
             _userManager = userManager;
         }
-       [Route("signup")]
+        [Route("signup")]
         public IActionResult SignUp()
-        {   
+        {
             return View();
         }
         [Route("signup")]
@@ -67,8 +64,8 @@ namespace HubbleSpace_Final.Controllers
         {
             if (ModelState.IsValid)
             {
-               var result = await _accountRepository.PasswordSignInAsync(signInModel);
-               if (result.Succeeded)
+                var result = await _accountRepository.PasswordSignInAsync(signInModel);
+                if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
                 }
@@ -77,11 +74,11 @@ namespace HubbleSpace_Final.Controllers
                     ModelState.AddModelError("", "Not Allowed to login");
                 }
                 else if (result.IsLockedOut)
-				{
-                    ModelState.AddModelError("","Your account is blocked.Please try again later");
-				}
+                {
+                    ModelState.AddModelError("", "Your account is blocked.Please try again later");
+                }
                 else { ModelState.AddModelError("", "Invalid credentials"); }
-                
+
             }
             return View(signInModel);
         }
@@ -144,7 +141,7 @@ namespace HubbleSpace_Final.Controllers
             ExternalLoginInfo info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
                 return RedirectToAction(nameof(Signin));
- 
+
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
             string[] userInfo = { info.Principal.FindFirst(ClaimTypes.Name).Value, info.Principal.FindFirst(ClaimTypes.Email).Value };
             if (result.Succeeded)
@@ -160,13 +157,13 @@ namespace HubbleSpace_Final.Controllers
                     PhoneNumber = info.Principal.FindFirst(ClaimTypes.MobilePhone).Value,
                     EmailConfirmed = true
                 };
- 
+
                 IdentityResult identResult = await _userManager.CreateAsync(user);
                 if (identResult.Succeeded)
                 {
                     identResult = await _userManager.AddLoginAsync(user, info);
-          
-                if (identResult.Succeeded)
+
+                    if (identResult.Succeeded)
                     {
                         await _signInManager.SignInAsync(user, false);
                         return RedirectToAction("Index", "Home");
@@ -212,13 +209,13 @@ namespace HubbleSpace_Final.Controllers
         }
         [HttpGet("confirm-email")]
         [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(string uid,string token,string email)
+        public async Task<IActionResult> ConfirmEmail(string uid, string token, string email)
         {
             EmailConfirmModel model = new EmailConfirmModel
             {
                 Email = email
             };
-            
+
             if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(token))
             {
                 token = token.Replace(' ', '+');
@@ -233,7 +230,7 @@ namespace HubbleSpace_Final.Controllers
                 return RedirectToAction("index", "home");
             }*/
             return View(model);
-           
+
         }
         [HttpPost("confirm-email")]
         [AllowAnonymous]
@@ -258,7 +255,7 @@ namespace HubbleSpace_Final.Controllers
             }
             return View(model);
         }
-        [AllowAnonymous,HttpGet("forgot-password")]
+        [AllowAnonymous, HttpGet("forgot-password")]
         public IActionResult ForgotPassword()
         {
             return View();
@@ -266,10 +263,10 @@ namespace HubbleSpace_Final.Controllers
         [AllowAnonymous, HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordModel model)
         {
-             if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var user = await _accountRepository.GetUserByEmailAsync(model.Email);
-                if (user !=null)
+                if (user != null)
                 {
                     await _accountRepository.GenerateForgotPasswordTokenAsync(user);
                 }

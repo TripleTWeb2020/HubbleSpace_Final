@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace HubbleSpace_Final.Models
 {
@@ -17,7 +13,7 @@ namespace HubbleSpace_Final.Models
 
         [Required(ErrorMessage = "Please enter your username")]
         [Display(Name = "Username")]
-        
+
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Please enter your email")]

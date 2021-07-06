@@ -5,16 +5,12 @@ using HubbleSpace_Final.Repository;
 using HubbleSpace_Final.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HubbleSpace_Final
 {
@@ -33,7 +29,7 @@ namespace HubbleSpace_Final
             services.AddControllersWithViews();
             services.AddDbContext<MyDbContext>(option => { option.UseSqlServer(Configuration.GetConnectionString("HubbleSpace_Final")); });
             services.AddIdentity<ApplicationUser, IdentityRole>()
-            
+
                 .AddEntityFrameworkStores<MyDbContext>().AddDefaultTokenProviders();
             services.AddAuthentication()
                     .AddGoogle(options =>
@@ -43,7 +39,8 @@ namespace HubbleSpace_Final
                         options.ClientSecret = "u_ENyz7ETZKJPlGcSPWtYYlA";
                         options.SignInScheme = IdentityConstants.ExternalScheme;
                     })
-                    .AddFacebook(options => {
+                    .AddFacebook(options =>
+                    {
                         IConfigurationSection facebookAuthNSection = Configuration.GetSection("Authentication:Facebook");
                         options.AppId = "385123116535823";
                         options.AppSecret = "341b7385c231b8e878cb389d61d2a39b";
@@ -66,7 +63,7 @@ namespace HubbleSpace_Final
                 options.SignIn.RequireConfirmedEmail = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(60);
                 options.Lockout.MaxFailedAccessAttempts = 5;
-               
+
             });
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IEmailService, EmailService>();

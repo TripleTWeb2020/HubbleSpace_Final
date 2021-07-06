@@ -5,5 +5,5 @@
         string GetUserId();
         bool IsAuthenticated();
     }
-    
+
 }

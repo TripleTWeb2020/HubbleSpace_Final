@@ -18,7 +18,7 @@ namespace HubbleSpace_Final.Repository
         Task<IdentityResult> ResetPasswordAsync(ResetPasswordModel model);
         Task<IdentityResult> ChangeProfileDetail(UserProfileModel userProfile);
 
-        
+
 
 
     }

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using HubbleSpace_Final.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HubbleSpace_Final.Entities;
 using PagedList.Core;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -33,7 +32,7 @@ namespace HubbleSpace_Final.Controllers
             var Sizes = from s in _context.Size.Include(s => s.color_Product).Include(s => s.color_Product.product)
                         select s;
 
-            if(id > 0)
+            if (id > 0)
             {
                 ViewData["ID_ColorProduct"] = id;
                 Sizes = Sizes.Where(s => s.color_Product.ID_Color_Product == id);
@@ -104,11 +103,11 @@ namespace HubbleSpace_Final.Controllers
         public IActionResult Create(int? id)
         {
             var ColorProduct = from c in _context.Color_Product
-                                     select new
-                                     {
-                                         ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.product.Product_Name + " - " + c.Color_Name
-                                     };
+                               select new
+                               {
+                                   ID_Color_Product = c.ID_Color_Product,
+                                   Name = c.product.Product_Name + " - " + c.Color_Name
+                               };
             if (id > 0)
             {
                 ViewData["ID_ColorProduct"] = id;
@@ -132,7 +131,7 @@ namespace HubbleSpace_Final.Controllers
                     ViewData["Message"] = "Mẫu giày này đã tồn tại size trên. " +
                         "Vui lòng chọn chỉnh sửa tại màn hình Quản lý size của sản phẩm nếu muốn điều chỉnh số lượng của size này";
                 }
-                else 
+                else
                 {
                     _context.Add(size);
                     await _context.SaveChangesAsync();
@@ -140,11 +139,11 @@ namespace HubbleSpace_Final.Controllers
                 }
             }
             var ColorProduct = from c in _context.Color_Product
-                                     select new
-                                     {
-                                         ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.product.Product_Name + " - " + c.Color_Name
-                                     };
+                               select new
+                               {
+                                   ID_Color_Product = c.ID_Color_Product,
+                                   Name = c.product.Product_Name + " - " + c.Color_Name
+                               };
             if (id > 0)
             {
                 ViewData["ID_ColorProduct"] = id;
@@ -168,11 +167,11 @@ namespace HubbleSpace_Final.Controllers
                 return NotFound();
             }
             var ColorProduct = from c in _context.Color_Product
-                                     select new
-                                     {
-                                         ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.product.Product_Name + " - " + c.Color_Name
-                                     };
+                               select new
+                               {
+                                   ID_Color_Product = c.ID_Color_Product,
+                                   Name = c.product.Product_Name + " - " + c.Color_Name
+                               };
             ViewData["ColorProduct_Select"] = new SelectList(ColorProduct, "ID_Color_Product", "Name", size.ID_Color_Product);
 
             ViewData["ID_ColorProduct"] = size.ID_Color_Product;
@@ -212,11 +211,11 @@ namespace HubbleSpace_Final.Controllers
                 return RedirectToAction("Index", new { @id = size.ID_Color_Product });
             }
             var ColorProduct = from c in _context.Color_Product
-                                     select new
-                                     {
-                                         ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.product.Product_Name + " - " + c.Color_Name
-                                     };
+                               select new
+                               {
+                                   ID_Color_Product = c.ID_Color_Product,
+                                   Name = c.product.Product_Name + " - " + c.Color_Name
+                               };
             ViewData["ColorProduct_Select"] = new SelectList(ColorProduct, "ID_Color_Product", "Name", size.ID_Color_Product);
 
             ViewData["ID_ColorProduct"] = size.ID_Color_Product;

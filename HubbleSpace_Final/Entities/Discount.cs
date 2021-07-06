@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Entities
 {
@@ -30,7 +28,7 @@ namespace HubbleSpace_Final.Entities
 
         [Display(Name = "Số lượt còn lại")]
         [Required(ErrorMessage = "Không được để trống")]
-        [Range(0,100,ErrorMessage ="Không hợp lệ")]
+        [Range(0, 100, ErrorMessage = "Không hợp lệ")]
         public int NumberofTurns { get; set; }
 
         public ICollection<DiscountUsed> DiscountUseds { get; set; }

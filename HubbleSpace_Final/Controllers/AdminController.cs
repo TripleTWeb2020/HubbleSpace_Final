@@ -72,7 +72,7 @@ namespace HubbleSpace_Final.Controllers
                                  where c.Object.Equals("Kids")
                                  select od.Quantity);
             ViewData["Men Item Sold"] = queryMenSold.Sum();
-           
+
             ViewData["Women Item Sold"] = queryWomenSold.Sum();
             ViewData["Kids Item Sold"] = queryKidsSold.Sum();
 
@@ -80,25 +80,26 @@ namespace HubbleSpace_Final.Controllers
 
             //Profit
             var queryProfitJan = from od in _context.Order
-                               where od.Date_Create.Month == 01 select od.TotalMoney;
-            var queryProfitFeb = from od in _context.Order
-                               where od.Date_Create.Month == 02
-                               select od.TotalMoney;
-            var queryProfitMarch = from od in _context.Order
-                                 where od.Date_Create.Month == 03
+                                 where od.Date_Create.Month == 01
                                  select od.TotalMoney;
+            var queryProfitFeb = from od in _context.Order
+                                 where od.Date_Create.Month == 02
+                                 select od.TotalMoney;
+            var queryProfitMarch = from od in _context.Order
+                                   where od.Date_Create.Month == 03
+                                   select od.TotalMoney;
             var queryProfitApr = from od in _context.Order
-                               where od.Date_Create.Month == 04
-                               select od.TotalMoney;
+                                 where od.Date_Create.Month == 04
+                                 select od.TotalMoney;
             var queryProfitMay = from od in _context.Order
-                               where od.Date_Create.Month == 05
-                               select od.TotalMoney;
+                                 where od.Date_Create.Month == 05
+                                 select od.TotalMoney;
             var queryProfitJune = from od in _context.Order
                                   where od.Date_Create.Month == 06
                                   select od.TotalMoney;
             var queryProfitJul = from od in _context.Order
-                                  where od.Date_Create.Month == 07
-                                  select od.TotalMoney;
+                                 where od.Date_Create.Month == 07
+                                 select od.TotalMoney;
 
             ViewData["Profit Jan"] = queryProfitJan.Sum();
             ViewData["Profit Feb"] = queryProfitFeb.Sum();
@@ -113,45 +114,46 @@ namespace HubbleSpace_Final.Controllers
                        where o.ReadStatus == ReadStatus.Unread && o.User.Id == _userService.GetUserId()
                        select o.ID_Notifcation;
             int res = await noti.CountAsync();
-			if(res != 0)
-			{
+            if (res != 0)
+            {
                 ViewData["Notifications"] = res;
-			}
-			else
-			{
+            }
+            else
+            {
                 ViewData["Notifications"] = 0;
-			}
+            }
 
 
             //Quantity
 
             var queryQuanJan = from od in _context.OrderDetail
-                                 join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
-                                 where profit.Date_Create.Month == 01 select od.Quantity;
-            var queryQuanFeb = from od in _context.OrderDetail
-                                 join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
-                                 where profit.Date_Create.Month == 02
-                                 select od.Quantity;
-            var queryQuanMarch = from od in _context.OrderDetail
-                                   join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
-                                   where profit.Date_Create.Month == 03
-                                   select od.Quantity;
-            var queryQuanApr = from od in _context.OrderDetail
-                                 join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
-                                 where profit.Date_Create.Month == 04
-                                 select od.Quantity;
-            var queryQuanMay = from od in _context.OrderDetail
-                                 join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
-                                 where profit.Date_Create.Month == 05
-                                 select od.Quantity;
-            var queryQuanJune = from od in _context.OrderDetail
                                join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
-                               where profit.Date_Create.Month == 06
+                               where profit.Date_Create.Month == 01
                                select od.Quantity;
-            var queryQuanJul = from od in _context.OrderDetail
+            var queryQuanFeb = from od in _context.OrderDetail
+                               join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
+                               where profit.Date_Create.Month == 02
+                               select od.Quantity;
+            var queryQuanMarch = from od in _context.OrderDetail
+                                 join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
+                                 where profit.Date_Create.Month == 03
+                                 select od.Quantity;
+            var queryQuanApr = from od in _context.OrderDetail
+                               join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
+                               where profit.Date_Create.Month == 04
+                               select od.Quantity;
+            var queryQuanMay = from od in _context.OrderDetail
+                               join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
+                               where profit.Date_Create.Month == 05
+                               select od.Quantity;
+            var queryQuanJune = from od in _context.OrderDetail
                                 join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
-                                where profit.Date_Create.Month == 07
+                                where profit.Date_Create.Month == 06
                                 select od.Quantity;
+            var queryQuanJul = from od in _context.OrderDetail
+                               join profit in _context.Order on od.ID_Order.ToString() equals profit.ID_Order.ToString()
+                               where profit.Date_Create.Month == 07
+                               select od.Quantity;
 
 
             ViewData["Quan Jan"] = queryQuanJan.Sum();
@@ -174,19 +176,19 @@ namespace HubbleSpace_Final.Controllers
 
             // Query for top shoe
             var queryTopShoe = from p in _context.Product
-                           join cp in _context.Color_Product on p.ID_Product.ToString() equals cp.ID_Product.ToString() into tb1
+                               join cp in _context.Color_Product on p.ID_Product.ToString() equals cp.ID_Product.ToString() into tb1
 
-                           from tbl1 in tb1
-                           join item in _context.OrderDetail on tbl1.ID_Color_Product.ToString() equals item.ID_Color_Product.ToString() into tb2
+                               from tbl1 in tb1
+                               join item in _context.OrderDetail on tbl1.ID_Color_Product.ToString() equals item.ID_Color_Product.ToString() into tb2
 
-                           from tbl2 in tb2
-                           //orderby tbl2.Quantity descending
-                           group tbl2 by new { p.Product_Name } into g
-                           select new
-                           {
-                               product_Name = g.Key.Product_Name,
-                               sum = g.Sum(item => item.Quantity),
-                           };
+                               from tbl2 in tb2
+                                   //orderby tbl2.Quantity descending
+                               group tbl2 by new { p.Product_Name } into g
+                               select new
+                               {
+                                   product_Name = g.Key.Product_Name,
+                                   sum = g.Sum(item => item.Quantity),
+                               };
             var queryShoeRank = queryTopShoe.OrderByDescending(s => s.sum).ToList();
             ViewData["query1stShoeName"] = queryShoeRank.ElementAt(0).product_Name;
             ViewData["query1stShoeQuan"] = queryShoeRank.ElementAt(0).sum;
@@ -206,8 +208,8 @@ namespace HubbleSpace_Final.Controllers
 
             // Query for notification
             var notification = from o in _context.Notifications.Include(o => o.User)
-                       where o.ReadStatus == ReadStatus.Unread && o.User.Id == _userService.GetUserId()
-                       select o.ID_Notifcation;
+                               where o.ReadStatus == ReadStatus.Unread && o.User.Id == _userService.GetUserId()
+                               select o.ID_Notifcation;
             int ress = await notification.CountAsync();
             if (ress != 0)
             {
@@ -229,7 +231,7 @@ namespace HubbleSpace_Final.Controllers
             ViewData["Noti"] = listts.ToList();
 
             return View(await Task.AsNoTracking().ToListAsync());
-           
+
 
         }
 
@@ -240,7 +242,7 @@ namespace HubbleSpace_Final.Controllers
             ViewData["Search"] = searchString;
 
             var Orders = from o in _context.Order.Include(o => o.User)
-                            select o;
+                         select o;
 
             if (!String.IsNullOrEmpty(time))
             {
@@ -248,12 +250,12 @@ namespace HubbleSpace_Final.Controllers
                 {
                     Orders = Orders.Where(o => o.Date_Create.Year == DateTime.Now.Year);
                 }
-                if(time == "month")
+                if (time == "month")
                 {
                     Orders = Orders.Where(o => o.Date_Create.Month == DateTime.Now.Month && o.Date_Create.Year == DateTime.Now.Year);
                 }
             }
-                
+
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -275,7 +277,7 @@ namespace HubbleSpace_Final.Controllers
                     Orders = Orders.OrderByDescending(o => o.Date_Create);
                     break;
             }
-            
+
             //Lấy doanh thu
             ViewData["totalMoney"] = Orders.Sum(o => o.TotalMoney);
 

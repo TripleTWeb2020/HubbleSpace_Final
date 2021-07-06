@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HubbleSpace_Final.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PagedList.Core;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using HubbleSpace_Final.Entities;
-using Microsoft.AspNetCore.Authorization;
-using PagedList.Core;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -26,13 +24,13 @@ namespace HubbleSpace_Final.Controllers
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Name"] = sortOrder == "Name" ? "name_desc" : "Name";
-            
+
             ViewData["Search"] = searchString;
 
 
 
             var Banners = from b in _context.Banner
-                           select b;
+                          select b;
 
             if (!String.IsNullOrEmpty(searchString))
             {

@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BraintreeHttp;
 using HubbleSpace_Final.Entities;
+using HubbleSpace_Final.Helpers;
 using HubbleSpace_Final.Models;
 using HubbleSpace_Final.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using HubbleSpace_Final.Helpers;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Authorization;
 using PayPal.Core;
 using PayPal.v1.Payments;
-using BraintreeHttp;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -31,7 +31,7 @@ namespace HubbleSpace_Final.Controllers
         private readonly string _secretKey;
         public double TyGiaUSD = 23300;//store in Database
 
-        public Client_ProductCartsController(ILogger<HomeController> logger, MyDbContext context, IUserService userService, UserManager<ApplicationUser> userManager,IConfiguration config)
+        public Client_ProductCartsController(ILogger<HomeController> logger, MyDbContext context, IUserService userService, UserManager<ApplicationUser> userManager, IConfiguration config)
         {
             _logger = logger;
             _context = context;
@@ -51,10 +51,10 @@ namespace HubbleSpace_Final.Controllers
             {
                 return JsonConvert.DeserializeObject<List<CartItemModel>>(jsoncart);
             }
-            
+
             return new List<CartItemModel>();
         }
- 
+
         // Xóa cart khỏi session
         void ClearCart()
         {
@@ -77,9 +77,9 @@ namespace HubbleSpace_Final.Controllers
             return View(GetCartItems());
         }
 
-       // [Route("/addcart/{productid:int}")]
+        // [Route("/addcart/{productid:int}")]
         //[HttpPost]
-        public IActionResult AddToCart( int id, double price, string name, string size)
+        public IActionResult AddToCart(int id, double price, string name, string size)
         {
             var color_Product = _context.Color_Product.Where(p => p.ID_Color_Product == id).FirstOrDefault();
 
@@ -123,7 +123,7 @@ namespace HubbleSpace_Final.Controllers
                     cart.Remove(cartDiscount);
                 }
             }
-            
+
             SaveCartSession(cart);
             // Trả về mã thành công (không có nội dung gì - chỉ để Ajax gọi)
             return Ok();
@@ -161,7 +161,8 @@ namespace HubbleSpace_Final.Controllers
             var discountUsed = _context.DiscountUsed.Where(ds => ds.User.Id == userId).FirstOrDefault();
 
             //User chưa dùng khuyến mãi và còn lượt
-            if (discount != null && discountUsed == null && discount.NumberofTurns > 0 && discount.Expire > DateTime.Now) {
+            if (discount != null && discountUsed == null && discount.NumberofTurns > 0 && discount.Expire > DateTime.Now)
+            {
                 var cart = GetCartItems();
                 cart.Add(new CartItemModel() { Amount = 1, Discount = discount.ID_Discount, Value_Discount = discount.Value });
                 // Lưu cart vào Session
@@ -174,7 +175,7 @@ namespace HubbleSpace_Final.Controllers
 
         public IActionResult Checkout()
         {
-            
+
             return View(GetCheckoutViewModel());
         }
 
@@ -195,14 +196,14 @@ namespace HubbleSpace_Final.Controllers
             {
                 Items = new List<Item>()
             };
-            var total = Math.Round((model.CartItems.Sum(p => p.Price * p.Amount) - model.CartItems.Sum(m => m.Value_Discount))/TyGiaUSD, 2);
+            var total = Math.Round((model.CartItems.Sum(p => p.Price * p.Amount) - model.CartItems.Sum(m => m.Value_Discount)) / TyGiaUSD, 2);
             foreach (var item in model.CartItems)
             {
                 itemList.Items.Add(new Item()
                 {
                     Name = item.Name,
                     Currency = "USD",
-                    Price = Math.Round(item.Price*item.Amount / TyGiaUSD, 2).ToString(),
+                    Price = Math.Round(item.Price * item.Amount / TyGiaUSD, 2).ToString(),
                     Quantity = item.Amount.ToString(),
                     Sku = "sku",
                     Tax = "0"
@@ -234,7 +235,7 @@ namespace HubbleSpace_Final.Controllers
                         InvoiceNumber = paypalOrderId.ToString()
                     }
                 },
-                
+
                 RedirectUrls = new RedirectUrls()
                 {
                     CancelUrl = $"{hostname}/Client_ProductCarts/PaymentMethod",
@@ -251,7 +252,7 @@ namespace HubbleSpace_Final.Controllers
 
             try
             {
-				BraintreeHttp.HttpResponse response = await client.Execute(request);
+                BraintreeHttp.HttpResponse response = await client.Execute(request);
                 var statusCode = response.StatusCode;
                 Payment result = response.Result<Payment>();
 
@@ -266,7 +267,7 @@ namespace HubbleSpace_Final.Controllers
                         paypalRedirectUrl = lnk.Href;
                     }
                 }
-                
+
 
                 return Redirect(paypalRedirectUrl);
             }
@@ -285,7 +286,7 @@ namespace HubbleSpace_Final.Controllers
         {
             var userId = _userService.GetUserId();
             var user = await _userManager.FindByIdAsync(userId);
-            
+
 
             var model = GetCheckoutViewModel();
             var checkoutRequest = new CheckoutRequest()
@@ -370,7 +371,7 @@ namespace HubbleSpace_Final.Controllers
                 message = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, order.User.UserName)
             };
             await ChannelHelper.Trigger(data, "notification", "new_notification");
-        
+
 
 
             var message = new NotificationPusher()
@@ -421,11 +422,12 @@ namespace HubbleSpace_Final.Controllers
             }
             totalMoney -= model.CartItems.Sum(m => m.Value_Discount);
 
-            var order = new Entities.Order() { 
+            var order = new Entities.Order()
+            {
                 TotalMoney = totalMoney,
                 Discount = discountValue,
                 Address = checkoutRequest.Address,
-                Receiver = checkoutRequest.FirstName +' '+ checkoutRequest.LastName,
+                Receiver = checkoutRequest.FirstName + ' ' + checkoutRequest.LastName,
                 SDT = checkoutRequest.Phone,
                 User = user,
                 Process = "Mới đặt",
@@ -438,7 +440,7 @@ namespace HubbleSpace_Final.Controllers
 
             foreach (var item in model.CartItems)
             {
-                if(item.Color_Product != null)
+                if (item.Color_Product != null)
                 {
                     OrderDetail orderdetail = new OrderDetail()
                     {
@@ -452,7 +454,7 @@ namespace HubbleSpace_Final.Controllers
                     await _context.SaveChangesAsync();
 
 
-                    Size size = _context.Size.Where(s => s.ID_Color_Product == item.Color_Product.ID_Color_Product 
+                    Size size = _context.Size.Where(s => s.ID_Color_Product == item.Color_Product.ID_Color_Product
                                                         && s.SizeNumber.Trim().ToLower() == item.Size.Trim().ToLower()).FirstOrDefault();
                     size.Quantity -= 1;
                     _context.Update(size);
@@ -461,7 +463,7 @@ namespace HubbleSpace_Final.Controllers
             }
 
             //User sử dụng Discount
-            if(useDiscount != null)
+            if (useDiscount != null)
             {
                 //ghi lại
                 var discountUsed = new DiscountUsed()
@@ -478,10 +480,11 @@ namespace HubbleSpace_Final.Controllers
                 _context.Update(discount);
                 await _context.SaveChangesAsync();
             }
-            
-            var data = new {
-                         message = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order,order.User.UserName)
-                     };
+
+            var data = new
+            {
+                message = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, order.User.UserName)
+            };
             await ChannelHelper.Trigger(data, "notification", "new_notification");
             var userr = await _userManager.FindByIdAsync("21114623-8ec9-4f38-92ca-89af9a82e22c");
 

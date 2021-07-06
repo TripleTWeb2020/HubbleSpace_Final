@@ -2,9 +2,7 @@
 using HubbleSpace_Final.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Repository
@@ -17,7 +15,7 @@ namespace HubbleSpace_Final.Repository
         private readonly IEmailService _emailService;
         private readonly IConfiguration _configuration;
 
-        public AccountRepository(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser>signInManager,IUserService userService,IEmailService emailService,IConfiguration configuration)
+        public AccountRepository(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserService userService, IEmailService emailService, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -33,11 +31,11 @@ namespace HubbleSpace_Final.Repository
         {
             var user = new ApplicationUser()
             {
-                LastName=userModel.LastName,
-                FirstName=userModel.FirstName,
+                LastName = userModel.LastName,
+                FirstName = userModel.FirstName,
                 Email = userModel.Email,
                 UserName = userModel.Username,
-               
+
             };
             var result = await _userManager.CreateAsync(user, userModel.Password);
             if (result.Succeeded)
@@ -47,7 +45,7 @@ namespace HubbleSpace_Final.Repository
             return result;
 
         }
-        
+
         public async Task GenerateEmailConfirmationTokenAsync(ApplicationUser user)
         {
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -60,9 +58,9 @@ namespace HubbleSpace_Final.Repository
         public async Task<SignInResult> PasswordSignInAsync(SignInModel signInModel)
         {
 
-            return await _signInManager.PasswordSignInAsync(signInModel.Username, signInModel.Password, signInModel.RememberMe,false);
-            
-           
+            return await _signInManager.PasswordSignInAsync(signInModel.Username, signInModel.Password, signInModel.RememberMe, false);
+
+
 
         }
         public async Task<IdentityResult> ResetPasswordAsync(ResetPasswordModel model)
@@ -81,18 +79,18 @@ namespace HubbleSpace_Final.Repository
         {
             await _signInManager.SignOutAsync();
         }
-        public async Task<IdentityResult>ChangePasswordAsync(ChangePasswordModel model)
+        public async Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model)
         {
             var userId = _userService.GetUserId();
             var user = await _userManager.FindByIdAsync(userId);
             return await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
         }
 
-        public async Task<IdentityResult> ConfirmEmailAsync(string uid,string token)
+        public async Task<IdentityResult> ConfirmEmailAsync(string uid, string token)
         {
             return await _userManager.ConfirmEmailAsync(await _userManager.FindByIdAsync(uid), token);
         }
-        private async Task SendEmailConfirmationEmail(ApplicationUser user,string token)
+        private async Task SendEmailConfirmationEmail(ApplicationUser user, string token)
         {
             string appDomain = _configuration.GetSection("Application:AppDomain").Value;
             string confirmationLink = _configuration.GetSection("Application:EmailConfirmation").Value;
@@ -140,7 +138,7 @@ namespace HubbleSpace_Final.Repository
             user.CreditCard = userProfile.CreditCard;
 
             return await _userManager.UpdateAsync(user);
-            
+
         }
-	}
+    }
 }

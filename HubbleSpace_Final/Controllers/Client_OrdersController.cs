@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using HubbleSpace_Final.Entities;
+﻿using HubbleSpace_Final.Entities;
 using HubbleSpace_Final.Models;
 using HubbleSpace_Final.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PagedList.Core;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -19,7 +18,7 @@ namespace HubbleSpace_Final.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public Client_OrdersController( MyDbContext context, IUserService userService, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public Client_OrdersController(MyDbContext context, IUserService userService, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userService = userService;
@@ -80,7 +79,7 @@ namespace HubbleSpace_Final.Controllers
                                                             .Include(o => o.order)
                                                             .Include(o => o.Color_Product.product)
                                select o;
-                
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 orderDetails = orderDetails.Where(a => a.Color_Product.product.Product_Name.Contains(searchString));

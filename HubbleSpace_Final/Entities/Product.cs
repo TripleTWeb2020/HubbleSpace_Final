@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Entities
 {
@@ -20,7 +18,7 @@ namespace HubbleSpace_Final.Entities
 
         [Display(Name = "Giá niêm yết")]
         [Required(ErrorMessage = "Không được để trống")]
-        [Range(0, 10000000000, ErrorMessage ="Không hợp lệ")]
+        [Range(0, 10000000000, ErrorMessage = "Không hợp lệ")]
         public double Price_Product { get; set; }
 
         [Range(0, 10000000000, ErrorMessage = "Không hợp lệ")]
@@ -37,7 +35,7 @@ namespace HubbleSpace_Final.Entities
         [ForeignKey("ID_Categorie")]
         public Category category { get; set; }
 
-        [Display(Name ="Mô tả")]
+        [Display(Name = "Mô tả")]
         public string Description { get; set; }
 
         public ICollection<Color_Product> Color_Products { get; set; }

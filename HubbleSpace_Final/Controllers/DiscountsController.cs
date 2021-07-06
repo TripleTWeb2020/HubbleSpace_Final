@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HubbleSpace_Final.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PagedList.Core;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using HubbleSpace_Final.Entities;
-using Microsoft.AspNetCore.Authorization;
-using PagedList.Core;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -35,7 +33,7 @@ namespace HubbleSpace_Final.Controllers
 
 
             var Discounts = from d in _context.Discount
-                           select d;
+                            select d;
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -201,7 +199,7 @@ namespace HubbleSpace_Final.Controllers
         }
         public IActionResult Search(string term)
         {
-            return View("Index", _context.Discount.Where(m =>m.Code_Discount.Contains(term)));
+            return View("Index", _context.Discount.Where(m => m.Code_Discount.Contains(term)));
         }
     }
 }

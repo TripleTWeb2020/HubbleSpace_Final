@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using HubbleSpace_Final.Entities;
+using HubbleSpace_Final.Helpers;
+using HubbleSpace_Final.Models;
+using HubbleSpace_Final.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HubbleSpace_Final.Entities;
-using HubbleSpace_Final.Helpers;
-using HubbleSpace_Final.Services;
-using Microsoft.AspNetCore.Identity;
-using HubbleSpace_Final.Models;
-using Microsoft.AspNetCore.Authorization;
 using PagedList.Core;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -22,7 +21,7 @@ namespace HubbleSpace_Final.Controllers
         private readonly IUserService _userService;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public OrdersController(MyDbContext context,IUserService userService, UserManager<ApplicationUser> userManager)
+        public OrdersController(MyDbContext context, IUserService userService, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userService = userService;
@@ -39,7 +38,7 @@ namespace HubbleSpace_Final.Controllers
 
 
             var Orders = from o in _context.Order.Include(o => o.User)
-                           select o;
+                         select o;
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -124,7 +123,7 @@ namespace HubbleSpace_Final.Controllers
             {
                 return NotFound();
             }
-            
+
             return View(order);
         }
 
@@ -135,7 +134,7 @@ namespace HubbleSpace_Final.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID_Order,TotalMoney,Date_Create,Address,Receiver,SDT,Process,PaymentStatus")] Order order)
         {
-            
+
             if (id != order.ID_Order)
             {
                 return NotFound();
@@ -152,10 +151,10 @@ namespace HubbleSpace_Final.Controllers
                     var user = await _userManager.FindByIdAsync(userId);
 
                     var orrder = await _context.Order.Include(o => o.User).Where(o => o.ID_Order == id).Select(o => o.User).FirstOrDefaultAsync();
-                    
+
                     var data = new
                     {
-                        message = System.String.Format("ID of #{0}, Your order status is changed by {1} to {2} ", order.ID_Order, user,order.Process)
+                        message = System.String.Format("ID of #{0}, Your order status is changed by {1} to {2} ", order.ID_Order, user, order.Process)
                     };
                     await ChannelHelper.Trigger(data, "Clientnotification", "new_Clientnotification");
 

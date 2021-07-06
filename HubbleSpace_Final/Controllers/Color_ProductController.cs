@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using HubbleSpace_Final.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HubbleSpace_Final.Entities;
 using PagedList.Core;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -28,12 +27,12 @@ namespace HubbleSpace_Final.Controllers
             ViewData["Name"] = sortOrder == "Name" ? "name_desc" : "Name";
             ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";
             ViewData["Search"] = searchString;
-            ViewData["ID_Product"] = id; 
+            ViewData["ID_Product"] = id;
 
 
             var color_Products = from c in _context.Color_Product.Include(c => c.product)
-                           select c;
-            if(id > 0)
+                                 select c;
+            if (id > 0)
             {
                 color_Products = color_Products.Where(c => c.product.ID_Product == id);
             }
@@ -69,7 +68,7 @@ namespace HubbleSpace_Final.Controllers
 
             return View(model);
         }
-        
+
         // GET: Color_Product/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -116,7 +115,7 @@ namespace HubbleSpace_Final.Controllers
             {
                 _context.Add(color_Product);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", new { @id = id }) ;
+                return RedirectToAction("Index", new { @id = id });
             }
             var product = _context.Product.Where(p => p.ID_Product == id).ToList();
 
@@ -232,6 +231,6 @@ namespace HubbleSpace_Final.Controllers
             return _context.Color_Product.Any(e => e.ID_Color_Product == id);
         }
 
-        
+
     }
 }

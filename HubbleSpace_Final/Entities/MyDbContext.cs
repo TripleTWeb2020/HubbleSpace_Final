@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using HubbleSpace_Final.Entities;
+﻿using HubbleSpace_Final.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using HubbleSpace_Final.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HubbleSpace_Final.Entities
 {
-    public class MyDbContext: IdentityDbContext<ApplicationUser>
+    public class MyDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Brand> Brand { get; set; }
         public DbSet<Category> Category { get; set; }
@@ -18,7 +17,7 @@ namespace HubbleSpace_Final.Entities
         public DbSet<OrderDetail> OrderDetail { get; set; }
         public DbSet<Size> Size { get; set; }
         public DbSet<Schedule> Schedule { get; set; }
-        public DbSet<NotificationPusher> Notifications{ get; set; }
+        public DbSet<NotificationPusher> Notifications { get; set; }
 
 
 
@@ -30,6 +29,6 @@ namespace HubbleSpace_Final.Entities
 
         public DbSet<HubbleSpace_Final.Entities.DiscountUsed> DiscountUsed { get; set; }
 
-        
+
     }
 }

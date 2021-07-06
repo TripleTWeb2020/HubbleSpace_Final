@@ -1,16 +1,14 @@
-﻿using System;
+﻿using HubbleSpace_Final.Entities;
+using HubbleSpace_Final.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PagedList.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using HubbleSpace_Final.Entities;
-using Microsoft.AspNetCore.Identity;
-using HubbleSpace_Final.Models;
-using Microsoft.AspNetCore.Authorization;
-using PagedList;
-using PagedList.Core;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -210,7 +208,7 @@ namespace HubbleSpace_Final.Controllers
 
             switch (sortOrder)
             {
-                
+
                 case "UserName":
                     Accounts = Accounts.OrderBy(a => a.UserName);
                     break;
@@ -238,7 +236,7 @@ namespace HubbleSpace_Final.Controllers
             ViewData["CountForTake"] = CountForTake + 1;
 
             return View(await _userManager.Users.AsNoTracking().ToListAsync());
-            
+
         }
         [HttpGet]
         public async Task<IActionResult> EditUser(string id)
@@ -548,7 +546,7 @@ namespace HubbleSpace_Final.Controllers
 
                 try
                 {
-                    await  _userManager.UpdateAsync(user);
+                    await _userManager.UpdateAsync(user);
                     if (applicationUser.level == 0)
                     {
                         if (await _userManager.IsInRoleAsync(user, "Admin"))

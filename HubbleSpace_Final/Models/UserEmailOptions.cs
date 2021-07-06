@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace HubbleSpace_Final.Models
 {
@@ -10,7 +7,7 @@ namespace HubbleSpace_Final.Models
         public List<string> ToEmails { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
-        public List<KeyValuePair<string,string>>PlaceHolders { get; set; }
+        public List<KeyValuePair<string, string>> PlaceHolders { get; set; }
     }
 
 }

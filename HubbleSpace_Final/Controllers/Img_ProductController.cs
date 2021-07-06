@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using HubbleSpace_Final.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HubbleSpace_Final.Entities;
 using PagedList.Core;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -87,12 +86,13 @@ namespace HubbleSpace_Final.Controllers
         // GET: Img_Product/Create
         public IActionResult Create(int id)
         {
-            var Color_Product = from c in _context.Color_Product where(c.ID_Color_Product == id)
-                                     select new
-                                     {
-                                         ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.Color_Name + " - " + c.product.Product_Name
-                                     };
+            var Color_Product = from c in _context.Color_Product
+                                where (c.ID_Color_Product == id)
+                                select new
+                                {
+                                    ID_Color_Product = c.ID_Color_Product,
+                                    Name = c.Color_Name + " - " + c.product.Product_Name
+                                };
             ViewData["ColorProduct_Select"] = new SelectList(Color_Product, "ID_Color_Product", "Name");
             ViewData["ID_ColorProduct"] = id;
             return View();
@@ -119,7 +119,7 @@ namespace HubbleSpace_Final.Controllers
                                     Name = c.Color_Name + " - " + c.product.Product_Name
                                 };
             ViewData["ColorProduct_Select"] = new SelectList(Color_Product, "ID_Color_Product", "Name", img_Product.ID_Color_Product);
-            ViewData["ID_ColorProduct"] = id; 
+            ViewData["ID_ColorProduct"] = id;
             return View(img_Product);
         }
 
@@ -178,7 +178,7 @@ namespace HubbleSpace_Final.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index",new { @id = img_Product.ID_Color_Product });
+                return RedirectToAction("Index", new { @id = img_Product.ID_Color_Product });
             }
             var Color_Product = from c in _context.Color_Product
                                 where (c.ID_Color_Product == img_Product.ID_Color_Product)

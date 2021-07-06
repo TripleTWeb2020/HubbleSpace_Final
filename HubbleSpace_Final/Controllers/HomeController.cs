@@ -1,17 +1,16 @@
-﻿using HubbleSpace_Final.Models;
+﻿using HubbleSpace_Final.Entities;
+using HubbleSpace_Final.Models;
+using HubbleSpace_Final.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using PagedList.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using HubbleSpace_Final.Entities;
-using HubbleSpace_Final.Services;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using PagedList.Core;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -22,7 +21,7 @@ namespace HubbleSpace_Final.Controllers
         private readonly MyDbContext _context;
         private readonly IUserService _userService;
 
-        public HomeController(ILogger<HomeController> logger, MyDbContext context,IUserService userService)
+        public HomeController(ILogger<HomeController> logger, MyDbContext context, IUserService userService)
         {
             _logger = logger;
             _context = context;
@@ -81,19 +80,19 @@ namespace HubbleSpace_Final.Controllers
 
             List<BestSaleModel> listSales = new List<BestSaleModel>();
 
-            foreach(var item in list_sale.Take(8))
+            foreach (var item in list_sale.Take(8))
             {
                 listSales.Add(item);
 
             }
             return PartialView(listSales);
         }
-        
+
         public IActionResult Privacy()
         {
             return View();
         }
-        
+
         public ActionResult Categories(string sortOrder, string Object, string CategoriesName, string brand, string price, string searchString, int page = 1)
         {
             ViewData["Search"] = searchString;
@@ -187,7 +186,7 @@ namespace HubbleSpace_Final.Controllers
                     break;
             }
 
-            
+
             ViewData["products_taked"] = color_Products.Count();
             ViewData["Object"] = Object;
             ViewData["CategoriesName"] = CategoriesName;
@@ -197,7 +196,7 @@ namespace HubbleSpace_Final.Controllers
             return View(model);
 
         }
-       
+
         public async Task<IActionResult> Product_Detail(int id)
         {
             return View(await _context.Img_Product.Include(p => p.color_Product.product)
@@ -206,18 +205,18 @@ namespace HubbleSpace_Final.Controllers
                                                   .Where(p => p.ID_Color_Product == id)
                                                   .ToListAsync());
         }
-        
+
         public async Task<IActionResult> GetSize(int id)
         {
-            return PartialView(await _context.Size.Where(s => s.ID_Color_Product == id).Include(s=>s.color_Product.product).OrderBy(s => s.ID_Size_Product).ToListAsync());
+            return PartialView(await _context.Size.Where(s => s.ID_Color_Product == id).Include(s => s.color_Product.product).OrderBy(s => s.ID_Size_Product).ToListAsync());
         }
-        
+
         public async Task<IActionResult> GetColor(int id)
         {
             return PartialView(await _context.Color_Product.Where(p => p.ID_Product == id).ToListAsync());
         }
-        
-        public async Task<IActionResult> GetRecommendProducts(string Object="", string Name ="", string Brand_Name = "")
+
+        public async Task<IActionResult> GetRecommendProducts(string Object = "", string Name = "", string Brand_Name = "")
         {
             var recommendProduct = from rp in _context.Color_Product
                                    select rp;

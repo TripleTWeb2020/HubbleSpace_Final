@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using HubbleSpace_Final.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HubbleSpace_Final.Entities;
-using Microsoft.AspNetCore.Authorization;
 using PagedList.Core;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -85,11 +84,11 @@ namespace HubbleSpace_Final.Controllers
         {
             ViewData["ID_Brand"] = new SelectList(_context.Brand, "ID_Brand", "Brand_Name");
             var Category_Name = from c in _context.Category
-                                     select new
-                                     {
-                                         ID_Categorie = c.ID_Categorie,
-                                         Category_Name = c.Category_Name + " - " + c.Object
-                                     };
+                                select new
+                                {
+                                    ID_Categorie = c.ID_Categorie,
+                                    Category_Name = c.Category_Name + " - " + c.Object
+                                };
             ViewData["ID_Categorie"] = new SelectList(Category_Name, "ID_Categorie", "Category_Name");
             return View();
         }

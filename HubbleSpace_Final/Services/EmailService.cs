@@ -1,9 +1,7 @@
 ﻿using HubbleSpace_Final.Models;
 using Microsoft.Extensions.Options;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -17,8 +15,8 @@ namespace HubbleSpace_Final.Services
         private readonly SMTPConfigModel _smtpConfig;
         public async Task SendTestEmail(UserEmailOptions userEmailOptions)
         {
-            userEmailOptions.Subject = UpdatePlaceHolders("Hello {{Username}}, This is a test Email subject from our web",userEmailOptions.PlaceHolders);
-            userEmailOptions.Body = UpdatePlaceHolders(GetEmailBody("TestEmail"),userEmailOptions.PlaceHolders);
+            userEmailOptions.Subject = UpdatePlaceHolders("Hello {{Username}}, This is a test Email subject from our web", userEmailOptions.PlaceHolders);
+            userEmailOptions.Body = UpdatePlaceHolders(GetEmailBody("TestEmail"), userEmailOptions.PlaceHolders);
             await SendEmail(userEmailOptions);
         }
         public async Task SendEmailForEmailConfirmation(UserEmailOptions userEmailOptions)
@@ -55,7 +53,7 @@ namespace HubbleSpace_Final.Services
             SmtpClient smtpClient = new SmtpClient
             {
                 UseDefaultCredentials = _smtpConfig.UseDefaultCredentials,
-                Credentials = new System.Net.NetworkCredential("tripletweb@gmail.com","Pntt2202"),
+                Credentials = new System.Net.NetworkCredential("tripletweb@gmail.com", "Pntt2202"),
                 Port = _smtpConfig.Port,
                 Host = _smtpConfig.Host,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
@@ -71,7 +69,7 @@ namespace HubbleSpace_Final.Services
         }
         private string UpdatePlaceHolders(string text, List<KeyValuePair<string, string>> keyValuePairs)
         {
-            if (!string.IsNullOrEmpty(text)&&keyValuePairs!=null)
+            if (!string.IsNullOrEmpty(text) && keyValuePairs != null)
             {
                 foreach (var placeholder in keyValuePairs)
                 {

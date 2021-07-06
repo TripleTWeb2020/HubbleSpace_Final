@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using HubbleSpace_Final.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HubbleSpace_Final.Entities;
 using PagedList.Core;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -30,8 +29,8 @@ namespace HubbleSpace_Final.Controllers
             var OrderDetails = from o in _context.OrderDetail.Include(o => o.Color_Product)
                                                                 .Include(o => o.order)
                                                                 .Include(o => o.Color_Product.product)
-                                select o;
-            if(id > 0)
+                               select o;
+            if (id > 0)
             {
                 OrderDetails = OrderDetails.Where(o => o.ID_Order == id);
                 ViewData["ID_Order"] = id;
@@ -67,7 +66,7 @@ namespace HubbleSpace_Final.Controllers
 
             return View(model);
         }
-            
+
         // GET: OrderDetails/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -92,22 +91,22 @@ namespace HubbleSpace_Final.Controllers
         // GET: OrderDetails/Create
         public IActionResult Create(int? id)
         {
-            
+
             var colorProduct = from c in _context.Color_Product
-                                     select new
-                                     {
-                                         ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.product.Product_Name + " - " + c.Color_Name,
-                                     };
+                               select new
+                               {
+                                   ID_Color_Product = c.ID_Color_Product,
+                                   Name = c.product.Product_Name + " - " + c.Color_Name,
+                               };
 
             ViewData["ColorProduct_Select"] = new SelectList(colorProduct, "ID_Color_Product", "Name");
 
             var order = from c in _context.Order
-                             select new
-                             {
-                                 ID_Order = c.ID_Order,
-                                 Name = c.Address + " - " + c.SDT
-                             };
+                        select new
+                        {
+                            ID_Order = c.ID_Order,
+                            Name = c.Address + " - " + c.SDT
+                        };
             if (id > 0)
             {
                 order = order.Where(o => o.ID_Order == id);
@@ -141,11 +140,11 @@ namespace HubbleSpace_Final.Controllers
             ViewData["ColorProduct_Select"] = new SelectList(colorProduct, "ID_Color_Product", "Name", orderDetail.ID_Color_Product);
 
             var order = from c in _context.Order
-                             select new
-                             {
-                                 ID_Order = c.ID_Order,
-                                 Name = c.Address+ " - " +c.SDT
-                             };
+                        select new
+                        {
+                            ID_Order = c.ID_Order,
+                            Name = c.Address + " - " + c.SDT
+                        };
             if (id > 0)
             {
                 order = order.Where(o => o.ID_Order == id);
@@ -170,19 +169,20 @@ namespace HubbleSpace_Final.Controllers
             }
 
             var colorProduct = from c in _context.Color_Product
-                                     select new
-                                     {
-                                         ID_Color_Product = c.ID_Color_Product,
-                                         Name = c.product.Product_Name + " - " + c.Color_Name
-                                     };
+                               select new
+                               {
+                                   ID_Color_Product = c.ID_Color_Product,
+                                   Name = c.product.Product_Name + " - " + c.Color_Name
+                               };
             ViewData["ColorProduct_Select"] = new SelectList(colorProduct, "ID_Color_Product", "Name", orderDetail.ID_Color_Product);
 
-            var order = from c in _context.Order where(c.ID_Order == orderDetail.ID_Order)
-                             select new
-                             {
-                                 ID_Order = c.ID_Order,
-                                 Name = c.Address + " - " + c.SDT
-                             };
+            var order = from c in _context.Order
+                        where (c.ID_Order == orderDetail.ID_Order)
+                        select new
+                        {
+                            ID_Order = c.ID_Order,
+                            Name = c.Address + " - " + c.SDT
+                        };
             ViewData["orderSelect"] = new SelectList(order, "ID_Order", "Name", orderDetail.ID_Order);
             ViewData["ID_Order"] = orderDetail.ID_Order;
             return View(orderDetail);

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Entities
 {
@@ -14,7 +12,7 @@ namespace HubbleSpace_Final.Entities
         public int ID_Color_Product { get; set; }
 
         [Display(Name = "Màu")]
-        [Required(ErrorMessage ="Không được để trống")]
+        [Required(ErrorMessage = "Không được để trống")]
         [MaxLength(100, ErrorMessage = "Không hợp lệ")]
         public string Color_Name { get; set; }
 

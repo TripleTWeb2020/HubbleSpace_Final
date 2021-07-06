@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace HubbleSpace_Final.Migrations
 {
@@ -40,7 +40,7 @@ namespace HubbleSpace_Final.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
 
-          
+
         }
     }
 }

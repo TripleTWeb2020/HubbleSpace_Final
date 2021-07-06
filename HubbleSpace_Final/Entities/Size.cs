@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Entities
 {
-    
+
     [Table("Size")]
     public class Size
     {
         [Key]
         public int ID_Size_Product { get; set; }
 
-        [Required(ErrorMessage ="Không được để trống")]
+        [Required(ErrorMessage = "Không được để trống")]
         [Display(Name = "Size")]
         public string SizeNumber { get; set; }
 

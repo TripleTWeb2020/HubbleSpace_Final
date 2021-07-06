@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HubbleSpace_Final.Entities
 {
@@ -15,7 +11,7 @@ namespace HubbleSpace_Final.Entities
 
         [Display(Name = "Hình ảnh")]
         [Required(ErrorMessage = "Không được để trống")]
-        [DataType(DataType.Upload, ErrorMessage ="Không hợp lệ")]
+        [DataType(DataType.Upload, ErrorMessage = "Không hợp lệ")]
         public string Photo { get; set; }
 
         [Display(Name = "Màu")]
