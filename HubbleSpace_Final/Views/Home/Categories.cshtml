@@ -5,6 +5,31 @@
     Layout = "_FrontendLayout";
 
 }
+<!-- Your Plugin chat code -->
+<div id="fb-customer-chat" class="fb-customerchat">
+</div>
+<script>
+    var chatbox = document.getElementById('fb-customer-chat');
+    chatbox.setAttribute("page_id", "109024788097939");
+    chatbox.setAttribute("attribution", "biz_inbox");
+    window.fbAsyncInit = function () {
+        FB.init({
+            xfbml: true,
+            version: 'v11.0'
+        });
+    };
+
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/60e4344ad6e7610a49a9da98/1f9tmohmc';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+
+</script>
 
 <div id="all">
     <div id="content">
@@ -123,7 +148,10 @@
                 <div class="col-lg-9">
                     <div class="box info-bar">
                         <div class="row">
-                            <div class="col-md-12 col-lg-4 products-showing">Showing @{if ((int)ViewData["products_taked"] < 6) {<strong>@ViewData["products_taked"]</strong>} else {<strong>6</strong>} } of <strong>@ViewData["products_taked"]</strong> products</div>
+                            <div class="col-md-12 col-lg-4 products-showing">Showing @{if ((int)ViewData["products_taked"] < 6)
+                                {<strong>@ViewData["products_taked"]</strong>}
+                            else
+                            {<strong>6</strong>} } of <strong>@ViewData["products_taked"]</strong> products</div>
                             <div class="col-md-12 col-lg-7 products-number-sort">
                                 <form class="form-inline d-block d-lg-flex justify-content-between flex-column flex-md-row">
                                     <div class="products-number">
@@ -136,23 +164,23 @@
                                         <ul class="dropdown-menu megamenu">
                                             <li class="nav-item">
                                                 <a class="nav-link-custom" asp-action="Categories" asp-route-Object="@ViewBag.Object" asp-route-CategoriesName="@ViewBag.CategoriesName"
-                                                    asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="A-Z">A - Z</a>
+                                                   asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="A-Z">A - Z</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link-custom" asp-action="Categories" asp-route-Object="@ViewBag.Object" asp-route-CategoriesName="@ViewBag.CategoriesName"
-                                                    asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="Z-A">Z - A</a>
+                                                   asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="Z-A">Z - A</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link-custom" asp-action="Categories" asp-route-Object="@ViewBag.Object" asp-route-CategoriesName="@ViewBag.CategoriesName"
-                                                    asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="Price(low-high)">Price (low-high)</a>
+                                                   asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="Price(low-high)">Price (low-high)</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link-custom" asp-action="Categories" asp-route-Object="@ViewBag.Object" asp-route-CategoriesName="@ViewBag.CategoriesName"
-                                                    asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="Price(high-low)">Price (high-low)</a>
+                                                   asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="Price(high-low)">Price (high-low)</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link-custom" asp-action="Categories" asp-route-Object="@ViewBag.Object" asp-route-CategoriesName="@ViewBag.CategoriesName"
-                                                    asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="New">New</a>
+                                                   asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="New">New</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -235,7 +263,7 @@
                         }
                     }
                     <pager class="pager-container" list="@Model" asp-action="Categories" asp-controller="Home" asp-route-Object="@ViewBag.Object" asp-route-CategoriesName="@ViewBag.CategoriesName"
-                                                                   asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="@ViewData["sortOrder"]"/>
+                           asp-route-searchString="@ViewBag.Search" asp-route-price="@ViewBag.price" asp-route-brand="@ViewBag.brand" asp-route-sortOrder="@ViewData["sortOrder"]" />
 
                 </div>
                 <!-- /.col-lg-9-->

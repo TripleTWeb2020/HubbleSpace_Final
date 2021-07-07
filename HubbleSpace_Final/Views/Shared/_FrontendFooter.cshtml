@@ -41,14 +41,9 @@
             <!-- /.col-lg-3-->
             <div class="col-lg-3 col-md-6">
                 <h4 class="mb-3">Get the news</h4>
-                <form>
-                    <div class="input-group">
-                        <input type="text" class="form-control"><span class="input-group-append">
-                            <button type="button" class="btn btn-outline-secondary">Subscribe!</button>
-                        </span>
-                    </div>
-                    <!-- /input-group-->
-                </form>
+                <div id="EmailSubscription">
+
+                </div>
                 <a href='https://www.symptoma.es/es/info/covid-19'>coronavirus España</a>
                 <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=dcdd35284fd1809b141afe832cb64b441b19157c'></script>
                 <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/782391/t/7"></script>
@@ -82,3 +77,29 @@
     </div>
 </div>
 <!-- *** COPYRIGHT END ***-->
+@section ajax{
+        <script>
+            $(function () {
+                $(document).ready(function () {
+                    $.ajax({
+                        url: "EmailSubscriptions/Index",
+                        success: function (response) {
+                            $("#banner").html(response);
+                            $(".owl-carousel").owlCarousel({
+                                autoplay: true,
+                                navigation: true,
+                                loop: true,
+                                items: 1,
+                                autoHeight: true,
+                            });
+                        }
+                    });
+                    
+                    
+
+                });
+
+            });
+        </script>
+
+}

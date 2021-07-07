@@ -1,0 +1,74 @@
+﻿@model IEnumerable<HubbleSpace_Final.Entities.EmailSubscription>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_AdminLayout";
+}
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="title-5 m-b-35">Quản lý Email Subscription</h3>
+        <div class="table-data__tool">
+            <div class="table-data__tool-left">
+                <form asp-action="Index" method="post">
+                    <div class="rs-select2--light rs-select2--sm">
+                        <input type="text" class="form-control" placeholder="Search for" name="SearchString" value="@ViewData["Search"]" />
+                    </div>
+                    <button class="au-btn-filter" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+            </div>
+            <div class="table-data__tool-right">
+                <a class="au-btn au-btn-icon au-btn--green au-btn--small" asp-action="Create">
+                    Add item
+                </a>
+            </div>
+        </div>
+        @using (Html.BeginForm("ExportToExcel", "EmailSubscriptions", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <input type="submit" value="Export" class="btn-primary" />
+        }
+        <!-- DATA TABLE -->
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead>
+                    <tr class="row">
+                        <th class="col-3">
+                            @Html.DisplayNameFor(model => model.Date_Created)
+                        </th>
+                        <th class="col-3">
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th class="col-3">
+                            @Html.DisplayNameFor(model => model.subscribed_Status)
+                        </th>
+                        <th class="col-3"></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    @foreach (var item in Model)
+                    {
+                        <tr class="tr-shadow row">
+                            <td class="col-3">
+                                @Html.DisplayFor(modelItem => item.Date_Created)
+                            </td>
+                            <td class="col-3">
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td class="col-3">
+                                @Html.DisplayFor(modelItem => item.subscribed_Status)
+                            </td>
+                            <td class="col-3">
+                                <a asp-action="Edit" asp-route-id="@item.ID_EmailSubscription">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.ID_EmailSubscription">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.ID_EmailSubscription">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <!--pager class="pager-container" list="@Model" asp-action="Index" asp-controller="EmailSubscriptions" /-->
+        </div>
+    </div>
+ </div>
+

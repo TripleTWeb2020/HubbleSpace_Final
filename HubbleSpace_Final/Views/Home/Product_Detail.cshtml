@@ -15,14 +15,39 @@
 }
 <!-- Load Facebook SDK for JavaScript -->
 <div id="fb-root"></div>
+<!-- Your Plugin chat code -->
+<div id="fb-customer-chat" class="fb-customerchat">
+</div>
 <script>
+    var chatbox = document.getElementById('fb-customer-chat');
+    chatbox.setAttribute("page_id", "109024788097939");
+    chatbox.setAttribute("attribution", "biz_inbox");
+    window.fbAsyncInit = function () {
+        FB.init({
+            xfbml: true,
+            version: 'v11.0'
+        });
+    };
+
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/60e4344ad6e7610a49a9da98/1f9tmohmc';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+
     (function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
         js = d.createElement(s); js.id = id;
         js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
         fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
 
 
 
@@ -120,13 +145,13 @@
 
                                 <!-- /.Share in social-->
                                 <!--
-            div id="details" class="center">
-            <h4>Show it to your friends</h4>
-            <div class="social" data-href="https://localhost:44336/Home/Product_Detail/10" data-layout="button_count" data-size="small">
-                <p style="text-align: center"><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flocalhost%3A44336%2FHome%2FProduct_Detail%2F10&amp;src=sdkpreparse" class="external facebook"><i class="fa fa-facebook"></i></a><a href="#" class="external gplus"><i class="fa fa-google-plus"></i></a><a href="#" class="external twitter"><i class="fa fa-twitter"></i></a><a href="#" class="email"><i class="fa fa-envelope"></i></a></p>
-            </div>
-        </!--div>
-        -->
+                                    div id="details" class="center">
+                                    <h4>Show it to your friends</h4>
+                                    <div class="social" data-href="https://localhost:44336/Home/Product_Detail/10" data-layout="button_count" data-size="small">
+                                        <p style="text-align: center"><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flocalhost%3A44336%2FHome%2FProduct_Detail%2F10&amp;src=sdkpreparse" class="external facebook"><i class="fa fa-facebook"></i></a><a href="#" class="external gplus"><i class="fa fa-google-plus"></i></a><a href="#" class="external twitter"><i class="fa fa-twitter"></i></a><a href="#" class="email"><i class="fa fa-envelope"></i></a></p>
+                                    </div>
+                                </!--div>
+                                -->
                                 <div class="fb-share-button" data-href="https://hubblespaceshoestore.azurewebsites.net/Home/Product_Detail/@Model.FirstOrDefault().color_Product.product.ID_Product" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fhubblespaceshoestore.azurewebsites.net%2FHome%2FProduct_Detail%2F@Model.FirstOrDefault().color_Product.product.ID_Product&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Chia sẻ</a></div>
                             }
                         </div>
