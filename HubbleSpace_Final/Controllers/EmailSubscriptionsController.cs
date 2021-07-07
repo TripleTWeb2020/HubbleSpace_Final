@@ -19,6 +19,7 @@ namespace HubbleSpace_Final.Controllers
         {
             _context = context;
         }
+        
         public ActionResult Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["Email"] = String.IsNullOrEmpty(sortOrder) ? "Email_desc" : "";
