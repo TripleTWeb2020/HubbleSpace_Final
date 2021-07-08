@@ -51,6 +51,15 @@ namespace HubbleSpace_Final.Controllers
                 ModelState.Clear();
                 return RedirectToAction("ConfirmEmail", new { email = userModel.Email });
             }
+
+            var emailSubscription = new EmailSubscription()
+            {
+                Date_Created = System.DateTime.Now,
+                Email = userModel.Email,
+                subscribed_Status = Subscribed_Status.Subscribed
+            };
+            _context.Add(emailSubscription);
+            await _context.SaveChangesAsync();
             return View(userModel);
         }
         [Route("Signin")]
@@ -229,6 +238,7 @@ namespace HubbleSpace_Final.Controllers
             {
                 return RedirectToAction("index", "home");
             }*/
+
             return View(model);
 
         }

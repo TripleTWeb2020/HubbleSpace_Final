@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HubbleSpace_Final.Entities;
@@ -9,17 +8,21 @@ using PagedList.Core;
 using ClosedXML.Excel;
 using System.Data;
 using System.IO;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace HubbleSpace_Final.Controllers
 {
     public class EmailSubscriptionsController : Controller
     {
         private readonly MyDbContext _context;
-        public EmailSubscriptionsController(MyDbContext context)
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public EmailSubscriptionsController(MyDbContext context, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
+            _roleManager = roleManager;
+
         }
-        
         public ActionResult Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["Email"] = String.IsNullOrEmpty(sortOrder) ? "Email_desc" : "";
@@ -52,24 +55,25 @@ namespace HubbleSpace_Final.Controllers
             return View(model);
         }
 
+        
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Subscribe(EmailSubscriptionModel emailSubscriptionModel)
+        public async Task<IActionResult> Subscribe([FromForm] EmailSubscriptionModel emailSubscriptionModel)
         {
-            if (ModelState.IsValid)
+            EmailSubscription EmailRequest = new Entities.EmailSubscription()
             {
-                var SubscriptionRequest = new Entities.EmailSubscription()
-                {
-                    Date_Created = DateTime.Now,
-                    subscribed_Status = Subscribed_Status.Subscribed,
-                    Email = emailSubscriptionModel.Email
-                };
-            _context.Add(SubscriptionRequest); ;
+                Email = emailSubscriptionModel.Email,
+                Date_Created = DateTime.Now,
+                subscribed_Status = Subscribed_Status.Subscribed
+            };
+
+            _context.Add(EmailRequest);
             await _context.SaveChangesAsync();
-            }
-            return View(emailSubscriptionModel);
+            return RedirectToAction(nameof(Index));
         }
+
         [HttpPost]
         public FileResult ExportToExcel()
         {
@@ -97,5 +101,131 @@ namespace HubbleSpace_Final.Controllers
             }
 
         }
+
+        // GET: EmailSubscription/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var email = await _context.EmailSubscription
+                .FirstOrDefaultAsync(m => m.ID_EmailSubscription == id);
+            if (email == null)
+            {
+                return NotFound();
+            }
+
+            return View(email);
+        }
+
+        // GET: EmailSubscriptions/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Categories/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ID_EmailSubscription,Date_Created,Email,subscribed_Status")] EmailSubscription emailSubscription)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(emailSubscription);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(emailSubscription);
+        }
+
+        // GET: Categories/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var email = await _context.EmailSubscription.FindAsync(id);
+            if (email == null)
+            {
+                return NotFound();
+            }
+            return View(email);
+        }
+
+        // POST: Categories/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("ID_EmailSubscription,Date_Created,Email,subscribed_Status")] EmailSubscription emailSubscription)
+        {
+            if (id != emailSubscription.ID_EmailSubscription)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(emailSubscription);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EmailExists(emailSubscription.ID_EmailSubscription))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(emailSubscription);
+        }
+
+        // GET: Categories/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var email = await _context.EmailSubscription
+                .FirstOrDefaultAsync(m => m.ID_EmailSubscription == id);
+            if (email == null)
+            {
+                return NotFound();
+            }
+
+            return View(email);
+        }
+
+        // POST: Categories/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var email = await _context.EmailSubscription.FindAsync(id);
+            _context.EmailSubscription.Remove(email);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool EmailExists(int id)
+        {
+            return _context.EmailSubscription.Any(e => e.ID_EmailSubscription == id);
+        }
+
     }
 }

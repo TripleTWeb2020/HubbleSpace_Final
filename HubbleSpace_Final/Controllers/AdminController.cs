@@ -312,12 +312,6 @@ namespace HubbleSpace_Final.Controllers
             return View(schedule);
         }
 
-        public ActionResult EmailSubscription()
-        {
-
-            return View();
-        }
-
 
     }
 }
