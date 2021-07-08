@@ -65,11 +65,12 @@ namespace HubbleSpace_Final.Controllers
                     subscribed_Status = Subscribed_Status.Subscribed,
                     Email = emailSubscriptionModel.Email
                 };
-            _context.Add(SubscriptionRequest); ;
+            _context.Add(SubscriptionRequest); 
             await _context.SaveChangesAsync();
             }
             return View(emailSubscriptionModel);
         }
+
         [HttpPost]
         public FileResult ExportToExcel()
         {
