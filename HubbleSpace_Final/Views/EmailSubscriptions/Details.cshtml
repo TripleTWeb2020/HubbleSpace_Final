@@ -1,0 +1,47 @@
+﻿@model HubbleSpace_Final.Entities.EmailSubscription
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="card card-body">
+        <div class="card-header title--sbold">
+            Email Subscription Detail
+        </div>
+        <div class="card-body card-block">
+            <input type="hidden" asp-for="ID_EmailSubscription" />
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Date_Created)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Date_Created)
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.Email)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.Email)
+                </div>
+
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    @Html.DisplayNameFor(model => model.subscribed_Status)
+                </div>
+                <div class="col-12 col-md-9">
+                    @Html.DisplayFor(model => model.subscribed_Status)
+                </div>
+
+            </div>
+            <div class="form-group card-footer">
+                <a asp-action="Delete" class="btn btn-danger col-2" asp-route-id="@Model.ID_EmailSubscription">Delete</a>
+                <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+            </div>
+        </div>
+    </div>
+</div>

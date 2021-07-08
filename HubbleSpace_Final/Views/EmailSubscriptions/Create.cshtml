@@ -1,0 +1,42 @@
+﻿@model HubbleSpace_Final.Entities.EmailSubscription
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="card card-body">
+        <div class="card-header title--sbold">
+            Create a new email subscription
+        </div>
+        <div class="card-body card-block" method="post" class="form-horizontal">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Date_Created" class="control-label"></label>
+                    <input asp-for="Date_Created" class="form-control" />
+                    <span asp-validation-for="Date_Created" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="subscribed_Status" class="control-label"></label>
+                    <select asp-for="subscribed_Status" class="form-control"></select>
+                    <span asp-validation-for="subscribed_Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="reset" value="Reset" class="btn btn-danger col-2" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
