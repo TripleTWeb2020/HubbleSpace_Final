@@ -84,13 +84,21 @@ namespace HubbleSpace_Final.Controllers
             var ExportEmailSubscription = from p in _context.EmailSubscription select p;
             foreach (var file in ExportEmailSubscription)
             {
-                dt.Rows.Add(file.ID_EmailSubscription, file.Email, file.Date_Created, file.subscribed_Status);
+                if(file.subscribed_Status == Subscribed_Status.Subscribed)
+                {
+                    dt.Rows.Add(file.ID_EmailSubscription, file.Email, file.Date_Created, file.subscribed_Status);
+                }
+               
             }
-            using XLWorkbook wb = new XLWorkbook();
-            wb.Worksheets.Add(dt);
-            using MemoryStream stream = new MemoryStream(); //using System.IO;  
-            wb.SaveAs(stream);
-            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "EmailSubscription.xlsx");
+            using(XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream()) //using System.IO;  
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "EmailSubscription.xlsx");
+                }
+            }
 
         }
 
