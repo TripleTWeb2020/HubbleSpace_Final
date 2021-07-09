@@ -37,22 +37,13 @@ namespace HubbleSpace_Final.Controllers
                 Products = Products.Where(a => a.Product_Name.Contains(searchString));
             }
 
-            switch (sortOrder)
+            Products = sortOrder switch
             {
-                case "name_desc":
-                    Products = Products.OrderByDescending(p => p.Product_Name);
-                    break;
-                case "Price":
-                    Products = Products.OrderBy(p => p.Price_Sale);
-                    break;
-                case "price_desc":
-                    Products = Products.OrderByDescending(p => p.Price_Sale);
-                    break;
-                default:
-                    Products = Products.OrderBy(p => p.Product_Name);
-                    break;
-            }
-
+                "name_desc" => Products.OrderByDescending(p => p.Product_Name),
+                "Price" => Products.OrderBy(p => p.Price_Sale),
+                "price_desc" => Products.OrderByDescending(p => p.Price_Sale),
+                _ => Products.OrderBy(p => p.Product_Name),
+            };
             PagedList<Product> model = new PagedList<Product>(Products, page, 10);
 
             return View(model);
@@ -86,7 +77,7 @@ namespace HubbleSpace_Final.Controllers
             var Category_Name = from c in _context.Category
                                 select new
                                 {
-                                    ID_Categorie = c.ID_Categorie,
+                                    c.ID_Categorie,
                                     Category_Name = c.Category_Name + " - " + c.Object
                                 };
             ViewData["ID_Categorie"] = new SelectList(Category_Name, "ID_Categorie", "Category_Name");
@@ -110,7 +101,7 @@ namespace HubbleSpace_Final.Controllers
             var Category_Name = from c in _context.Category
                                 select new
                                 {
-                                    ID_Categorie = c.ID_Categorie,
+                                    c.ID_Categorie,
                                     Category_Name = c.Category_Name + " - " + c.Object
                                 };
             ViewData["ID_Categorie"] = new SelectList(Category_Name, "ID_Categorie", "Category_Name", product.ID_Categorie);
@@ -134,7 +125,7 @@ namespace HubbleSpace_Final.Controllers
             var Category_Name = from c in _context.Category
                                 select new
                                 {
-                                    ID_Categorie = c.ID_Categorie,
+                                    c.ID_Categorie,
                                     Category_Name = c.Category_Name + " - " + c.Object
                                 };
             ViewData["ID_Categorie"] = new SelectList(Category_Name, "ID_Categorie", "Category_Name", product.ID_Categorie);
@@ -177,7 +168,7 @@ namespace HubbleSpace_Final.Controllers
             var Category_Name = from c in _context.Category
                                 select new
                                 {
-                                    ID_Categorie = c.ID_Categorie,
+                                    c.ID_Categorie,
                                     Category_Name = c.Category_Name + " - " + c.Object
                                 };
             ViewData["ID_Categorie"] = new SelectList(Category_Name, "ID_Categorie", "Category_Name", product.ID_Categorie);

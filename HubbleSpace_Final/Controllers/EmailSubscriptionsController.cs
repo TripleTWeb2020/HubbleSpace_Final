@@ -1,32 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HubbleSpace_Final.Entities;
-using HubbleSpace_Final.Models;
 using Microsoft.AspNetCore.Mvc;
-using PagedList.Core;
-using ClosedXML.Excel;
-using System.Data;
-using System.IO;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using HubbleSpace_Final.Entities;
+using PagedList.Core;
+using System.Data;
+using ClosedXML.Excel;
+using System.IO;
+using HubbleSpace_Final.Models;
 
 namespace HubbleSpace_Final.Controllers
 {
     public class EmailSubscriptionsController : Controller
     {
         private readonly MyDbContext _context;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        public EmailSubscriptionsController(MyDbContext context, RoleManager<IdentityRole> roleManager)
+
+        public EmailSubscriptionsController(MyDbContext context)
         {
             _context = context;
-            _roleManager = roleManager;
-
         }
+
+        // GET: EmailSubscriptions
         public ActionResult Index(string sortOrder, string searchString, int page = 1)
         {
-            ViewData["Email"] = String.IsNullOrEmpty(sortOrder) ? "Email_desc" : "";
-            ViewData["Date_Created"] = sortOrder == "Date_Created" ? "date_desc" : "date_Created";
+            ViewData["Email"] = sortOrder == "Email" ? "Email_desc" : "Email";
+            ViewData["date_Created"] = String.IsNullOrEmpty(sortOrder)? "" : "date_Created";
+            ViewData["subscribed_Status"] = sortOrder == "subscribed_Status" ? "subscribedStatus_desc" : "subscribed_Status";
+
             ViewData["Search"] = searchString;
 
             var Email = from p in _context.EmailSubscription select p;
@@ -35,43 +38,36 @@ namespace HubbleSpace_Final.Controllers
                 Email = Email.Where(a => a.Email.Contains(searchString));
             }
 
-            switch (sortOrder)
+            Email = sortOrder switch
             {
-                case "Email_desc":
-                    Email = Email.OrderByDescending(p => p.Email);
-                    break;
-                case "date_Created":
-                    Email = Email.OrderBy(p => p.Date_Created);
-                    break;
-                case "date_desc":
-                    Email = Email.OrderByDescending(p => p.Date_Created);
-                    break;
-                default:
-                    Email = Email.OrderBy(p => p.Email);
-                    break;
-            }
+                "Email_desc" => Email.OrderByDescending(p => p.Email),
+                "Email" => Email.OrderBy(p => p.Email),
+                "date_Created" => Email.OrderBy(p => p.Date_Created),
+                "subscribed_Status" => Email.OrderBy(p => p.subscribed_Status),
+                "subscribedStatus_desc" => Email.OrderByDescending(p => p.subscribed_Status),
+                _ => Email.OrderByDescending(p => p.Date_Created),
+            };
             PagedList<EmailSubscription> model = new PagedList<EmailSubscription>(Email, page, 10);
 
             return View(model);
         }
 
         
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Subscribe([FromForm] EmailSubscriptionModel emailSubscriptionModel)
+        public string Subscribe(string email)
         {
-            EmailSubscription EmailRequest = new Entities.EmailSubscription()
+            if(_context.EmailSubscription.Where(c=>c.Email == email).Count() != 0)
+                return "You have subscribed!";
+            EmailSubscription EmailRequest = new EmailSubscription()
             {
-                Email = emailSubscriptionModel.Email,
-                Date_Created = DateTime.Now,
+                Email = email,
                 subscribed_Status = Subscribed_Status.Subscribed
             };
 
             _context.Add(EmailRequest);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var result = _context.SaveChanges();
+            if (result == 0)
+                return "Subscribe Failed!";
+            return "You have subscribed successfully!";
         }
 
         [HttpPost]
@@ -90,19 +86,15 @@ namespace HubbleSpace_Final.Controllers
             {
                 dt.Rows.Add(file.ID_EmailSubscription, file.Email, file.Date_Created, file.subscribed_Status);
             }
-            using(XLWorkbook wb = new XLWorkbook())
-            {
-                wb.Worksheets.Add(dt);
-                using (MemoryStream stream = new MemoryStream()) //using System.IO;  
-                {
-                    wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "EmailSubscription.xlsx");
-                }
-            }
+            using XLWorkbook wb = new XLWorkbook();
+            wb.Worksheets.Add(dt);
+            using MemoryStream stream = new MemoryStream(); //using System.IO;  
+            wb.SaveAs(stream);
+            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "EmailSubscription.xlsx");
 
         }
 
-        // GET: EmailSubscription/Details/5
+        // GET: EmailSubscriptions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -110,14 +102,14 @@ namespace HubbleSpace_Final.Controllers
                 return NotFound();
             }
 
-            var email = await _context.EmailSubscription
+            var emailSubscription = await _context.EmailSubscription
                 .FirstOrDefaultAsync(m => m.ID_EmailSubscription == id);
-            if (email == null)
+            if (emailSubscription == null)
             {
                 return NotFound();
             }
 
-            return View(email);
+            return View(emailSubscription);
         }
 
         // GET: EmailSubscriptions/Create
@@ -126,7 +118,7 @@ namespace HubbleSpace_Final.Controllers
             return View();
         }
 
-        // POST: Categories/Create
+        // POST: EmailSubscriptions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -142,7 +134,7 @@ namespace HubbleSpace_Final.Controllers
             return View(emailSubscription);
         }
 
-        // GET: Categories/Edit/5
+        // GET: EmailSubscriptions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -150,15 +142,15 @@ namespace HubbleSpace_Final.Controllers
                 return NotFound();
             }
 
-            var email = await _context.EmailSubscription.FindAsync(id);
-            if (email == null)
+            var emailSubscription = await _context.EmailSubscription.FindAsync(id);
+            if (emailSubscription == null)
             {
                 return NotFound();
             }
-            return View(email);
+            return View(emailSubscription);
         }
 
-        // POST: Categories/Edit/5
+        // POST: EmailSubscriptions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -179,7 +171,7 @@ namespace HubbleSpace_Final.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmailExists(emailSubscription.ID_EmailSubscription))
+                    if (!EmailSubscriptionExists(emailSubscription.ID_EmailSubscription))
                     {
                         return NotFound();
                     }
@@ -193,7 +185,7 @@ namespace HubbleSpace_Final.Controllers
             return View(emailSubscription);
         }
 
-        // GET: Categories/Delete/5
+        // GET: EmailSubscriptions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -201,31 +193,30 @@ namespace HubbleSpace_Final.Controllers
                 return NotFound();
             }
 
-            var email = await _context.EmailSubscription
+            var emailSubscription = await _context.EmailSubscription
                 .FirstOrDefaultAsync(m => m.ID_EmailSubscription == id);
-            if (email == null)
+            if (emailSubscription == null)
             {
                 return NotFound();
             }
 
-            return View(email);
+            return View(emailSubscription);
         }
 
-        // POST: Categories/Delete/5
+        // POST: EmailSubscriptions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var email = await _context.EmailSubscription.FindAsync(id);
-            _context.EmailSubscription.Remove(email);
+            var emailSubscription = await _context.EmailSubscription.FindAsync(id);
+            _context.EmailSubscription.Remove(emailSubscription);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmailExists(int id)
+        private bool EmailSubscriptionExists(int id)
         {
             return _context.EmailSubscription.Any(e => e.ID_EmailSubscription == id);
         }
-
     }
 }

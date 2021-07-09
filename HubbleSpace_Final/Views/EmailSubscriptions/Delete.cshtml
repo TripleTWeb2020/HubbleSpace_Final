@@ -1,18 +1,17 @@
 ﻿@model HubbleSpace_Final.Entities.EmailSubscription
 
 @{
-    ViewData["Title"] = "Details - EmailSubscription";
+    ViewData["Title"] = "Delete - EmailSubscription";
     Layout = "_AdminLayout";
-
 }
 
 <div class="row">
     <div class="card card-body">
         <div class="card-header title--sbold">
-            Thông tin Email Subscription
+            Xóa Email Subscription <br>
+            Bạn chắc chắn muốn xóa Email Subscription này?
         </div>
         <div class="card-body card-block">
-            <input type="hidden" asp-for="ID_EmailSubscription" />
             <div class="row form-group">
                 <div class="col col-md-3">
                     Date Created
@@ -40,10 +39,14 @@
                 </div>
             </div>
 
-            <div class="form-group card-footer">
-                <a asp-action="Edit" class="btn btn-danger col-2" asp-route-id="@Model.ID_EmailSubscription">Edit</a>
-                <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
-            </div>
+            <form asp-action="Delete">
+                <div class="form-group card-footer">
+                    <input type="hidden" asp-for="ID_EmailSubscription" />
+                    <input type="submit" value="Delete" class="btn btn-danger col-2" />
+                    <a asp-action="Index" class="btn btn-secondary col-2">Back</a>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>

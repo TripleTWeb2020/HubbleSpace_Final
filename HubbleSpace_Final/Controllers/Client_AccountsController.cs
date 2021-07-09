@@ -54,7 +54,6 @@ namespace HubbleSpace_Final.Controllers
 
             var emailSubscription = new EmailSubscription()
             {
-                Date_Created = System.DateTime.Now,
                 Email = userModel.Email,
                 subscribed_Status = Subscribed_Status.Subscribed
             };

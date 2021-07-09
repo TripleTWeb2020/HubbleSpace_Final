@@ -6,18 +6,18 @@ namespace HubbleSpace_Final.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "description",
+            migrationBuilder.AddColumn<string>(
+                name: "Description",
                 table: "Product",
-                newName: "Description");
+                nullable: true
+               );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
+            migrationBuilder.DropColumn(
                 name: "Description",
-                table: "Product",
-                newName: "description");
+                table: "Product");
         }
     }
 }

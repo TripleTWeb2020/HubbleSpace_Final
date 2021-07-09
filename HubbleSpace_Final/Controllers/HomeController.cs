@@ -18,13 +18,11 @@ namespace HubbleSpace_Final.Controllers
     public class HomeController : Controller
     {
 
-        private readonly ILogger<HomeController> _logger;
         private readonly MyDbContext _context;
         private readonly IUserService _userService;
 
-        public HomeController(ILogger<HomeController> logger, MyDbContext context, IUserService userService)
+        public HomeController(MyDbContext context, IUserService userService)
         {
-            _logger = logger;
             _context = context;
             _userService = userService;
 
@@ -65,7 +63,7 @@ namespace HubbleSpace_Final.Controllers
             return PartialView(await _context.Banner.ToListAsync());
         }
 
-        public IActionResult GetBestSale()
+        public async Task<IActionResult> GetBestSale()
         {
             var list_sale = from c in _context.Color_Product
                             select new BestSaleModel
@@ -79,14 +77,7 @@ namespace HubbleSpace_Final.Controllers
                             };
             list_sale = list_sale.Distinct().OrderByDescending(p => p.Quantity);
 
-            List<BestSaleModel> listSales = new List<BestSaleModel>();
-
-            foreach (var item in list_sale.Take(8))
-            {
-                listSales.Add(item);
-
-            }
-            return PartialView(listSales);
+            return PartialView(await list_sale.Take(8).ToListAsync());
         }
 
         public IActionResult Privacy()
@@ -221,15 +212,12 @@ namespace HubbleSpace_Final.Controllers
         {
             var recommendProduct = from rp in _context.Color_Product
                                    select rp;
-            Console.WriteLine(recommendProduct.Count());
             recommendProduct = recommendProduct.Include(p => p.product.category)
                                                 .Where(p => p.product.category.Object.Contains(Object))
                                                 .Where(p => p.product.category.Category_Name.Contains(Name))
                                                 .Where(p => p.product.Brand.Brand_Name.Contains(Brand_Name));
-            Console.WriteLine(recommendProduct.Count());
             if (recommendProduct.Count() >= 4)
                 recommendProduct = recommendProduct.Take(4);
-            Console.WriteLine(recommendProduct.Count());
             return PartialView(await recommendProduct.Distinct().ToListAsync());
         }
 

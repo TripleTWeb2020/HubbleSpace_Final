@@ -35,19 +35,17 @@
                         <partial name="_CategoriesOfKidsFooter" />
                     </div>
                 </div>
+                <h4 class="mb-3">Get the news</h4>
+                <form class="input-group" id="subscribe" >
+                    <input type="email" class="form-control" id="txtEmail" />
+                    <span class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary"><i class="fa fa-bell-o"></i>Subscribe!</button>
+                    </span>
+                </form>
             </div>
             <!-- /.col-lg-3-->
             <div class="col-lg-3 col-md-6">
-                <h4 class="mb-3">Get the news</h4>
-                @using (Html.BeginForm("Subscribe", "EmailSubscriptions", FormMethod.Post)) {
-                <div class="input-group">
-                    <input type="text" class="form-control" id="txtEmail">
-                    <span class="input-group-append">
-                        <button type="submit" class="btn btn-outline-secondary">Subscribe!</button>
-                    </span>
-                </div>
-                }
-
+                
                 <!-- /input-group-->
                 <a href='https://www.symptoma.es/es/info/covid-19'>coronavirus España</a>
                 <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=dcdd35284fd1809b141afe832cb64b441b19157c'></script>
@@ -82,29 +80,17 @@
     </div>
 </div>
 <!-- *** COPYRIGHT END ***-->
-@section ajax{
-        <script>
-            $(function () {
-                $(document).ready(function () {
-                    $.ajax({
-                        url: "EmailSubscriptions/Index",
-                        success: function (response) {
-                            $("#banner").html(response);
-                            $(".owl-carousel").owlCarousel({
-                                autoplay: true,
-                                navigation: true,
-                                loop: true,
-                                items: 1,
-                                autoHeight: true,
-                            });
-                        }
-                    });
-                    
-                    
 
-                });
-
+<script type="text/javascript">
+    $("#subscribe").submit(function () {
+            $.ajax({
+                url: "EmailSubscriptions/Subscribe",
+                data: {
+                    "email": $("#txtEmail").val(),
+                },
+                success: function (response) {
+                    alert(response)
+                },
             });
-        </script>
-
-}
+        });
+</script>

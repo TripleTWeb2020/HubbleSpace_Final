@@ -13,6 +13,7 @@ namespace HubbleSpace_Final.Entities
         public DbSet<Img_Product> Img_Product { get; set; }
         public DbSet<Banner> Banner { get; set; }
         public DbSet<Discount> Discount { get; set; }
+        public DbSet<DiscountUsed> DiscountUsed { get; set; }
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderDetail> OrderDetail { get; set; }
         public DbSet<Size> Size { get; set; }
@@ -27,7 +28,6 @@ namespace HubbleSpace_Final.Entities
         }
 
 
-        public DbSet<HubbleSpace_Final.Entities.DiscountUsed> DiscountUsed { get; set; }
 
 
     }

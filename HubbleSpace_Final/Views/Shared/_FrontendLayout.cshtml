@@ -30,8 +30,16 @@
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+    <!-- JavaScript files-->
+    <script src="~/distribution/vendor/jquery/jquery.min.js"></script>
+    <script src="~/distribution/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/distribution/vendor/jquery.cookie/jquery.cookie.js"></script>
+    <script src="~/distribution/vendor/owl.carousel/owl.carousel.js"></script>
+    <script src="~/distribution/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.js"></script>
+    <script src="~/distribution/js/front.js"></script>
     @RenderSection("css", required: false)
     @RenderSection("SocialSeo", required: false)
+    @RenderSection("ajax", required: false)
 
 
 </head>
@@ -96,15 +104,6 @@
     </div>
 
     @await Html.PartialAsync("_FrontendFooter")
-
-    <!-- JavaScript files-->
-    <script src="~/distribution/vendor/jquery/jquery.min.js"></script>
-    <script src="~/distribution/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/distribution/vendor/jquery.cookie/jquery.cookie.js"></script>
-    <script src="~/distribution/vendor/owl.carousel/owl.carousel.js"></script>
-    <script src="~/distribution/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.js"></script>
-    <script src="~/distribution/js/front.js"></script>
-    @RenderSection("ajax", required: false)
     @RenderSection("Scripts", required: false)
 
 </body>

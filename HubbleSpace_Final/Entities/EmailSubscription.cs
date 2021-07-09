@@ -31,7 +31,7 @@ namespace HubbleSpace_Final.Entities
 
 		public EmailSubscription()
 		{
-
+			Date_Created = DateTime.Now;
 		}
 	}
 }

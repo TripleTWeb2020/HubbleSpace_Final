@@ -262,21 +262,13 @@ namespace HubbleSpace_Final.Controllers
                 Orders = Orders.Where(o => o.SDT.Contains(searchString));
             }
 
-            switch (sortOrder)
+            Orders = sortOrder switch
             {
-                case "date_desc":
-                    Orders = Orders.OrderBy(o => o.Date_Create);
-                    break;
-                case "Process":
-                    Orders = Orders.OrderBy(o => o.Process);
-                    break;
-                case "process_desc":
-                    Orders = Orders.OrderByDescending(o => o.Process);
-                    break;
-                default:
-                    Orders = Orders.OrderByDescending(o => o.Date_Create);
-                    break;
-            }
+                "date_desc" => Orders.OrderBy(o => o.Date_Create),
+                "Process" => Orders.OrderBy(o => o.Process),
+                "process_desc" => Orders.OrderByDescending(o => o.Process),
+                _ => Orders.OrderByDescending(o => o.Date_Create),
+            };
 
             //Lấy doanh thu
             ViewData["totalMoney"] = Orders.Sum(o => o.TotalMoney);
