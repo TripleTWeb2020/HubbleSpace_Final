@@ -199,7 +199,6 @@ namespace HubbleSpace_Final.Controllers
             return View(model);
 
         }
-        [Route("en/Home/Product_Detail/{id}")]
 
         public async Task<IActionResult> Product_Detail(int id)
         {
