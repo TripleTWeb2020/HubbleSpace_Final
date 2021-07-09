@@ -60,7 +60,7 @@ namespace HubbleSpace_Final.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Subscribe([FromForm] EmailSubscriptionModel emailSubscriptionModel)
+        public async Task<IActionResult> Subscribe(EmailSubscriptionModel emailSubscriptionModel)
         {
             EmailSubscription EmailRequest = new Entities.EmailSubscription()
             {
@@ -88,7 +88,11 @@ namespace HubbleSpace_Final.Controllers
             var ExportEmailSubscription = from p in _context.EmailSubscription select p;
             foreach (var file in ExportEmailSubscription)
             {
-                dt.Rows.Add(file.ID_EmailSubscription, file.Email, file.Date_Created, file.subscribed_Status);
+                if(file.subscribed_Status == Subscribed_Status.Subscribed)
+                {
+                    dt.Rows.Add(file.ID_EmailSubscription, file.Email, file.Date_Created, file.subscribed_Status);
+                }
+               
             }
             using(XLWorkbook wb = new XLWorkbook())
             {

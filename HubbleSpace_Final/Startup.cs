@@ -1,3 +1,4 @@
+using AspNetCore.SEOHelper;
 using HubbleSpace_Final.Entities;
 using HubbleSpace_Final.Helpers;
 using HubbleSpace_Final.Models;
@@ -61,6 +62,7 @@ namespace HubbleSpace_Final
             services.Configure<IdentityOptions>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = true;
+                options.User.RequireUniqueEmail = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(60);
                 options.Lockout.MaxFailedAccessAttempts = 5;
 
@@ -100,7 +102,9 @@ namespace HubbleSpace_Final
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
             });
+            app.UseXMLSitemap(env.ContentRootPath);
         }
     }
 }

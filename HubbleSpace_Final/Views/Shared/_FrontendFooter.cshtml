@@ -39,7 +39,8 @@
             <!-- /.col-lg-3-->
             <div class="col-lg-3 col-md-6">
                 <h4 class="mb-3">Get the news</h4>
-                @using (Html.BeginForm("Subscribe", "EmailSubscriptions", FormMethod.Post)) {
+                @using (Html.BeginForm("Subscribe", "EmailSubscriptions", FormMethod.Post)) 
+                {
                 <div class="input-group">
                     <input type="text" class="form-control" id="txtEmail">
                     <span class="input-group-append">

@@ -1,6 +1,8 @@
-﻿using HubbleSpace_Final.Entities;
+﻿using AspNetCore.SEOHelper.Sitemap;
+using HubbleSpace_Final.Entities;
 using HubbleSpace_Final.Models;
 using HubbleSpace_Final.Services;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,13 +23,13 @@ namespace HubbleSpace_Final.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly MyDbContext _context;
         private readonly IUserService _userService;
-
-        public HomeController(ILogger<HomeController> logger, MyDbContext context, IUserService userService)
+        private readonly IWebHostEnvironment _env;
+        public HomeController(ILogger<HomeController> logger, MyDbContext context, IUserService userService, IWebHostEnvironment env)
         {
             _logger = logger;
             _context = context;
             _userService = userService;
-
+            _env = env;
         }
 
         public async Task<IActionResult> Index()
@@ -197,6 +199,7 @@ namespace HubbleSpace_Final.Controllers
             return View(model);
 
         }
+        [Route("en/Home/Product_Detail/{id}")]
 
         public async Task<IActionResult> Product_Detail(int id)
         {
@@ -257,6 +260,14 @@ namespace HubbleSpace_Final.Controllers
                 .AppendLine("/sitemap.xml");
 
             return this.Content(sb.ToString(), "text/plain", Encoding.UTF8);
+        }
+
+        public string CreateSitemapInRootDirectory()
+        {
+            var list = new List<SitemapNode>();
+            list.Add(new SitemapNode { LastModified = DateTime.UtcNow, Priority = 0.8, Url = "https://localhost:44336/Home/Product_Detail/43", Frequency = SitemapFrequency.Daily });
+            new SitemapDocument().CreateSitemapXML(list, _env.ContentRootPath);
+            return "sitemap.xml file should be create in root directory";
         }
     }
 }

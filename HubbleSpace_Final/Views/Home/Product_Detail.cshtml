@@ -74,12 +74,12 @@
                 </div>
 
                 <!--ProductMain-->
-                <div class="col-12">
+                <div class="col-12" itemscope itemtype="http://schema.org/Product">
                     <div id="productMain" class="row">
 
                         <!--product_slider-->
                         <div class="col-lg-8 col-md-6">
-                            <div id="main-slider" class="owl-carousel owl-theme">
+                            <div id="main-slider" class="owl-carousel owl-theme" itemprop="image">
                                 @foreach (var item in Model)
                                 {
                                     <div class="item">
@@ -119,9 +119,9 @@
                         <div class="col-lg-4 col-md-6 box" style="margin-bottom: 0">
                             @if (product != null)
                             {
-                                <h2>@Html.DisplayFor(modelItem => product.color_Product.product.Product_Name)</h2>
+                                <h2 itemprop="name">@Html.DisplayFor(modelItem => product.color_Product.product.Product_Name)</h2>
                                 <h4><i>@Html.DisplayFor(modelItem => product.color_Product.Color_Name)</i></h4>
-                                <i>@Html.DisplayFor(modelItem => product.color_Product.product.Description)</i>
+                                <i itemprop="description">@Html.DisplayFor(modelItem => product.color_Product.product.Description)</i>
                                 <p class="price">
                                     <del>
                                         @if (product.color_Product.product.Price_Sale < product.color_Product.product.Price_Product)
@@ -130,7 +130,7 @@
                                         }
                                     </del>
                                 </p>
-                                <p class="price-sale">
+                                <p class="price-sale" itemprop="price">
                                     <text> @String.Format("{0:0,0}", product.color_Product.product.Price_Sale) VNĐ </text>
                                 </p>
                                 <form asp-controller="Client_ProductCarts" asp-action="AddToCart" method="get">
