@@ -100,9 +100,20 @@ namespace HubbleSpace_Final
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "Admin",
+                    pattern: "Admin/Index", new { controller = "Admin", action = "Index" });
+
+                endpoints.MapControllerRoute(
+                    name: "Product_Detail",
+                    pattern: "{name}/{color}", new { controller = "Home", action = "Product_Detail" });
+
+                 endpoints.MapControllerRoute(
+                    name: "Categories",
+                    pattern: "{Object}-{name}", new { controller = "Home", action = "Categories" });
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-
             });
             app.UseXMLSitemap(env.ContentRootPath);
         }

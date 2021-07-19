@@ -28,22 +28,22 @@ namespace HubbleSpace_Final.Controllers
         }
 
         [Route("/HistoryOrder", Name = "HistoryOrder")]
-        public async Task<IActionResult> HistoryOrder(string sortOrder, string searchString, int page = 1)
+        public async Task<IActionResult> HistoryOrder(string sortOrder, string search, int page = 1)
         {
             var userId = _userService.GetUserId();
             var user = await _userManager.FindByIdAsync(userId);
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Process"] = sortOrder == "Process" ? "process_desc" : "Process";
-            ViewData["Search"] = searchString;
+            ViewData["Search"] = search;
 
 
 
             var Orders = from o in _context.Order.Include(o => o.User).Where(o => o.User == user)
                          select o;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(search))
             {
-                Orders = Orders.Where(o => o.Date_Create.Date.ToString() == searchString);
+                Orders = Orders.Where(o => o.Date_Create.Date.ToString() == search);
             }
 
             switch (sortOrder)
@@ -67,12 +67,12 @@ namespace HubbleSpace_Final.Controllers
             return View(model);
         }
 
-        public ActionResult OrderDetail(int id, string sortOrder, string searchString, int page = 1)
+        public ActionResult OrderDetail(int id, string sortOrder, string search, int page = 1)
         {
             ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";
             ViewData["Quantity"] = sortOrder == "Quantity" ? "quantity_desc" : "Quantity";
-            ViewData["Search"] = searchString;
+            ViewData["Search"] = search;
 
             var orderDetails = from o in _context.OrderDetail.Where(c => c.ID_Order == id)
                                                             .Include(o => o.Color_Product)
@@ -80,9 +80,9 @@ namespace HubbleSpace_Final.Controllers
                                                             .Include(o => o.Color_Product.product)
                                select o;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(search))
             {
-                orderDetails = orderDetails.Where(a => a.Color_Product.product.Product_Name.Contains(searchString));
+                orderDetails = orderDetails.Where(a => a.Color_Product.product.Product_Name.Contains(search));
             }
 
             switch (sortOrder)

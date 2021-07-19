@@ -24,18 +24,18 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: EmailSubscriptions
-        public ActionResult Index(string sortOrder, string searchString, int page = 1)
+        public ActionResult Index(string sortOrder, string search, int page = 1)
         {
             ViewData["Email"] = sortOrder == "Email" ? "Email_desc" : "Email";
             ViewData["date_Created"] = String.IsNullOrEmpty(sortOrder)? "" : "date_Created";
             ViewData["subscribed_Status"] = sortOrder == "subscribed_Status" ? "subscribedStatus_desc" : "subscribed_Status";
 
-            ViewData["Search"] = searchString;
+            ViewData["Search"] = search;
 
             var Email = from p in _context.EmailSubscription select p;
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(search))
             {
-                Email = Email.Where(a => a.Email.Contains(searchString));
+                Email = Email.Where(a => a.Email.Contains(search));
             }
 
             Email = sortOrder switch

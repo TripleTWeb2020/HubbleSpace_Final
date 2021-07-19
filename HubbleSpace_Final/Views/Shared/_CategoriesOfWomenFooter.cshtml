@@ -5,7 +5,7 @@
         var itemObjects = context.Category.Where(c => c.Object == "Women").Distinct();
         foreach (var i in itemObjects)
         {
-            <li><a asp-controller="Home" asp-action="Categories" asp-route-Object="@i.Object" asp-route-CategoriesName="@i.Category_Name">@i.Category_Name</a></li>
+            <li><a asp-controller="Home" asp-action="Categories" asp-route-Object="@i.Object" asp-route-name="@i.Category_Name">@i.Category_Name</a></li>
         }
     }
 </ul>

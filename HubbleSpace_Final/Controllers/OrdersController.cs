@@ -29,20 +29,20 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Orders
-        public ActionResult Index(string sortOrder, string searchString, int page = 1)
+        public ActionResult Index(string sortOrder, string search, int page = 1)
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Process"] = sortOrder == "Process" ? "process_desc" : "Process";
-            ViewData["Search"] = searchString;
+            ViewData["Search"] = search;
 
 
 
             var Orders = from o in _context.Order.Include(o => o.User)
                          select o;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(search))
             {
-                Orders = Orders.Where(o => o.SDT.Contains(searchString));
+                Orders = Orders.Where(o => o.SDT.Contains(search));
             }
 
             switch (sortOrder)

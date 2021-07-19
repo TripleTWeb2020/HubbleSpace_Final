@@ -27,7 +27,7 @@
             @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
             {
                 <div class="nav-item dropdown-item">
-                    <a class="nav-link-custom" asp-action="Index" asp-controller="Admin">
+                    <a class="nav-link-custom" asp-controller="Admin" asp-action="Index">
                         <i class="fa fa-briefcase"></i>
                         Admin DashBoard
                     </a>

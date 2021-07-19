@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
     <!--Title Page-->
-    <title>@ViewData["Title"] - Hubble Space</title>
+    <title>@ViewData["Title"]</title>
     <link rel="shortcut icon" href="~/Images/HSlogo.png">
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="~/distribution/vendor/bootstrap/css/bootstrap.css">
@@ -95,7 +95,7 @@
             <div class="container">
                 <form asp-action="Categories" method="get" class="ml-auto">
                     <div class="input-group">
-                        <input name="SearchString" type="text" placeholder="Search" class="form-control" value="@ViewData["Search"]">
+                        <input name="search" type="text" placeholder="Search" class="form-control" value="@ViewData["Search"]">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </div>

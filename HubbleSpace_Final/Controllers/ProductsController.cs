@@ -21,20 +21,20 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Products
-        public ActionResult Index(string sortOrder, string searchString, int page = 1)
+        public ActionResult Index(string sortOrder, string search, int page = 1)
         {
             ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["Price"] = sortOrder == "Price" ? "price_desc" : "Price";
-            ViewData["Search"] = searchString;
+            ViewData["Search"] = search;
 
 
 
             var Products = from p in _context.Product.Include(p => p.Brand).Include(p => p.category)
                            select p;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(search))
             {
-                Products = Products.Where(a => a.Product_Name.Contains(searchString));
+                Products = Products.Where(a => a.Product_Name.Contains(search));
             }
 
             Products = sortOrder switch

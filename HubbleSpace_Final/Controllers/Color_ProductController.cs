@@ -21,12 +21,12 @@ namespace HubbleSpace_Final.Controllers
 
 
         // GET: Color_Product
-        public ActionResult Index(string sortOrder, string searchString, int id, int page = 1)
+        public ActionResult Index(string sortOrder, string search, int id, int page = 1)
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Name"] = sortOrder == "Name" ? "name_desc" : "Name";
             ViewData["ColorName"] = sortOrder == "ColorName" ? "colorname_desc" : "ColorName";
-            ViewData["Search"] = searchString;
+            ViewData["Search"] = search;
             ViewData["ID_Product"] = id;
 
 
@@ -37,9 +37,9 @@ namespace HubbleSpace_Final.Controllers
                 color_Products = color_Products.Where(c => c.product.ID_Product == id);
             }
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(search))
             {
-                color_Products = color_Products.Where(c => c.product.Product_Name.Contains(searchString));
+                color_Products = color_Products.Where(c => c.product.Product_Name.Contains(search));
             }
 
             switch (sortOrder)

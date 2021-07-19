@@ -87,12 +87,8 @@ namespace HubbleSpace_Final.Controllers
             return View();
         }
 
-        public ActionResult Categories(string sortOrder, string Object, string CategoriesName, string brand, string price, string searchString, int page = 1)
+        public IActionResult Categories(string Object, string name, string? brand, string? price, string? sort, string? search, int page = 1)
         {
-            ViewData["Search"] = searchString;
-            ViewData["CategoriesName"] = CategoriesName;
-            ViewData["Object"] = Object;
-            ViewData["sortOrder"] = sortOrder;
 
             var color_Products = from p in _context.Color_Product.Include(p => p.product).Include(p => p.product.category)
                                  select p;
@@ -100,16 +96,19 @@ namespace HubbleSpace_Final.Controllers
             if (!String.IsNullOrEmpty(Object))
             {
                 color_Products = color_Products.Where(p => p.product.category.Object == Object);
+                ViewData["Object"] = Object;
             }
 
-            if (!String.IsNullOrEmpty(CategoriesName))
+            if (!String.IsNullOrEmpty(name))
             {
-                color_Products = color_Products.Where(p => p.product.category.Category_Name == CategoriesName);
+                color_Products = color_Products.Where(p => p.product.category.Category_Name == name);
+                ViewData["name"] = name;
             }
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(search))
             {
-                color_Products = color_Products.Where(p => p.product.Product_Name.Contains(searchString));
+                color_Products = color_Products.Where(p => p.product.Product_Name.Contains(search));
+                ViewData["Search"] = search;
             }
 
             switch (brand)
@@ -156,34 +155,32 @@ namespace HubbleSpace_Final.Controllers
                     break;
             }
 
-            switch (sortOrder)
+            switch (sort)
             {
                 case "Z-A":
                     color_Products = color_Products.OrderByDescending(p => p.product.Product_Name);
-                    ViewData["sortOrder"] = sortOrder;
+                    ViewData["sort"] = sort;
                     break;
                 case "New":
                     color_Products = color_Products.OrderByDescending(p => p.Date);
-                    ViewData["sortOrder"] = sortOrder;
+                    ViewData["sort"] = sort;
                     break;
                 case "Price(low-high)":
                     color_Products = color_Products.OrderBy(p => p.product.Price_Sale);
-                    ViewData["sortOrder"] = sortOrder;
+                    ViewData["sort"] = sort;
                     break;
                 case "Price(high-low)":
                     color_Products = color_Products.OrderByDescending(p => p.product.Price_Sale);
-                    ViewData["sortOrder"] = sortOrder;
+                    ViewData["sort"] = sort;
                     break;
                 default:
                     color_Products = color_Products.OrderBy(p => p.product.Product_Name);
-                    ViewData["sortOrder"] = sortOrder;
+                    ViewData["sort"] = sort;
                     break;
             }
 
 
             ViewData["products_taked"] = color_Products.Count();
-            ViewData["Object"] = Object;
-            ViewData["CategoriesName"] = CategoriesName;
 
             PagedList<Color_Product> model = new PagedList<Color_Product>(color_Products, page, 6);
 
@@ -191,12 +188,12 @@ namespace HubbleSpace_Final.Controllers
 
         }
 
-        public async Task<IActionResult> Product_Detail(int id)
+        public async Task<IActionResult> Product_Detail(string name, string color)
         {
             return View(await _context.Img_Product.Include(p => p.color_Product.product)
                                                   .Include(p => p.color_Product.product.category)
                                                   .Include(p => p.color_Product.product.Brand)
-                                                  .Where(p => p.ID_Color_Product == id)
+                                                  .Where(p => p.color_Product.Color_Name.Replace(" ","") == color.Replace("-","/") && p.color_Product.product.Product_Name == name.Replace("-"," "))
                                                   .ToListAsync());
         }
 
@@ -207,7 +204,7 @@ namespace HubbleSpace_Final.Controllers
 
         public async Task<IActionResult> GetColor(int id)
         {
-            return PartialView(await _context.Color_Product.Where(p => p.ID_Product == id).ToListAsync());
+            return PartialView(await _context.Color_Product.Where(p => p.ID_Product == id).Include(s => s.product).ToListAsync());
         }
 
         public async Task<IActionResult> GetRecommendProducts(string Object = "", string Name = "", string Brand_Name = "")

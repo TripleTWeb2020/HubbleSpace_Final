@@ -235,11 +235,11 @@ namespace HubbleSpace_Final.Controllers
 
         }
 
-        public ActionResult Statistic(string time, string sortOrder, string searchString, int page = 1)
+        public ActionResult Statistic(string time, string sortOrder, string search, int page = 1)
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Process"] = sortOrder == "Process" ? "process_desc" : "Process";
-            ViewData["Search"] = searchString;
+            ViewData["Search"] = search;
 
             var Orders = from o in _context.Order.Include(o => o.User)
                          select o;
@@ -257,9 +257,9 @@ namespace HubbleSpace_Final.Controllers
             }
 
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(search))
             {
-                Orders = Orders.Where(o => o.SDT.Contains(searchString));
+                Orders = Orders.Where(o => o.SDT.Contains(search));
             }
 
             Orders = sortOrder switch

@@ -5,7 +5,7 @@
     {
             @foreach (var item in Model)
             {
-                <a href="~/../Home/Product_Detail/@Html.DisplayFor(modelItem => item.ID_Color_Product)">
+                <a asp-action="Product_Detail" asp-route-name="@item.product.Product_Name.Replace(" ", "-")" asp-route-color="@item.Color_Name.Replace(" ","").Replace("/", "-")">
                     <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" />
                 </a>
             }

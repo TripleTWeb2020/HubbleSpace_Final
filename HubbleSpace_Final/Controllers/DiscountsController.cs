@@ -20,7 +20,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Discounts
-        public ActionResult Index(string sortOrder, string searchString, int page = 1)
+        public ActionResult Index(string sortOrder, string search, int page = 1)
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Name"] = sortOrder == "Name" ? "name_desc" : "Name";
@@ -28,16 +28,16 @@ namespace HubbleSpace_Final.Controllers
             ViewData["Turn"] = sortOrder == "Turn" ? "turn_desc" : "Turn";
 
 
-            ViewData["Search"] = searchString;
+            ViewData["Search"] = search;
 
 
 
             var Discounts = from d in _context.Discount
                             select d;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(search))
             {
-                Discounts = Discounts.Where(d => d.Code_Discount.Contains(searchString));
+                Discounts = Discounts.Where(d => d.Code_Discount.Contains(search));
             }
 
             switch (sortOrder)

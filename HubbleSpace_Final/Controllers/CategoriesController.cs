@@ -20,36 +20,27 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Categories
-        public ActionResult Index(string sortOrder, string searchString, int page = 1)
+        public ActionResult Index(string sortOrder, string search, int page = 1)
         {
             ViewData["Name"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["Object"] = sortOrder == "Object" ? "object_desc" : "Object";
-            ViewData["Search"] = searchString;
+            ViewData["Search"] = search;
 
             var Categories = from c in _context.Category
                              select c;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(search))
             {
-                Categories = Categories.Where(c => c.Category_Name.Contains(searchString));
+                Categories = Categories.Where(c => c.Category_Name.Contains(search));
             }
 
-            switch (sortOrder)
+            Categories = sortOrder switch
             {
-                case "name_desc":
-                    Categories = Categories.OrderByDescending(c => c.Category_Name);
-                    break;
-                case "Object":
-                    Categories = Categories.OrderBy(c => c.Object);
-                    break;
-                case "object_desc":
-                    Categories = Categories.OrderByDescending(a => a.Object);
-                    break;
-                default:
-                    Categories = Categories.OrderBy(c => c.Category_Name);
-                    break;
-            }
-
+                "name_desc" => Categories.OrderByDescending(c => c.Category_Name),
+                "Object" => Categories.OrderBy(c => c.Object),
+                "object_desc" => Categories.OrderByDescending(a => a.Object),
+                _ => Categories.OrderBy(c => c.Category_Name),
+            };
             PagedList<Category> model = new PagedList<Category>(Categories, page, 10);
 
             return View(model);

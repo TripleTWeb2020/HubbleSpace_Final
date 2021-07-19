@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<HubbleSpace_Final.Entities.Img_Product>
 
 @{
-    ViewData["Title"] = "Details Page";
+    ViewData["Title"] = @Model.FirstOrDefault().color_Product.product.Product_Name.ToString();
     Layout = "_FrontendLayout";
     var hostName = $"{Context.Request.Scheme}://{Context.Request.Host}";
 }
@@ -59,7 +59,7 @@
                 <div class="col-12" style="padding-right: 0">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="~/../Home">Home</a></li>
+                            <li class="breadcrumb-item"><a asp-controller="Home">Home</a></li>
                             @{
                                 var breadcrumb_item = Model.FirstOrDefault();
                                 if (breadcrumb_item != null)
@@ -177,7 +177,7 @@
                 $(function () {
                     $(document).ready(function () {
                         $.ajax({
-                            url: "../GetSize",
+                            url: "../Home/GetSize",
                             data: {
                                 "id": @Model.FirstOrDefault().ID_Color_Product,
                             },
@@ -186,7 +186,7 @@
                             }
                         });
                         $.ajax({
-                            url: "../GetColor",
+                            url: "../Home/GetColor",
                             data: {
                                 "id": @Model.FirstOrDefault().color_Product.product.ID_Product,
                             },
@@ -196,7 +196,7 @@
                         });
 
                         $.ajax({
-                            url: "../GetRecommendProducts",
+                            url: "../Home/GetRecommendProducts",
                             data: {
                                 "Object": "@Model.FirstOrDefault().color_Product.product.category.Object.ToString()",
                                 "Name": "@Model.FirstOrDefault().color_Product.product.category.Category_Name.ToString()",

@@ -20,21 +20,21 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // GET: Banners
-        public ActionResult Index(string sortOrder, string searchString, int page = 1)
+        public ActionResult Index(string sortOrder, string search, int page = 1)
         {
             ViewData["Date"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewData["Name"] = sortOrder == "Name" ? "name_desc" : "Name";
 
-            ViewData["Search"] = searchString;
+            ViewData["Search"] = search;
 
 
 
             var Banners = from b in _context.Banner
                           select b;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(search))
             {
-                Banners = Banners.Where(b => b.Banner_Name.Contains(searchString));
+                Banners = Banners.Where(b => b.Banner_Name.Contains(search));
             }
 
             switch (sortOrder)

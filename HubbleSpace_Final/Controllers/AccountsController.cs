@@ -189,21 +189,21 @@ namespace HubbleSpace_Final.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ManageUserAsync(string sortOrder, string searchString, int CountForTake = 1)
+        public async Task<IActionResult> ManageUserAsync(string sortOrder, string search, int CountForTake = 1)
         {
             ViewData["Username"] = sortOrder == "Username" ? "UserName_desc" : "UserName";
             ViewData["Email"] = sortOrder == "Email" ? "Email_desc" : "Email";
 
-            ViewData["Search"] = searchString;
+            ViewData["Search"] = search;
 
 
 
             var Accounts = from a in _userManager.Users
                            select a;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(search))
             {
-                Accounts = Accounts.Where(a => a.UserName.Contains(searchString));
+                Accounts = Accounts.Where(a => a.UserName.Contains(search));
             }
 
             switch (sortOrder)
@@ -408,18 +408,18 @@ namespace HubbleSpace_Final.Controllers
 
 
         // Viết lại
-        public ActionResult Index(string sortOrder, string searchString, int page = 1)
+        public ActionResult Index(string sortOrder, string search, int page = 1)
         {
             ViewData["Name"] = sortOrder == "Username" ? "UserName_desc" : "UserName";
             ViewData["Level"] = sortOrder == "Level" ? "Level_desc" : "Level";
-            ViewData["Search"] = searchString;
+            ViewData["Search"] = search;
 
             var accounts = from a in _userManager.Users
                            select a;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(search))
             {
-                accounts = accounts.Where(a => a.UserName.Contains(searchString));
+                accounts = accounts.Where(a => a.UserName.Contains(search));
             }
 
             switch (sortOrder)

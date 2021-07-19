@@ -7,18 +7,18 @@
             <div class="flip-container">
                 <div class="flipper">
                     <div class="front">
-                        <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                        <a asp-action="Product_Detail" asp-route-name="@item.product.Product_Name.Replace(" ","-")" asp-route-color="@item.Color_Name.Replace(" ","").Replace("/","-")">
                             <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
                         </a>
                     </div>
                     <div class="back">
-                        <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+                        <a asp-action="Product_Detail"  asp-route-name="@item.product.Product_Name.Replace(" ","-")" asp-route-color="@item.Color_Name.Replace(" ","").Replace("/","-")">
                             <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
                         </a>
                     </div>
                 </div>
             </div>
-            <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product">
+            <a asp-action="Product_Detail" asp-route-name="@item.product.Product_Name.Replace(" ","-")" asp-route-color="@item.Color_Name.Replace(" ","").Replace("/","-")">
                 <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.product.Product_Name)" class="img-fluid">
             </a>
             <div class="text">
@@ -35,7 +35,7 @@
                     <text> @String.Format("{0:0,0}", item.product.Price_Sale) VNĐ </text>
                 </p>
                 <p class="buttons">
-                    <a asp-action="Product_Detail" asp-route-id="@item.ID_Color_Product" class="btn btn-outline-secondary">View detail</a>
+                    <a asp-action="Product_Detail"  asp-route-name="@item.product.Product_Name.Replace(" ","-")" asp-route-color="@item.Color_Name.Replace(" ","").Replace("/","-")" class="btn btn-outline-secondary">View detail</a>
                 </p>
             </div>
             <!-- /.ribbon-->

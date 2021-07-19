@@ -186,7 +186,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         [Authorize]
-        public async System.Threading.Tasks.Task<IActionResult> PaypalCheckout()
+        public async Task<IActionResult> PaypalCheckout()
         {
             var model = GetCheckoutViewModel();
             var environment = new SandboxEnvironment("AbKTW-djsNwmU-gxRXpVhioK2j7SYrm3-nZ6whkZXoyrX4GNZj21D2lFGQT7gFxpGcubD1_-Ai1-os4u", "EEEK8kgLJOETCh7Ec7xx4NN2FsXI9UHZGiSofokEuKAgHJywvRbwqv8c3tPq-LdayJVPF3Jc-6BXxNqm");
@@ -281,6 +281,25 @@ namespace HubbleSpace_Final.Controllers
             }
 
         }
+
+        protected void NganLuongCheckout(object sender, EventArgs e)
+        {
+            #region Create NganLuong Order
+            var model = GetCheckoutViewModel();
+            var total = model.CartItems.Sum(p => p.Price * p.Amount) - model.CartItems.Sum(m => m.Value_Discount);
+            #endregion
+            var hostname = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+
+            var return_url = $"{hostname}/Client_ProductCarts/Checkout";
+            var transaction_info = "NganLuongPayment";
+            var order_code = DateTime.Now.ToString("yyyyMMddHHmmss");
+            var receiver = "tripletweb@gmail.com";//Tài khoản nhận tiền 
+            var price = "100000";
+            NganLuongPayment nl = new NganLuongPayment();
+            var url = nl.buildCheckoutUrl(return_url, receiver, transaction_info, order_code, price);
+            Response.Redirect(url);
+        }
+
         [HttpPost]
         public async Task<ActionResult> CheckoutCOD(CheckOutViewModel request)
         {
