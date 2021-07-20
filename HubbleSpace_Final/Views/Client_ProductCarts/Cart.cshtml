@@ -85,8 +85,8 @@
                                                             total += totalmoney;
                                                             stt++;
                                                             <tr>
-                                                                <td><a asp-controller="Home" asp-action="Product_Detail" asp-route-id="@cartitem.Color_Product.ID_Color_Product"><img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => cartitem.Color_Product.Image)" alt="@Html.DisplayFor(modelItem => cartitem.Name)"></a></td>
-                                                                <td><a asp-controller="Home" asp-action="Product_Detail" asp-route-id="@cartitem.Color_Product.ID_Color_Product">@Html.DisplayFor(modelItem => cartitem.Name)</a></td>
+                                                                <td><a asp-controller="Home" asp-action="Product_Detail" asp-route-name="@cartitem.Name.Replace(" ", "-")" asp-route-color="@cartitem.Color_Product.Color_Name.Replace(" ","").Replace("/", "-")"><img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => cartitem.Color_Product.Image)" alt="@Html.DisplayFor(modelItem => cartitem.Name)"></a></td>
+                                                                <td><a asp-controller="Home" asp-action="Product_Detail" asp-route-name="@cartitem.Name.Replace(" ", "-")" asp-route-color="@cartitem.Color_Product.Color_Name.Replace(" ","").Replace("/", "-")">@Html.DisplayFor(modelItem => cartitem.Name)</a></td>
                                                                 <td>@(cartitem.Color_Product.Color_Name)</td>
                                                                 <td>@(cartitem.Size)<input type="hidden" value="@(cartitem.Size)" id="size" /></td>
                                                                 <td>
@@ -110,9 +110,9 @@
                                         </tfoot>
                                     </table>
                                     <div class="box-footer d-flex justify-content-between flex-lg-row">
-                                        <div class="left"><a asp-controller="Home" asp-action="Categories" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i> Continue shopping</a></div>
+                                        <div class="left"><a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i> Continue shopping</a></div>
                                         <div class="right">
-                                            <a asp-controller="Client_ProductCarts" asp-action="PaymentMethod" class="btn btn-primary">Proceed to Choose your payment method <i class="fa fa-chevron-right"></i></a>
+                                            <a asp-controller="Client_ProductCarts" asp-action="Checkout" class="btn btn-primary">Check out <i class="fa fa-chevron-right"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +145,7 @@
                                             {
                                                 <tr id="discount">
                                                     <td>Discount</td>
-                                                    <td>@(cartitem.Discount)</td>
+                                                    <td></td>
                                                     <th>- @(cartitem.Value_Discount.ToString("n0")) </th>
                                                 </tr>
                                                 total -= cartitem.Value_Discount;
@@ -154,7 +154,7 @@
                                         }
                                         <tr class="total">
                                             <td> Total </td>
-                                            <td></td>
+                                            <td>@Model.Where(i => i.Discount == 0).Sum(i => i.Amount)</td>
                                             <th>@((total).ToString("n0")) </th>
                                         </tr>
                                     </tbody>
@@ -204,7 +204,6 @@
                                             id: $(this).attr("data-id"),
                                         },
                                         success: function (result) {
-
                                             window.location.href = "@Url.RouteUrl("cart")";
                                         }
                                     });

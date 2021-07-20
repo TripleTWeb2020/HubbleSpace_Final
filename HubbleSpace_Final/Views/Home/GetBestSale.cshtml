@@ -30,23 +30,23 @@
                                         <div class="flip-container">
                                             <div class="flipper">
                                                 <div class="front">
-                                                    <a asp-action="Product_Detail" asp-route-name="@item.Product.Product_Name.Replace(" ", "-")" asp-route-color="@item.NameColor.Trim().Replace("/", "-")">
+                                                    <a asp-action="Product_Detail" asp-route-name="@item.Product.Product_Name.Replace(" ", "-")" asp-route-color="@item.NameColor.Replace(" ","").Replace("/", "-")">
                                                         <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.Product.Product_Name)">
                                                     </a>
                                                 </div>
                                                 <div class="back">
-                                                    <a asp-action="Product_Detail" asp-route-name="@item.Product.Product_Name.Replace(" ", "-")" asp-route-color="@item.NameColor.Trim().Replace("/", "-")">
+                                                    <a asp-action="Product_Detail" asp-route-name="@item.Product.Product_Name.Replace(" ", "-")" asp-route-color="@item.NameColor.Replace(" ","").Replace("/", "-")">
                                                         <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.Product.Product_Name)" />
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <a asp-action="Product_Detail" asp-route-name="@item.Product.Product_Name.Replace(" ", "-")" asp-route-color="@item.NameColor.Trim().Replace("/", "-")" class="invisible">
+                                        <a asp-action="Product_Detail" asp-route-name="@item.Product.Product_Name.Replace(" ", "-")" asp-route-color="@item.NameColor.Replace(" ","").Replace("/", "-")" class="invisible">
                                             <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.Product.Product_Name)">
                                         </a>
                                         <div class="text">
                                             <h3>
-                                                <a asp-action="Product_Detail" asp-route-name="@item.Product.Product_Name.Replace(" ", "-")" asp-route-color="@item.NameColor.Trim().Replace("/", "-")">
+                                                <a asp-action="Product_Detail" asp-route-name="@item.Product.Product_Name.Replace(" ", "-")" asp-route-color="@item.NameColor.Replace(" ","").Replace("/", "-")">
                                                     @Html.DisplayFor(modelItem => item.Product.Product_Name)
                                                 </a>
                                             </h3>
@@ -62,7 +62,7 @@
                                                 <text> @String.Format("{0:0,0}", item.Product.Price_Sale) VNĐ </text>
                                             </p>
                                             <p class="buttons">
-                                                <a asp-action="Product_Detail" asp-route-name="@item.Product.Product_Name.Replace(" ", "-")" asp-route-color="@item.NameColor.Trim().Replace("/", "-")" class="btn btn-outline-secondary">View detail</a>
+                                                <a asp-action="Product_Detail" asp-route-name="@item.Product.Product_Name.Replace(" ", "-")" asp-route-color="@item.NameColor.Replace(" ","").Replace("/", "-")" class="btn btn-outline-secondary">View detail</a>
                                                 <!--<a asp-action="Cart" asp-route-id="@item.ID_Color_Product" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>-->
                                             </p>
                                         </div>

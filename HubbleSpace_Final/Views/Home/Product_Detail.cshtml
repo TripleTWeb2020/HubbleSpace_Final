@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<HubbleSpace_Final.Entities.Img_Product>
+@inject HubbleSpace_Final.Entities.MyDbContext context
 
 @{
     ViewData["Title"] = @Model.FirstOrDefault().color_Product.product.Product_Name.ToString();
@@ -76,7 +77,6 @@
                 <!--ProductMain-->
                 <div class="col-12" itemscope itemtype="http://schema.org/Product">
                     <div id="productMain" class="row">
-
                         <!--product_slider-->
                         <div class="col-lg-8 col-md-6">
                             <div id="main-slider" class="owl-carousel owl-theme" itemprop="image">
@@ -112,8 +112,22 @@
                             }
 
                             <!--product_color-->
-                            <div id="getcolor"></div>
+                            <div id="getcolor">
+                                @{
+                                    var color = context.Color_Product.Where(c => c.ID_Product == product.color_Product.ID_Product);
+                                    if (color.Count() > 1)
+                                    {
+                                        @foreach (var item in color)
+                                        {
+                                            <a asp-action="Product_Detail" asp-route-name="@item.product.Product_Name.Replace(" ", "-")" asp-route-color="@item.Color_Name.Replace(" ","").Replace("/", "-")">
+                                                <img src="~/Images/Color_Product_Avatar/@Html.DisplayFor(modelItem => item.Image)" />
+                                            </a>
+                                        }
+                                    }
+                                }
+                            </div>
                         </div>
+
 
                         <!--product_details-->
                         <div class="col-lg-4 col-md-6 box" style="margin-bottom: 0">
@@ -133,11 +147,27 @@
                                 <p class="price-sale" itemprop="price">
                                     <text> @String.Format("{0:0,0}", product.color_Product.product.Price_Sale) VNĐ </text>
                                 </p>
-                                <form asp-controller="Client_ProductCarts" asp-action="AddToCart" method="get">
-                                    <input type="hidden" name="id" value="@product.ID_Color_Product" />
-                                    <input type="hidden" name="name" value="@product.color_Product.product.Product_Name" />
-                                    <input type="hidden" name="price" value="@product.color_Product.product.Price_Sale" />
-                                    <div id="getsize" class="sizes" data-auto-id="@product.ID_Color_Product"></div>
+                                <form id="addtocart" method="post">
+                                    <input type="hidden" id="id" name="id" value="@product.ID_Color_Product" />
+                                    <input type="hidden" id="name" name="name" value="@product.color_Product.product.Product_Name" />
+                                    <input type="hidden" id="price" name="price" value="@product.color_Product.product.Price_Sale" />
+                                    <div id="getsize" class="sizes">
+                                        @{var size = context.Size.Where(c => c.ID_Color_Product == product.ID_Color_Product);
+                                            if (size != null)
+                                            {
+                                                foreach (var item in size)
+                                                {
+                                                    if (item.Quantity > 0)
+                                                    {
+                                                        <div class="gl-label">
+                                                            <input id="size" name="size" type="radio" value="@item.SizeNumber" required />
+                                                            <span> @Html.DisplayFor(modelItem => item.SizeNumber)</span>
+                                                        </div>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    </div>
                                     <p class="text-center buttons">
                                         <input type="submit" class="btn btn-primary" value="Add to cart" /><!--<i class="fa fa-shopping-cart"></i>-->
                                     </p>
@@ -145,25 +175,24 @@
 
                                 <!-- /.Share in social-->
                                 <!--
-                                    div id="details" class="center">
-                                    <h4>Show it to your friends</h4>
-                                    <div class="social" data-href="https://localhost:44336/Home/Product_Detail/10" data-layout="button_count" data-size="small">
-                                        <p style="text-align: center"><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flocalhost%3A44336%2FHome%2FProduct_Detail%2F10&amp;src=sdkpreparse" class="external facebook"><i class="fa fa-facebook"></i></a><a href="#" class="external gplus"><i class="fa fa-google-plus"></i></a><a href="#" class="external twitter"><i class="fa fa-twitter"></i></a><a href="#" class="email"><i class="fa fa-envelope"></i></a></p>
-                                    </div>
-                                </!--div>
-                                -->
+                    div id="details" class="center">
+                    <h4>Show it to your friends</h4>
+                    <div class="social" data-href="https://localhost:44336/Home/Product_Detail/10" data-layout="button_count" data-size="small">
+                        <p style="text-align: center"><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flocalhost%3A44336%2FHome%2FProduct_Detail%2F10&amp;src=sdkpreparse" class="external facebook"><i class="fa fa-facebook"></i></a><a href="#" class="external gplus"><i class="fa fa-google-plus"></i></a><a href="#" class="external twitter"><i class="fa fa-twitter"></i></a><a href="#" class="email"><i class="fa fa-envelope"></i></a></p>
+                    </div>
+                </!--div>
+                -->
                                 <div class="fb-share-button" data-href="https://hubblespaceshoestore.azurewebsites.net/Home/Product_Detail/@Model.FirstOrDefault().color_Product.product.ID_Product" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fhubblespaceshoestore.azurewebsites.net%2FHome%2FProduct_Detail%2F@Model.FirstOrDefault().color_Product.product.ID_Product&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Chia sẻ</a></div>
                             }
                         </div>
                     </div>
 
-
                     <!-- /.Recommend 4 product-->
                     <div id="getRecommendProducts" class="row">
-
+                        
                     </div>
+                    <!-- /.col-md-9-->
                 </div>
-                <!-- /.col-md-9-->
             </div>
         </div>
     </div>
@@ -177,36 +206,30 @@
                 $(function () {
                     $(document).ready(function () {
                         $.ajax({
-                            url: "../Home/GetSize",
-                            data: {
-                                "id": @Model.FirstOrDefault().ID_Color_Product,
-                            },
-                            success: function (response) {
-                                $("#getsize").html(response)
-                            }
-                        });
-                        $.ajax({
-                            url: "../Home/GetColor",
-                            data: {
-                                "id": @Model.FirstOrDefault().color_Product.product.ID_Product,
-                            },
-                            success: function (response) {
-                                $("#getcolor").html(response)
-                            }
-                        });
-
-                        $.ajax({
                             url: "../Home/GetRecommendProducts",
                             data: {
-                                "Object": "@Model.FirstOrDefault().color_Product.product.category.Object.ToString()",
-                                "Name": "@Model.FirstOrDefault().color_Product.product.category.Category_Name.ToString()",
-                                "Brand_Name": "@Model.FirstOrDefault().color_Product.product.Brand.Brand_Name.ToString()",
+                                "price": "@Model.FirstOrDefault().color_Product.product.Price_Sale",
                             },
                             success: function (response) {
                                 $("#getRecommendProducts").html(response)
                             }
                         });
                     });
+                    $("#addtocart").submit(function () {
+                        $.ajax({
+                            url: "../Client_ProductCarts/AddToCart",
+                            data: {
+                                "id": $("#id").val(),
+                                "name": $("#name").val(),
+                                "price": $("#price").val(),
+                                "size": $("input[name='size']:checked").val()
+                            },
+                            success: function (response) {
+                                window.location.reload
+                            }
+                        });
+                    });
+
                 });
             </script>
         }

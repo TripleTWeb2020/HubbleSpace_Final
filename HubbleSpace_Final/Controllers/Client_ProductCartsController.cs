@@ -101,24 +101,22 @@ namespace HubbleSpace_Final.Controllers
 
             // Lưu cart vào Session
             SaveCartSession(cart);
-            return RedirectToAction(nameof(Cart));
+            return Ok();
         }
 
         /// xóa item trong cart
         [Route("/removecart", Name = "removecart")]
         public IActionResult RemoveCart(int id)
         {
-
             var cart = GetCartItems();
             var cartitem = cart.Skip(id - 1).Take(1).FirstOrDefault();
-            var cartDiscount = cart.Skip(id).Take(1).FirstOrDefault();
+            var cartDiscount = cart.Where(c => c.Discount != 0).FirstOrDefault();
             if (cartitem != null)
             {
                 // Đã tồn tại, xóa đi
                 cart.Remove(cartitem);
-                var cartitem1 = cart.Skip(id - 1).Take(1).FirstOrDefault();
                 SaveCartSession(cart);
-                if (cart.Count != 0)
+                if (cart.Where(c => c.Discount == 0).Count() == 0)
                 {
                     cart.Remove(cartDiscount);
                 }
@@ -150,7 +148,7 @@ namespace HubbleSpace_Final.Controllers
 
         /// Thêm discount
         [Route("/discount", Name = "discount")]
-        public string discount(string code)
+        public string Discount(string code)
         {
             var userId = _userService.GetUserId();
 
@@ -158,7 +156,7 @@ namespace HubbleSpace_Final.Controllers
             var discount = _context.Discount.Where(p => p.Code_Discount == code).FirstOrDefault();
 
             //User dùng khuyến mãi?
-            var discountUsed = _context.DiscountUsed.Where(ds => ds.User.Id == userId).FirstOrDefault();
+            var discountUsed = _context.DiscountUsed.Where(ds => ds.User.Id == userId && ds.Discount.Code_Discount == code).FirstOrDefault();
 
             //User chưa dùng khuyến mãi và còn lượt
             if (discount != null && discountUsed == null && discount.NumberofTurns > 0 && discount.Expire > DateTime.Now)
@@ -296,11 +294,12 @@ namespace HubbleSpace_Final.Controllers
             var receiver = "tripletweb@gmail.com";//Tài khoản nhận tiền 
             var price = "100000";
             NganLuongPayment nl = new NganLuongPayment();
-            var url = nl.buildCheckoutUrl(return_url, receiver, transaction_info, order_code, price);
+            var url = nl.BuildCheckoutUrl(return_url, receiver, transaction_info, order_code, price);
             Response.Redirect(url);
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> CheckoutCOD(CheckOutViewModel request)
         {
             var userId = _userService.GetUserId();

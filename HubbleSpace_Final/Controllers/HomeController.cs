@@ -197,26 +197,11 @@ namespace HubbleSpace_Final.Controllers
                                                   .ToListAsync());
         }
 
-        public async Task<IActionResult> GetSize(int id)
+        public async Task<IActionResult> GetRecommendProducts(double price)
         {
-            return PartialView(await _context.Size.Where(s => s.ID_Color_Product == id).Include(s => s.color_Product.product).OrderBy(s => s.ID_Size_Product).ToListAsync());
-        }
+            var recommendProduct = _context.Color_Product.Include(p => p.product).Where(p => p.product.Price_Sale - price > 0).OrderBy(p => p.product.Price_Sale).Take(2);
+            recommendProduct = recommendProduct.Concat(_context.Color_Product.Include(p => p.product).Where(p => p.product.Price_Sale - price < 0).OrderByDescending(p => p.product.Price_Sale).Take(2));
 
-        public async Task<IActionResult> GetColor(int id)
-        {
-            return PartialView(await _context.Color_Product.Where(p => p.ID_Product == id).Include(s => s.product).ToListAsync());
-        }
-
-        public async Task<IActionResult> GetRecommendProducts(string Object = "", string Name = "", string Brand_Name = "")
-        {
-            var recommendProduct = from rp in _context.Color_Product
-                                   select rp;
-            recommendProduct = recommendProduct.Include(p => p.product.category)
-                                                .Where(p => p.product.category.Object.Contains(Object))
-                                                .Where(p => p.product.category.Category_Name.Contains(Name))
-                                                .Where(p => p.product.Brand.Brand_Name.Contains(Brand_Name));
-            if (recommendProduct.Count() >= 4)
-                recommendProduct = recommendProduct.Take(4);
             return PartialView(await recommendProduct.Distinct().ToListAsync());
         }
 

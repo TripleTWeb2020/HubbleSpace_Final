@@ -16,14 +16,12 @@ namespace HubbleSpace_Final.Controllers
         private readonly MyDbContext _context;
         private readonly IUserService _userService;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public Client_OrdersController(MyDbContext context, IUserService userService, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public Client_OrdersController(MyDbContext context, IUserService userService, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userService = userService;
             _userManager = userManager;
-            _roleManager = roleManager;
 
         }
 
@@ -46,22 +44,13 @@ namespace HubbleSpace_Final.Controllers
                 Orders = Orders.Where(o => o.Date_Create.Date.ToString() == search);
             }
 
-            switch (sortOrder)
+            Orders = sortOrder switch
             {
-                case "date_desc":
-                    Orders = Orders.OrderBy(o => o.Date_Create);
-                    break;
-                case "Process":
-                    Orders = Orders.OrderBy(o => o.Process);
-                    break;
-                case "process_desc":
-                    Orders = Orders.OrderByDescending(o => o.Process);
-                    break;
-                default:
-                    Orders = Orders.OrderByDescending(o => o.Date_Create);
-                    break;
-            }
-
+                "date_desc" => Orders.OrderBy(o => o.Date_Create),
+                "Process" => Orders.OrderBy(o => o.Process),
+                "process_desc" => Orders.OrderByDescending(o => o.Process),
+                _ => Orders.OrderByDescending(o => o.Date_Create),
+            };
             PagedList<Order> model = new PagedList<Order>(Orders, page, 10);
 
             return View(model);
@@ -85,28 +74,15 @@ namespace HubbleSpace_Final.Controllers
                 orderDetails = orderDetails.Where(a => a.Color_Product.product.Product_Name.Contains(search));
             }
 
-            switch (sortOrder)
+            orderDetails = sortOrder switch
             {
-                case "name_desc":
-                    orderDetails = orderDetails.OrderByDescending(a => a.Color_Product.product.Product_Name);
-                    break;
-                case "ColorName":
-                    orderDetails = orderDetails.OrderBy(a => a.Color_Product.Color_Name);
-                    break;
-                case "colorname_desc":
-                    orderDetails = orderDetails.OrderByDescending(a => a.Color_Product.Color_Name);
-                    break;
-                case "Quantity":
-                    orderDetails = orderDetails.OrderBy(a => a.Quantity);
-                    break;
-                case "quantity_desc":
-                    orderDetails = orderDetails.OrderByDescending(a => a.Quantity);
-                    break;
-                default:
-                    orderDetails = orderDetails.OrderBy(a => a.Color_Product.product.Product_Name);
-                    break;
-            }
-
+                "name_desc" => orderDetails.OrderByDescending(a => a.Color_Product.product.Product_Name),
+                "ColorName" => orderDetails.OrderBy(a => a.Color_Product.Color_Name),
+                "colorname_desc" => orderDetails.OrderByDescending(a => a.Color_Product.Color_Name),
+                "Quantity" => orderDetails.OrderBy(a => a.Quantity),
+                "quantity_desc" => orderDetails.OrderByDescending(a => a.Quantity),
+                _ => orderDetails.OrderBy(a => a.Color_Product.product.Product_Name),
+            };
             PagedList<OrderDetail> model = new PagedList<OrderDetail>(orderDetails, page, 10);
 
             return View(model);

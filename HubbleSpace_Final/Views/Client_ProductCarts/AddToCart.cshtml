@@ -1,0 +1,19 @@
+﻿@model List<CartItemModel>
+
+
+@{
+    if (Model.Where(c => c.Discount == 0).Sum(c => c.Amount) > 0)
+    {
+        var totalitem = Model.Where(c => c.Discount == 0).Sum(c => c.Amount);
+        <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block">
+            <a asp-route="cart" class="btn btn-primary navbar-btn">
+                <i class="fa fa-shopping-cart"></i>
+                <span>@totalitem item(s) in cart</span>
+            </a>
+        </div>
+    }
+    else
+    {
+        <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a asp-route="cart" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span>0 item in cart</span></a></div>
+    }
+}

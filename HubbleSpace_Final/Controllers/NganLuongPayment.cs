@@ -8,9 +8,9 @@ namespace HubbleSpace_Final.Controllers
     public class NganLuongPayment : Controller
     {
        
-        private String nganluong_url = "http://sandbox.nganluong.vn/checkout.php";
-        private String merchant_site_code = "50535";    //ma merchant site
-        private String secure_pass = "c2d5bcc90b01c69bed4283f96c39fb44";    //mat khau giao tiep
+        private readonly string nganluong_url = "http://sandbox.nganluong.vn/checkout.php";
+        private readonly string merchant_site_code = "50535";    //ma merchant site
+        private readonly string secure_pass = "c2d5bcc90b01c69bed4283f96c39fb44";    //mat khau giao tiep
 
         public String GetMD5Hash(String input)
         {
@@ -31,7 +31,7 @@ namespace HubbleSpace_Final.Controllers
             return md5String;
         }
 
-        public String buildCheckoutUrl(String return_url, String receiver, String transaction_info, String order_code, String price)
+        public String BuildCheckoutUrl(String return_url, String receiver, String transaction_info, String order_code, String price)
         {
             // Tạo biến secure code 
             String secure_code = "";
@@ -51,21 +51,22 @@ namespace HubbleSpace_Final.Controllers
             secure_code += " " + this.secure_pass;
 
             // Tạo mảng băm 
-            Hashtable ht = new Hashtable();
+            Hashtable ht = new Hashtable
+            {
+                { "merchant_site_code", this.merchant_site_code },
 
-            ht.Add("merchant_site_code", this.merchant_site_code);
+                { "return_url", HttpUtility.UrlEncode(return_url).ToLower() },
 
-            ht.Add("return_url", HttpUtility.UrlEncode(return_url).ToLower());
+                { "receiver", receiver },
 
-            ht.Add("receiver", receiver);
+                { "transaction_info", transaction_info },
 
-            ht.Add("transaction_info", transaction_info);
+                { "order_code", order_code },
 
-            ht.Add("order_code", order_code);
+                { "price", price },
 
-            ht.Add("price", price);
-
-            ht.Add("secure_code", this.GetMD5Hash(secure_code));
+                { "secure_code", this.GetMD5Hash(secure_code) }
+            };
 
             // Tạo url redirect 
             String redirect_url = this.nganluong_url;
@@ -97,7 +98,7 @@ namespace HubbleSpace_Final.Controllers
             return rdu;
         }
 
-        public Boolean verifyPaymentUrl(String transaction_info, String order_code, String price, String payment_id, String payment_type, String error_text, String secure_code)
+        public Boolean VerifyPaymentUrl(String transaction_info, String order_code, String price, String payment_id, String payment_type, String error_text, String secure_code)
         {
             // Tạo mã xác thực từ web 
             String str = "";
@@ -119,9 +120,7 @@ namespace HubbleSpace_Final.Controllers
             str += " " + this.secure_pass;
 
             // Mã hóa các tham số
-            String verify_secure_code = "";
-
-            verify_secure_code = this.GetMD5Hash(str);
+            string verify_secure_code = GetMD5Hash(str);
 
             // Xác thực mã của web với mã trả về từ nganluong.vn 
             if (verify_secure_code == secure_code) return true;
