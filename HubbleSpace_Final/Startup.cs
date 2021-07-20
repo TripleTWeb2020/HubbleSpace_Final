@@ -73,6 +73,7 @@ namespace HubbleSpace_Final
             services.AddScoped<IUserService, UserService>();
             services.AddHttpClient();
             services.Configure<SMTPConfigModel>(Configuration.GetSection("SMTPConfig"));
+            services.AddRouting(options => options.LowercaseUrls = true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,6 +97,7 @@ namespace HubbleSpace_Final
             app.UseSession();
 
             app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
@@ -105,7 +107,7 @@ namespace HubbleSpace_Final
 
                 endpoints.MapControllerRoute(
                     name: "Product_Detail",
-                    pattern: "{name}/{color}", new { controller = "Home", action = "Product_Detail" });
+                    pattern: "{category}/{name}/{color}", new { controller = "Home", action = "Product_Detail" });
 
                  endpoints.MapControllerRoute(
                     name: "Categories",
