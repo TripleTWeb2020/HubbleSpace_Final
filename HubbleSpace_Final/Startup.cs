@@ -107,7 +107,7 @@ namespace HubbleSpace_Final
 
                 endpoints.MapControllerRoute(
                     name: "Product_Detail",
-                    pattern: "{category}/{name}/{color}", new { controller = "Home", action = "Product_Detail" });
+                    pattern: "{name}/{color}", new { controller = "Home", action = "Product_Detail" });
 
                  endpoints.MapControllerRoute(
                     name: "Categories",

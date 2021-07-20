@@ -188,12 +188,12 @@ namespace HubbleSpace_Final.Controllers
 
         }
 
-        public async Task<IActionResult> Product_Detail(string category,string name, string color)
+        public async Task<IActionResult> Product_Detail(string name, string color)
         {
             return View(await _context.Img_Product.Include(p => p.color_Product.product)
                                                   .Include(p => p.color_Product.product.category)
                                                   .Include(p => p.color_Product.product.Brand)
-                                                  .Where(p => p.color_Product.Color_Name.Replace(" ","") == color.Replace("-","/") && p.color_Product.product.Product_Name.ToLower() == name.ToLower().Replace("-"," ") && p.color_Product.product.category.Category_Name.ToLower() == category.ToLower() )
+                                                  .Where(p => p.color_Product.Color_Name.Replace(" ","") == color.Replace("-","/") && p.color_Product.product.Product_Name.ToLower() == name.ToLower().Replace("-"," "))
                                                   .ToListAsync());
         }
 
