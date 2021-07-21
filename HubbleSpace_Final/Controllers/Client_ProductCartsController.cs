@@ -211,7 +211,7 @@ namespace HubbleSpace_Final.Controllers
                 {
                     Name = item.Name,
                     Currency = "USD",
-                    Price = Math.Round(item.Price * item.Amount / TyGiaUSD, 2).ToString(),
+                    Price = Math.Round(item.Price/ TyGiaUSD, 2).ToString(),
                     Quantity = item.Amount.ToString(),
                     Sku = "sku",
                     Tax = "0"
@@ -227,6 +227,7 @@ namespace HubbleSpace_Final.Controllers
                 {
                     new Transaction()
                     {
+                        ItemList = itemList,
                         Amount = new Amount()
                         {
                             Total = total.ToString(),
@@ -238,7 +239,7 @@ namespace HubbleSpace_Final.Controllers
                                 Subtotal = total.ToString()
                             }
                         },
-                        ItemList = itemList,
+                        //ItemList = itemList,                       
                         Description = $"Invoice #{paypalOrderId}",
                         InvoiceNumber = paypalOrderId.ToString()
                     }
