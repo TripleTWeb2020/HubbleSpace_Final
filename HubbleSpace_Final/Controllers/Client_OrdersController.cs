@@ -34,10 +34,8 @@ namespace HubbleSpace_Final.Controllers
             ViewData["Process"] = sortOrder == "Process" ? "process_desc" : "Process";
             ViewData["Search"] = search;
 
-
-
             var Orders = from o in _context.Order.Include(o => o.User).Where(o => o.User == user)
-                         select o;
+                            select o;
 
             if (!String.IsNullOrEmpty(search))
             {
@@ -55,6 +53,18 @@ namespace HubbleSpace_Final.Controllers
 
             return View(model);
         }
+        [Route("/TrackOrder", Name = "TrackOrder")]
+        public async Task<IActionResult> TrackOrder(string Id, int page = 1)
+        {
+            if (!String.IsNullOrEmpty(Id))
+            {
+                var searchId = Convert.ToInt32(Id.Replace("#", "")) / 10000;
+                var Orders = _context.Order.Where(o => o.ID_Order == searchId).FirstOrDefault();
+                return View(Orders);
+            }
+            return View(null);
+        }
+
 
         public ActionResult OrderDetail(int id, string sortOrder, string search, int page = 1)
         {

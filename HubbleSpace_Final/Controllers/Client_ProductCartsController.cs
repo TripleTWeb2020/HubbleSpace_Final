@@ -251,7 +251,7 @@ namespace HubbleSpace_Final.Controllers
 
                 RedirectUrls = new RedirectUrls()
                 {
-                    CancelUrl = $"{hostname}/payment",
+                    CancelUrl = $"{hostname}/paymentfailed",
                     ReturnUrl = $"{hostname}/paymentsuccessful"
                 },
                 Payer = new Payer()
@@ -288,7 +288,7 @@ namespace HubbleSpace_Final.Controllers
                 var debugId = httpException.Headers.GetValues("PayPal-Debug-Id").FirstOrDefault();
 
                 //Process when Checkout with Paypal fails
-                return Redirect("/payment");
+                return Redirect("/paymentfailed");
             }
 
         }
@@ -361,6 +361,15 @@ namespace HubbleSpace_Final.Controllers
             order.Process = "Mới đặt";
             _context.Update(order);
             _context.SaveChanges();
+            var rd = new Random();
+            ViewData["Id"] = "#" + order.ID_Order.ToString() + rd.Next(1000, 9999).ToString();
+            return View(order);
+        }
+
+        [Route("/paymentfailed", Name = "paymentfailed")]
+        public IActionResult PaymentFailed()
+        {
+            
             return View();
         }
 

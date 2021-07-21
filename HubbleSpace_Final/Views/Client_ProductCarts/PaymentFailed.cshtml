@@ -2,7 +2,7 @@
 
 @model HubbleSpace_Final.Entities.Order
 @{
-    ViewData["Title"] = "Payment Successful";
+    ViewData["Title"] = "Payment Failed";
     Layout = "_FrontendLayout";
 
 }
@@ -46,21 +46,9 @@
         <div class="col-lg-12">
             <div class="box">
                 <div class="social-login-content center">
-                    <h1>Payment Successful!</h1>
+                    <h1>Payment Failed!</h1>
                     <br />
-                    @if (_signInManager.IsSignedIn(User))
-                    {
-                        <img src="~/Images/paymentsuccessful.png" class="img-fluid" />
-                        <br />
-                        <a class="btn btn-outline-danger" style="margin-bottom: 15px" asp-action="HistoryOrder" asp-controller="Client_Orders">History Oder</a>
-                    }
-                    else
-                    {
-                        <h2>Your order is @ViewData["Id"]</h2>
-                        <img src="~/Images/paymentsuccessful.png" class="img-fluid" />
-                        <br />
-                        <a class="btn btn-outline-danger" style="margin-bottom: 15px" asp-action="TrackOrder" asp-controller="Client_Orders">Track Order</a>
-                    }
+                    <img src="~/Images/paymentfailed.png" class="img-fluid" />
                 </div>
             </div>
         </div>

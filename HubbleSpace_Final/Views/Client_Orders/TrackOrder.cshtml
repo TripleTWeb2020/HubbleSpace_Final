@@ -1,0 +1,132 @@
+﻿@model HubbleSpace_Final.Entities.Order
+@{
+    ViewData["Title"] = "Track Order";
+    Layout = "_FrontendLayout";
+}
+<!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<!-- Your Plugin chat code -->
+<div id="fb-customer-chat" class="fb-customerchat">
+</div>
+<script>
+    var chatbox = document.getElementById('fb-customer-chat');
+    chatbox.setAttribute("page_id", "109024788097939");
+    chatbox.setAttribute("attribution", "biz_inbox");
+    window.fbAsyncInit = function () {
+        FB.init({
+            xfbml: true,
+            version: 'v11.0'
+        });
+    };
+
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/60e4344ad6e7610a49a9da98/1f9tmohmc';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+
+<div class="container" style="min-height: 400px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- breadcrumb-->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/../Home">Home</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">Track Order</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-lg-12">
+            <div class="box">
+                <form method="post" class="ml-auto" style="margin-bottom:20px" asp-controller="Client_Orders" asp-action="TrackOrder">
+                    <div class="input-group">
+                        <input name="Id" placeholder="Your Order's ID" class="form-control" required>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+                @if (Model != null)
+                {
+                    <div class="col-md-12 offset-12">
+                        <!-- DATA TABLE -->
+                        <h2>Lịch sử đơn hàng</h2>
+                        <div class="table-responsive-data2">
+                            <table class="table table-data2">
+                                <thead>
+                                    <tr class="row">
+                                        <th class="col-1">
+                                            @Html.DisplayNameFor(model => model.TotalMoney)
+                                        </th>
+                                        <th class="col-1">
+                                            @Html.DisplayNameFor(model => model.Discount)
+                                        </th>
+                                        <th class="col-1">
+                                            @Html.DisplayNameFor(model => model.Date_Create)
+                                        </th>
+                                        <th class="col-2">
+                                            @Html.DisplayNameFor(model => model.PaymentStatus)
+                                        </th>
+                                        <th class="col-2">
+                                            @Html.DisplayNameFor(model => model.Address)
+                                        </th>
+                                        <th class="col-2">
+                                            @Html.DisplayNameFor(model => model.SDT)
+                                        </th>
+                                        <th class="col-1">
+                                            @Html.DisplayNameFor(model => model.Process)
+                                        </th>
+                                        <th class="col-2"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="tr-shadow row">
+                                        <td class="col-1">
+                                            @Model.TotalMoney.ToString("n0")
+                                        </td>
+                                        <td class="col-1">
+                                            @Model.Discount.ToString("n0")
+                                        </td>
+                                        <td class="col-1">
+                                            @Model.Date_Create.ToShortDateString()
+                                        </td>
+                                        <td class="col-2">
+                                            @Model.PaymentStatus
+                                        </td>
+                                        <td class="col-2">
+                                            @Model.Address
+                                        </td>
+                                        <td class="col-2">
+                                            @Model.SDT
+                                        </td>
+                                        <td class="col-1">
+                                            @Model.Process
+                                        </td>
+                                        <td class="col-2">
+                                            <p class="buttons">
+                                                <a asp-action="OrderDetail" asp-route-id="@Model.ID_Order" class="btn btn-outline-primary">View detail</a>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- END DATA TABLE -->
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
