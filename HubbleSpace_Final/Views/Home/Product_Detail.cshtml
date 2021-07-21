@@ -233,7 +233,7 @@
                                 "size": $("input[name='size']:checked").val()
                             },
                             success: function (response) {
-                                window.location.reload
+                                $('#basket-overview').children('a').children('span').replaceWith('<span> ' + response +' item(s) in cart</span>')
                             }
                         });
                     });

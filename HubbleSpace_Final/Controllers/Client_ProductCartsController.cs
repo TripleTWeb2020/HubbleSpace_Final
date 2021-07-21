@@ -79,13 +79,12 @@ namespace HubbleSpace_Final.Controllers
 
         // [Route("/addcart/{productid:int}")]
         [HttpPost]
-        public IActionResult AddToCart(int id, double price, string name, string size)
+        public int AddToCart(int id, double price, string name, string size)
         {
             var color_Product = _context.Color_Product.Where(p => p.ID_Color_Product == id).FirstOrDefault();
-
-            if (color_Product == null)
-                return NotFound("No available products");
             var cart = GetCartItems();
+            if (color_Product == null)
+                return cart.Where(c => c.Discount == 0).Sum(c => c.Amount);
             var cartitem = cart.Find(p => p.Color_Product.ID_Color_Product == id && p.Size == size);
             if (cartitem != null)
             {
@@ -101,7 +100,7 @@ namespace HubbleSpace_Final.Controllers
 
             // Lưu cart vào Session
             SaveCartSession(cart);
-            return Ok();
+            return cart.Where(c => c.Discount == 0).Sum(c => c.Amount);
         }
 
         /// xóa item trong cart
@@ -207,7 +206,7 @@ namespace HubbleSpace_Final.Controllers
                 Items = new List<Item>()
             };
 
-            var total = new double();
+            double total = 0;
 
             foreach (var item in model.CartItems)
             {
@@ -235,13 +234,13 @@ namespace HubbleSpace_Final.Controllers
                         ItemList = itemList,
                         Amount = new Amount()
                         {
-                            Total = total.ToString(),
+                            Total = Math.Round(total, 2).ToString(),
                             Currency = "USD",
                             Details = new AmountDetails
                             {
                                 Tax = "0",
                                 Shipping = "0",
-                                Subtotal = total.ToString()
+                                Subtotal = Math.Round(total, 2).ToString()
                             }
                         },
                         //ItemList = itemList,                       
@@ -582,7 +581,7 @@ namespace HubbleSpace_Final.Controllers
                     //cập nhật số lượng trong kho
                     Size size = _context.Size.Where(s => s.ID_Color_Product == item.Color_Product.ID_Color_Product
                                                         && s.SizeNumber.Trim().ToLower() == item.Size.Trim().ToLower()).FirstOrDefault();
-                    size.Quantity -= 1;
+                    size.Quantity -= item.Amount;
                     _context.Update(size);
                     await _context.SaveChangesAsync();
                 }
@@ -712,7 +711,7 @@ namespace HubbleSpace_Final.Controllers
                     //cập nhật số lượng trong kho
                     Size size = _context.Size.Where(s => s.ID_Color_Product == item.Color_Product.ID_Color_Product
                                                         && s.SizeNumber.Trim().ToLower() == item.Size.Trim().ToLower()).FirstOrDefault();
-                    size.Quantity -= 1;
+                    size.Quantity -= item.Amount;
                     _context.Update(size);
                     await _context.SaveChangesAsync();
                 }
