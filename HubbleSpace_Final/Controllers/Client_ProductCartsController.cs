@@ -30,6 +30,7 @@ namespace HubbleSpace_Final.Controllers
         private readonly string _clientId;
         private readonly string _secretKey;
         public double TyGiaUSD = 23300;//store in Database
+        private IConfiguration _configuration;
 
         public Client_ProductCartsController(ILogger<HomeController> logger, MyDbContext context, IUserService userService, UserManager<ApplicationUser> userManager, IConfiguration config)
         {
@@ -39,6 +40,7 @@ namespace HubbleSpace_Final.Controllers
             _userManager = userManager;
             _clientId = config["PaypalSettings:ClientId"];
             _secretKey = config["PaypalSettings:SecretKey"];
+            _configuration = config;
 
         }
 
@@ -184,7 +186,154 @@ namespace HubbleSpace_Final.Controllers
 
             return View();
         }
+        public async Task<IActionResult> VnPayCheckout()
+        {
+            var model = GetCheckoutViewModel();
+            var total = (model.CartItems.Sum(p => p.Price * p.Amount) - model.CartItems.Sum(m => m.Value_Discount));
+            string vnp_Returnurl = "https://localhost:44336/Client_ProductCarts/StatusAsync"; //URL nhan ket qua tra ve 
+            string vnp_Url = "http://sandbox.vnpayment.vn/merchant_webapi/merchant.html"; //URL thanh toan cua VNPAY 
+            string vnp_TmnCode = "RXEJTR1O"; //Ma website
+            string vnp_HashSecret = "SZSEUCSMERCFRNMPSKZGIALYTHMENIUQ"; //Chuoi bi mat
+            OrderInfoVnPay order = new OrderInfoVnPay();
+            //Save order to db
+            order.OrderId = DateTime.Now.Ticks ;
+            order.Amount = Convert.ToInt64(total);
+            order.OrderDesc = "Thanh toan dat hang tren test store";
+            order.CreatedDate = DateTime.Now;
+            string locale = "vn";
+            //Build URL for VNPAY
+            VnPayLibrary vnpay = new VnPayLibrary();
 
+            vnpay.AddRequestData("vnp_Version", "2.0.1");
+            vnpay.AddRequestData("vnp_Command", "pay");
+            vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);
+            vnpay.AddRequestData("vnp_Amount", (order.Amount * 100).ToString());
+            vnpay.AddRequestData("vnp_BankCode", "NCB");
+            vnpay.AddRequestData("vnp_CreateDate", order.CreatedDate.ToString("yyyyMMddHHmmss"));
+            vnpay.AddRequestData("vnp_CurrCode", "VND");
+            vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress());
+            if (!string.IsNullOrEmpty(locale))
+            {
+                vnpay.AddRequestData("vnp_Locale", locale);
+            }
+            else
+            {
+                vnpay.AddRequestData("vnp_Locale", "vn");
+            }
+            vnpay.AddRequestData("vnp_OrderInfo", order.OrderDesc);
+            
+            vnpay.AddRequestData("vnp_ReturnUrl", vnp_Returnurl);
+            vnpay.AddRequestData("vnp_TxnRef", order.OrderId.ToString());
+            //Add Params of 2.0.1 Version
+            vnpay.AddRequestData("vnp_ExpireDate", DateTime.Now.AddMinutes(15).ToString("yyyyMMddHHmmss"));
+            //Billing
+            //vnpay.AddRequestData("vnp_Bill_Mobile", txt_billing_mobile.Text.Trim());
+            //vnpay.AddRequestData("vnp_Bill_Email", txt_billing_email.Text.Trim());
+            var txt_billing_fullname = "Tuyen Thanh";
+            var fullName = txt_billing_fullname.Trim();
+            if (!String.IsNullOrEmpty(fullName))
+            {
+                var indexof = fullName.IndexOf(' ');
+                vnpay.AddRequestData("vnp_Bill_FirstName", fullName.Substring(0, indexof));
+                vnpay.AddRequestData("vnp_Bill_LastName", fullName.Substring(indexof + 1, fullName.Length - indexof - 1));
+            }
+
+            string paymentUrl = vnpay.CreateRequestUrl(vnp_Url, vnp_HashSecret);
+            //log.InfoFormat("VNPAY URL: {0}", paymentUrl);
+            Response.Redirect(paymentUrl);
+            return Json("Success");
+        }
+        /*public async Task<IActionResult> StatusAsync()
+        {
+            string returnContent = string.Empty;
+            if (Request.QueryString.Value.Length > 0)
+            {
+                string vnp_HashSecret = _configuration.GetSection("VNPayInfo").GetSection("vnp_HashSecret").Value; //Chuoi bi mat
+                var vnpayData = Request.Query;
+                //return Json(vnpayData);
+                VnPayLibrary vnpay = new VnPayLibrary();
+                if (vnpayData.Count > 0)
+                {
+                    foreach (var s in vnpayData)
+                    {
+                        //get all querystring data
+                        if (!string.IsNullOrEmpty(s.Key) && s.Key.StartsWith("vnp_"))
+                        {
+                            vnpay.AddResponseData(s.Key, s.Value);
+                        }
+                    }
+                }
+                //Lay danh sach tham so tra ve tu VNPAY
+
+                //vnp_TxnRef: Ma don hang merchant gui VNPAY tai command=pay    
+                string orderId = vnpay.GetResponseData("vnp_TxnRef");
+                //vnp_TransactionNo: Ma GD tai he thong VNPAY
+                long vnpayTranId = Convert.ToInt64(vnpay.GetResponseData("vnp_TransactionNo"));
+                //vnp_ResponseCode:Response code from VNPAY: 00: Thanh cong, Khac 00: Xem tai lieu
+                string vnp_ResponseCode = vnpay.GetResponseData("vnp_ResponseCode");
+                //vnp_SecureHash: MD5 cua du lieu tra ve
+                string vnp_SecureHash = vnpay.GetResponseData("vnp_SecureHash");
+                bool checkSignature = vnpay.ValidateSignature(vnp_SecureHash, vnp_HashSecret);
+                if (checkSignature)
+                {
+                    //Cap nhat ket qua GD
+                    //Yeu cau: Truy van vao CSDL cua  Merchant => lay ra duoc OrderInfo
+                    //Giả sử OrderInfo lấy ra được như giả lập bên dưới
+                    var order = await _context.OrderDetail
+                        .FirstOrDefaultAsync(m => m.OrderId == orderId);
+                    order.vnp_TransactionNo = vnpayTranId;
+                    order.vpn_TxnResponseCode = vnp_ResponseCode;
+                    order.Status = 0; //0: Cho thanh toan,1: da thanh toan,2: GD loi
+                                      //Kiem tra tinh trang Order
+                    if (order != null)
+                    {
+                        if (order.Status == 0)
+                        {
+                            if (vnp_ResponseCode == "00")
+                            {
+                                //Thanh toan thanh cong
+                                ViewData["Status"] = "Thanh toán thành công, OrderId=" + orderId + ", VNPAY TranId=" + vnpayTranId;
+                                order.Status = 1;
+                            }
+                            else
+                            {
+                                //Thanh toan khong thanh cong. Ma loi: vnp_ResponseCode
+                                //  displayMsg.InnerText = "Có lỗi xảy ra trong quá trình xử lý.Mã lỗi: " + vnp_ResponseCode;
+                                ViewData["Status"] = "Thanh toán lỗi, OrderId=" + orderId + ", VNPAY TranId=" + vnpayTranId + ",ResponseCode=" + vnp_ResponseCode;
+                                order.Status = 2;
+                            }
+                            returnContent = "{\"RspCode\":\"00\",\"Message\":\"Confirm Success\"}";
+                            //Thêm code Thực hiện cập nhật vào Database 
+                            //Update Database
+                        }
+                        else
+                        {
+                            returnContent = "{\"RspCode\":\"02\",\"Message\":\"Order already confirmed\"}";
+                        }
+                        _context.Update(order);
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        returnContent = "{\"RspCode\":\"01\",\"Message\":\"Order not found\"}";
+                    }
+                }
+                else
+                {
+                    ViewData["Status"] = "Invalid signature";
+                    returnContent = "{\"RspCode\":\"97\",\"Message\":\"Invalid signature\"}";
+                }
+            }
+            else
+            {
+                returnContent = "{\"RspCode\":\"99\",\"Message\":\"Input data required\"}";
+            }
+
+            //Response.ClearContent();
+            //Response.Write(returnContent);
+            //Response.End();
+            return View();
+        }*/
         [Authorize]
         public async Task<IActionResult> PaypalCheckout()
         {
@@ -411,6 +560,118 @@ namespace HubbleSpace_Final.Controllers
 
         [HttpPost]
         public async Task<ActionResult> Checkout(CheckOutViewModel request)
+        {
+            var userId = _userService.GetUserId();
+            var user = await _userManager.FindByIdAsync(userId);
+
+            var model = GetCheckoutViewModel();
+            var checkoutRequest = new CheckoutRequest()
+            {
+                Address = request.CheckoutModel.Address,
+                FirstName = request.CheckoutModel.FirstName,
+                LastName = request.CheckoutModel.LastName,
+                Email = request.CheckoutModel.Email,
+                Phone = request.CheckoutModel.Phone,
+                //OrderDetails = orderDetails
+            };
+
+            //Đơn hàng có áp dụng Discount
+            var useDiscount = model.CartItems.Where(c => c.Discount > 0).FirstOrDefault();
+            double discountValue = 0;
+            if (useDiscount != null)
+            {
+                discountValue = useDiscount.Value_Discount;
+            }
+
+            //Tổng tiền đơn hàng
+            double totalMoney = 0;
+            foreach (var item in model.CartItems.Where(c => c.Discount == 0))
+            {
+                totalMoney += (item.Amount * item.Price);
+            }
+            totalMoney -= model.CartItems.Sum(m => m.Value_Discount);
+
+            var order = new Entities.Order()
+            {
+                TotalMoney = totalMoney,
+                Discount = discountValue,
+                Address = checkoutRequest.Address,
+                Receiver = checkoutRequest.FirstName + ' ' + checkoutRequest.LastName,
+                SDT = checkoutRequest.Phone,
+                User = user,
+                Process = "Mới đặt",
+                PaymentStatus = PaymentStatus.Paypal
+            };
+            _context.Add(order);
+            await _context.SaveChangesAsync();
+
+            var order_success = _context.Order.ToList().LastOrDefault();
+
+            foreach (var item in model.CartItems)
+            {
+                if (item.Color_Product != null)
+                {
+                    OrderDetail orderdetail = new OrderDetail()
+                    {
+                        ID_Color_Product = item.Color_Product.ID_Color_Product,
+                        Size = item.Size,
+                        Price_Sale = item.Price,
+                        Quantity = item.Amount,
+                        ID_Order = order_success.ID_Order,
+                    };
+                    _context.Add(orderdetail);
+                    await _context.SaveChangesAsync();
+
+
+                    Size size = _context.Size.Where(s => s.ID_Color_Product == item.Color_Product.ID_Color_Product
+                                                        && s.SizeNumber.Trim().ToLower() == item.Size.Trim().ToLower()).FirstOrDefault();
+                    size.Quantity -= 1;
+                    _context.Update(size);
+                    await _context.SaveChangesAsync();
+                }
+            }
+
+            //User sử dụng Discount
+            if (useDiscount != null)
+            {
+                //ghi lại
+                var discountUsed = new DiscountUsed()
+                {
+                    ID_Discount = useDiscount.Discount,
+                    User = user,
+                };
+                _context.Add(discountUsed);
+                await _context.SaveChangesAsync();
+
+                //Discount bị trừ 1 lượt sử dụng
+                var discount = _context.Discount.Where(d => d.ID_Discount == useDiscount.Discount).FirstOrDefault();
+                discount.NumberofTurns -= 1;
+                _context.Update(discount);
+                await _context.SaveChangesAsync();
+            }
+
+            var data = new
+            {
+                message = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, order.User.UserName)
+            };
+            await ChannelHelper.Trigger(data, "notification", "new_notification");
+            var userr = await _userManager.FindByIdAsync("21114623-8ec9-4f38-92ca-89af9a82e22c");
+
+            var message = new NotificationPusher()
+            {
+                User = userr,
+                Date_Created = DateTime.Now,
+                Content = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, order.User.UserName),
+                ReadStatus = ReadStatus.Unread
+            };
+            _context.Add(message);
+            await _context.SaveChangesAsync();
+            ClearCart();
+            TempData["SuccessMsg"] = "Order puschased successful";
+            return RedirectToAction("HistoryOrder", "Client_Orders");
+        }
+        [HttpPost]
+        public async Task<ActionResult> CheckoutVnPay(CheckOutViewModel request)
         {
             var userId = _userService.GetUserId();
             var user = await _userManager.FindByIdAsync(userId);

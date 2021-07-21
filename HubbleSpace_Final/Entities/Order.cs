@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HubbleSpace_Final.Entities
 {
-    public enum PaymentStatus { COD, Paypal }
+    public enum PaymentStatus { COD, Paypal,VnPay }
     [Table("Order")]
     public class Order
     {
