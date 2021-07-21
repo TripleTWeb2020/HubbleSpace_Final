@@ -719,6 +719,118 @@ namespace HubbleSpace_Final.Controllers
             TempData["SuccessMsg"] = "Order successful";
             return Ok();
         }
+        [HttpPost]
+        public async Task<ActionResult> CheckoutVnPay(CheckOutViewModel request)
+        {
+            var userId = _userService.GetUserId();
+            var user = await _userManager.FindByIdAsync(userId);
+
+            var model = GetCheckoutViewModel();
+            var checkoutRequest = new CheckoutRequest()
+            {
+                Address = request.CheckoutModel.Address,
+                FirstName = request.CheckoutModel.FirstName,
+                LastName = request.CheckoutModel.LastName,
+                Email = request.CheckoutModel.Email,
+                Phone = request.CheckoutModel.Phone,
+                //OrderDetails = orderDetails
+            };
+
+            //Đơn hàng có áp dụng Discount
+            var useDiscount = model.CartItems.Where(c => c.Discount > 0).FirstOrDefault();
+            double discountValue = 0;
+            if (useDiscount != null)
+            {
+                discountValue = useDiscount.Value_Discount;
+            }
+
+            //Tổng tiền đơn hàng
+            double totalMoney = 0;
+            foreach (var item in model.CartItems.Where(c => c.Discount == 0))
+            {
+                totalMoney += (item.Amount * item.Price);
+            }
+            totalMoney -= model.CartItems.Sum(m => m.Value_Discount);
+
+            var order = new Entities.Order()
+            {
+                TotalMoney = totalMoney,
+                Discount = discountValue,
+                Address = checkoutRequest.Address,
+                Receiver = checkoutRequest.FirstName + ' ' + checkoutRequest.LastName,
+                SDT = checkoutRequest.Phone,
+                User = user,
+                Process = "Mới đặt",
+                PaymentStatus = PaymentStatus.Paypal
+            };
+            _context.Add(order);
+            await _context.SaveChangesAsync();
+
+            var order_success = _context.Order.ToList().LastOrDefault();
+
+            foreach (var item in model.CartItems)
+            {
+                if (item.Color_Product != null)
+                {
+                    OrderDetail orderdetail = new OrderDetail()
+                    {
+                        ID_Color_Product = item.Color_Product.ID_Color_Product,
+                        Size = item.Size,
+                        Price_Sale = item.Price,
+                        Quantity = item.Amount,
+                        ID_Order = order_success.ID_Order,
+                    };
+                    _context.Add(orderdetail);
+                    await _context.SaveChangesAsync();
+
+
+                    Size size = _context.Size.Where(s => s.ID_Color_Product == item.Color_Product.ID_Color_Product
+                                                        && s.SizeNumber.Trim().ToLower() == item.Size.Trim().ToLower()).FirstOrDefault();
+                    size.Quantity -= 1;
+                    _context.Update(size);
+                    await _context.SaveChangesAsync();
+                }
+            }
+
+            //User sử dụng Discount
+            if (useDiscount != null)
+            {
+                //ghi lại
+                var discountUsed = new DiscountUsed()
+                {
+                    ID_Discount = useDiscount.Discount,
+                    User = user,
+                };
+                _context.Add(discountUsed);
+                await _context.SaveChangesAsync();
+
+                //Discount bị trừ 1 lượt sử dụng
+                var discount = _context.Discount.Where(d => d.ID_Discount == useDiscount.Discount).FirstOrDefault();
+                discount.NumberofTurns -= 1;
+                _context.Update(discount);
+                await _context.SaveChangesAsync();
+            }
+
+            var data = new
+            {
+                message = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, order.User.UserName)
+            };
+            await ChannelHelper.Trigger(data, "notification", "new_notification");
+            var userr = await _userManager.FindByIdAsync("21114623-8ec9-4f38-92ca-89af9a82e22c");
+
+            var message = new NotificationPusher()
+            {
+                User = userr,
+                Date_Created = DateTime.Now,
+                Content = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, order.User.UserName),
+                ReadStatus = ReadStatus.Unread
+            };
+            _context.Add(message);
+            await _context.SaveChangesAsync();
+            ClearCart();
+            TempData["SuccessMsg"] = "Order puschased successful";
+            return RedirectToAction("HistoryOrder", "Client_Orders");
+        }
 
         private CheckOutViewModel GetCheckoutViewModel()
         {
