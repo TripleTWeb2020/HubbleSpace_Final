@@ -225,6 +225,7 @@
                     $("#addtocart").submit(function () {
                         $.ajax({
                             url: "../Client_ProductCarts/AddToCart",
+                            type:"post",
                             data: {
                                 "id": $("#id").val(),
                                 "name": $("#name").val(),
@@ -232,7 +233,7 @@
                                 "size": $("input[name='size']:checked").val()
                             },
                             success: function (response) {
-                                $("#basket-overview").html(response)
+                                window.location.reload
                             }
                         });
                     });

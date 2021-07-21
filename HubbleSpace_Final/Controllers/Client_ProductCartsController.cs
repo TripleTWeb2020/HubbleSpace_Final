@@ -78,7 +78,7 @@ namespace HubbleSpace_Final.Controllers
         }
 
         // [Route("/addcart/{productid:int}")]
-        //[HttpPost]
+        [HttpPost]
         public IActionResult AddToCart(int id, double price, string name, string size)
         {
             var color_Product = _context.Color_Product.Where(p => p.ID_Color_Product == id).FirstOrDefault();
@@ -101,7 +101,7 @@ namespace HubbleSpace_Final.Controllers
 
             // Lưu cart vào Session
             SaveCartSession(cart);
-            return PartialView();
+            return Ok();
         }
 
         /// xóa item trong cart
@@ -199,7 +199,7 @@ namespace HubbleSpace_Final.Controllers
         {
             var model = GetCheckoutViewModel();
             await PaypalCheckout();
-            var environment = new SandboxEnvironment("AareJfDq7SW_BqFDP9arICcNtnu7S64aJ_7Imr-3apQ_qluGXErV34V3o21B4hcEAKTZ4D1WiOkga40y", "EEuZKftAMxCRjaLrEQJHVCK_Zx0FMXl-BXn0Zp6Yxnndv-YDvruEkC1lbjTDtEAU7tDTnRiMM9KuJQHJ");
+            var environment = new SandboxEnvironment(_clientId, _secretKey);
             var client = new PayPalHttpClient(environment);
             #region Create Paypal Order
             var itemList = new ItemList()
