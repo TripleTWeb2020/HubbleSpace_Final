@@ -58,7 +58,7 @@ namespace HubbleSpace_Final.Helpers
             string queryString = data.ToString();
             string rawData = GetRequestRaw();
             baseUrl += "?" + queryString;
-            string vnp_SecureHash = Utils.Md5(vnp_HashSecret + rawData);
+            string vnp_SecureHash = Utils.Sha256(vnp_HashSecret + rawData);
             baseUrl += "vnp_SecureHash=" + vnp_SecureHash;
             return baseUrl;
         }
@@ -84,7 +84,7 @@ namespace HubbleSpace_Final.Helpers
         public bool ValidateSignature(string inputHash, string secretKey)
         {
             string rspRaw = GetResponseRaw();
-            string myChecksum = Utils.Md5(secretKey + rspRaw);
+            string myChecksum = Utils.Sha256(secretKey + rspRaw);
             return myChecksum.Equals(inputHash, StringComparison.InvariantCultureIgnoreCase);
         }
         private string GetResponseRaw()
@@ -135,6 +135,23 @@ namespace HubbleSpace_Final.Helpers
             }
             return sb.ToString();
         }
+        public static String Sha256(String data)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                // ComputeHash - returns byte array  
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(data));
+
+                // Convert byte array to a string   
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+
         public static string GetIpAddress()
         {
             string ipAddress;

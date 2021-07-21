@@ -206,9 +206,12 @@ namespace HubbleSpace_Final.Controllers
             {
                 Items = new List<Item>()
             };
-            var total = Math.Round((model.CartItems.Sum(p => p.Price * p.Amount) - model.CartItems.Sum(m => m.Value_Discount)) / TyGiaUSD, 2);
+
+            var total = new double();
+
             foreach (var item in model.CartItems)
             {
+                total += Math.Round(item.Price / TyGiaUSD, 2) * item.Amount;
                 itemList.Items.Add(new Item()
                 {
                     Name = item.Name,
