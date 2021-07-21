@@ -23,7 +23,7 @@ namespace HubbleSpace_Final.Controllers
         private readonly MyDbContext _context;
         private readonly IUserService _userService;
         private readonly IWebHostEnvironment _env;
-        public HomeController(ILogger<HomeController> logger, MyDbContext context, IUserService userService, IWebHostEnvironment env)
+        public HomeController(MyDbContext context, IUserService userService, IWebHostEnvironment env)
         {
             _context = context;
             _userService = userService;
@@ -188,12 +188,12 @@ namespace HubbleSpace_Final.Controllers
 
         }
 
-        public async Task<IActionResult> Product_Detail(string category,string name, string color)
+        public async Task<IActionResult> Product_Detail(string name, string color)
         {
             return View(await _context.Img_Product.Include(p => p.color_Product.product)
                                                   .Include(p => p.color_Product.product.category)
                                                   .Include(p => p.color_Product.product.Brand)
-                                                  .Where(p => p.color_Product.Color_Name.Replace(" ","") == color.Replace("-","/") && p.color_Product.product.Product_Name.ToLower() == name.ToLower().Replace("-"," ") && p.color_Product.product.category.Category_Name.ToLower() == category.ToLower() )
+                                                  .Where(p => p.color_Product.Color_Name.Replace(" ","") == color.Replace("-","/") && p.color_Product.product.Product_Name.ToLower() == name.ToLower().Replace("-"," "))
                                                   .ToListAsync());
         }
 

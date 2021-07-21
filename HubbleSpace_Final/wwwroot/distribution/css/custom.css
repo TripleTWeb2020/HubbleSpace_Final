@@ -57,6 +57,14 @@ center {
     text-align: center;
     
 }
+.box .row .col-md-12 h2 {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 2.25rem;
+    color: #4fbfa8;
+    font-weight: 100;
+    text-align: center;
+}
 
 .plflipper .front a img {
     width: 840px;

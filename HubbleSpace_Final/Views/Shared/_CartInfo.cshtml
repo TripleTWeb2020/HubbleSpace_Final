@@ -9,12 +9,7 @@
     if (jsoncart != null)
     {
         var cart = JsonConvert.DeserializeObject<List<CartItemModel>>(jsoncart);
-        var totalitem = 0;
-        @foreach (var item in cart)
-        {
-            totalitem += item.Amount;
-
-        }
+        var totalitem = cart.Where(c => c.Discount == 0).Sum(c => c.Amount);
         <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block">
             <a asp-route="cart" class="btn btn-primary navbar-btn">
                 <i class="fa fa-shopping-cart"></i>

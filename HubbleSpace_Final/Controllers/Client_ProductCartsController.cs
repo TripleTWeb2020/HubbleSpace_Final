@@ -21,7 +21,6 @@ namespace HubbleSpace_Final.Controllers
 {
     public class Client_ProductCartsController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly MyDbContext _context;
         private readonly IUserService _userService;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -31,15 +30,15 @@ namespace HubbleSpace_Final.Controllers
         private readonly string _secretKey;
         public double TyGiaUSD = 23300;//store in Database
 
-        public Client_ProductCartsController(ILogger<HomeController> logger, MyDbContext context, IUserService userService, UserManager<ApplicationUser> userManager, IConfiguration config)
+        public static CheckoutRequest checkoutrequest { get; set; }
+
+        public Client_ProductCartsController(MyDbContext context, IUserService userService, UserManager<ApplicationUser> userManager, IConfiguration config)
         {
-            _logger = logger;
             _context = context;
             _userService = userService;
             _userManager = userManager;
             _clientId = config["PaypalSettings:ClientId"];
             _secretKey = config["PaypalSettings:SecretKey"];
-
         }
 
         // Lấy cart từ Session (danh sách CartItem)
@@ -101,7 +100,7 @@ namespace HubbleSpace_Final.Controllers
 
             // Lưu cart vào Session
             SaveCartSession(cart);
-            return Ok();
+            return PartialView();
         }
 
         /// xóa item trong cart
@@ -171,23 +170,34 @@ namespace HubbleSpace_Final.Controllers
 
         }
 
+        [Route("/checkout", Name = "checkout")]
         public IActionResult Checkout()
         {
-
             return View(GetCheckoutViewModel());
         }
 
-        public IActionResult PaymentMethod()
+        [Route("/payment", Name = "payment")]
+        public IActionResult Payment(CheckOutViewModel request)
         {
-
-            return View();
+            if(request.CheckoutModel != null)
+            {
+                checkoutrequest = new CheckoutRequest()
+                {
+                    FirstName =  request.CheckoutModel.FirstName,
+                    LastName = request.CheckoutModel.LastName,
+                    Email = request.CheckoutModel.Email,
+                    Phone = request.CheckoutModel.Phone,
+                    Address = request.CheckoutModel.Address,
+                };
+            }
+            return View(request);
         }
 
-        [Authorize]
-        public async Task<IActionResult> PaypalCheckout()
+        [Route("/PaypalPayment", Name = "PaypalPayment")]
+        public async Task<IActionResult> PaypalPayment()
         {
             var model = GetCheckoutViewModel();
-            var environment = new SandboxEnvironment("AbKTW-djsNwmU-gxRXpVhioK2j7SYrm3-nZ6whkZXoyrX4GNZj21D2lFGQT7gFxpGcubD1_-Ai1-os4u", "EEEK8kgLJOETCh7Ec7xx4NN2FsXI9UHZGiSofokEuKAgHJywvRbwqv8c3tPq-LdayJVPF3Jc-6BXxNqm");
+            var environment = new SandboxEnvironment(_clientId, _secretKey);
             var client = new PayPalHttpClient(environment);
             #region Create Paypal Order
             var itemList = new ItemList()
@@ -221,14 +231,14 @@ namespace HubbleSpace_Final.Controllers
                         {
                             Total = total.ToString(),
                             Currency = "USD",
-                            /*Details = new AmountDetails
+                            Details = new AmountDetails
                             {
                                 Tax = "0",
                                 Shipping = "0",
                                 Subtotal = total.ToString()
-                            }*/
+                            }
                         },
-                        //ItemList = itemList,
+                        ItemList = itemList,
                         Description = $"Invoice #{paypalOrderId}",
                         InvoiceNumber = paypalOrderId.ToString()
                     }
@@ -236,8 +246,8 @@ namespace HubbleSpace_Final.Controllers
 
                 RedirectUrls = new RedirectUrls()
                 {
-                    CancelUrl = $"{hostname}/Client_ProductCarts/PaymentMethod",
-                    ReturnUrl = $"{hostname}/Client_ProductCarts/Checkout"
+                    CancelUrl = $"{hostname}/payment",
+                    ReturnUrl = $"{hostname}/paymentsuccessful"
                 },
                 Payer = new Payer()
                 {
@@ -250,7 +260,7 @@ namespace HubbleSpace_Final.Controllers
 
             try
             {
-                BraintreeHttp.HttpResponse response = await client.Execute(request);
+                var response = await client.Execute(request);
                 var statusCode = response.StatusCode;
                 Payment result = response.Result<Payment>();
 
@@ -265,8 +275,6 @@ namespace HubbleSpace_Final.Controllers
                         paypalRedirectUrl = lnk.Href;
                     }
                 }
-
-
                 return Redirect(paypalRedirectUrl);
             }
             catch (HttpException httpException)
@@ -275,12 +283,13 @@ namespace HubbleSpace_Final.Controllers
                 var debugId = httpException.Headers.GetValues("PayPal-Debug-Id").FirstOrDefault();
 
                 //Process when Checkout with Paypal fails
-                return Redirect("/Client_ProductCarts/PaymentMethod");
+                return Redirect("/payment");
             }
 
         }
 
-        protected void NganLuongCheckout(object sender, EventArgs e)
+        [Route("/NganLuongPayment", Name = "NganLuongPayment")]
+        public IActionResult NganLuongPayment()
         {
             #region Create NganLuong Order
             var model = GetCheckoutViewModel();
@@ -295,25 +304,31 @@ namespace HubbleSpace_Final.Controllers
             var price = "100000";
             NganLuongPayment nl = new NganLuongPayment();
             var url = nl.BuildCheckoutUrl(return_url, receiver, transaction_info, order_code, price);
-            Response.Redirect(url);
+            return Redirect(url);
+        }
+
+        [Route("/PaymentSuccessful", Name = "PaymentSuccessful")]
+        public IActionResult PaymentSuccessful()
+        {
+            return RedirectToAction("PaypalCheckout", "Client_ProductCarts");
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> CheckoutCOD(CheckOutViewModel request)
+        [Route("/checkoutcod", Name = "checkoutcod")]
+        public async Task<IActionResult> CheckoutCOD()
         {
             var userId = _userService.GetUserId();
             var user = await _userManager.FindByIdAsync(userId);
-
-
             var model = GetCheckoutViewModel();
+
             var checkoutRequest = new CheckoutRequest()
             {
-                Address = request.CheckoutModel.Address,
-                FirstName = request.CheckoutModel.FirstName,
-                LastName = request.CheckoutModel.LastName,
-                Email = request.CheckoutModel.Email,
-                Phone = request.CheckoutModel.Phone,
+                Address = checkoutrequest.Address,
+                FirstName = checkoutrequest.FirstName,
+                LastName = checkoutrequest.LastName,
+                Email = checkoutrequest.Email,
+                Phone = checkoutrequest.Phone,
                 //OrderDetails = orderDetails
             };
 
@@ -390,8 +405,6 @@ namespace HubbleSpace_Final.Controllers
             };
             await ChannelHelper.Trigger(data, "notification", "new_notification");
 
-
-
             var message = new NotificationPusher()
             {
                 User = user,
@@ -408,28 +421,32 @@ namespace HubbleSpace_Final.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> Checkout(CheckOutViewModel request)
+        [Route("/PaypalCheckout", Name = "PaypalCheckout")]
+        public async Task<IActionResult> PaypalCheckout()
         {
-            var userId = _userService.GetUserId();
-            var user = await _userManager.FindByIdAsync(userId);
-
-            var model = GetCheckoutViewModel();
             var checkoutRequest = new CheckoutRequest()
             {
-                Address = request.CheckoutModel.Address,
-                FirstName = request.CheckoutModel.FirstName,
-                LastName = request.CheckoutModel.LastName,
-                Email = request.CheckoutModel.Email,
-                Phone = request.CheckoutModel.Phone,
+                Address = checkoutrequest.Address,
+                FirstName = checkoutrequest.FirstName,
+                LastName = checkoutrequest.LastName,
+                Email = checkoutrequest.Email,
+                Phone = checkoutrequest.Phone,
                 //OrderDetails = orderDetails
             };
+            var model = GetCheckoutViewModel();
+
+            double discountValue = 0;
 
             //Đơn hàng có áp dụng Discount
-            var useDiscount = model.CartItems.Where(c => c.Discount > 0).FirstOrDefault();
-            double discountValue = 0;
-            if (useDiscount != null)
+            var userId = _userService.GetUserId();
+            if (userId != null)
             {
-                discountValue = useDiscount.Value_Discount;
+                var user = await _userManager.FindByIdAsync(userId);
+                var useDiscount = model.CartItems.Where(c => c.Discount > 0).FirstOrDefault();
+                if (useDiscount != null)
+                {
+                    discountValue = useDiscount.Value_Discount;
+                }
             }
 
             //Tổng tiền đơn hàng
@@ -440,22 +457,83 @@ namespace HubbleSpace_Final.Controllers
             }
             totalMoney -= model.CartItems.Sum(m => m.Value_Discount);
 
-            var order = new Entities.Order()
+            //Xử lý đặt hàng cho user
+            if (userId != null)
             {
-                TotalMoney = totalMoney,
-                Discount = discountValue,
-                Address = checkoutRequest.Address,
-                Receiver = checkoutRequest.FirstName + ' ' + checkoutRequest.LastName,
-                SDT = checkoutRequest.Phone,
-                User = user,
-                Process = "Mới đặt",
-                PaymentStatus = PaymentStatus.Paypal
-            };
-            _context.Add(order);
-            await _context.SaveChangesAsync();
+                var user = await _userManager.FindByIdAsync(userId);
+                var order = new Entities.Order()
+                {
+                    TotalMoney = totalMoney,
+                    Discount = discountValue,
+                    Address = checkoutRequest.Address,
+                    Receiver = checkoutRequest.FirstName + ' ' + checkoutRequest.LastName,
+                    SDT = checkoutRequest.Phone,
+                    User = user,
+                    Process = "Mới đặt",
+                    PaymentStatus = PaymentStatus.Paypal
+                };
+                _context.Add(order);
+                await _context.SaveChangesAsync();
 
+                //User sử dụng Discount
+                var useDiscount = model.CartItems.Where(c => c.Discount > 0).FirstOrDefault();
+                if (useDiscount != null)
+                {
+                    //ghi lại
+                    var discountUsed = new DiscountUsed()
+                    {
+                        ID_Discount = useDiscount.Discount,
+                        User = user,
+                    };
+                    _context.Add(discountUsed);
+                    await _context.SaveChangesAsync();
+
+                    //Discount bị trừ 1 lượt sử dụng
+                    var discount = _context.Discount.Where(d => d.ID_Discount == useDiscount.Discount).FirstOrDefault();
+                    discount.NumberofTurns -= 1;
+                    _context.Update(discount);
+                    await _context.SaveChangesAsync();
+                }
+
+                //Notification cho user
+                var data = new
+                {
+                    message = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, order.User.UserName)
+                };
+                await ChannelHelper.Trigger(data, "notification", "new_notification");
+                var userr = await _userManager.FindByIdAsync("21114623-8ec9-4f38-92ca-89af9a82e22c");
+
+                var message = new NotificationPusher()
+                {
+                    User = userr,
+                    Date_Created = DateTime.Now,
+                    Content = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, order.User.UserName),
+                    ReadStatus = ReadStatus.Unread
+                };
+                _context.Add(message);
+                await _context.SaveChangesAsync();
+            }
+
+            //xử lý đơn hàng cho khách
+            else
+            {
+                var order = new Entities.Order()
+                {
+                    TotalMoney = totalMoney,
+                    Discount = discountValue,
+                    Address = checkoutRequest.Address,
+                    Receiver = checkoutRequest.FirstName + ' ' + checkoutRequest.LastName,
+                    SDT = checkoutRequest.Phone,
+                    User = null,
+                    Process = "Mới đặt",
+                    PaymentStatus = PaymentStatus.Paypal
+                };
+                _context.Add(order);
+                await _context.SaveChangesAsync();
+            }
+
+            //chi tiết đơn hàng
             var order_success = _context.Order.ToList().LastOrDefault();
-
             foreach (var item in model.CartItems)
             {
                 if (item.Color_Product != null)
@@ -471,7 +549,7 @@ namespace HubbleSpace_Final.Controllers
                     _context.Add(orderdetail);
                     await _context.SaveChangesAsync();
 
-
+                    //cập nhật số lượng trong kho
                     Size size = _context.Size.Where(s => s.ID_Color_Product == item.Color_Product.ID_Color_Product
                                                         && s.SizeNumber.Trim().ToLower() == item.Size.Trim().ToLower()).FirstOrDefault();
                     size.Quantity -= 1;
@@ -480,41 +558,6 @@ namespace HubbleSpace_Final.Controllers
                 }
             }
 
-            //User sử dụng Discount
-            if (useDiscount != null)
-            {
-                //ghi lại
-                var discountUsed = new DiscountUsed()
-                {
-                    ID_Discount = useDiscount.Discount,
-                    User = user,
-                };
-                _context.Add(discountUsed);
-                await _context.SaveChangesAsync();
-
-                //Discount bị trừ 1 lượt sử dụng
-                var discount = _context.Discount.Where(d => d.ID_Discount == useDiscount.Discount).FirstOrDefault();
-                discount.NumberofTurns -= 1;
-                _context.Update(discount);
-                await _context.SaveChangesAsync();
-            }
-
-            var data = new
-            {
-                message = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, order.User.UserName)
-            };
-            await ChannelHelper.Trigger(data, "notification", "new_notification");
-            var userr = await _userManager.FindByIdAsync("21114623-8ec9-4f38-92ca-89af9a82e22c");
-
-            var message = new NotificationPusher()
-            {
-                User = userr,
-                Date_Created = DateTime.Now,
-                Content = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, order.User.UserName),
-                ReadStatus = ReadStatus.Unread
-            };
-            _context.Add(message);
-            await _context.SaveChangesAsync();
             ClearCart();
             TempData["SuccessMsg"] = "Order puschased successful";
             return RedirectToAction("HistoryOrder", "Client_Orders");

@@ -130,17 +130,17 @@
 
 
                         <!--product_details-->
-                        <div class="col-lg-4 col-md-6 box" style="margin-bottom: 0">
+                        <div class="col-lg-4 col-md-6 box">
                             @if (product != null)
                             {
-                                <h2 itemprop="name">@Html.DisplayFor(modelItem => product.color_Product.product.Product_Name)</h2>
-                                <h4><i>@Html.DisplayFor(modelItem => product.color_Product.Color_Name)</i></h4>
+                                <h1 itemprop="name">@Html.DisplayFor(modelItem => product.color_Product.product.Product_Name)</h1>
+                                <h3><i>@Html.DisplayFor(modelItem => product.color_Product.Color_Name)</i></h3>
                                 <i itemprop="description">@Html.DisplayFor(modelItem => product.color_Product.product.Description)</i>
                                 <p class="price">
                                     <del>
                                         @if (product.color_Product.product.Price_Sale < product.color_Product.product.Price_Product)
                                         {
-                                            <text> @String.Format("{0:0,0}", product.color_Product.product.Price_Product) VNĐ </text>
+                                            <text>@String.Format("{0:0,0}", product.color_Product.product.Price_Product) VNĐ </text>
                                         }
                                     </del>
                                 </p>
@@ -188,8 +188,15 @@
                     </div>
 
                     <!-- /.Recommend 4 product-->
+                    <div class="box py-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2 class="mb-0"><strong>Recommend</strong></h2>
+                            </div>
+                        </div>
+                    </div>
                     <div id="getRecommendProducts" class="row">
-                        
+
                     </div>
                     <!-- /.col-md-9-->
                 </div>
@@ -225,7 +232,7 @@
                                 "size": $("input[name='size']:checked").val()
                             },
                             success: function (response) {
-                                window.location.reload
+                                $("#basket-overview").html(response)
                             }
                         });
                     });
@@ -234,5 +241,6 @@
             </script>
         }
     }
+
 }
 
