@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using PayPal.Core;
 using PayPal.v1.Payments;
@@ -16,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static HubbleSpace_Final.Models.VnPayLibrary;
 
 namespace HubbleSpace_Final.Controllers
 {
@@ -29,6 +29,7 @@ namespace HubbleSpace_Final.Controllers
         private readonly string _clientId;
         private readonly string _secretKey;
         public double TyGiaUSD = 23300;//store in Database
+        private IConfiguration _configuration;
 
         public static CheckoutRequest checkoutrequest { get; set; }
 
@@ -39,6 +40,7 @@ namespace HubbleSpace_Final.Controllers
             _userManager = userManager;
             _clientId = config["PaypalSettings:ClientId"];
             _secretKey = config["PaypalSettings:SecretKey"];
+            _configuration = config;
         }
 
         // Lấy cart từ Session (danh sách CartItem)
@@ -179,11 +181,11 @@ namespace HubbleSpace_Final.Controllers
         [Route("/payment", Name = "payment")]
         public IActionResult Payment(CheckOutViewModel request)
         {
-            if(request.CheckoutModel != null)
+            if (request.CheckoutModel != null)
             {
                 checkoutrequest = new CheckoutRequest()
                 {
-                    FirstName =  request.CheckoutModel.FirstName,
+                    FirstName = request.CheckoutModel.FirstName,
                     LastName = request.CheckoutModel.LastName,
                     Email = request.CheckoutModel.Email,
                     Phone = request.CheckoutModel.Phone,
@@ -197,6 +199,7 @@ namespace HubbleSpace_Final.Controllers
         public async Task<IActionResult> PaypalPayment()
         {
             var model = GetCheckoutViewModel();
+            await PaypalCheckout();
             var environment = new SandboxEnvironment(_clientId, _secretKey);
             var client = new PayPalHttpClient(environment);
             #region Create Paypal Order
@@ -211,7 +214,7 @@ namespace HubbleSpace_Final.Controllers
                 {
                     Name = item.Name,
                     Currency = "USD",
-                    Price = Math.Round(item.Price/ TyGiaUSD, 2).ToString(),
+                    Price = Math.Round(item.Price / TyGiaUSD, 2).ToString(),
                     Quantity = item.Amount.ToString(),
                     Sku = "sku",
                     Tax = "0"
@@ -289,29 +292,204 @@ namespace HubbleSpace_Final.Controllers
 
         }
 
-        [Route("/NganLuongPayment", Name = "NganLuongPayment")]
-        public IActionResult NganLuongPayment()
+        public async Task<IActionResult> VNPayment()
         {
-            #region Create NganLuong Order
+            // Get payment input
             var model = GetCheckoutViewModel();
-            var total = model.CartItems.Sum(p => p.Price * p.Amount) - model.CartItems.Sum(m => m.Value_Discount);
-            #endregion
-            var hostname = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            //Tổng tiền đơn hàng
+            double totalMoney = 0;
+            var VnpalOrderId = DateTime.Now.Ticks;
+            foreach (var item in model.CartItems.Where(c => c.Discount == 0))
+            {
+                totalMoney += (item.Amount * item.Price);
+            }
+            totalMoney -= model.CartItems.Sum(m => m.Value_Discount);
 
-            var return_url = $"{hostname}/Client_ProductCarts/Checkout";
-            var transaction_info = "NganLuongPayment";
-            var order_code = DateTime.Now.ToString("yyyyMMddHHmmss");
-            var receiver = "tripletweb@gmail.com";//Tài khoản nhận tiền 
-            var price = "100000";
-            NganLuongPayment nl = new NganLuongPayment();
-            var url = nl.BuildCheckoutUrl(return_url, receiver, transaction_info, order_code, price);
-            return Redirect(url);
+            //Get Config Info
+            string vnp_Returnurl = _configuration.GetSection("VNPayInfo").GetSection("vnp_Returnurl").Value; //URL nhan ket qua tra ve 
+            string vnp_Url = _configuration.GetSection("VNPayInfo").GetSection("vnp_Url").Value; //URL thanh toan cua VNPAY 
+            string vnp_TmnCode = _configuration.GetSection("VNPayInfo").GetSection("vnp_TmnCode").Value; //Ma website
+            string vnp_HashSecret = _configuration.GetSection("VNPayInfo").GetSection("vnp_HashSecret").Value; //Chuoi bi mat
+            if (string.IsNullOrEmpty(vnp_TmnCode) || string.IsNullOrEmpty(vnp_HashSecret))
+            {
+                return Json("Vui lòng cấu hình các tham số: vnp_TmnCode,vnp_HashSecret trong file appsetting.json");
+            }
+            string locale = "vn";
+            //Build URL for VNPAY
+            VnPayLibrary vnpay = new VnPayLibrary();
+
+            vnpay.AddRequestData("vnp_Version", "2.0.0");
+            vnpay.AddRequestData("vnp_Command", "pay");
+            vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);
+            vnpay.AddRequestData("vnp_Amount", (totalMoney * 100).ToString());
+            //if (cboBankCode.SelectedItem != null && !string.IsNullOrEmpty(cboBankCode.SelectedItem.Value))
+            //{
+            //    vnpay.AddRequestData("vnp_BankCode", cboBankCode.SelectedItem.Value);
+            //}
+            //vnpay.AddRequestData("vnp_BankCode", "NCB");
+            vnpay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss"));
+            vnpay.AddRequestData("vnp_CurrCode", "VND");
+            vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress());
+
+
+            if (!string.IsNullOrEmpty(locale))
+            {
+                vnpay.AddRequestData("vnp_Locale", locale);
+            }
+            else
+            {
+                vnpay.AddRequestData("vnp_Locale", "vn");
+            }
+            vnpay.AddRequestData("vnp_OrderInfo", $"Đơn hàng #{VnpalOrderId} số tiền {totalMoney.ToString("n0")}");
+            //vnpay.AddRequestData("vnp_OrderType", orderCategory.SelectedItem.Value); //default value: other
+            vnpay.AddRequestData("vnp_ReturnUrl", vnp_Returnurl);
+            vnpay.AddRequestData("vnp_TxnRef", $"{VnpalOrderId.ToString()}");
+
+            string paymentUrl = vnpay.CreateRequestUrl(vnp_Url, vnp_HashSecret);
+            //log.InfoFormat("VNPAY URL: {0}", paymentUrl);
+            Response.Redirect(paymentUrl);
+            return Json("Success");
         }
 
-        [Route("/PaymentSuccessful", Name = "PaymentSuccessful")]
+        [Route("/paymentsuccessful", Name = "paymentsuccessful")]
         public IActionResult PaymentSuccessful()
         {
-            return RedirectToAction("PaypalCheckout", "Client_ProductCarts");
+            var order = _context.Order.ToList().LastOrDefault();
+            order.Process = "Mới đặt";
+            _context.Update(order);
+            _context.SaveChanges();
+            return View();
+        }
+
+        public async Task<IActionResult> VNPayCheckout()
+        {
+            //Get payment input
+            var model = GetCheckoutViewModel();
+
+            double discountValue = 0;
+
+            //Đơn hàng có áp dụng Discount
+            var userId = _userService.GetUserId();
+            if (userId != null)
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                var useDiscount = model.CartItems.Where(c => c.Discount > 0).FirstOrDefault();
+                if (useDiscount != null)
+                {
+                    discountValue = useDiscount.Value_Discount;
+                }
+            }
+
+            //Tổng tiền đơn hàng
+            double totalMoney = 0;
+            var VnpalOrderId = DateTime.Now.Ticks;
+            foreach (var item in model.CartItems.Where(c => c.Discount == 0))
+            {
+                totalMoney += (item.Amount * item.Price);
+            }
+            totalMoney -= model.CartItems.Sum(m => m.Value_Discount);
+
+            //Xử lý đặt hàng cho user
+            if (userId != null)
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                var order = new Entities.Order()
+                {
+                    TotalMoney = totalMoney,
+                    Discount = discountValue,
+                    Address = checkoutrequest.Address,
+                    Receiver = checkoutrequest.FirstName + ' ' + checkoutrequest.LastName,
+                    SDT = checkoutrequest.Phone,
+                    User = user,
+                    Process = "Mới đặt",
+                    PaymentStatus = PaymentStatus.VnPay
+                };
+                _context.Add(order);
+                await _context.SaveChangesAsync();
+
+                //User sử dụng Discount
+                var useDiscount = model.CartItems.Where(c => c.Discount > 0).FirstOrDefault();
+                if (useDiscount != null)
+                {
+                    //ghi lại
+                    var discountUsed = new DiscountUsed()
+                    {
+                        ID_Discount = useDiscount.Discount,
+                        User = user,
+                    };
+                    _context.Add(discountUsed);
+                    await _context.SaveChangesAsync();
+
+                    //Discount bị trừ 1 lượt sử dụng
+                    var discount = _context.Discount.Where(d => d.ID_Discount == useDiscount.Discount).FirstOrDefault();
+                    discount.NumberofTurns -= 1;
+                    _context.Update(discount);
+                    await _context.SaveChangesAsync();
+                }
+
+                //Notification cho user
+                var data = new
+                {
+                    message = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, order.User.UserName)
+                };
+                await ChannelHelper.Trigger(data, "notification", "new_notification");
+                var userr = await _userManager.FindByIdAsync("21114623-8ec9-4f38-92ca-89af9a82e22c");
+
+                var message = new NotificationPusher()
+                {
+                    User = userr,
+                    Date_Created = DateTime.Now,
+                    Content = System.String.Format("New order with ID of #{0} is successfully by {1}", order.ID_Order, order.User.UserName),
+                    ReadStatus = ReadStatus.Unread
+                };
+                _context.Add(message);
+                await _context.SaveChangesAsync();
+            }
+
+            //xử lý đơn hàng cho khách
+            else
+            {
+                var order = new Entities.Order()
+                {
+                    TotalMoney = totalMoney,
+                    Discount = discountValue,
+                    Address = checkoutrequest.Address,
+                    Receiver = checkoutrequest.FirstName + ' ' + checkoutrequest.LastName,
+                    SDT = checkoutrequest.Phone,
+                    User = null,
+                    Process = "Mới đặt",
+                    PaymentStatus = PaymentStatus.VnPay
+                };
+                _context.Add(order);
+                await _context.SaveChangesAsync();
+            }
+
+            //chi tiết đơn hàng
+            var order_success = _context.Order.ToList().LastOrDefault();
+            foreach (var item in model.CartItems)
+            {
+                if (item.Color_Product != null)
+                {
+                    OrderDetail orderdetail = new OrderDetail()
+                    {
+                        ID_Color_Product = item.Color_Product.ID_Color_Product,
+                        Size = item.Size,
+                        Price_Sale = item.Price,
+                        Quantity = item.Amount,
+                        ID_Order = order_success.ID_Order,
+                    };
+                    _context.Add(orderdetail);
+                    await _context.SaveChangesAsync();
+
+                    //cập nhật số lượng trong kho
+                    Size size = _context.Size.Where(s => s.ID_Color_Product == item.Color_Product.ID_Color_Product
+                                                        && s.SizeNumber.Trim().ToLower() == item.Size.Trim().ToLower()).FirstOrDefault();
+                    size.Quantity -= 1;
+                    _context.Update(size);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            return RedirectToAction("HistoryOrder", "Client_Orders");
         }
 
         [HttpPost]
@@ -322,16 +500,6 @@ namespace HubbleSpace_Final.Controllers
             var userId = _userService.GetUserId();
             var user = await _userManager.FindByIdAsync(userId);
             var model = GetCheckoutViewModel();
-
-            var checkoutRequest = new CheckoutRequest()
-            {
-                Address = checkoutrequest.Address,
-                FirstName = checkoutrequest.FirstName,
-                LastName = checkoutrequest.LastName,
-                Email = checkoutrequest.Email,
-                Phone = checkoutrequest.Phone,
-                //OrderDetails = orderDetails
-            };
 
             //Đơn hàng có áp dụng Discount
             var useDiscount = model.CartItems.Where(c => c.Discount > 0).FirstOrDefault();
@@ -353,9 +521,9 @@ namespace HubbleSpace_Final.Controllers
             {
                 TotalMoney = totalMoney,
                 Discount = discountValue,
-                Address = checkoutRequest.Address,
-                Receiver = checkoutRequest.FirstName + ' ' + checkoutRequest.LastName,
-                SDT = checkoutRequest.Phone,
+                Address = checkoutrequest.Address,
+                Receiver = checkoutrequest.FirstName + ' ' + checkoutrequest.LastName,
+                SDT = checkoutrequest.Phone,
                 User = user,
                 Process = "Mới đặt",
                 PaymentStatus = PaymentStatus.COD
@@ -420,24 +588,13 @@ namespace HubbleSpace_Final.Controllers
             return RedirectToAction("HistoryOrder", "Client_Orders");
         }
 
-
         [HttpPost]
         [Route("/PaypalCheckout", Name = "PaypalCheckout")]
         public async Task<IActionResult> PaypalCheckout()
         {
-            var checkoutRequest = new CheckoutRequest()
-            {
-                Address = checkoutrequest.Address,
-                FirstName = checkoutrequest.FirstName,
-                LastName = checkoutrequest.LastName,
-                Email = checkoutrequest.Email,
-                Phone = checkoutrequest.Phone,
-                //OrderDetails = orderDetails
-            };
+            
             var model = GetCheckoutViewModel();
-
             double discountValue = 0;
-
             //Đơn hàng có áp dụng Discount
             var userId = _userService.GetUserId();
             if (userId != null)
@@ -466,11 +623,11 @@ namespace HubbleSpace_Final.Controllers
                 {
                     TotalMoney = totalMoney,
                     Discount = discountValue,
-                    Address = checkoutRequest.Address,
-                    Receiver = checkoutRequest.FirstName + ' ' + checkoutRequest.LastName,
-                    SDT = checkoutRequest.Phone,
+                    Address = checkoutrequest.Address,
+                    Receiver = checkoutrequest.FirstName + ' ' + checkoutrequest.LastName,
+                    SDT = checkoutrequest.Phone,
                     User = user,
-                    Process = "Mới đặt",
+                    Process = "Paypal - Chưa thanh toán",
                     PaymentStatus = PaymentStatus.Paypal
                 };
                 _context.Add(order);
@@ -495,7 +652,6 @@ namespace HubbleSpace_Final.Controllers
                     _context.Update(discount);
                     await _context.SaveChangesAsync();
                 }
-
                 //Notification cho user
                 var data = new
                 {
@@ -522,11 +678,11 @@ namespace HubbleSpace_Final.Controllers
                 {
                     TotalMoney = totalMoney,
                     Discount = discountValue,
-                    Address = checkoutRequest.Address,
-                    Receiver = checkoutRequest.FirstName + ' ' + checkoutRequest.LastName,
-                    SDT = checkoutRequest.Phone,
+                    Address = checkoutrequest.Address,
+                    Receiver = checkoutrequest.FirstName + ' ' + checkoutrequest.LastName,
+                    SDT = checkoutrequest.Phone,
                     User = null,
-                    Process = "Mới đặt",
+                    Process = "Paypal - Chưa thanh toán",
                     PaymentStatus = PaymentStatus.Paypal
                 };
                 _context.Add(order);
@@ -560,8 +716,8 @@ namespace HubbleSpace_Final.Controllers
             }
 
             ClearCart();
-            TempData["SuccessMsg"] = "Order puschased successful";
-            return RedirectToAction("HistoryOrder", "Client_Orders");
+            TempData["SuccessMsg"] = "Order successful";
+            return Ok();
         }
 
         private CheckOutViewModel GetCheckoutViewModel()
